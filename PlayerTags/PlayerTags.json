@@ -3,9 +3,9 @@
     "Name": "Player Tags",
     "Description": "See tags for players in nameplates and chat, such as their role and job, or custom tags for players you know.",
     "RepoUrl": "https://github.com/r00telement/PlayerTags",
-    "IconUrl": "https://github.com/r00telement/PlayerTags/master/Resources/Chat_1.png",
+    "IconUrl": "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png",
     "ImageUrls": [
-        "https://github.com/r00telement/PlayerTags/master/Resources/Chat_1.png",
-        "https://github.com/r00telement/PlayerTags/master/Resources/Nameplates_1.png"
+        "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png",
+        "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png"
     ]
 }
