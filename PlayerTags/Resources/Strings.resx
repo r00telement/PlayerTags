@@ -1,0 +1,375 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Loc_Static_PluginName" xml:space="preserve">
+    <value>Player Tags</value>
+  </data>
+  <data name="Loc_Static_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Loc_Static_Development" xml:space="preserve">
+    <value>Development</value>
+  </data>
+  <data name="Loc_Static_CustomTags" xml:space="preserve">
+    <value>Custom tags</value>
+  </data>
+  <data name="Loc_Static_AddCustomTag" xml:space="preserve">
+    <value>Add custom tag</value>
+  </data>
+  <data name="Loc_Static_RemoveCustomTag" xml:space="preserve">
+    <value>Remove custom tag</value>
+  </data>
+  <data name="Loc_Static_NoCustomTagsAdded" xml:space="preserve">
+    <value>No custom tags added.</value>
+  </data>
+  <data name="Loc_Static_RoleAndJobTags" xml:space="preserve">
+    <value>Role and job tags</value>
+  </data>
+  <data name="Loc_Static_Roles" xml:space="preserve">
+    <value>Roles</value>
+  </data>
+  <data name="Loc_Static_Jobs" xml:space="preserve">
+    <value>Jobs</value>
+  </data>
+  <data name="Loc_Static_ChatTag" xml:space="preserve">
+    <value>Chat tag</value>
+  </data>
+  <data name="Loc_Static_NameplateTag" xml:space="preserve">
+    <value>Nameplate tag</value>
+  </data>
+  <data name="Loc_Static_Nameplates" xml:space="preserve">
+    <value>Nameplates</value>
+  </data>
+  <data name="Loc_IsPlayerNameRandomlyGenerated" xml:space="preserve">
+    <value>Randomly generate player names</value>
+  </data>
+  <data name="Loc_IsPlayerNameRandomlyGenerated_Description" xml:space="preserve">
+    <value>Use tags to replace every player's name with a randomly generated one. Helpful for preserving anonymity when taking screenshots.</value>
+  </data>
+  <data name="Loc_RoleOverrideConfig_IsEnabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="Loc_RoleOverrideConfig_IsEnabled_Description" xml:space="preserve">
+    <value>Enable the tag for this role.</value>
+  </data>
+  <data name="Loc_RoleOverrideConfig_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Loc_RoleOverrideConfig_Name_Description" xml:space="preserve">
+    <value>The name to use for this role when the format is set to use role names.</value>
+  </data>
+  <data name="Loc_CustomColorConfig_IsEnabled" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Loc_CustomColorConfig_IsEnabled_Description" xml:space="preserve">
+    <value>Enable a custom color.</value>
+  </data>
+  <data name="Loc_CustomTagConfig_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Loc_CustomTagConfig_Name_Description" xml:space="preserve">
+    <value>The name of the tag to display.</value>
+  </data>
+  <data name="Loc_CustomTagConfig_FormattedGameObjectNames" xml:space="preserve">
+    <value>Apply to game object names</value>
+  </data>
+  <data name="Loc_CustomTagConfig_FormattedGameObjectNames_Description" xml:space="preserve">
+    <value>A list of game object names to apply the tag to, separated by commas. E.g. "Cloud Strife, Tifa Lockhart"</value>
+  </data>
+  <data name="Loc_FreeCompanyNameplateVisibility" xml:space="preserve">
+    <value>Free company visibility</value>
+  </data>
+  <data name="Loc_FreeCompanyNameplateVisibility_Description" xml:space="preserve">
+    <value>The visibility of the free company on nameplates.</value>
+  </data>
+  <data name="Loc_FreeCompanyNameplateVisibility_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_FreeCompanyNameplateVisibility_Default_Description" xml:space="preserve">
+    <value>The free company on nameplates will only be visible when the character is in a free company.</value>
+  </data>
+  <data name="Loc_FreeCompanyNameplateVisibility_Never" xml:space="preserve">
+    <value>Never visible</value>
+  </data>
+  <data name="Loc_FreeCompanyNameplateVisibility_Never_Description" xml:space="preserve">
+    <value>The free company on nameplates will never be visible.</value>
+  </data>
+  <data name="Loc_NameplateElement" xml:space="preserve">
+    <value>Data element</value>
+  </data>
+  <data name="Loc_NameplateElement_Description" xml:space="preserve">
+    <value>A data element on nameplates.</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany" xml:space="preserve">
+    <value>Free company</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany_Description" xml:space="preserve">
+    <value>The free company on nameplates.</value>
+  </data>
+  <data name="Loc_NameplateElement_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Loc_NameplateElement_Name_Description" xml:space="preserve">
+    <value>The name on nameplates.</value>
+  </data>
+  <data name="Loc_NameplateElement_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Loc_NameplateElement_Title_Description" xml:space="preserve">
+    <value>The title on nameplates.</value>
+  </data>
+  <data name="Loc_RoleTagFormat" xml:space="preserve">
+    <value>Tag format</value>
+  </data>
+  <data name="Loc_RoleTagFormat_Description" xml:space="preserve">
+    <value>The format that the role tag should be displayed as.</value>
+  </data>
+  <data name="Loc_RoleTagFormat_AbbreviatedJobName" xml:space="preserve">
+    <value>Abbreviated job name</value>
+  </data>
+  <data name="Loc_RoleTagFormat_JobName" xml:space="preserve">
+    <value>Job name</value>
+  </data>
+  <data name="Loc_RoleTagFormat_AbbreviatedJobName_Description" xml:space="preserve">
+    <value>The tag will appear as an abbreviated job name, e.g. SAM, WHM, GNB.</value>
+  </data>
+  <data name="Loc_RoleTagFormat_JobName_Description" xml:space="preserve">
+    <value>The tag will appear as a job name in English, e.g. Samurai, White Mage, Gunbreaker.</value>
+  </data>
+  <data name="Loc_RoleTagFormat_RoleName" xml:space="preserve">
+    <value>Role name</value>
+  </data>
+  <data name="Loc_RoleTagFormat_RoleName_Description" xml:space="preserve">
+    <value>The tag will appear as the configured role name, e.g. DPS, Healer, Tank.</value>
+  </data>
+  <data name="Loc_Role" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Loc_Role_Description" xml:space="preserve">
+    <value>A character role.</value>
+  </data>
+  <data name="Loc_Role_DPS" xml:space="preserve">
+    <value>DPS</value>
+  </data>
+  <data name="Loc_Role_DPS_Description" xml:space="preserve">
+    <value>The DPS role.</value>
+  </data>
+  <data name="Loc_Role_Healer" xml:space="preserve">
+    <value>Healer</value>
+  </data>
+  <data name="Loc_Role_Healer_Description" xml:space="preserve">
+    <value>The healer role.</value>
+  </data>
+  <data name="Loc_Role_LandHand" xml:space="preserve">
+    <value>Land/Hand</value>
+  </data>
+  <data name="Loc_Role_LandHand_Description" xml:space="preserve">
+    <value>The land/hand role.</value>
+  </data>
+  <data name="Loc_Role_Tank" xml:space="preserve">
+    <value>Tank</value>
+  </data>
+  <data name="Loc_Role_Tank_Description" xml:space="preserve">
+    <value>The tank role.</value>
+  </data>
+  <data name="Loc_StringPosition" xml:space="preserve">
+    <value>String position</value>
+  </data>
+  <data name="Loc_StringPosition_Description" xml:space="preserve">
+    <value>The position in a string where tags will be displayed.</value>
+  </data>
+  <data name="Loc_StringPosition_After" xml:space="preserve">
+    <value>After</value>
+  </data>
+  <data name="Loc_StringPosition_After_Description" xml:space="preserve">
+    <value>The tag will be positioned after the data element.</value>
+  </data>
+  <data name="Loc_StringPosition_Before" xml:space="preserve">
+    <value>Before</value>
+  </data>
+  <data name="Loc_StringPosition_Before_Description" xml:space="preserve">
+    <value>The tag will be positioned before the data element.</value>
+  </data>
+  <data name="Loc_StringPosition_None" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Loc_StringPosition_None_Description" xml:space="preserve">
+    <value>The tag will not be positioned in the string.</value>
+  </data>
+  <data name="Loc_StringPosition_Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="Loc_StringPosition_Replace_Description" xml:space="preserve">
+    <value>The tag will replace its data element.</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition" xml:space="preserve">
+    <value>Title position</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_Description" xml:space="preserve">
+    <value>The position of the title on nameplates.</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_AlwaysAboveName" xml:space="preserve">
+    <value>Always above the name</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_AlwaysAboveName_Description" xml:space="preserve">
+    <value>The title on nameplates will always be positioned above the name.</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_AlwaysBelowName" xml:space="preserve">
+    <value>Always below the name</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_AlwaysBelowName_Description" xml:space="preserve">
+    <value>The title on nameplates will always be positioned below the name.</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_TitleNameplatePosition_Default_Description" xml:space="preserve">
+    <value>The title on nameplates will be positioned depending on the title.</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility" xml:space="preserve">
+    <value>Title visibility</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Description" xml:space="preserve">
+    <value>The visibility of the title on nameplates.</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Always" xml:space="preserve">
+    <value>Always</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Always_Description" xml:space="preserve">
+    <value>The title on nameplates will always be visible, even when the character does not have a title.</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Default_Description" xml:space="preserve">
+    <value>The title on nameplates will only be visible when the character has a title.</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Never" xml:space="preserve">
+    <value>Never</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_Never_Description" xml:space="preserve">
+    <value>The title on nameplates will never visible.</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_WhenHasTags" xml:space="preserve">
+    <value>When it has tags</value>
+  </data>
+  <data name="Loc_TitleNameplateVisibility_WhenHasTags_Description" xml:space="preserve">
+    <value>The title on nameplates will only be visible when it has tags.</value>
+  </data>
+</root>
