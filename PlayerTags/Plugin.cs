@@ -1,5 +1,6 @@
 ﻿using Dalamud.Data;
 using Dalamud.Game;
+using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Command;
@@ -10,7 +11,6 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.IoC;
 using Dalamud.Logging;
 using Dalamud.Plugin;
-using PlayerTags.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,80 +44,114 @@ namespace PlayerTags
         [PluginService]
         private static CommandManager CommandManager { get; set; } = null!;
 
-        private MainConfig m_Config;
+        [PluginService]
+        private static ClientState ClientState { get; set; } = null!;
 
-        private MainConfigUI m_ConfigUI;
+        private PluginConfiguration m_PluginConfiguration;
 
-        private Dictionary<string, Payload[]> m_JobTagPayloads = new Dictionary<string, Payload[]>();
+        private PluginConfigurationUI m_PluginConfigurationUI;
 
-        private Dictionary<CustomTagConfig, Payload[]> m_CustomTagPayloads = new Dictionary<CustomTagConfig, Payload[]>();
+        private RandomNameGenerator m_RandomNameGenerator = new RandomNameGenerator();
+
+        private PluginHooks? m_PluginHooks = null;
+
+        private Dictionary<Tag, Dictionary<TagTarget, Payload[]>> m_TagTargetPayloads = new Dictionary<Tag, Dictionary<TagTarget, Payload[]>>();
 
         private TextPayload m_SpaceTextPayload = new TextPayload($" ");
 
-        private PluginHooks m_PluginHooks;
-
-        private RandomNameGenerator? m_RandomNameGenerator = null;
+        private PluginData m_PluginData = new PluginData();
 
         public Plugin()
         {
             UIColorHelper.Initialize(DataManager);
+            m_PluginConfiguration = PluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
+            m_PluginConfiguration.Initialize(PluginInterface);
+            m_PluginData.Initialize(DataManager, m_PluginConfiguration);
+            m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData);
 
-            m_Config = PluginInterface.GetPluginConfig() as MainConfig ?? new MainConfig();
-            m_Config.Initialize(PluginInterface, DataManager);
-            m_Config.Saved += Configuration_Saved;
-
-            m_ConfigUI = new MainConfigUI(m_Config);
-
+            ClientState.Login += ClientState_Login;
+            ClientState.Logout += ClientState_Logout;
+            ClientState.TerritoryChanged += ClientState_TerritoryChanged;
+            ChatGui.ChatMessage += Chat_ChatMessage;
+            PluginInterface.UiBuilder.Draw += UiBuilder_Draw;
+            PluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
+            m_PluginConfiguration.Saved += PluginConfiguration_Saved;
             CommandManager.AddHandler(c_CommandName, new CommandInfo((string command, string arguments) =>
             {
-                m_ConfigUI.IsVisible = true;
+                m_PluginConfiguration.IsVisible = true;
+                m_PluginConfiguration.Save(m_PluginData);
             })
             {
                 HelpMessage = "Shows the config"
             });
-
-            PluginInterface.UiBuilder.Draw += UiBuilder_Draw;
-            PluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
-
-            m_PluginHooks = new PluginHooks(Framework, ObjectTable, GameGui, SetNameplate);
-
-            ChatGui.ChatMessage += Chat_ChatMessage;
-
-            if (m_Config.IsPlayerNameRandomlyGenerated && m_RandomNameGenerator == null)
-            {
-                m_RandomNameGenerator = new RandomNameGenerator();
-            }
+            Hook();
         }
 
         public void Dispose()
         {
-            PluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
+            Unhook();
             CommandManager.RemoveHandler(c_CommandName);
+            m_PluginConfiguration.Saved -= PluginConfiguration_Saved;
+            PluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
+            PluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
             ChatGui.ChatMessage -= Chat_ChatMessage;
-            m_Config.Saved -= Configuration_Saved;
-            m_PluginHooks?.Dispose();
+            ClientState.TerritoryChanged -= ClientState_TerritoryChanged;
+            ClientState.Logout -= ClientState_Logout;
+            ClientState.Login -= ClientState_Login;
         }
 
-        private void Configuration_Saved()
+        private void Hook()
+        {
+            if (m_PluginHooks == null)
+            {
+                m_PluginHooks = new PluginHooks(Framework, ObjectTable, GameGui, SetNameplate);
+            }
+        }
+
+        private void Unhook()
+        {
+            if (m_PluginHooks != null)
+            {
+                m_PluginHooks.Dispose();
+                m_PluginHooks = null;
+            }
+        }
+
+        private void Rehook()
+        {
+            Unhook();
+            Hook();
+        }
+
+        private void ClientState_Login(object? sender, EventArgs e)
+        {
+            Hook();
+        }
+
+        private void ClientState_Logout(object? sender, EventArgs e)
+        {
+            Unhook();
+        }
+
+        private void ClientState_TerritoryChanged(object? sender, ushort e)
+        {
+            Rehook();
+        }
+
+        private void PluginConfiguration_Saved()
         {
             // Invalidate the cached payloads so they get remade
-            m_JobTagPayloads.Clear();
-            m_CustomTagPayloads.Clear();
-
-            if (m_Config.IsPlayerNameRandomlyGenerated && m_RandomNameGenerator == null)
-            {
-                m_RandomNameGenerator = new RandomNameGenerator();
-            }
+            m_TagTargetPayloads.Clear();
         }
 
         private void UiBuilder_Draw()
         {
-            m_ConfigUI.Draw();
+            m_PluginConfigurationUI.Draw();
         }
 
         private void UiBuilder_OpenConfigUi()
         {
-            m_ConfigUI.IsVisible = true;
+            m_PluginConfiguration.IsVisible = true;
         }
 
         private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
@@ -143,105 +177,101 @@ namespace PlayerTags
         {
             AddTagsToNameplate(gameObject, name, title, freeCompany, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged);
 
-            if (m_Config.TitlePosition == TitleNameplatePosition.AlwaysAboveName)
+            if (m_PluginConfiguration.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
             {
                 isTitleAboveName = true;
             }
-            else if (m_Config.TitlePosition == TitleNameplatePosition.AlwaysBelowName)
+            else if (m_PluginConfiguration.NameplateTitlePosition == NameplateTitlePosition.AlwaysBelowName)
             {
                 isTitleAboveName = false;
             }
 
-            if (m_Config.TitleVisibility == TitleNameplateVisibility.Default)
+            if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.Default)
             {
             }
-            else if (m_Config.TitleVisibility == TitleNameplateVisibility.Always)
+            else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.Always)
             {
                 isTitleVisible = true;
             }
-            else if (m_Config.TitleVisibility == TitleNameplateVisibility.Never)
+            else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.Never)
             {
                 isTitleVisible = false;
             }
-            else if (m_Config.TitleVisibility == TitleNameplateVisibility.WhenHasTags)
+            else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.WhenHasTags)
             {
                 isTitleVisible = isTitleChanged;
             }
 
-            if (m_Config.FreeCompanyVisibility == FreeCompanyNameplateVisibility.Default)
+            if (m_PluginConfiguration.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Default)
             {
             }
-            else if (m_Config.FreeCompanyVisibility == FreeCompanyNameplateVisibility.Never)
+            else if (m_PluginConfiguration.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Never)
             {
                 freeCompany.Payloads.Clear();
                 isFreeCompanyChanged = true;
             }
         }
 
-        /// <summary>
-        /// Gets the job tag payloads for the given character. If the payloads don't yet exist then they are created.
-        /// </summary>
-        /// <param name="character">The character to get job tag payloads for.</param>
-        /// <returns>A list of job tag payloads for the given character.</returns>
-        private IEnumerable<Payload> GetJobTagPayloads(Character character)
+        private Payload[] CreateTagPayloads(TagTarget tagTarget, Tag tag)
         {
-            var roleId = character.ClassJob.GameData.Role;
-            var jobAbbreviation = character.ClassJob.GameData.Abbreviation;
-            var role = MainConfig.RolesById[roleId];
-
-            var roleConfig = m_Config.RoleTag.RoleOverrideConfigs[role];
-            if (!roleConfig.IsEnabled)
-            {
-                return new Payload[] { };
-            }
-
-            if (m_JobTagPayloads.TryGetValue(jobAbbreviation, out var payloads))
-            {
-                return payloads;
-            }
-
-            string text = "";
-            if (m_Config.RoleTag.Format == RoleTagFormat.AbbreviatedJobName)
-            {
-                text = character.ClassJob.GameData.Abbreviation;
-            }
-            else if (m_Config.RoleTag.Format == RoleTagFormat.JobName)
-            {
-                text = character.ClassJob.GameData.NameEnglish;
-            }
-            else if (m_Config.RoleTag.Format == RoleTagFormat.RoleName)
-            {
-                text = m_Config.RoleTag.RoleOverrideConfigs[role].Name;
-            }
-
             List<Payload> newPayloads = new List<Payload>();
 
-            // There will always be a text payload
-            newPayloads.Add(new TextPayload(text));
-
-            ushort? colorId = null;
-
-            // Pick a color id if one is available
-            if (roleConfig.JobOverrideConfigs[jobAbbreviation].CustomColor.Id != null)
+            BitmapFontIcon? icon = null;
+            if (tagTarget == TagTarget.Chat && tag.IsIconVisibleInChat.InheritedValue != null && tag.IsIconVisibleInChat.InheritedValue.Value)
             {
-                colorId = roleConfig.JobOverrideConfigs[jobAbbreviation].CustomColor.Id!.Value;
+                icon = tag.Icon.InheritedValue;
             }
-            else if (roleConfig.CustomColor.Id != null)
+            else if (tagTarget == TagTarget.Nameplate && tag.IsIconVisibleInNameplates.InheritedValue != null && tag.IsIconVisibleInNameplates.InheritedValue.Value)
             {
-                colorId = roleConfig.CustomColor.Id.Value;
+                icon = tag.Icon.InheritedValue;
             }
 
-            // If we picked a color id, add the payloads for it
-            if (colorId != null)
+            string? text = null;
+            if (tagTarget == TagTarget.Chat && tag.IsTextVisibleInChat.InheritedValue != null && tag.IsTextVisibleInChat.InheritedValue.Value)
             {
-                newPayloads.Insert(0, new UIForegroundPayload(colorId.Value));
-                newPayloads.Add(new UIForegroundPayload(0));
+                text = tag.Text.InheritedValue;
+            }
+            else if (tagTarget == TagTarget.Nameplate && tag.IsTextVisibleInNameplates.InheritedValue != null && tag.IsTextVisibleInNameplates.InheritedValue.Value)
+            {
+                text = tag.Text.InheritedValue;
             }
 
-            var newPayloadsArray = newPayloads.ToArray();
-            m_JobTagPayloads[jobAbbreviation] = newPayloadsArray;
+            if (!m_TagTargetPayloads.ContainsKey(tag))
+            {
+                m_TagTargetPayloads[tag] = new Dictionary<TagTarget, Payload[]>();
+            }
 
-            return newPayloadsArray;
+            if (icon != null && icon.Value != BitmapFontIcon.None)
+            {
+                newPayloads.Add(new IconPayload(icon.Value));
+            }
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
+                {
+                    newPayloads.Add(new EmphasisItalicPayload(true));
+                }
+
+                if (tag.TextColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIForegroundPayload(tag.TextColor.InheritedValue.Value));
+                }
+
+                newPayloads.Add(new TextPayload(text));
+
+                if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
+                {
+                    newPayloads.Add(new EmphasisItalicPayload(false));
+                }
+
+                if (tag.TextColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIForegroundPayload(0));
+                }
+            }
+
+            return newPayloads.ToArray();
         }
 
         /// <summary>
@@ -249,51 +279,83 @@ namespace PlayerTags
         /// </summary>
         /// <param name="customTagConfig">The custom tag config to get payloads for.</param>
         /// <returns>A list of payloads for the given custom tag.</returns>
-        private IEnumerable<Payload> GetCustomTagPayloads(CustomTagConfig customTagConfig)
+        private IEnumerable<Payload> GetTagPayloads(TagTarget tagTarget, Tag tag)
         {
-            if (m_CustomTagPayloads.TryGetValue(customTagConfig, out var payloads))
+            if (m_TagTargetPayloads.TryGetValue(tag, out var tagTargetPayloads))
             {
-                return payloads;
+                if (tagTargetPayloads.TryGetValue(tagTarget, out var payloads))
+                {
+                    return payloads;
+                }
+            }
+            else
+            {
+                m_TagTargetPayloads[tag] = new Dictionary<TagTarget, Payload[]>();
             }
 
-            List<Payload> newPayloads = new List<Payload>();
-
-            // There will always be a text payload
-            newPayloads.Add(new TextPayload(customTagConfig.Name));
-
-            ushort? colorId = null;
-
-            // Pick a color id if one is available
-            if (customTagConfig.CustomColor.Id != null)
-            {
-                colorId = customTagConfig.CustomColor.Id!.Value;
-            }
-
-            // If we picked a color id, add the payloads for it
-            if (colorId != null)
-            {
-                newPayloads.Insert(0, new UIForegroundPayload(colorId.Value));
-                newPayloads.Add(new UIForegroundPayload(0));
-            }
-
-            var newPayloadsArray = newPayloads.ToArray();
-            m_CustomTagPayloads[customTagConfig] = newPayloadsArray;
-
-            return newPayloadsArray;
+            m_TagTargetPayloads[tag][tagTarget] = CreateTagPayloads(tagTarget, tag);
+            return m_TagTargetPayloads[tag][tagTarget];
         }
 
-
         /// <summary>
-        /// Adds an additional space text payload in between any existing text payloads.
+        /// Adds an additional space text payload in between any existing text payloads. If there is an icon payload between two text payloads then the space is skipped.
+        /// Also adds an extra space to the beginning or end depending on the tag position and whether the most significant payload in either direction is a text payload.
+        /// In spirit, this is to ensure there is always a space between 2 text payloads, including between these payloads and the target payload.
         /// </summary>
         /// <param name="payloads">The payloads to add spaces between.</param>
-        private void AddSpacesBetweenTextPayloads(List<Payload> payloads)
+        private void AddSpacesBetweenTextPayloads(List<Payload> payloads, TagPosition tagPosition)
         {
-            var textPayloads = payloads.Where(payload => payload is TextPayload).ToList();
-            foreach (var textPayload in textPayloads.Skip(1))
+            if (payloads == null)
             {
-                var index = payloads.IndexOf(textPayload);
-                payloads.Insert(index, m_SpaceTextPayload);
+                return;
+            }
+
+            if (!payloads.Any())
+            {
+                return;
+            }
+
+            List<int> indicesToInsertSpacesAt = new List<int>();
+            int lastTextPayloadIndex = -1;
+            foreach (var payload in payloads.Reverse<Payload>())
+            {
+                if (payload is IconPayload iconPayload)
+                {
+                    lastTextPayloadIndex = -1;
+                }
+                else if (payload is TextPayload textPayload)
+                {
+                    if (lastTextPayloadIndex != -1)
+                    {
+                        indicesToInsertSpacesAt.Add(payloads.IndexOf(textPayload) + 1);
+                    }
+
+                    lastTextPayloadIndex = payloads.IndexOf(textPayload);
+                }
+            }
+
+            foreach (var indexToInsertSpaceAt in indicesToInsertSpacesAt)
+            {
+                payloads.Insert(indexToInsertSpaceAt, m_SpaceTextPayload);
+            }
+
+            // Decide whether to add a space to the end
+            if (tagPosition == TagPosition.Before)
+            {
+                var significantPayloads = payloads.Where(payload => payload is TextPayload || payload is IconPayload);
+                if (significantPayloads.Last() is TextPayload)
+                {
+                    payloads.Add(m_SpaceTextPayload);
+                }
+            }
+            // Decide whether to add a space to the beginning
+            else if (tagPosition == TagPosition.After)
+            {
+                var significantPayloads = payloads.Where(payload => payload is TextPayload || payload is IconPayload);
+                if (significantPayloads.First() is TextPayload)
+                {
+                    payloads.Insert(0, m_SpaceTextPayload);
+                }
             }
         }
 
@@ -313,15 +375,19 @@ namespace PlayerTags
             public TextPayload TextPayload { get; init; }
 
             /// <summary>
-            /// The matching game object.
+            /// The matching game object if one exists
             /// </summary>
             public GameObject? GameObject { get; init; }
 
-            public StringMatch(SeString seString, TextPayload textPayload, GameObject? gameObject = null)
+            /// <summary>
+            /// A matching player payload if one exists.
+            /// </summary>
+            public PlayerPayload? PlayerPayload { get; init; }
+
+            public StringMatch(SeString seString, TextPayload textPayload)
             {
                 SeString = seString;
                 TextPayload = textPayload;
-                GameObject = gameObject;
             }
 
             /// <summary>
@@ -358,7 +424,11 @@ namespace PlayerTags
                     // The next payload MUST be a text payload
                     if (payloadIndex + 1 < seString.Payloads.Count && seString.Payloads[payloadIndex + 1] is TextPayload textPayload)
                     {
-                        var stringMatch = new StringMatch(seString, textPayload, gameObject);
+                        var stringMatch = new StringMatch(seString, textPayload)
+                        {
+                            GameObject = gameObject,
+                            PlayerPayload = playerPayload
+                        };
                         stringMatches.Add(stringMatch);
 
                         // Don't handle the text payload twice
@@ -370,18 +440,25 @@ namespace PlayerTags
                     }
                 }
 
+                /// TODO: Not sure if this is desirable. Enabling this allows tags to appear next to the name of the local player by text in chat because the local player doesn't have a player payload.
+                /// But because it's just a simple string comparison, it won't work in all circumstances. E.g. in party chat the player name is wrapped in (). To be comprehensive we need to search substring.
+                /// This means we would need to think about breaking down existing payloads to split them out.
+                /// If we decide to do that, we could even for example find unlinked player names in chat and add player payloads for them.
                 // If it's just a text payload then either a character NEEDS to exist for it, or it needs to be identified as a character by custom tag configs
-                else if (payload is TextPayload textPayload)
-                {
-                    var gameObject = ObjectTable.FirstOrDefault(gameObject => gameObject.Name.TextValue == textPayload.Text);
-                    var isIncludedInCustomTagConfig = m_Config.CustomTagConfigs.Any(customTagConfig => customTagConfig.IncludesGameObjectName(textPayload.Text));
+                //else if (payload is TextPayload textPayload)
+                //{
+                //    var gameObject = ObjectTable.FirstOrDefault(gameObject => gameObject.Name.TextValue == textPayload.Text);
+                //    var isIncludedInCustomTagConfig = m_Config.CustomTags.Any(customTagConfig => customTagConfig.IncludesGameObjectName(textPayload.Text));
 
-                    if (gameObject != null || isIncludedInCustomTagConfig)
-                    {
-                        var stringMatch = new StringMatch(seString, textPayload, gameObject);
-                        stringMatches.Add(stringMatch);
-                    }
-                }
+                //    if (gameObject != null || isIncludedInCustomTagConfig)
+                //    {
+                //        var stringMatch = new StringMatch(seString, textPayload)
+                //        {
+                //            GameObject = gameObject
+                //        };
+                //        stringMatches.Add(stringMatch);
+                //    }
+                //}
             }
 
             return stringMatches;
@@ -390,32 +467,37 @@ namespace PlayerTags
         /// <summary>
         /// Adds the given payload changes to the dictionary.
         /// </summary>
-        /// <param name="stringPosition">The position of the string to add changes to.</param>
+        /// <param name="tagPosition">The position to add changes to.</param>
         /// <param name="payloads">The payloads to add.</param>
         /// <param name="stringChanges">The dictionary to add the changes to.</param>
-        private void AddPayloadChanges(StringPosition stringPosition, IEnumerable<Payload> payloads, Dictionary<StringPosition, List<Payload>> stringChanges)
+        private void AddPayloadChanges(TagPosition tagPosition, IEnumerable<Payload> payloads, Dictionary<TagPosition, List<Payload>> stringChanges)
         {
-            if (!payloads.Any())
+            if (payloads == null || !payloads.Any())
             {
                 return;
             }
 
-            if (!stringChanges.Keys.Contains(stringPosition))
+            if (stringChanges == null)
             {
-                stringChanges[stringPosition] = new List<Payload>();
+                return;
             }
 
-            stringChanges[stringPosition].AddRange(payloads);
+            if (!stringChanges.Keys.Contains(tagPosition))
+            {
+                stringChanges[tagPosition] = new List<Payload>();
+            }
+
+            stringChanges[tagPosition].AddRange(payloads);
         }
 
         /// <summary>
         /// Adds the given payload changes to the dictionary.
         /// </summary>
         /// <param name="nameplateElement">The nameplate element to add changes to.</param>
-        /// <param name="stringPosition">The position of the string to add changes to.</param>
+        /// <param name="tagPosition">The position to add changes to.</param>
         /// <param name="payloads">The payloads to add.</param>
         /// <param name="nameplateChanges">The dictionary to add the changes to.</param>
-        private void AddPayloadChanges(NameplateElement nameplateElement, StringPosition stringPosition, IEnumerable<Payload> payloads, Dictionary<NameplateElement, Dictionary<StringPosition, List<Payload>>> nameplateChanges)
+        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloads, Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges)
         {
             if (!payloads.Any())
             {
@@ -424,10 +506,10 @@ namespace PlayerTags
 
             if (!nameplateChanges.Keys.Contains(nameplateElement))
             {
-                nameplateChanges[nameplateElement] = new Dictionary<StringPosition, List<Payload>>();
+                nameplateChanges[nameplateElement] = new Dictionary<TagPosition, List<Payload>>();
             }
 
-            AddPayloadChanges(stringPosition, payloads, nameplateChanges[nameplateElement]);
+            AddPayloadChanges(tagPosition, payloads, nameplateChanges[nameplateElement]);
         }
 
         /// <summary>
@@ -436,53 +518,71 @@ namespace PlayerTags
         /// <param name="seString">The string to apply changes to.</param>
         /// <param name="stringChanges">The changes to apply.</param>
         /// <param name="anchorPayload">The payload in the string that changes should be anchored to. If there is no anchor, the changes will be applied to the entire string.</param>
-        private void ApplyStringChanges(SeString seString, Dictionary<StringPosition, List<Payload>> stringChanges, Payload? anchorPayload = null)
+        private void ApplyStringChanges(SeString seString, Dictionary<TagPosition, List<Payload>> stringChanges, Payload? anchorPayload = null)
         {
-            foreach ((var stringPosition, var payloads) in stringChanges)
+            if (stringChanges.Count == 0)
             {
-                if (!payloads.Any())
-                {
-                    continue;
-                }
+                return;
+            }
 
-                AddSpacesBetweenTextPayloads(payloads);
+            List<TagPosition> tagPositionsOrdered = new List<TagPosition>();
+            // If there's no anchor payload, do replaces first so that befores and afters are based on the replaced data
+            if (anchorPayload == null)
+            {
+                tagPositionsOrdered.Add(TagPosition.Replace);
+            }
 
-                if (stringPosition == StringPosition.Before)
+            tagPositionsOrdered.Add(TagPosition.Before);
+            tagPositionsOrdered.Add(TagPosition.After);
+
+            // If there is an anchor payload, do replaces last so that we still know which payload needs to be removed
+            if (anchorPayload != null)
+            {
+                tagPositionsOrdered.Add(TagPosition.Replace);
+            }
+
+            foreach (var tagPosition in tagPositionsOrdered)
+            {
+                if (stringChanges.TryGetValue(tagPosition, out var payloads) && payloads.Any())
                 {
-                    if (anchorPayload != null)
+                    AddSpacesBetweenTextPayloads(stringChanges[tagPosition], tagPosition);
+                    if (tagPosition == TagPosition.Before)
                     {
-                        var payloadIndex = seString.Payloads.IndexOf(anchorPayload);
-                        seString.Payloads.InsertRange(payloadIndex, payloads.Append(m_SpaceTextPayload));
+                        if (anchorPayload != null)
+                        {
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
+                            seString.Payloads.InsertRange(anchorPayloadIndex, payloads);
+                        }
+                        else
+                        {
+                            seString.Payloads.InsertRange(0, payloads);
+                        }
                     }
-                    else
+                    else if (tagPosition == TagPosition.After)
                     {
-                        seString.Payloads.InsertRange(0, payloads.Append(m_SpaceTextPayload));
+                        if (anchorPayload != null)
+                        {
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
+                            seString.Payloads.InsertRange(anchorPayloadIndex + 1, payloads);
+                        }
+                        else
+                        {
+                            seString.Payloads.AddRange(payloads);
+                        }
                     }
-                }
-                else if (stringPosition == StringPosition.After)
-                {
-                    if (anchorPayload != null)
+                    else if (tagPosition == TagPosition.Replace)
                     {
-                        var payloadIndex = seString.Payloads.IndexOf(anchorPayload);
-                        seString.Payloads.InsertRange(payloadIndex + 1, payloads.Prepend(m_SpaceTextPayload));
-                    }
-                    else
-                    {
-                        seString.Payloads.AddRange(payloads.Prepend(m_SpaceTextPayload));
-                    }
-                }
-                else if (stringPosition == StringPosition.Replace)
-                {
-                    if (anchorPayload != null)
-                    {
-                        var payloadIndex = seString.Payloads.IndexOf(anchorPayload);
-                        seString.Payloads.InsertRange(payloadIndex, payloads);
-                        seString.Payloads.Remove(anchorPayload);
-                    }
-                    else
-                    {
-                        seString.Payloads.Clear();
-                        seString.Payloads.AddRange(payloads);
+                        if (anchorPayload != null)
+                        {
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
+                            seString.Payloads.InsertRange(anchorPayloadIndex, payloads);
+                            seString.Payloads.Remove(anchorPayload);
+                        }
+                        else
+                        {
+                            seString.Payloads.Clear();
+                            seString.Payloads.AddRange(payloads);
+                        }
                     }
                 }
             }
@@ -504,18 +604,25 @@ namespace PlayerTags
             isTitleChanged = false;
             isFreeCompanyChanged = false;
 
-            Dictionary<NameplateElement, Dictionary<StringPosition, List<Payload>>> nameplateChanges = new Dictionary<NameplateElement, Dictionary<StringPosition, List<Payload>>>();
+            Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges = new Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>>();
 
             if (gameObject is Character character)
             {
-                // Add the role tag payloads
-                if (m_Config.RoleTag.NameplatePosition != StringPosition.None)
+                // Add the job tag
+                if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
-                    AddPayloadChanges(m_Config.RoleTag.NameplateElement, m_Config.RoleTag.NameplatePosition, GetJobTagPayloads(character), nameplateChanges);
+                    if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
+                    {
+                        var payloads = GetTagPayloads(TagTarget.Nameplate, jobTag);
+                        if (payloads.Any())
+                        {
+                            AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                        }
+                    }
                 }
 
-                // Add randomly generated name tag payload
-                if (m_Config.IsPlayerNameRandomlyGenerated && m_RandomNameGenerator != null)
+                // Add the randomly generated name tag payload
+                if (m_PluginConfiguration.IsPlayerNameRandomlyGenerated && m_RandomNameGenerator != null)
                 {
                     var characterName = character.Name.TextValue;
                     if (characterName != null)
@@ -523,18 +630,25 @@ namespace PlayerTags
                         var generatedName = m_RandomNameGenerator.GetGeneratedName(characterName);
                         if (generatedName != null)
                         {
-                            AddPayloadChanges(NameplateElement.Name, StringPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), nameplateChanges);
+                            AddPayloadChanges(NameplateElement.Name, TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), nameplateChanges);
                         }
                     }
                 }
             }
 
             // Add the custom tag payloads
-            foreach (var customTagConfig in m_Config.CustomTagConfigs)
+            foreach (var customTag in m_PluginData.CustomTags)
             {
-                if (customTagConfig.NameplatePosition != StringPosition.None && customTagConfig.FormattedGameObjectNames.Split(',').Contains(gameObject.Name.TextValue))
+                if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
                 {
-                    AddPayloadChanges(customTagConfig.NameplateElement, customTagConfig.NameplatePosition, GetCustomTagPayloads(customTagConfig), nameplateChanges);
+                    if (customTag.IncludesGameObjectNameToApplyTo(gameObject.Name.TextValue))
+                    {
+                        var payloads = GetTagPayloads(TagTarget.Nameplate, customTag);
+                        if (payloads.Any())
+                        {
+                            AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                        }
+                    }
                 }
             }
 
@@ -577,37 +691,52 @@ namespace PlayerTags
             var stringMatches = GetStringMatches(message);
             foreach (var stringMatch in stringMatches)
             {
-                Dictionary<StringPosition, List<Payload>> stringChanges = new Dictionary<StringPosition, List<Payload>>();
+                Dictionary<TagPosition, List<Payload>> stringChanges = new Dictionary<TagPosition, List<Payload>>();
 
                 // The role tag payloads
                 if (stringMatch.GameObject is Character character)
                 {
-                    if (m_Config.RoleTag.ChatPosition != StringPosition.None)
+                    // Add the job tag
+                    if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
-                        AddPayloadChanges(m_Config.RoleTag.ChatPosition, GetJobTagPayloads(character), stringChanges);
-                    }
-                }
-
-                // Add randomly generated name tag payload
-                if (m_Config.IsPlayerNameRandomlyGenerated && m_RandomNameGenerator != null)
-                {
-                    var playerName = stringMatch.GetMatchText();
-                    if (playerName != null)
-                    {
-                        var generatedName = m_RandomNameGenerator.GetGeneratedName(playerName);
-                        if (generatedName != null)
+                        if (jobTag.TagPositionInChat.InheritedValue != null)
                         {
-                            AddPayloadChanges(StringPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges);
+                            var payloads = GetTagPayloads(TagTarget.Chat, jobTag);
+                            if (payloads.Any())
+                            {
+                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
+                            }
+                        }
+                    }
+
+                    // Add randomly generated name tag payload
+                    if (m_PluginConfiguration.IsPlayerNameRandomlyGenerated && m_RandomNameGenerator != null)
+                    {
+                        var playerName = stringMatch.GetMatchText();
+                        if (playerName != null)
+                        {
+                            var generatedName = m_RandomNameGenerator.GetGeneratedName(playerName);
+                            if (generatedName != null)
+                            {
+                                AddPayloadChanges(TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges);
+                            }
                         }
                     }
                 }
 
                 // Add the custom tag payloads
-                foreach (var customTagConfig in m_Config.CustomTagConfigs)
+                foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    if (customTagConfig.IncludesGameObjectName(stringMatch.GetMatchText()))
+                    if (customTag.TagPositionInChat.InheritedValue != null)
                     {
-                        AddPayloadChanges(customTagConfig.ChatPosition, GetCustomTagPayloads(customTagConfig), stringChanges);
+                        if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
+                        {
+                            var customTagPayloads = GetTagPayloads(TagTarget.Chat, customTag);
+                            if (customTagPayloads.Any())
+                            {
+                                AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                            }
+                        }
                     }
                 }
 

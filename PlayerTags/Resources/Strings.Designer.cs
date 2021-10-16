@@ -61,110 +61,119 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color.
+        ///   Looks up a localized string similar to All Custom.
         /// </summary>
-        public static string Loc_CustomColorConfig_IsEnabled {
+        public static string Loc_AllCustomTags {
             get {
-                return ResourceManager.GetString("Loc_CustomColorConfig_IsEnabled", resourceCulture);
+                return ResourceManager.GetString("Loc_AllCustomTags", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable a custom color..
+        ///   Looks up a localized string similar to All Roles.
         /// </summary>
-        public static string Loc_CustomColorConfig_IsEnabled_Description {
+        public static string Loc_AllRoleTagss {
             get {
-                return ResourceManager.GetString("Loc_CustomColorConfig_IsEnabled_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_AllRoleTagss", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply to game object names.
+        ///   Looks up a localized string similar to All.
         /// </summary>
-        public static string Loc_CustomTagConfig_FormattedGameObjectNames {
+        public static string Loc_AllTags {
             get {
-                return ResourceManager.GetString("Loc_CustomTagConfig_FormattedGameObjectNames", resourceCulture);
+                return ResourceManager.GetString("Loc_AllTags", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A list of game object names to apply the tag to, separated by commas. E.g. &quot;Cloud Strife, Tifa Lockhart&quot;.
+        ///   Looks up a localized string similar to Custom.
         /// </summary>
-        public static string Loc_CustomTagConfig_FormattedGameObjectNames_Description {
+        public static string Loc_CustomTags {
             get {
-                return ResourceManager.GetString("Loc_CustomTagConfig_FormattedGameObjectNames_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_CustomTags", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Game object names to apply to.
         /// </summary>
-        public static string Loc_CustomTagConfig_Name {
+        public static string Loc_GameObjectNamesToApplyTo {
             get {
-                return ResourceManager.GetString("Loc_CustomTagConfig_Name", resourceCulture);
+                return ResourceManager.GetString("Loc_GameObjectNamesToApplyTo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name of the tag to display..
+        ///   Looks up a localized string similar to A list of game object names to always apply tags to, separated by commas or semi-colons. E.g. &quot;Cloud Strife, Tifa Lockhart&quot;..
         /// </summary>
-        public static string Loc_CustomTagConfig_Name_Description {
+        public static string Loc_GameObjectNamesToApplyTo_Description {
             get {
-                return ResourceManager.GetString("Loc_CustomTagConfig_Name_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_GameObjectNamesToApplyTo_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free company visibility.
+        ///   Looks up a localized string similar to Icon.
         /// </summary>
-        public static string Loc_FreeCompanyNameplateVisibility {
+        public static string Loc_Icon {
             get {
-                return ResourceManager.GetString("Loc_FreeCompanyNameplateVisibility", resourceCulture);
+                return ResourceManager.GetString("Loc_Icon", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default.
+        ///   Looks up a localized string similar to The icon that will be displayed in the tag..
         /// </summary>
-        public static string Loc_FreeCompanyNameplateVisibility_Default {
+        public static string Loc_Icon_Description {
             get {
-                return ResourceManager.GetString("Loc_FreeCompanyNameplateVisibility_Default", resourceCulture);
+                return ResourceManager.GetString("Loc_Icon_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The free company on nameplates will only be visible when the character is in a free company..
+        ///   Looks up a localized string similar to Enable the value of this override..
         /// </summary>
-        public static string Loc_FreeCompanyNameplateVisibility_Default_Description {
+        public static string Loc_IsEnabled_Description {
             get {
-                return ResourceManager.GetString("Loc_FreeCompanyNameplateVisibility_Default_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsEnabled_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The visibility of the free company on nameplates..
+        ///   Looks up a localized string similar to Icon visible in chat.
         /// </summary>
-        public static string Loc_FreeCompanyNameplateVisibility_Description {
+        public static string Loc_IsIconVisibleInChatOption {
             get {
-                return ResourceManager.GetString("Loc_FreeCompanyNameplateVisibility_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInChatOption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Never visible.
+        ///   Looks up a localized string similar to Whether the icon is visible in the tag in chat..
         /// </summary>
-        public static string Loc_FreeCompanyNameplateVisibility_Never {
+        public static string Loc_IsIconVisibleInChatOption_Description {
             get {
-                return ResourceManager.GetString("Loc_FreeCompanyNameplateVisibility_Never", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInChatOption_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The free company on nameplates will never be visible..
+        ///   Looks up a localized string similar to Icon visible in nameplates.
         /// </summary>
-        public static string Loc_FreeCompanyNameplateVisibility_Never_Description {
+        public static string Loc_IsIconVisibleInNameplateOption {
             get {
-                return ResourceManager.GetString("Loc_FreeCompanyNameplateVisibility_Never_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInNameplateOption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the icon is visible in the tag in nameplates..
+        /// </summary>
+        public static string Loc_IsIconVisibleInNameplateOption_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsIconVisibleInNameplateOption_Description", resourceCulture);
             }
         }
         
@@ -187,92 +196,245 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data element.
+        ///   Looks up a localized string similar to Text italic.
         /// </summary>
-        public static string Loc_NameplateElement {
+        public static string Loc_IsTextItalicOption {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextItalicOption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A data element on nameplates..
+        ///   Looks up a localized string similar to Whether the text in the tag is italic..
         /// </summary>
-        public static string Loc_NameplateElement_Description {
+        public static string Loc_IsTextItalicOption_Description {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextItalicOption_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free company.
+        ///   Looks up a localized string similar to Text visible in chat.
         /// </summary>
-        public static string Loc_NameplateElement_FreeCompany {
+        public static string Loc_IsTextVisibleInChatOption {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_FreeCompany", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInChatOption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The free company on nameplates..
+        ///   Looks up a localized string similar to Whether the text is visible in the tag in chat..
         /// </summary>
-        public static string Loc_NameplateElement_FreeCompany_Description {
+        public static string Loc_IsTextVisibleInChatOption_Description {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_FreeCompany_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInChatOption_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Text visible in nameplates.
         /// </summary>
-        public static string Loc_NameplateElement_Name {
+        public static string Loc_IsTextVisibleInNameplateOption {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_Name", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInNameplateOption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The name on nameplates..
+        ///   Looks up a localized string similar to Whether the text is visible in the tag in nameplates..
         /// </summary>
-        public static string Loc_NameplateElement_Name_Description {
+        public static string Loc_IsTextVisibleInNameplateOption_Description {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_Name_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInNameplateOption_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Free company visibility.
         /// </summary>
-        public static string Loc_NameplateElement_Title {
+        public static string Loc_NameplateFreeCompanyVisibility {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_Title", resourceCulture);
+                return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates..
+        ///   Looks up a localized string similar to Default.
         /// </summary>
-        public static string Loc_NameplateElement_Title_Description {
+        public static string Loc_NameplateFreeCompanyVisibility_Default {
             get {
-                return ResourceManager.GetString("Loc_NameplateElement_Title_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility_Default", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to The free company on nameplates will only be visible when the character is in a free company..
         /// </summary>
-        public static string Loc_Role {
+        public static string Loc_NameplateFreeCompanyVisibility_Default_Description {
             get {
-                return ResourceManager.GetString("Loc_Role", resourceCulture);
+                return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility_Default_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A character role..
+        ///   Looks up a localized string similar to Never visible.
         /// </summary>
-        public static string Loc_Role_Description {
+        public static string Loc_NameplateFreeCompanyVisibility_Never {
             get {
-                return ResourceManager.GetString("Loc_Role_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility_Never", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The free company on nameplates will never be visible..
+        /// </summary>
+        public static string Loc_NameplateFreeCompanyVisibility_Never_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility_Never_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title position.
+        /// </summary>
+        public static string Loc_NameplateTitlePosition {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always above name.
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_AlwaysAboveName {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_AlwaysAboveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will always be positioned above the name..
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_AlwaysAboveName_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_AlwaysAboveName_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always below name.
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_AlwaysBelowName {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_AlwaysBelowName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will always be positioned below the name..
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_AlwaysBelowName_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_AlwaysBelowName_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_Default {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will be positioned depending on the title..
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_Default_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_Default_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title visibility.
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Always visible.
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Always {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Always", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will always be visible, even when the character does not have a title..
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Always_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Always_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Default {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will only be visible when the character has a title..
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Default_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Default_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never visible.
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Never {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Never", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will never visible..
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Never_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Never_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only visible when it has tags.
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_WhenHasTags {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_WhenHasTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title on nameplates will only be visible when it has tags..
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_WhenHasTags_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_WhenHasTags_Description", resourceCulture);
             }
         }
         
@@ -286,29 +448,11 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The DPS role..
-        /// </summary>
-        public static string Loc_Role_DPS_Description {
-            get {
-                return ResourceManager.GetString("Loc_Role_DPS_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Healer.
         /// </summary>
         public static string Loc_Role_Healer {
             get {
                 return ResourceManager.GetString("Loc_Role_Healer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The healer role..
-        /// </summary>
-        public static string Loc_Role_Healer_Description {
-            get {
-                return ResourceManager.GetString("Loc_Role_Healer_Description", resourceCulture);
             }
         }
         
@@ -322,15 +466,6 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The land/hand role..
-        /// </summary>
-        public static string Loc_Role_LandHand_Description {
-            get {
-                return ResourceManager.GetString("Loc_Role_LandHand_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Tank.
         /// </summary>
         public static string Loc_Role_Tank {
@@ -340,124 +475,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tank role..
-        /// </summary>
-        public static string Loc_Role_Tank_Description {
-            get {
-                return ResourceManager.GetString("Loc_Role_Tank_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enabled.
-        /// </summary>
-        public static string Loc_RoleOverrideConfig_IsEnabled {
-            get {
-                return ResourceManager.GetString("Loc_RoleOverrideConfig_IsEnabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Enable the tag for this role..
-        /// </summary>
-        public static string Loc_RoleOverrideConfig_IsEnabled_Description {
-            get {
-                return ResourceManager.GetString("Loc_RoleOverrideConfig_IsEnabled_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string Loc_RoleOverrideConfig_Name {
-            get {
-                return ResourceManager.GetString("Loc_RoleOverrideConfig_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The name to use for this role when the format is set to use role names..
-        /// </summary>
-        public static string Loc_RoleOverrideConfig_Name_Description {
-            get {
-                return ResourceManager.GetString("Loc_RoleOverrideConfig_Name_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Tag format.
-        /// </summary>
-        public static string Loc_RoleTagFormat {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Abbreviated job name.
-        /// </summary>
-        public static string Loc_RoleTagFormat_AbbreviatedJobName {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_AbbreviatedJobName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The tag will appear as an abbreviated job name, e.g. SAM, WHM, GNB..
-        /// </summary>
-        public static string Loc_RoleTagFormat_AbbreviatedJobName_Description {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_AbbreviatedJobName_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The format that the role tag should be displayed as..
-        /// </summary>
-        public static string Loc_RoleTagFormat_Description {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Job name.
-        /// </summary>
-        public static string Loc_RoleTagFormat_JobName {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_JobName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The tag will appear as a job name in English, e.g. Samurai, White Mage, Gunbreaker..
-        /// </summary>
-        public static string Loc_RoleTagFormat_JobName_Description {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_JobName_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Role name.
-        /// </summary>
-        public static string Loc_RoleTagFormat_RoleName {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_RoleName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The tag will appear as the configured role name, e.g. DPS, Healer, Tank..
-        /// </summary>
-        public static string Loc_RoleTagFormat_RoleName_Description {
-            get {
-                return ResourceManager.GetString("Loc_RoleTagFormat_RoleName_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add custom tag.
+        ///   Looks up a localized string similar to Add a custom tag.
         /// </summary>
         public static string Loc_Static_AddCustomTag {
             get {
@@ -466,20 +484,11 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chat tag.
+        ///   Looks up a localized string similar to Add an override..
         /// </summary>
-        public static string Loc_Static_ChatTag {
+        public static string Loc_Static_AddPropertyOverride_Description {
             get {
-                return ResourceManager.GetString("Loc_Static_ChatTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Custom tags.
-        /// </summary>
-        public static string Loc_Static_CustomTags {
-            get {
-                return ResourceManager.GetString("Loc_Static_CustomTags", resourceCulture);
+                return ResourceManager.GetString("Loc_Static_AddPropertyOverride_Description", resourceCulture);
             }
         }
         
@@ -493,47 +502,11 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to General.
-        /// </summary>
-        public static string Loc_Static_General {
-            get {
-                return ResourceManager.GetString("Loc_Static_General", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Jobs.
-        /// </summary>
-        public static string Loc_Static_Jobs {
-            get {
-                return ResourceManager.GetString("Loc_Static_Jobs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Nameplates.
         /// </summary>
         public static string Loc_Static_Nameplates {
             get {
                 return ResourceManager.GetString("Loc_Static_Nameplates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Nameplate tag.
-        /// </summary>
-        public static string Loc_Static_NameplateTag {
-            get {
-                return ResourceManager.GetString("Loc_Static_NameplateTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No custom tags added..
-        /// </summary>
-        public static string Loc_Static_NoCustomTagsAdded {
-            get {
-                return ResourceManager.GetString("Loc_Static_NoCustomTagsAdded", resourceCulture);
             }
         }
         
@@ -547,7 +520,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove custom tag.
+        ///   Looks up a localized string similar to Remove this custom tag.
         /// </summary>
         public static string Loc_Static_RemoveCustomTag {
             get {
@@ -556,272 +529,173 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role and job tags.
+        ///   Looks up a localized string similar to Remove this override. The value will be inherited..
         /// </summary>
-        public static string Loc_Static_RoleAndJobTags {
+        public static string Loc_Static_RemovePropertyOverride_Description {
             get {
-                return ResourceManager.GetString("Loc_Static_RoleAndJobTags", resourceCulture);
+                return ResourceManager.GetString("Loc_Static_RemovePropertyOverride_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Roles.
+        ///   Looks up a localized string similar to Tags.
         /// </summary>
-        public static string Loc_Static_Roles {
+        public static string Loc_Static_Tags {
             get {
-                return ResourceManager.GetString("Loc_Static_Roles", resourceCulture);
+                return ResourceManager.GetString("Loc_Static_Tags", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to String position.
+        ///   Looks up a localized string similar to This plugin can modify nameplates. When combined with other plugins that modify nameplates, you are likely to see unexpected behavior..
         /// </summary>
-        public static string Loc_StringPosition {
+        public static string Loc_Static_WarningMessage {
             get {
-                return ResourceManager.GetString("Loc_StringPosition", resourceCulture);
+                return ResourceManager.GetString("Loc_Static_WarningMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to After.
         /// </summary>
-        public static string Loc_StringPosition_After {
+        public static string Loc_TagPosition_After {
             get {
-                return ResourceManager.GetString("Loc_StringPosition_After", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPosition_After", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tag will be positioned after the data element..
+        ///   Looks up a localized string similar to Display the tag after the target element..
         /// </summary>
-        public static string Loc_StringPosition_After_Description {
+        public static string Loc_TagPosition_After_Description {
             get {
-                return ResourceManager.GetString("Loc_StringPosition_After_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPosition_After_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Before.
         /// </summary>
-        public static string Loc_StringPosition_Before {
+        public static string Loc_TagPosition_Before {
             get {
-                return ResourceManager.GetString("Loc_StringPosition_Before", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPosition_Before", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tag will be positioned before the data element..
+        ///   Looks up a localized string similar to Display the tag before the target element..
         /// </summary>
-        public static string Loc_StringPosition_Before_Description {
+        public static string Loc_TagPosition_Before_Description {
             get {
-                return ResourceManager.GetString("Loc_StringPosition_Before_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The position in a string where tags will be displayed..
-        /// </summary>
-        public static string Loc_StringPosition_Description {
-            get {
-                return ResourceManager.GetString("Loc_StringPosition_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to None.
-        /// </summary>
-        public static string Loc_StringPosition_None {
-            get {
-                return ResourceManager.GetString("Loc_StringPosition_None", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The tag will not be positioned in the string..
-        /// </summary>
-        public static string Loc_StringPosition_None_Description {
-            get {
-                return ResourceManager.GetString("Loc_StringPosition_None_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPosition_Before_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Replace.
         /// </summary>
-        public static string Loc_StringPosition_Replace {
+        public static string Loc_TagPosition_Replace {
             get {
-                return ResourceManager.GetString("Loc_StringPosition_Replace", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPosition_Replace", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The tag will replace its data element..
+        ///   Looks up a localized string similar to Replace the target element with the tag..
         /// </summary>
-        public static string Loc_StringPosition_Replace_Description {
+        public static string Loc_TagPosition_Replace_Description {
             get {
-                return ResourceManager.GetString("Loc_StringPosition_Replace_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPosition_Replace_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title position.
+        ///   Looks up a localized string similar to Tag position in chat.
         /// </summary>
-        public static string Loc_TitleNameplatePosition {
+        public static string Loc_TagPositionInChat {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPositionInChat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Always above the name.
+        ///   Looks up a localized string similar to Where the tag should be positioned in chat..
         /// </summary>
-        public static string Loc_TitleNameplatePosition_AlwaysAboveName {
+        public static string Loc_TagPositionInChat_Description {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_AlwaysAboveName", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPositionInChat_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will always be positioned above the name..
+        ///   Looks up a localized string similar to Tag position in chat.
         /// </summary>
-        public static string Loc_TitleNameplatePosition_AlwaysAboveName_Description {
+        public static string Loc_TagPositionInNameplates {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_AlwaysAboveName_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPositionInNameplates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Always below the name.
+        ///   Looks up a localized string similar to Where the tag should be positioned in nameplates..
         /// </summary>
-        public static string Loc_TitleNameplatePosition_AlwaysBelowName {
+        public static string Loc_TagPositionInNameplates_Description {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_AlwaysBelowName", resourceCulture);
+                return ResourceManager.GetString("Loc_TagPositionInNameplates_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will always be positioned below the name..
+        ///   Looks up a localized string similar to Tag target in chat.
         /// </summary>
-        public static string Loc_TitleNameplatePosition_AlwaysBelowName_Description {
+        public static string Loc_TagTargetInNameplates {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_AlwaysBelowName_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TagTargetInNameplates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Default.
+        ///   Looks up a localized string similar to The element that the tag should target in nameplates..
         /// </summary>
-        public static string Loc_TitleNameplatePosition_Default {
+        public static string Loc_TagTargetInNameplates_Description {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_Default", resourceCulture);
+                return ResourceManager.GetString("Loc_TagTargetInNameplates_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will be positioned depending on the title..
+        ///   Looks up a localized string similar to Text.
         /// </summary>
-        public static string Loc_TitleNameplatePosition_Default_Description {
+        public static string Loc_Text {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_Default_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The position of the title on nameplates..
+        ///   Looks up a localized string similar to The text that will be displayed in the tag..
         /// </summary>
-        public static string Loc_TitleNameplatePosition_Description {
+        public static string Loc_Text_Description {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplatePosition_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_Text_Description", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title visibility.
+        ///   Looks up a localized string similar to Text color.
         /// </summary>
-        public static string Loc_TitleNameplateVisibility {
+        public static string Loc_TextColorOption {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility", resourceCulture);
+                return ResourceManager.GetString("Loc_TextColorOption", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Always.
+        ///   Looks up a localized string similar to The color of the text in the tag..
         /// </summary>
-        public static string Loc_TitleNameplateVisibility_Always {
+        public static string Loc_TextColorOption_Description {
             get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Always", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will always be visible, even when the character does not have a title..
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_Always_Description {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Always_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default.
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_Default {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Default", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will only be visible when the character has a title..
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_Default_Description {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Default_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The visibility of the title on nameplates..
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_Description {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Never.
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_Never {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Never", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will never visible..
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_Never_Description {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_Never_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to When it has tags.
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_WhenHasTags {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_WhenHasTags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The title on nameplates will only be visible when it has tags..
-        /// </summary>
-        public static string Loc_TitleNameplateVisibility_WhenHasTags_Description {
-            get {
-                return ResourceManager.GetString("Loc_TitleNameplateVisibility_WhenHasTags_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TextColorOption_Description", resourceCulture);
             }
         }
     }

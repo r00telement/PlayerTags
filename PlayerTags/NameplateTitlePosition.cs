@@ -1,6 +1,6 @@
-﻿namespace PlayerTags.Config
+﻿namespace PlayerTags
 {
-    public enum TitleNameplatePosition
+    public enum NameplateTitlePosition
     {
         Default,
         AlwaysAboveName,

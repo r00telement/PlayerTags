@@ -1,4 +1,4 @@
-﻿namespace PlayerTags.Config
+﻿namespace PlayerTags
 {
     public enum NameplateElement
     {

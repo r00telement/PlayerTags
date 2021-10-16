@@ -120,41 +120,95 @@
   <data name="Loc_Static_PluginName" xml:space="preserve">
     <value>Player Tags</value>
   </data>
-  <data name="Loc_Static_General" xml:space="preserve">
-    <value>General</value>
-  </data>
-  <data name="Loc_Static_Development" xml:space="preserve">
-    <value>Development</value>
-  </data>
-  <data name="Loc_Static_CustomTags" xml:space="preserve">
-    <value>Custom tags</value>
-  </data>
-  <data name="Loc_Static_AddCustomTag" xml:space="preserve">
-    <value>Add custom tag</value>
-  </data>
-  <data name="Loc_Static_RemoveCustomTag" xml:space="preserve">
-    <value>Remove custom tag</value>
-  </data>
-  <data name="Loc_Static_NoCustomTagsAdded" xml:space="preserve">
-    <value>No custom tags added.</value>
-  </data>
-  <data name="Loc_Static_RoleAndJobTags" xml:space="preserve">
-    <value>Role and job tags</value>
-  </data>
-  <data name="Loc_Static_Roles" xml:space="preserve">
-    <value>Roles</value>
-  </data>
-  <data name="Loc_Static_Jobs" xml:space="preserve">
-    <value>Jobs</value>
-  </data>
-  <data name="Loc_Static_ChatTag" xml:space="preserve">
-    <value>Chat tag</value>
-  </data>
-  <data name="Loc_Static_NameplateTag" xml:space="preserve">
-    <value>Nameplate tag</value>
+  <data name="Loc_Static_WarningMessage" xml:space="preserve">
+    <value>This plugin can modify nameplates. When combined with other plugins that modify nameplates, you are likely to see unexpected behavior.</value>
   </data>
   <data name="Loc_Static_Nameplates" xml:space="preserve">
     <value>Nameplates</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility" xml:space="preserve">
+    <value>Free company visibility</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Default_Description" xml:space="preserve">
+    <value>The free company on nameplates will only be visible when the character is in a free company.</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Never" xml:space="preserve">
+    <value>Never visible</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Never_Description" xml:space="preserve">
+    <value>The free company on nameplates will never be visible.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility" xml:space="preserve">
+    <value>Title visibility</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Always" xml:space="preserve">
+    <value>Always visible</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Always_Description" xml:space="preserve">
+    <value>The title on nameplates will always be visible, even when the character does not have a title.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Default_Description" xml:space="preserve">
+    <value>The title on nameplates will only be visible when the character has a title.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Never" xml:space="preserve">
+    <value>Never visible</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Never_Description" xml:space="preserve">
+    <value>The title on nameplates will never visible.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_WhenHasTags" xml:space="preserve">
+    <value>Only visible when it has tags</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_WhenHasTags_Description" xml:space="preserve">
+    <value>The title on nameplates will only be visible when it has tags.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition" xml:space="preserve">
+    <value>Title position</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysAboveName" xml:space="preserve">
+    <value>Always above name</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysAboveName_Description" xml:space="preserve">
+    <value>The title on nameplates will always be positioned above the name.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysBelowName" xml:space="preserve">
+    <value>Always below name</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysBelowName_Description" xml:space="preserve">
+    <value>The title on nameplates will always be positioned below the name.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Default_Description" xml:space="preserve">
+    <value>The title on nameplates will be positioned depending on the title.</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany" xml:space="preserve">
+    <value>Free company</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany_Description" xml:space="preserve">
+    <value>The free company element on nameplates.</value>
+  </data>
+  <data name="Loc_NameplateElement_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Loc_NameplateElement_Name_Description" xml:space="preserve">
+    <value>The name element on nameplates.</value>
+  </data>
+  <data name="Loc_NameplateElement_Title" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="Loc_NameplateElement_Title_Description" xml:space="preserve">
+    <value>The title element on nameplates.</value>
+  </data>
+  <data name="Loc_Static_Development" xml:space="preserve">
+    <value>Development</value>
   </data>
   <data name="Loc_IsPlayerNameRandomlyGenerated" xml:space="preserve">
     <value>Randomly generate player names</value>
@@ -162,214 +216,145 @@
   <data name="Loc_IsPlayerNameRandomlyGenerated_Description" xml:space="preserve">
     <value>Use tags to replace every player's name with a randomly generated one. Helpful for preserving anonymity when taking screenshots.</value>
   </data>
-  <data name="Loc_RoleOverrideConfig_IsEnabled" xml:space="preserve">
-    <value>Enabled</value>
+  <data name="Loc_Static_Tags" xml:space="preserve">
+    <value>Tags</value>
   </data>
-  <data name="Loc_RoleOverrideConfig_IsEnabled_Description" xml:space="preserve">
-    <value>Enable the tag for this role.</value>
+  <data name="Loc_AllTags" xml:space="preserve">
+    <value>All</value>
   </data>
-  <data name="Loc_RoleOverrideConfig_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Loc_RoleOverrideConfig_Name_Description" xml:space="preserve">
-    <value>The name to use for this role when the format is set to use role names.</value>
-  </data>
-  <data name="Loc_CustomColorConfig_IsEnabled" xml:space="preserve">
-    <value>Color</value>
-  </data>
-  <data name="Loc_CustomColorConfig_IsEnabled_Description" xml:space="preserve">
-    <value>Enable a custom color.</value>
-  </data>
-  <data name="Loc_CustomTagConfig_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Loc_CustomTagConfig_Name_Description" xml:space="preserve">
-    <value>The name of the tag to display.</value>
-  </data>
-  <data name="Loc_CustomTagConfig_FormattedGameObjectNames" xml:space="preserve">
-    <value>Apply to game object names</value>
-  </data>
-  <data name="Loc_CustomTagConfig_FormattedGameObjectNames_Description" xml:space="preserve">
-    <value>A list of game object names to apply the tag to, separated by commas. E.g. "Cloud Strife, Tifa Lockhart"</value>
-  </data>
-  <data name="Loc_FreeCompanyNameplateVisibility" xml:space="preserve">
-    <value>Free company visibility</value>
-  </data>
-  <data name="Loc_FreeCompanyNameplateVisibility_Description" xml:space="preserve">
-    <value>The visibility of the free company on nameplates.</value>
-  </data>
-  <data name="Loc_FreeCompanyNameplateVisibility_Default" xml:space="preserve">
-    <value>Default</value>
-  </data>
-  <data name="Loc_FreeCompanyNameplateVisibility_Default_Description" xml:space="preserve">
-    <value>The free company on nameplates will only be visible when the character is in a free company.</value>
-  </data>
-  <data name="Loc_FreeCompanyNameplateVisibility_Never" xml:space="preserve">
-    <value>Never visible</value>
-  </data>
-  <data name="Loc_FreeCompanyNameplateVisibility_Never_Description" xml:space="preserve">
-    <value>The free company on nameplates will never be visible.</value>
-  </data>
-  <data name="Loc_NameplateElement" xml:space="preserve">
-    <value>Data element</value>
-  </data>
-  <data name="Loc_NameplateElement_Description" xml:space="preserve">
-    <value>A data element on nameplates.</value>
-  </data>
-  <data name="Loc_NameplateElement_FreeCompany" xml:space="preserve">
-    <value>Free company</value>
-  </data>
-  <data name="Loc_NameplateElement_FreeCompany_Description" xml:space="preserve">
-    <value>The free company on nameplates.</value>
-  </data>
-  <data name="Loc_NameplateElement_Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Loc_NameplateElement_Name_Description" xml:space="preserve">
-    <value>The name on nameplates.</value>
-  </data>
-  <data name="Loc_NameplateElement_Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="Loc_NameplateElement_Title_Description" xml:space="preserve">
-    <value>The title on nameplates.</value>
-  </data>
-  <data name="Loc_RoleTagFormat" xml:space="preserve">
-    <value>Tag format</value>
-  </data>
-  <data name="Loc_RoleTagFormat_Description" xml:space="preserve">
-    <value>The format that the role tag should be displayed as.</value>
-  </data>
-  <data name="Loc_RoleTagFormat_AbbreviatedJobName" xml:space="preserve">
-    <value>Abbreviated job name</value>
-  </data>
-  <data name="Loc_RoleTagFormat_JobName" xml:space="preserve">
-    <value>Job name</value>
-  </data>
-  <data name="Loc_RoleTagFormat_AbbreviatedJobName_Description" xml:space="preserve">
-    <value>The tag will appear as an abbreviated job name, e.g. SAM, WHM, GNB.</value>
-  </data>
-  <data name="Loc_RoleTagFormat_JobName_Description" xml:space="preserve">
-    <value>The tag will appear as a job name in English, e.g. Samurai, White Mage, Gunbreaker.</value>
-  </data>
-  <data name="Loc_RoleTagFormat_RoleName" xml:space="preserve">
-    <value>Role name</value>
-  </data>
-  <data name="Loc_RoleTagFormat_RoleName_Description" xml:space="preserve">
-    <value>The tag will appear as the configured role name, e.g. DPS, Healer, Tank.</value>
-  </data>
-  <data name="Loc_Role" xml:space="preserve">
-    <value>Role</value>
-  </data>
-  <data name="Loc_Role_Description" xml:space="preserve">
-    <value>A character role.</value>
-  </data>
-  <data name="Loc_Role_DPS" xml:space="preserve">
-    <value>DPS</value>
-  </data>
-  <data name="Loc_Role_DPS_Description" xml:space="preserve">
-    <value>The DPS role.</value>
-  </data>
-  <data name="Loc_Role_Healer" xml:space="preserve">
-    <value>Healer</value>
-  </data>
-  <data name="Loc_Role_Healer_Description" xml:space="preserve">
-    <value>The healer role.</value>
+  <data name="Loc_AllRoleTags" xml:space="preserve">
+    <value>All Roles</value>
   </data>
   <data name="Loc_Role_LandHand" xml:space="preserve">
     <value>Land/Hand</value>
   </data>
-  <data name="Loc_Role_LandHand_Description" xml:space="preserve">
-    <value>The land/hand role.</value>
-  </data>
   <data name="Loc_Role_Tank" xml:space="preserve">
     <value>Tank</value>
   </data>
-  <data name="Loc_Role_Tank_Description" xml:space="preserve">
-    <value>The tank role.</value>
+  <data name="Loc_Role_Healer" xml:space="preserve">
+    <value>Healer</value>
   </data>
-  <data name="Loc_StringPosition" xml:space="preserve">
-    <value>String position</value>
+  <data name="Loc_Role_DPS" xml:space="preserve">
+    <value>DPS</value>
   </data>
-  <data name="Loc_StringPosition_Description" xml:space="preserve">
-    <value>The position in a string where tags will be displayed.</value>
+  <data name="Loc_AllCustomTags" xml:space="preserve">
+    <value>All Custom</value>
   </data>
-  <data name="Loc_StringPosition_After" xml:space="preserve">
+  <data name="Loc_CustomTags" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="Loc_IsEnabled_Description" xml:space="preserve">
+    <value>Enable the value of this override.</value>
+  </data>
+  <data name="Loc_Static_AddPropertyOverride_Description" xml:space="preserve">
+    <value>Add an override.</value>
+  </data>
+  <data name="Loc_Static_RemovePropertyOverride_Description" xml:space="preserve">
+    <value>Remove this override. The value will be inherited.</value>
+  </data>
+  <data name="Loc_Static_AddCustomTag" xml:space="preserve">
+    <value>Add a custom tag</value>
+  </data>
+  <data name="Loc_Static_RemoveCustomTag" xml:space="preserve">
+    <value>Remove this custom tag</value>
+  </data>
+
+  <data name="Loc_Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="Loc_Icon_Description" xml:space="preserve">
+    <value>The icon that will be displayed in the tag.</value>
+  </data>
+  <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
+    <value>Icon visible in chat</value>
+  </data>
+  <data name="Loc_IsIconVisibleInChat_Description" xml:space="preserve">
+    <value>Whether the icon is visible in the tag in chat.</value>
+  </data>
+  <data name="Loc_IsIconVisibleInNameplates" xml:space="preserve">
+    <value>Icon visible in nameplates</value>
+  </data>
+  <data name="Loc_IsIconVisibleInNameplates_Description" xml:space="preserve">
+    <value>Whether the icon is visible in the tag in nameplates.</value>
+  </data>
+
+  <data name="Loc_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Loc_Text_Description" xml:space="preserve">
+    <value>The text that will be displayed in the tag.</value>
+  </data>
+  <data name="Loc_TextColor" xml:space="preserve">
+    <value>Text color</value>
+  </data>
+  <data name="Loc_TextColor_Description" xml:space="preserve">
+    <value>The color of the text in the tag.</value>
+  </data>
+  <data name="Loc_IsTextItalic" xml:space="preserve">
+    <value>Text italic</value>
+  </data>
+  <data name="Loc_IsTextItalic_Description" xml:space="preserve">
+    <value>Whether the text in the tag is italic.</value>
+  </data>
+  <data name="Loc_IsTextVisibleInChat" xml:space="preserve">
+    <value>Text visible in chat</value>
+  </data>
+  <data name="Loc_IsTextVisibleInChat_Description" xml:space="preserve">
+    <value>Whether the text is visible in the tag in chat.</value>
+  </data>
+  <data name="Loc_IsTextVisibleInNameplates" xml:space="preserve">
+    <value>Text visible in nameplates</value>
+  </data>
+  <data name="Loc_IsTextVisibleInNameplates_Description" xml:space="preserve">
+    <value>Whether the text is visible in the tag in nameplates.</value>
+  </data>
+
+  <data name="Loc_TagPositionInChat" xml:space="preserve">
+    <value>Tag position in chat</value>
+  </data>
+  <data name="Loc_TagPositionInChat_Description" xml:space="preserve">
+    <value>Where the tag should be positioned in chat.</value>
+  </data>
+  <data name="Loc_TagPositionInNameplates" xml:space="preserve">
+    <value>Tag position in nameplates</value>
+  </data>
+  <data name="Loc_TagPositionInNameplates_Description" xml:space="preserve">
+    <value>Where the tag should be positioned in nameplates.</value>
+  </data>
+  <data name="Loc_TagTargetInNameplates" xml:space="preserve">
+    <value>Tag target in nameplates</value>
+  </data>
+  <data name="Loc_TagTargetInNameplates_Description" xml:space="preserve">
+    <value>The element that the tag should target in nameplates.</value>
+  </data>
+
+  <data name="Loc_GameObjectNamesToApplyTo" xml:space="preserve">
+    <value>Game object names to apply to</value>
+  </data>
+  <data name="Loc_GameObjectNamesToApplyTo_Description" xml:space="preserve">
+    <value>A list of game object names to always apply tags to, separated by commas or semi-colons. E.g. "Cloud Strife, Tifa Lockhart".</value>
+  </data>
+
+  <data name="Loc_TagPosition_After" xml:space="preserve">
     <value>After</value>
   </data>
-  <data name="Loc_StringPosition_After_Description" xml:space="preserve">
-    <value>The tag will be positioned after the data element.</value>
+  <data name="Loc_TagPosition_After_Description" xml:space="preserve">
+    <value>Display the tag after the target element.</value>
   </data>
-  <data name="Loc_StringPosition_Before" xml:space="preserve">
+  <data name="Loc_TagPosition_Before" xml:space="preserve">
     <value>Before</value>
   </data>
-  <data name="Loc_StringPosition_Before_Description" xml:space="preserve">
-    <value>The tag will be positioned before the data element.</value>
+  <data name="Loc_TagPosition_Before_Description" xml:space="preserve">
+    <value>Display the tag before the target element.</value>
   </data>
-  <data name="Loc_StringPosition_None" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="Loc_StringPosition_None_Description" xml:space="preserve">
-    <value>The tag will not be positioned in the string.</value>
-  </data>
-  <data name="Loc_StringPosition_Replace" xml:space="preserve">
+  <data name="Loc_TagPosition_Replace" xml:space="preserve">
     <value>Replace</value>
   </data>
-  <data name="Loc_StringPosition_Replace_Description" xml:space="preserve">
-    <value>The tag will replace its data element.</value>
+  <data name="Loc_TagPosition_Replace_Description" xml:space="preserve">
+    <value>Replace the target element with the tag.</value>
   </data>
-  <data name="Loc_TitleNameplatePosition" xml:space="preserve">
-    <value>Title position</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_Description" xml:space="preserve">
-    <value>The position of the title on nameplates.</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_AlwaysAboveName" xml:space="preserve">
-    <value>Always above the name</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_AlwaysAboveName_Description" xml:space="preserve">
-    <value>The title on nameplates will always be positioned above the name.</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_AlwaysBelowName" xml:space="preserve">
-    <value>Always below the name</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_AlwaysBelowName_Description" xml:space="preserve">
-    <value>The title on nameplates will always be positioned below the name.</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_Default" xml:space="preserve">
-    <value>Default</value>
-  </data>
-  <data name="Loc_TitleNameplatePosition_Default_Description" xml:space="preserve">
-    <value>The title on nameplates will be positioned depending on the title.</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility" xml:space="preserve">
-    <value>Title visibility</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Description" xml:space="preserve">
-    <value>The visibility of the title on nameplates.</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Always" xml:space="preserve">
-    <value>Always</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Always_Description" xml:space="preserve">
-    <value>The title on nameplates will always be visible, even when the character does not have a title.</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Default" xml:space="preserve">
-    <value>Default</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Default_Description" xml:space="preserve">
-    <value>The title on nameplates will only be visible when the character has a title.</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Never" xml:space="preserve">
-    <value>Never</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_Never_Description" xml:space="preserve">
-    <value>The title on nameplates will never visible.</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_WhenHasTags" xml:space="preserve">
-    <value>When it has tags</value>
-  </data>
-  <data name="Loc_TitleNameplateVisibility_WhenHasTags_Description" xml:space="preserve">
-    <value>The title on nameplates will only be visible when it has tags.</value>
+
+  <data name="Loc_IsEnabled" xml:space="preserve">
+    <value>Enabled</value>
   </data>
 </root>

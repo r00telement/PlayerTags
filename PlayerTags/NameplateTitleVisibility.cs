@@ -1,6 +1,6 @@
-﻿namespace PlayerTags.Config
+﻿namespace PlayerTags
 {
-    public enum TitleNameplateVisibility
+    public enum NameplateTitleVisibility
     {
         Default,
         Always,
