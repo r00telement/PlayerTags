@@ -2,6 +2,7 @@
 using Dalamud.Game;
 using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
@@ -104,7 +105,7 @@ namespace PlayerTags
         {
             if (m_PluginHooks == null)
             {
-                m_PluginHooks = new PluginHooks(Framework, ObjectTable, GameGui, SetNameplate);
+                m_PluginHooks = new PluginHooks(Framework, ObjectTable, GameGui, SetPlayerNameplate);
             }
         }
 
@@ -146,7 +147,11 @@ namespace PlayerTags
 
         private void UiBuilder_Draw()
         {
-            m_PluginConfigurationUI.Draw();
+            // Don't bother showing the config unless the player is in the world
+            if (ClientState.LocalPlayer != null)
+            {
+                m_PluginConfigurationUI.Draw();
+            }
         }
 
         private void UiBuilder_OpenConfigUi()
@@ -173,9 +178,9 @@ namespace PlayerTags
         /// <param name="isNameChanged">Whether the name was changed.</param>
         /// <param name="isTitleChanged">Whether the title was changed.</param>
         /// <param name="isFreeCompanyChanged">Whether the free company was changed.</param>
-        private void SetNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref bool isTitleVisible, ref bool isTitleAboveName, ref int iconId, out bool isNameChanged, out bool isTitleChanged, out bool isFreeCompanyChanged)
+        private void SetPlayerNameplate(PlayerCharacter playerCharacter, SeString name, SeString title, SeString freeCompany, ref bool isTitleVisible, ref bool isTitleAboveName, ref int iconId, out bool isNameChanged, out bool isTitleChanged, out bool isFreeCompanyChanged)
         {
-            AddTagsToNameplate(gameObject, name, title, freeCompany, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged);
+            AddTagsToNameplate(playerCharacter, name, title, freeCompany, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged);
 
             if (m_PluginConfiguration.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
             {
@@ -260,14 +265,14 @@ namespace PlayerTags
 
                 newPayloads.Add(new TextPayload(text));
 
-                if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
-                {
-                    newPayloads.Add(new EmphasisItalicPayload(false));
-                }
-
                 if (tag.TextColor.InheritedValue != null)
                 {
                     newPayloads.Add(new UIForegroundPayload(0));
+                }
+
+                if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
+                {
+                    newPayloads.Add(new EmphasisItalicPayload(false));
                 }
             }
 

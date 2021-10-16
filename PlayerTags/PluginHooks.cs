@@ -1,5 +1,6 @@
 ﻿using Dalamud.Game;
 using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Gui;
 using Dalamud.Game.Text.SeStringHandling;
@@ -14,70 +15,54 @@ namespace PlayerTags
 {
     public class PluginHooks : IDisposable
     {
-        [UnmanagedFunctionPointer(CallingConvention.ThisCall, CharSet = CharSet.Ansi)]
-        private delegate IntPtr SetNameplateDelegate_Private(IntPtr nameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
-
-        [UnmanagedFunctionPointer(CallingConvention.ThisCall, CharSet = CharSet.Ansi)]
-        private delegate IntPtr UIModule_GetRaptureAtkModuleDelegate_Private(IntPtr uiModule);
-
-        [UnmanagedFunctionPointer(CallingConvention.ThisCall, CharSet = CharSet.Ansi)]
-        private delegate IntPtr Framework_GetUIModuleDelegate_Private(IntPtr framework);
-
         private class PluginAddressResolver : BaseAddressResolver
         {
             private const string SetNameplateSignature = "48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2";
             internal IntPtr SetNameplatePtr;
 
-            private const string Framework_GetUIModuleSignature = "E8 ?? ?? ?? ?? 48 8B C8 48 8B 10 FF 92 ?? ?? ?? ?? 48 8B C8 BA ?? ?? ?? ??";
-            internal IntPtr Framework_GetUIModulePtr;
-
             protected override void Setup64Bit(SigScanner scanner)
             {
                 SetNameplatePtr = scanner.ScanText(SetNameplateSignature);
-                Framework_GetUIModulePtr = scanner.ScanText(Framework_GetUIModuleSignature);
             }
         }
+
+        private delegate IntPtr SetPlayerNameplateDelegate_Unmanaged(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
 
         private Framework m_Framework;
         private ObjectTable m_ObjectTable;
         private GameGui m_GameGui;
-        private SetNameplateDelegate m_SetNameplate;
+        private SetPlayerNameplateDelegate m_SetPlayerNameplate;
 
         private PluginAddressResolver m_PluginAddressResolver;
-        private Hook<SetNameplateDelegate_Private> m_SetNameplateHook;
-        private readonly Framework_GetUIModuleDelegate_Private m_GetUIModule;
-        private IntPtr? m_NameplateObjectArrayPtr;
-        private IntPtr? m_NameplateInfoArrayPtr;
+        private Hook<SetPlayerNameplateDelegate_Unmanaged> m_SetPlayerNameplateHook;
 
-        public PluginHooks(Framework framework, ObjectTable objectTable, GameGui gameGui, SetNameplateDelegate setNameplate)
+        public PluginHooks(Framework framework, ObjectTable objectTable, GameGui gameGui, SetPlayerNameplateDelegate setPlayerNameplate)
         {
             m_Framework = framework;
             m_ObjectTable = objectTable;
             m_GameGui = gameGui;
-            m_SetNameplate = setNameplate;
+            m_SetPlayerNameplate = setPlayerNameplate;
 
             m_PluginAddressResolver = new PluginAddressResolver();
             m_PluginAddressResolver.Setup();
 
-            m_GetUIModule = Marshal.GetDelegateForFunctionPointer<Framework_GetUIModuleDelegate_Private>(m_PluginAddressResolver.Framework_GetUIModulePtr);
-
-            m_SetNameplateHook = new Hook<SetNameplateDelegate_Private>(m_PluginAddressResolver.SetNameplatePtr, new SetNameplateDelegate_Private(SetNameplateDetour));
-            m_SetNameplateHook.Enable();
+            m_SetPlayerNameplateHook = new Hook<SetPlayerNameplateDelegate_Unmanaged>(m_PluginAddressResolver.SetNameplatePtr, new SetPlayerNameplateDelegate_Unmanaged(SetPlayerNameplateDetour));
+            m_SetPlayerNameplateHook.Enable();
         }
 
         public void Dispose()
         {
-            m_SetNameplateHook.Disable();
+            m_SetPlayerNameplateHook.Disable();
         }
 
-        private IntPtr SetNameplateDetour(IntPtr nameplateObjectPtrOriginal, bool isTitleAboveNameOriginal, bool isTitleVisibleOriginal, IntPtr titlePtrOriginal, IntPtr namePtrOriginal, IntPtr freeCompanyPtrOriginal, int iconIdOriginal)
+        private IntPtr SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtrOriginal, bool isTitleAboveNameOriginal, bool isTitleVisibleOriginal, IntPtr titlePtrOriginal, IntPtr namePtrOriginal, IntPtr freeCompanyPtrOriginal, int iconIdOriginal)
         {
-            if (m_SetNameplate != null)
+            if (m_SetPlayerNameplate != null)
             {
                 try
                 {
-                    GameObject? gameObject = GetNameplateObject<GameObject>(nameplateObjectPtrOriginal);
-                    if (gameObject != null)
+                    PlayerCharacter? playerCharacter = GetNameplateGameObject<PlayerCharacter>(playerNameplateObjectPtrOriginal);
+                    if (playerCharacter != null)
                     {
                         SeString title = ReadSeString(titlePtrOriginal);
                         SeString name = ReadSeString(namePtrOriginal);
@@ -88,7 +73,7 @@ namespace PlayerTags
                         bool isTitleChanged;
                         bool isNameChanged;
                         bool isFreeCompanyChanged;
-                        m_SetNameplate(gameObject, name, title, freeCompany, ref isTitleVisible, ref isTitleAboveName, ref iconId, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged);
+                        m_SetPlayerNameplate(playerCharacter, name, title, freeCompany, ref isTitleVisible, ref isTitleAboveName, ref iconId, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged);
 
                         IntPtr namePtr = namePtrOriginal;
                         if (isNameChanged)
@@ -108,7 +93,7 @@ namespace PlayerTags
                             freeCompanyPtr = Allocate(freeCompany);
                         }
 
-                        var result = m_SetNameplateHook.Original(nameplateObjectPtrOriginal, isTitleAboveName, isTitleVisible, titlePtr, namePtr, freeCompanyPtr, iconId);
+                        var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtrOriginal, isTitleAboveName, isTitleVisible, titlePtr, namePtr, freeCompanyPtr, iconId);
 
                         if (isNameChanged)
                         {
@@ -134,7 +119,7 @@ namespace PlayerTags
                 }
             }
 
-            return m_SetNameplateHook.Original(nameplateObjectPtrOriginal, isTitleAboveNameOriginal, isTitleVisibleOriginal, titlePtrOriginal, namePtrOriginal, freeCompanyPtrOriginal, iconIdOriginal);
+            return m_SetPlayerNameplateHook.Original(playerNameplateObjectPtrOriginal, isTitleAboveNameOriginal, isTitleVisibleOriginal, titlePtrOriginal, namePtrOriginal, freeCompanyPtrOriginal, iconIdOriginal);
         }
 
         private static SeString ReadSeString(IntPtr stringPtr)
@@ -175,64 +160,43 @@ namespace PlayerTags
             ptr = IntPtr.Zero;
         }
 
-        private T? GetNameplateObject<T>(IntPtr nameplateObjectPtr)
+        private T? GetNameplateGameObject<T>(IntPtr nameplateObjectPtr)
             where T : GameObject
         {
-            if (!m_NameplateInfoArrayPtr.HasValue)
+            // Get the nameplate object array
+            var nameplateAddonPtr = m_GameGui.GetAddonByName("NamePlate", 1);
+            var nameplateObjectArrayPtrPtr = nameplateAddonPtr + Marshal.OffsetOf(typeof(AddonNamePlate), nameof(AddonNamePlate.NamePlateObjectArray)).ToInt32();
+            var nameplateObjectArrayPtr = Marshal.ReadIntPtr(nameplateObjectArrayPtrPtr);
+            if (nameplateObjectArrayPtr == IntPtr.Zero)
             {
-                // Get the nameplate object array
-                var namePlateAddonPtr = m_GameGui.GetAddonByName("NamePlate", 1);
-                var namePlateObjectArrayPtrPtr = namePlateAddonPtr + Marshal.OffsetOf(typeof(AddonNamePlate), nameof(AddonNamePlate.NamePlateObjectArray)).ToInt32();
-                var nameplateObjectArrayPtr = Marshal.ReadIntPtr(namePlateObjectArrayPtrPtr);
-                if (nameplateObjectArrayPtr == IntPtr.Zero)
-                {
-                    return null!;
-                }
-
-                m_NameplateObjectArrayPtr = nameplateObjectArrayPtr;
-
-                // Get the nameplate info
-                IntPtr raptureAtkModulePtr;
-                var frameworkPtr = m_Framework.Address.BaseAddress;
-                var uiModulePtr = m_GetUIModule(frameworkPtr);
-                unsafe
-                {
-                    var uiModule = *(UIModule*)uiModulePtr;
-                    var UIModule_GetRaptureAtkModuleAddress = new IntPtr(uiModule.vfunc[7]);
-                    var GetRaptureAtkModule = Marshal.GetDelegateForFunctionPointer<UIModule_GetRaptureAtkModuleDelegate_Private>(UIModule_GetRaptureAtkModuleAddress);
-                    raptureAtkModulePtr = GetRaptureAtkModule(uiModulePtr);
-                }
-
-                if (raptureAtkModulePtr == IntPtr.Zero)
-                {
-                    return null!;
-                }
-
-                m_NameplateInfoArrayPtr = raptureAtkModulePtr + Marshal.OffsetOf(typeof(RaptureAtkModule), nameof(RaptureAtkModule.NamePlateInfoArray)).ToInt32();
+                return null;
             }
 
-            // Determine the index of this nameplate
+            // Determine the index of the nameplate object within the nameplate object array
             var namePlateObjectSize = Marshal.SizeOf(typeof(AddonNamePlate.NamePlateObject));
-            var namePlateObjectPtr0 = m_NameplateObjectArrayPtr!.Value + namePlateObjectSize * 0;
+            var namePlateObjectPtr0 = nameplateObjectArrayPtr + namePlateObjectSize * 0;
             var namePlateIndex = (nameplateObjectPtr.ToInt64() - namePlateObjectPtr0.ToInt64()) / namePlateObjectSize;
             if (namePlateIndex < 0 || namePlateIndex >= 50)
             {
-                return null!;
+                return null;
             }
 
-            var namePlateInfoPtr = new IntPtr(m_NameplateInfoArrayPtr.Value.ToInt64() + Marshal.SizeOf(typeof(RaptureAtkModule.NamePlateInfo)) * namePlateIndex);
+            // Get the nameplate info array
+            IntPtr nameplateInfoArrayPtr = IntPtr.Zero;
+            unsafe
+            {
+                var framework = FFXIVClientStructs.FFXIV.Client.System.Framework.Framework.Instance();
+                var ui3DModule = framework->GetUiModule()->GetUI3DModule();
+                nameplateInfoArrayPtr = new IntPtr(&(framework->GetUiModule()->GetRaptureAtkModule()->NamePlateInfoArray));
+            }
+
+            // Get the nameplate info for the nameplate object
+            var namePlateInfoPtr = new IntPtr(nameplateInfoArrayPtr.ToInt64() + Marshal.SizeOf(typeof(RaptureAtkModule.NamePlateInfo)) * namePlateIndex);
             RaptureAtkModule.NamePlateInfo namePlateInfo = Marshal.PtrToStructure<RaptureAtkModule.NamePlateInfo>(namePlateInfoPtr);
 
-            // Get the player character for this nameplate info
+            // Return the object for its object id
             var objectId = namePlateInfo.ObjectID.ObjectID;
-
-            T? gameObject = m_ObjectTable.FirstOrDefault(obj => obj.ObjectId == objectId) as T;
-            if (gameObject == null)
-            {
-                return null!;
-            }
-
-            return gameObject!;
+            return m_ObjectTable.SearchById(objectId) as T;
         }
     }
 }
