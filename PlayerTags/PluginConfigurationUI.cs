@@ -52,6 +52,10 @@ namespace PlayerTags
                 int depth = 0;
                 Draw(m_PluginData.AllTags, ref depth);
 
+
+                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));            
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
                 if (ImGui.Button(Strings.Loc_Static_AddCustomTag))
                 {
                     var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
@@ -63,6 +67,10 @@ namespace PlayerTags
                     m_PluginData.CustomTags.Add(newTag);
                     newTag.Parent = m_PluginData.AllCustomTags;
                 }
+                ImGui.PopStyleColor();
+                ImGui.PopStyleColor();
+                ImGui.PopStyleColor();
+
                 ImGui.TreePop();
                 ImGui.End();
             }
@@ -239,12 +247,20 @@ namespace PlayerTags
                 ImGui.SameLine();
                 ImGui.BeginGroup();
                 ImGui.Indent();
+                ImGui.Text("");
+
+                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
+                ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
                 if (ImGui.Button(Strings.Loc_Static_RemoveCustomTag))
                 {
                     m_PluginData.AllCustomTags.Children.Remove(tag);
                     m_PluginData.CustomTags.Remove(tag);
                     m_PluginConfiguration.Save(m_PluginData);
                 }
+                ImGui.PopStyleColor();
+                ImGui.PopStyleColor();
+                ImGui.PopStyleColor();
                 ImGui.EndGroup();
             }
             ImGui.EndGroup();
@@ -261,12 +277,10 @@ namespace PlayerTags
 
         private void DrawRemoveButton(IInheritable inheritable)
         {
-
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 0));
             ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
-
             if (ImGui.Button($"x", new Vector2(23, 23)))
             {
                 inheritable.Behavior = InheritableBehavior.Inherit;
