@@ -72,7 +72,6 @@ namespace PlayerTags
 
             ClientState.Login += ClientState_Login;
             ClientState.Logout += ClientState_Logout;
-            ClientState.TerritoryChanged += ClientState_TerritoryChanged;
             ChatGui.ChatMessage += Chat_ChatMessage;
             PluginInterface.UiBuilder.Draw += UiBuilder_Draw;
             PluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
@@ -96,7 +95,6 @@ namespace PlayerTags
             PluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
             ChatGui.ChatMessage -= Chat_ChatMessage;
-            ClientState.TerritoryChanged -= ClientState_TerritoryChanged;
             ClientState.Logout -= ClientState_Logout;
             ClientState.Login -= ClientState_Login;
         }
@@ -132,11 +130,6 @@ namespace PlayerTags
         private void ClientState_Logout(object? sender, EventArgs e)
         {
             Unhook();
-        }
-
-        private void ClientState_TerritoryChanged(object? sender, ushort e)
-        {
-            Rehook();
         }
 
         private void PluginConfiguration_Saved()
