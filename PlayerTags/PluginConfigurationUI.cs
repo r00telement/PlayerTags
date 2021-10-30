@@ -49,8 +49,7 @@ namespace PlayerTags
 
                 DrawHeading(Strings.Loc_Static_Tags);
                 ImGui.TreePush();
-                int depth = 0;
-                Draw(m_PluginData.AllTags, ref depth);
+                Draw(m_PluginData.AllTags);
 
 
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));            
@@ -81,7 +80,7 @@ namespace PlayerTags
             }
         }
 
-        public void Draw(Tag tag, ref int depth)
+        public void Draw(Tag tag)
         {
             ImGui.PushID(tag.GetHashCode().ToString());
 
@@ -267,10 +266,8 @@ namespace PlayerTags
 
             foreach (var childTag in tag.Children.ToArray())
             {
-                depth++;
-                Draw(childTag, ref depth);
+                Draw(childTag);
             }
-            depth++;
 
             ImGui.PopID();
         }
