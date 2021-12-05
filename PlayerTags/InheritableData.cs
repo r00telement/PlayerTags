@@ -10,6 +10,7 @@ namespace PlayerTags
         [JsonConverter(typeof(StringEnumConverter))]
         [JsonProperty("Behavior")]
         public InheritableBehavior Behavior;
+
         [JsonProperty("Value")]
         [JsonConverter(typeof(GeneralConverter))]
         public object Value;

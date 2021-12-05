@@ -176,7 +176,7 @@ namespace PlayerTags
             var namePlateObjectSize = Marshal.SizeOf(typeof(AddonNamePlate.NamePlateObject));
             var namePlateObjectPtr0 = nameplateObjectArrayPtr + namePlateObjectSize * 0;
             var namePlateIndex = (nameplateObjectPtr.ToInt64() - namePlateObjectPtr0.ToInt64()) / namePlateObjectSize;
-            if (namePlateIndex < 0 || namePlateIndex >= 50)
+            if (namePlateIndex < 0 || namePlateIndex >= AddonNamePlate.NumNamePlateObjects)
             {
                 return null;
             }
@@ -186,8 +186,7 @@ namespace PlayerTags
             unsafe
             {
                 var framework = FFXIVClientStructs.FFXIV.Client.System.Framework.Framework.Instance();
-                var ui3DModule = framework->GetUiModule()->GetUI3DModule();
-                nameplateInfoArrayPtr = new IntPtr(&(framework->GetUiModule()->GetRaptureAtkModule()->NamePlateInfoArray));
+                nameplateInfoArrayPtr = new IntPtr(&framework->GetUiModule()->GetRaptureAtkModule()->NamePlateInfoArray);
             }
 
             // Get the nameplate info for the nameplate object
