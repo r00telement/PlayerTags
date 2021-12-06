@@ -62,6 +62,8 @@ namespace PlayerTags
 
         private PluginData m_PluginData = new PluginData();
 
+        private bool m_OpenConfigClicked = false;
+
         public Plugin()
         {
             UIColorHelper.Initialize(DataManager);
@@ -116,12 +118,6 @@ namespace PlayerTags
             }
         }
 
-        private void Rehook()
-        {
-            Unhook();
-            Hook();
-        }
-
         private void ClientState_Login(object? sender, EventArgs e)
         {
             Hook();
@@ -140,15 +136,23 @@ namespace PlayerTags
 
         private void UiBuilder_Draw()
         {
-            // Don't bother showing the config unless the player is in the world
-            if (ClientState.LocalPlayer != null)
+            if (m_PluginConfiguration.IsVisible)
             {
-                m_PluginConfigurationUI.Draw();
+                // Only allow the config to be shown either when in the world, or when explicitly opened 
+                if (ClientState.LocalPlayer != null || m_OpenConfigClicked)
+                {
+                    m_PluginConfigurationUI.Draw();
+                }
+            }
+            else
+            {
+                m_OpenConfigClicked = false;
             }
         }
 
         private void UiBuilder_OpenConfigUi()
         {
+            m_OpenConfigClicked = true;
             m_PluginConfiguration.IsVisible = true;
         }
 

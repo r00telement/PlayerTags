@@ -74,8 +74,4 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
-
-    <Target Name="PackagePlugin" AfterTargets="Build">
-        <DalamudPackager ProjectDir="$(ProjectDir)" OutputPath="$(OutputPath)" AssemblyName="$(AssemblyName)" MakeZip="true" Exclude="$(AssemblyName).pdb;$(AssemblyName).deps.json" />
-	</Target>
 </Project>
