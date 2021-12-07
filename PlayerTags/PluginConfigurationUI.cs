@@ -82,6 +82,8 @@ namespace PlayerTags
 
                     var drawPartyMember = (string playerName) =>
                     {
+                        ImGui.PushID(playerName);
+
                         ImGui.TableNextRow();
 
                         ImGui.TableNextColumn();
@@ -89,9 +91,12 @@ namespace PlayerTags
 
                         foreach (Tag customTag in m_PluginData.CustomTags)
                         {
+                            ImGui.PushID(customTag.GetHashCode().ToString());
+
                             ImGui.TableNextColumn();
 
                             bool isTagAssigned = customTag.IncludesGameObjectNameToApplyTo(playerName);
+                            
                             DrawCheckbox("IsEnabled", false, ref isTagAssigned, () =>
                             {
                                 if (isTagAssigned)
@@ -105,7 +110,11 @@ namespace PlayerTags
 
                                 m_PluginConfiguration.Save(m_PluginData);
                             });
+
+                            ImGui.PopID();
                         }
+
+                        ImGui.PopID();
                     };
 
                     foreach (var partyMember in m_PartyList)
@@ -135,9 +144,12 @@ namespace PlayerTags
         {
             ImGui.PushID(tag.GetHashCode().ToString());
 
+            string collapsingHeaderId = tag.Name.Value;
             string collapsingHeaderName = tag.Name.Value;
             if (m_PluginData.CustomTags.Contains(tag))
             {
+                collapsingHeaderId = $"Custom_{m_PluginData.CustomTags.IndexOf(tag)}";
+
                 if (tag.Text.InheritedValue != null)
                 {
                     collapsingHeaderName = tag.Text.InheritedValue;
