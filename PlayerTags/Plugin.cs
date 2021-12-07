@@ -147,7 +147,6 @@ namespace PlayerTags
             string gameObjectName = args.Text.TextValue;
 
             var removedTags = m_PluginData.CustomTags.Where(tag => !tag.IncludesGameObjectNameToApplyTo(gameObjectName));
-
             var addTagItem = new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
             {
                 foreach (var removedTag in removedTags)
@@ -170,7 +169,10 @@ namespace PlayerTags
                 addTagItem.Enabled = false;
             }
 
-            args.Items.Add(addTagItem);
+            if (removedTags.Any())
+            {
+                args.Items.Add(addTagItem);
+            }
 
             var addedTags = m_PluginData.CustomTags.Where(tag => tag.IncludesGameObjectNameToApplyTo(gameObjectName));
 
@@ -196,7 +198,10 @@ namespace PlayerTags
                 removeTagItem.Enabled = false;
             }
 
-            args.Items.Add(removeTagItem);
+            if (addedTags.Any())
+            {
+                args.Items.Add(removeTagItem);
+            }
         }
 
         private void UiBuilder_Draw()
