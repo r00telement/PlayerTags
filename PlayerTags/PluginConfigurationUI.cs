@@ -183,8 +183,6 @@ namespace PlayerTags
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
 
                 ImGui.Text("");
-                var addPopupPos = ImGui.GetCursorPos();
-                addPopupPos.Y -= 4;
                 if (ImGui.Button("+", addButtonSize))
                 {
                     ImGui.OpenPopup("AddPopup");
@@ -195,7 +193,7 @@ namespace PlayerTags
 
                 bool wasPaddingConsumed = false;
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 5));
-                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + addPopupPos);
+                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() - new Vector2(0, 4));
                 if (ImGui.BeginPopup("AddPopup"))
                 {
                     wasPaddingConsumed = true;
@@ -259,12 +257,6 @@ namespace PlayerTags
 
                 foreach (var selectedInheritablesWithLocalizedName in selectedInheritablesWithLocalizedNames)
                 {
-                    ImGui.SameLine();
-                    ImGui.BeginGroup();
-
-                    ImGui.Indent();
-                    ImGui.BeginChild(selectedInheritablesWithLocalizedName.Name, new Vector2(180, 50));
-
                     switch (selectedInheritablesWithLocalizedName.Name)
                     {
                         case nameof(tag.Icon):
@@ -306,9 +298,6 @@ namespace PlayerTags
                         default:
                             break;
                     }
-
-                    ImGui.EndChild();
-                    ImGui.EndGroup();
                 }
 
                 if (m_PluginData.CustomTags.Contains(tag))
@@ -394,16 +383,32 @@ namespace PlayerTags
 
         private void DrawInheritable(string localizedStringName, InheritableValue<bool> inheritable)
         {
+            ImGui.SameLine();
+            ImGui.BeginGroup();
+            ImGui.Indent();
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 50));
+
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             DrawCheckbox("IsEnabled", false, ref inheritable.Value, () =>
             {
                 m_PluginConfiguration.Save(m_PluginData);
             });
+
+            ImGui.SameLine();
+            DrawRemoveButton(inheritable);
+
+            ImGui.EndChild();
+            ImGui.EndGroup();
         }
 
         private void DrawInheritable<TEnum>(string localizedStringName, bool shouldLocalizeNames, bool shouldOrderNames, InheritableValue<TEnum> inheritable)
             where TEnum : struct, Enum
         {
+            ImGui.SameLine();
+            ImGui.BeginGroup();
+            ImGui.Indent();
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 50));
+
             ImGui.Text(Localizer.GetString(localizedStringName, false));
 
             bool isEnabled = inheritable.Behavior == InheritableBehavior.Enabled;
@@ -428,10 +433,18 @@ namespace PlayerTags
 
             ImGui.SameLine();
             DrawRemoveButton(inheritable);
+
+            ImGui.EndChild();
+            ImGui.EndGroup();
         }
 
         private void DrawInheritable(string localizedStringName, InheritableValue<ushort> inheritable)
         {
+            ImGui.SameLine();
+            ImGui.BeginGroup();
+            ImGui.Indent();
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 50));
+
             ImGui.Text(Localizer.GetString(localizedStringName, false));
 
             bool isEnabled = inheritable.Behavior == InheritableBehavior.Enabled;
@@ -491,10 +504,18 @@ namespace PlayerTags
 
             ImGui.SameLine();
             DrawRemoveButton(inheritable);
+
+            ImGui.EndChild();
+            ImGui.EndGroup();
         }
 
         private void DrawInheritable(string localizedStringName, InheritableReference<string> inheritable)
         {
+            ImGui.SameLine();
+            ImGui.BeginGroup();
+            ImGui.Indent();
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 50));
+
             ImGui.Text(Localizer.GetString(localizedStringName, false));
 
             bool isEnabled = inheritable.Behavior == InheritableBehavior.Enabled;
@@ -519,6 +540,9 @@ namespace PlayerTags
 
             ImGui.SameLine();
             DrawRemoveButton(inheritable);
+
+            ImGui.EndChild();
+            ImGui.EndGroup();
         }
 
         private void DrawHeading(string label)
