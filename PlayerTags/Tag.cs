@@ -80,7 +80,7 @@ namespace PlayerTags
 
         public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
 
-        private string[] CleanGameObjectNamesToApplyTo
+        private string[] SplitGameObjectNamesToApplyTo
         {
             get
             {
@@ -89,7 +89,15 @@ namespace PlayerTags
                     return new string[] { };
                 }
 
-                return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',').Select(gameObjectName => gameObjectName.ToLower().Trim()).ToArray();
+                return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',');
+            }
+        }
+
+        private string[] CleanGameObjectNamesToApplyTo
+        {
+            get
+            {
+                return SplitGameObjectNamesToApplyTo.Select(gameObjectName => gameObjectName.ToLower().Trim()).ToArray();
             }
         }
 
@@ -101,6 +109,35 @@ namespace PlayerTags
         public bool IncludesGameObjectNameToApplyTo(string gameObjectName)
         {
             return CleanGameObjectNamesToApplyTo.Contains(gameObjectName.ToLower());
+        }
+
+        public void AddGameObjectNameToApplyTo(string gameObjectName)
+        {
+            if (IncludesGameObjectNameToApplyTo(gameObjectName))
+            {
+                return;
+            }
+
+            List<string> newSplitGameObjectNamesToApplyTo = SplitGameObjectNamesToApplyTo.ToList();
+
+            newSplitGameObjectNamesToApplyTo.Add(gameObjectName);
+
+            GameObjectNamesToApplyTo = string.Join(";", newSplitGameObjectNamesToApplyTo);
+        }
+
+        public void RemoveGameObjectNameToApplyTo(string gameObjectName)
+        {
+            if (!IncludesGameObjectNameToApplyTo(gameObjectName))
+            {
+                return;
+            }
+
+            List<string> newSplitGameObjectNamesToApplyTo = SplitGameObjectNamesToApplyTo.ToList();
+
+            var index = Array.IndexOf(CleanGameObjectNamesToApplyTo, gameObjectName.ToLower());
+            newSplitGameObjectNamesToApplyTo.RemoveAt(index);
+
+            GameObjectNamesToApplyTo = string.Join(";", newSplitGameObjectNamesToApplyTo);
         }
 
         public Dictionary<string, InheritableData> GetChanges(Dictionary<string, InheritableData>? defaultChanges = null)

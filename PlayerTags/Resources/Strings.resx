@@ -123,8 +123,29 @@
   <data name="Loc_Static_WarningMessage" xml:space="preserve">
     <value>This plugin can modify nameplates. When combined with other plugins that modify nameplates, you are likely to see unexpected behavior.</value>
   </data>
+  <data name="Loc_Static_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Loc_Static_PartyAssign" xml:space="preserve">
+    <value>Assign custom tags to party</value>
+  </data>
+  <data name="Loc_Static_PlayerName" xml:space="preserve">
+    <value>Player name</value>
+  </data>
+  <data name="Loc_Static_ContextMenu_AddTag" xml:space="preserve">
+    <value>Add tag</value>
+  </data>
+  <data name="Loc_Static_ContextMenu_RemoveTag" xml:space="preserve">
+    <value>Remove tag</value>
+  </data>
   <data name="Loc_Static_Nameplates" xml:space="preserve">
     <value>Nameplates</value>
+  </data>
+  <data name="Loc_IsCustomTagContextMenuEnabled" xml:space="preserve">
+    <value>Enable context menu options for custom tags</value>
+  </data>
+  <data name="Loc_IsCustomTagContextMenuEnabled_Description" xml:space="preserve">
+    <value>When opening the player context menu, options will be available to add and remove custom tags for the selected player.</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility" xml:space="preserve">
     <value>Free company visibility</value>
@@ -292,7 +313,7 @@
   </data>
   <data name="Loc_IsTextItalic" xml:space="preserve">
     <value>Text italic</value>
-  </data>
+  </data> 
   <data name="Loc_IsTextItalic_Description" xml:space="preserve">
     <value>Whether the text in the tag is italic.</value>
   </data>

@@ -19,7 +19,7 @@ namespace PlayerTags.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Strings {
@@ -72,9 +72,9 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Looks up a localized string similar to All Roles.
         /// </summary>
-        public static string Loc_AllRoleTagss {
+        public static string Loc_AllRoleTags {
             get {
-                return ResourceManager.GetString("Loc_AllRoleTagss", resourceCulture);
+                return ResourceManager.GetString("Loc_AllRoleTags", resourceCulture);
             }
         }
         
@@ -133,6 +133,33 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enable context menu options for custom tags.
+        /// </summary>
+        public static string Loc_IsCustomTagContextMenuEnabled {
+            get {
+                return ResourceManager.GetString("Loc_IsCustomTagContextMenuEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When opening the player context menu, options will be available to add and remove custom tags for the selected player..
+        /// </summary>
+        public static string Loc_IsCustomTagContextMenuEnabled_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsCustomTagContextMenuEnabled_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabled.
+        /// </summary>
+        public static string Loc_IsEnabled {
+            get {
+                return ResourceManager.GetString("Loc_IsEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable the value of this override..
         /// </summary>
         public static string Loc_IsEnabled_Description {
@@ -144,36 +171,36 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Icon visible in chat.
         /// </summary>
-        public static string Loc_IsIconVisibleInChatOption {
+        public static string Loc_IsIconVisibleInChat {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInChatOption", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInChat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Whether the icon is visible in the tag in chat..
         /// </summary>
-        public static string Loc_IsIconVisibleInChatOption_Description {
+        public static string Loc_IsIconVisibleInChat_Description {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInChatOption_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInChat_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Icon visible in nameplates.
         /// </summary>
-        public static string Loc_IsIconVisibleInNameplateOption {
+        public static string Loc_IsIconVisibleInNameplates {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInNameplateOption", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInNameplates", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Whether the icon is visible in the tag in nameplates..
         /// </summary>
-        public static string Loc_IsIconVisibleInNameplateOption_Description {
+        public static string Loc_IsIconVisibleInNameplates_Description {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInNameplateOption_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsIconVisibleInNameplates_Description", resourceCulture);
             }
         }
         
@@ -198,54 +225,108 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Text italic.
         /// </summary>
-        public static string Loc_IsTextItalicOption {
+        public static string Loc_IsTextItalic {
             get {
-                return ResourceManager.GetString("Loc_IsTextItalicOption", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextItalic", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Whether the text in the tag is italic..
         /// </summary>
-        public static string Loc_IsTextItalicOption_Description {
+        public static string Loc_IsTextItalic_Description {
             get {
-                return ResourceManager.GetString("Loc_IsTextItalicOption_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextItalic_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Text visible in chat.
         /// </summary>
-        public static string Loc_IsTextVisibleInChatOption {
+        public static string Loc_IsTextVisibleInChat {
             get {
-                return ResourceManager.GetString("Loc_IsTextVisibleInChatOption", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInChat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Whether the text is visible in the tag in chat..
         /// </summary>
-        public static string Loc_IsTextVisibleInChatOption_Description {
+        public static string Loc_IsTextVisibleInChat_Description {
             get {
-                return ResourceManager.GetString("Loc_IsTextVisibleInChatOption_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInChat_Description", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Text visible in nameplates.
         /// </summary>
-        public static string Loc_IsTextVisibleInNameplateOption {
+        public static string Loc_IsTextVisibleInNameplates {
             get {
-                return ResourceManager.GetString("Loc_IsTextVisibleInNameplateOption", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInNameplates", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Whether the text is visible in the tag in nameplates..
         /// </summary>
-        public static string Loc_IsTextVisibleInNameplateOption_Description {
+        public static string Loc_IsTextVisibleInNameplates_Description {
             get {
-                return ResourceManager.GetString("Loc_IsTextVisibleInNameplateOption_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsTextVisibleInNameplates_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Free company.
+        /// </summary>
+        public static string Loc_NameplateElement_FreeCompany {
+            get {
+                return ResourceManager.GetString("Loc_NameplateElement_FreeCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The free company element on nameplates..
+        /// </summary>
+        public static string Loc_NameplateElement_FreeCompany_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateElement_FreeCompany_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Loc_NameplateElement_Name {
+            get {
+                return ResourceManager.GetString("Loc_NameplateElement_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name element on nameplates..
+        /// </summary>
+        public static string Loc_NameplateElement_Name_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateElement_Name_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Loc_NameplateElement_Title {
+            get {
+                return ResourceManager.GetString("Loc_NameplateElement_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The title element on nameplates..
+        /// </summary>
+        public static string Loc_NameplateElement_Title_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateElement_Title_Description", resourceCulture);
             }
         }
         
@@ -493,6 +574,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add tag.
+        /// </summary>
+        public static string Loc_Static_ContextMenu_AddTag {
+            get {
+                return ResourceManager.GetString("Loc_Static_ContextMenu_AddTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove tag.
+        /// </summary>
+        public static string Loc_Static_ContextMenu_RemoveTag {
+            get {
+                return ResourceManager.GetString("Loc_Static_ContextMenu_RemoveTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Development.
         /// </summary>
         public static string Loc_Static_Development {
@@ -502,11 +601,38 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string Loc_Static_General {
+            get {
+                return ResourceManager.GetString("Loc_Static_General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nameplates.
         /// </summary>
         public static string Loc_Static_Nameplates {
             get {
                 return ResourceManager.GetString("Loc_Static_Nameplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Assign custom tags to party.
+        /// </summary>
+        public static string Loc_Static_PartyAssign {
+            get {
+                return ResourceManager.GetString("Loc_Static_PartyAssign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Player name.
+        /// </summary>
+        public static string Loc_Static_PlayerName {
+            get {
+                return ResourceManager.GetString("Loc_Static_PlayerName", resourceCulture);
             }
         }
         
@@ -628,7 +754,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag position in chat.
+        ///   Looks up a localized string similar to Tag position in nameplates.
         /// </summary>
         public static string Loc_TagPositionInNameplates {
             get {
@@ -646,7 +772,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag target in chat.
+        ///   Looks up a localized string similar to Tag target in nameplates.
         /// </summary>
         public static string Loc_TagTargetInNameplates {
             get {
@@ -684,18 +810,18 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Text color.
         /// </summary>
-        public static string Loc_TextColorOption {
+        public static string Loc_TextColor {
             get {
-                return ResourceManager.GetString("Loc_TextColorOption", resourceCulture);
+                return ResourceManager.GetString("Loc_TextColor", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to The color of the text in the tag..
         /// </summary>
-        public static string Loc_TextColorOption_Description {
+        public static string Loc_TextColor_Description {
             get {
-                return ResourceManager.GetString("Loc_TextColorOption_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TextColor_Description", resourceCulture);
             }
         }
     }

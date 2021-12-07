@@ -1,4 +1,9 @@
-﻿using ImGuiNET;
+﻿using Dalamud.Game.ClientState;
+using Dalamud.Game.ClientState.Objects;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Party;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
+using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Resources;
 using System;
@@ -10,15 +15,17 @@ namespace PlayerTags
     public class PluginConfigurationUI
     {
         private PluginConfiguration m_PluginConfiguration;
-
         private PluginData m_PluginData;
-
+        private ClientState m_ClientState;
+        private PartyList m_PartyList;
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
 
-        public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
+        public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData, ClientState clientState, PartyList partyList)
         {
             m_PluginConfiguration = config;
             m_PluginData = pluginData;
+            m_ClientState = clientState;
+            m_PartyList = partyList;
         }
 
         public void Draw()
@@ -34,6 +41,11 @@ namespace PlayerTags
                 ImGui.TextWrapped(Strings.Loc_Static_WarningMessage);
                 ImGui.PopStyleColor();
 
+                DrawHeading(Strings.Loc_Static_General);
+                ImGui.TreePush();
+                DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                ImGui.TreePop();
+
                 DrawHeading(Strings.Loc_Static_Nameplates);
                 ImGui.TreePush();
                 DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateFreeCompanyVisibility, () => m_PluginConfiguration.Save(m_PluginData));
@@ -45,32 +57,71 @@ namespace PlayerTags
                 ImGui.TreePush();
                 DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => m_PluginConfiguration.Save(m_PluginData));
                 ImGui.TreePop();
-                ImGui.EndTabItem();
+
 
                 DrawHeading(Strings.Loc_Static_Tags);
                 ImGui.TreePush();
                 Draw(m_PluginData.AllTags);
+                ImGui.TreePop();
 
 
-                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));            
-                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
-                ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
-                if (ImGui.Button(Strings.Loc_Static_AddCustomTag))
+                DrawHeading(Strings.Loc_Static_PartyAssign);
+                ImGui.TreePush();
+                if (ImGui.BeginTable("##PartyAssignTable", 1 + m_PluginData.CustomTags.Count))
                 {
-                    var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
+                    ImGui.TableHeader(Strings.Loc_Static_PlayerName);
+                    ImGui.TableSetupColumn(Strings.Loc_Static_PlayerName);
+                    ImGui.NextColumn();
+                    foreach (var customTag in m_PluginData.CustomTags)
                     {
-                        Text = "",
-                        GameObjectNamesToApplyTo = ""
+                        ImGui.TableHeader(customTag.Text.InheritedValue);
+                        ImGui.TableSetupColumn(customTag.Text.InheritedValue);
+                        ImGui.NextColumn();
+                    }
+                    ImGui.TableHeadersRow();
+
+                    var drawPartyMember = (string playerName) =>
+                    {
+                        ImGui.TableNextRow();
+
+                        ImGui.TableNextColumn();
+                        ImGui.Text(playerName);
+
+                        foreach (Tag customTag in m_PluginData.CustomTags)
+                        {
+                            ImGui.TableNextColumn();
+
+                            bool isTagAssigned = customTag.IncludesGameObjectNameToApplyTo(playerName);
+                            DrawCheckbox("IsEnabled", false, ref isTagAssigned, () =>
+                            {
+                                if (isTagAssigned)
+                                {
+                                    customTag.AddGameObjectNameToApplyTo(playerName);
+                                }
+                                else
+                                {
+                                    customTag.RemoveGameObjectNameToApplyTo(playerName);
+                                }
+
+                                m_PluginConfiguration.Save(m_PluginData);
+                            });
+                        }
                     };
 
-                    m_PluginData.CustomTags.Add(newTag);
-                    newTag.Parent = m_PluginData.AllCustomTags;
-                }
-                ImGui.PopStyleColor();
-                ImGui.PopStyleColor();
-                ImGui.PopStyleColor();
+                    foreach (var partyMember in m_PartyList)
+                    {
+                        drawPartyMember(partyMember.Name.TextValue);
+                    }
 
+                    if (m_PartyList.Length == 0 && m_ClientState.LocalPlayer != null)
+                    {
+                        drawPartyMember(m_ClientState.LocalPlayer.Name.TextValue);
+                    }
+
+                    ImGui.EndTable();
+                }
                 ImGui.TreePop();
+
                 ImGui.End();
             }
 
@@ -84,189 +135,209 @@ namespace PlayerTags
         {
             ImGui.PushID(tag.GetHashCode().ToString());
 
-            ImGui.BeginGroup();
-            ImGui.BeginChild(tag.GetHashCode().ToString(), new Vector2(100, 60));
-
-            var text = tag.Name.Value;
-            var textSize = ImGui.CalcTextSize(text);
-            var addButtonSize = new Vector2(23, 23);
-            var panelSize = ImGui.GetItemRectSize();
-
-            ImGui.SetCursorPosX(panelSize.X - textSize.X);
-            ImGui.Text(text);
-
-            if (ImGui.IsPopupOpen("AddPopup"))
-            {
-                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.2f, 0.6f, 0.2f, 1));
-            }
-            else
-            {
-                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
-            }
-            ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
-            ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
-            ImGui.SetCursorPosX(panelSize.X - addButtonSize.X);
-            var addPopupPos = ImGui.GetCursorPos();
-            addPopupPos.Y -= addButtonSize.Y + 2;
-            if (ImGui.Button("+", addButtonSize))
-            {
-                ImGui.OpenPopup("AddPopup");
-            }
-            ImGui.PopStyleColor();
-            ImGui.PopStyleColor();
-            ImGui.PopStyleColor();
-
-            bool wasPaddingConsumed = false;
-            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 5));
-            ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + addPopupPos);
-            if (ImGui.BeginPopup("AddPopup"))
-            {
-                wasPaddingConsumed = true;
-                ImGui.PopStyleVar();
-
-                ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0f, 0f, 0f, 0));
-                if (ImGui.BeginListBox("###SelectableInheritables"))
-                {
-                    var selectableInheritables = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior == InheritableBehavior.Inherit).ToDictionary(item => item.Key, item => item.Value);
-                    var selectableInheritablesWithLocalizedNames = selectableInheritables
-                        .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
-                        .OrderBy(item => item.LocalizedName);
-
-                    foreach (var inheritableLocalizedName in selectableInheritablesWithLocalizedNames)
-                    {
-                        bool isSelected = false;
-                        if (ImGui.Selectable(inheritableLocalizedName.LocalizedName, isSelected))
-                        {
-                            selectableInheritables[inheritableLocalizedName.Name].Behavior = InheritableBehavior.Enabled;
-
-                            if (selectableInheritables[inheritableLocalizedName.Name] is InheritableValue<bool> inheritableBool)
-                            {
-                                inheritableBool.Value = true;
-                            }
-
-                            m_PluginConfiguration.Save(m_PluginData);
-                            ImGui.CloseCurrentPopup();
-                        }
-
-                        if (isSelected)
-                        {
-                            ImGui.SetItemDefaultFocus();
-                        }
-
-                        if (ImGui.IsItemHovered())
-                        {
-                            ImGui.SetTooltip(Localizer.GetString(inheritableLocalizedName.Name, true));
-                        }
-                    }
-
-                    ImGui.EndListBox();
-                }
-                ImGui.PopStyleColor();
-                ImGui.EndPopup();
-            }
-            if (!wasPaddingConsumed)
-            {
-                ImGui.PopStyleVar();
-            }
-
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip(Strings.Loc_Static_AddPropertyOverride_Description);
-            }
-            ImGui.EndChild();
-            ImGui.EndGroup();
-
-            ImGui.SameLine();
-            ImGui.BeginGroup();
-
-            var selectedInheritables = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior != InheritableBehavior.Inherit).ToDictionary(item => item.Key, item => item.Value);
-            var selectedInheritablesWithLocalizedNames = selectedInheritables
-                .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
-                .OrderBy(item => item.LocalizedName);
-
-            foreach (var selectedInheritablesWithLocalizedName in selectedInheritablesWithLocalizedNames)
-            {
-                switch (selectedInheritablesWithLocalizedName.Name)
-                {
-                    case nameof(tag.Icon):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.Icon), false, true, tag.Icon);
-                        break;
-                    case nameof(tag.IsIconVisibleInChat):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.IsIconVisibleInChat), tag.IsIconVisibleInChat);
-                        break;
-                    case nameof(tag.IsIconVisibleInNameplates):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.IsIconVisibleInNameplates), tag.IsIconVisibleInNameplates);
-                        break;
-                    case nameof(tag.Text):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.Text), tag.Text);
-                        break;
-                    case nameof(tag.TextColor):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.TextColor), tag.TextColor);
-                        break;
-                    case nameof(tag.IsTextItalic):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.IsTextItalic), tag.IsTextItalic);
-                        break;
-                    case nameof(tag.IsTextVisibleInChat):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.IsTextVisibleInChat), tag.IsTextVisibleInChat);
-                        break;
-                    case nameof(tag.IsTextVisibleInNameplates):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.IsTextVisibleInNameplates), tag.IsTextVisibleInNameplates);
-                        break;
-                    case nameof(tag.TagPositionInChat):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.TagPositionInChat), true, false, tag.TagPositionInChat);
-                        break;
-                    case nameof(tag.TagPositionInNameplates):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.TagPositionInNameplates), true, false, tag.TagPositionInNameplates);
-                        break;
-                    case nameof(tag.TagTargetInNameplates):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.TagTargetInNameplates), true, false, tag.TagTargetInNameplates);
-                        break;
-                    case nameof(tag.GameObjectNamesToApplyTo):
-                        ImGui.SameLine();
-                        DrawInheritable(nameof(tag.GameObjectNamesToApplyTo), tag.GameObjectNamesToApplyTo);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
+            var collapsingHeaderName = tag.Name.Value;
             if (m_PluginData.CustomTags.Contains(tag))
             {
-                ImGui.SameLine();
-                ImGui.BeginGroup();
-                ImGui.Indent();
-                ImGui.Text("");
+                collapsingHeaderName = tag.Text.InheritedValue;
+            }
 
-                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
-                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
-                ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
-                if (ImGui.Button(Strings.Loc_Static_RemoveCustomTag))
+            if (ImGui.CollapsingHeader($"{collapsingHeaderName}###{tag.GetHashCode()}"))
+            {
+                ImGui.TreePush();
+                ImGui.BeginGroup();
+
+                ImGui.BeginGroup();
+                var addButtonSize = new Vector2(23, 23);
+                if (ImGui.IsPopupOpen("AddPopup"))
                 {
-                    m_PluginData.AllCustomTags.Children.Remove(tag);
-                    m_PluginData.CustomTags.Remove(tag);
-                    m_PluginConfiguration.Save(m_PluginData);
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                }
+                else
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
+                }
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
+
+                ImGui.Text("");
+                var addPopupPos = ImGui.GetCursorPos();
+                addPopupPos.Y -= 4;
+                if (ImGui.Button("+", addButtonSize))
+                {
+                    ImGui.OpenPopup("AddPopup");
                 }
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
-                ImGui.EndGroup();
-            }
-            ImGui.EndGroup();
 
-            foreach (var childTag in tag.Children.ToArray())
-            {
-                Draw(childTag);
+                bool wasPaddingConsumed = false;
+                ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 5));
+                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + addPopupPos);
+                if (ImGui.BeginPopup("AddPopup"))
+                {
+                    wasPaddingConsumed = true;
+                    ImGui.PopStyleVar();
+
+                    ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0f, 0f, 0f, 0));
+                    if (ImGui.BeginListBox("###SelectableInheritables"))
+                    {
+                        var selectableInheritables = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior == InheritableBehavior.Inherit).ToDictionary(item => item.Key, item => item.Value);
+                        var selectableInheritablesWithLocalizedNames = selectableInheritables
+                            .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
+                            .OrderBy(item => item.LocalizedName);
+
+                        foreach (var inheritableLocalizedName in selectableInheritablesWithLocalizedNames)
+                        {
+                            bool isSelected = false;
+                            if (ImGui.Selectable(inheritableLocalizedName.LocalizedName, isSelected))
+                            {
+                                selectableInheritables[inheritableLocalizedName.Name].Behavior = InheritableBehavior.Enabled;
+
+                                if (selectableInheritables[inheritableLocalizedName.Name] is InheritableValue<bool> inheritableBool)
+                                {
+                                    inheritableBool.Value = true;
+                                }
+
+                                m_PluginConfiguration.Save(m_PluginData);
+                                ImGui.CloseCurrentPopup();
+                            }
+
+                            if (isSelected)
+                            {
+                                ImGui.SetItemDefaultFocus();
+                            }
+
+                            if (ImGui.IsItemHovered())
+                            {
+                                ImGui.SetTooltip(Localizer.GetString(inheritableLocalizedName.Name, true));
+                            }
+                        }
+
+                        ImGui.EndListBox();
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.EndPopup();
+                }
+                if (!wasPaddingConsumed)
+                {
+                    ImGui.PopStyleVar();
+                }
+
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip(Strings.Loc_Static_AddPropertyOverride_Description);
+                }
+                ImGui.EndGroup();
+
+                var selectedInheritables = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior != InheritableBehavior.Inherit).ToDictionary(item => item.Key, item => item.Value);
+                var selectedInheritablesWithLocalizedNames = selectedInheritables
+                    .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
+                    .OrderBy(item => item.LocalizedName);
+
+                foreach (var selectedInheritablesWithLocalizedName in selectedInheritablesWithLocalizedNames)
+                {
+                    ImGui.SameLine();
+                    ImGui.BeginGroup();
+
+                    ImGui.Indent();
+                    ImGui.BeginChild(selectedInheritablesWithLocalizedName.Name, new Vector2(180, 50));
+
+                    switch (selectedInheritablesWithLocalizedName.Name)
+                    {
+                        case nameof(tag.Icon):
+                            DrawInheritable(nameof(tag.Icon), false, true, tag.Icon);
+                            break;
+                        case nameof(tag.IsIconVisibleInChat):
+                            DrawInheritable(nameof(tag.IsIconVisibleInChat), tag.IsIconVisibleInChat);
+                            break;
+                        case nameof(tag.IsIconVisibleInNameplates):
+                            DrawInheritable(nameof(tag.IsIconVisibleInNameplates), tag.IsIconVisibleInNameplates);
+                            break;
+                        case nameof(tag.Text):
+                            DrawInheritable(nameof(tag.Text), tag.Text);
+                            break;
+                        case nameof(tag.TextColor):
+                            DrawInheritable(nameof(tag.TextColor), tag.TextColor);
+                            break;
+                        case nameof(tag.IsTextItalic):
+                            DrawInheritable(nameof(tag.IsTextItalic), tag.IsTextItalic);
+                            break;
+                        case nameof(tag.IsTextVisibleInChat):
+                            DrawInheritable(nameof(tag.IsTextVisibleInChat), tag.IsTextVisibleInChat);
+                            break;
+                        case nameof(tag.IsTextVisibleInNameplates):
+                            DrawInheritable(nameof(tag.IsTextVisibleInNameplates), tag.IsTextVisibleInNameplates);
+                            break;
+                        case nameof(tag.TagPositionInChat):
+                            DrawInheritable(nameof(tag.TagPositionInChat), true, false, tag.TagPositionInChat);
+                            break;
+                        case nameof(tag.TagPositionInNameplates):
+                            DrawInheritable(nameof(tag.TagPositionInNameplates), true, false, tag.TagPositionInNameplates);
+                            break;
+                        case nameof(tag.TagTargetInNameplates):
+                            DrawInheritable(nameof(tag.TagTargetInNameplates), true, false, tag.TagTargetInNameplates);
+                            break;
+                        case nameof(tag.GameObjectNamesToApplyTo):
+                            DrawInheritable(nameof(tag.GameObjectNamesToApplyTo), tag.GameObjectNamesToApplyTo);
+                            break;
+                        default:
+                            break;
+                    }
+
+                    ImGui.EndChild();
+                    ImGui.EndGroup();
+                }
+
+                if (m_PluginData.CustomTags.Contains(tag))
+                {
+                    ImGui.SameLine();
+                    ImGui.BeginGroup();
+                    ImGui.Indent();
+                    ImGui.Text("");
+
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
+                    if (ImGui.Button(Strings.Loc_Static_RemoveCustomTag))
+                    {
+                        m_PluginData.AllCustomTags.Children.Remove(tag);
+                        m_PluginData.CustomTags.Remove(tag);
+                        m_PluginConfiguration.Save(m_PluginData);
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.EndGroup();
+                }
+
+                foreach (var childTag in tag.Children.ToArray())
+                {
+                    Draw(childTag);
+                }
+
+                if (tag == m_PluginData.AllCustomTags)
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                    if (ImGui.Button(Strings.Loc_Static_AddCustomTag))
+                    {
+                        var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
+                        {
+                            Text = "",
+                            GameObjectNamesToApplyTo = ""
+                        };
+
+                        m_PluginData.CustomTags.Add(newTag);
+                        newTag.Parent = m_PluginData.AllCustomTags;
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                }
+
+                ImGui.EndGroup();
+                ImGui.TreePop();
             }
 
             ImGui.PopID();
@@ -295,29 +366,16 @@ namespace PlayerTags
 
         private void DrawInheritable(string localizedStringName, InheritableValue<bool> inheritable)
         {
-            ImGui.BeginGroup();
-            ImGui.Indent();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 47));
-
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             DrawCheckbox("IsEnabled", false, ref inheritable.Value, () =>
             {
                 m_PluginConfiguration.Save(m_PluginData);
             });
-            ImGui.SameLine();
-            DrawRemoveButton(inheritable);
-
-            ImGui.EndChild();
-            ImGui.EndGroup();
         }
 
         private void DrawInheritable<TEnum>(string localizedStringName, bool shouldLocalizeNames, bool shouldOrderNames, InheritableValue<TEnum> inheritable)
             where TEnum : struct, Enum
         {
-            ImGui.BeginGroup();
-            ImGui.Indent();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 47));
-
             ImGui.Text(Localizer.GetString(localizedStringName, false));
 
             bool isEnabled = inheritable.Behavior == InheritableBehavior.Enabled;
@@ -342,17 +400,10 @@ namespace PlayerTags
 
             ImGui.SameLine();
             DrawRemoveButton(inheritable);
-
-            ImGui.EndChild();
-            ImGui.EndGroup();
         }
 
         private void DrawInheritable(string localizedStringName, InheritableValue<ushort> inheritable)
         {
-            ImGui.BeginGroup();
-            ImGui.Indent();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 47));
-
             ImGui.Text(Localizer.GetString(localizedStringName, false));
 
             bool isEnabled = inheritable.Behavior == InheritableBehavior.Enabled;
@@ -412,17 +463,10 @@ namespace PlayerTags
 
             ImGui.SameLine();
             DrawRemoveButton(inheritable);
-
-            ImGui.EndChild();
-            ImGui.EndGroup();
         }
 
         private void DrawInheritable(string localizedStringName, InheritableReference<string> inheritable)
         {
-            ImGui.BeginGroup();
-            ImGui.Indent();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 47));
-
             ImGui.Text(Localizer.GetString(localizedStringName, false));
 
             bool isEnabled = inheritable.Behavior == InheritableBehavior.Enabled;
@@ -447,9 +491,6 @@ namespace PlayerTags
 
             ImGui.SameLine();
             DrawRemoveButton(inheritable);
-
-            ImGui.EndChild();
-            ImGui.EndGroup();
         }
 
         private void DrawHeading(string label)

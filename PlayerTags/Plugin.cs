@@ -4,6 +4,7 @@ using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
+using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.Game.Text;
@@ -12,16 +13,18 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.IoC;
 using Dalamud.Logging;
 using Dalamud.Plugin;
+using PlayerTags.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using XivCommon;
+using XivCommon.Functions.ContextMenu;
 
 namespace PlayerTags
 {
     public sealed class Plugin : IDalamudPlugin
     {
         public string Name => "Player Tags";
-
         private const string c_CommandName = "/playertags";
 
         [PluginService]
@@ -48,21 +51,17 @@ namespace PlayerTags
         [PluginService]
         private static ClientState ClientState { get; set; } = null!;
 
+        [PluginService]
+        private static PartyList PartyList { get; set; } = null!;
+
         private PluginConfiguration m_PluginConfiguration;
-
         private PluginConfigurationUI m_PluginConfigurationUI;
-
         private RandomNameGenerator m_RandomNameGenerator = new RandomNameGenerator();
-
         private PluginHooks? m_PluginHooks = null;
-
         private Dictionary<Tag, Dictionary<TagTarget, Payload[]>> m_TagTargetPayloads = new Dictionary<Tag, Dictionary<TagTarget, Payload[]>>();
-
         private TextPayload m_SpaceTextPayload = new TextPayload($" ");
-
         private PluginData m_PluginData = new PluginData();
-
-        private bool m_OpenConfigClicked = false;
+        private XivCommonBase XivCommon;
 
         public Plugin()
         {
@@ -70,7 +69,7 @@ namespace PlayerTags
             m_PluginConfiguration = PluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             m_PluginConfiguration.Initialize(PluginInterface);
             m_PluginData.Initialize(DataManager, m_PluginConfiguration);
-            m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData);
+            m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData, ClientState, PartyList);
 
             ClientState.Login += ClientState_Login;
             ClientState.Logout += ClientState_Logout;
@@ -87,10 +86,14 @@ namespace PlayerTags
                 HelpMessage = "Shows the config"
             });
             Hook();
+            XivCommon = new XivCommonBase(Hooks.ContextMenu);
+            XivCommon.Functions.ContextMenu.OpenContextMenu += ContextMenu_OpenContextMenu;
         }
 
         public void Dispose()
         {
+            XivCommon.Functions.ContextMenu.OpenContextMenu -= ContextMenu_OpenContextMenu;
+            XivCommon.Dispose();
             Unhook();
             CommandManager.RemoveHandler(c_CommandName);
             m_PluginConfiguration.Saved -= PluginConfiguration_Saved;
@@ -134,25 +137,78 @@ namespace PlayerTags
             m_TagTargetPayloads.Clear();
         }
 
+        private void ContextMenu_OpenContextMenu(ContextMenuOpenArgs args)
+        {
+            if (args.Text == null || !m_PluginConfiguration.IsCustomTagContextMenuEnabled)
+            {
+                return;
+            }
+
+            string gameObjectName = args.Text.TextValue;
+
+            var removedTags = m_PluginData.CustomTags.Where(tag => !tag.IncludesGameObjectNameToApplyTo(gameObjectName));
+
+            var addTagItem = new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
+            {
+                foreach (var removedTag in removedTags)
+                {
+                    itemArgs.Items.Add(new NormalContextMenuItem(removedTag.Text.Value, (args =>
+                    {
+                        removedTag.AddGameObjectNameToApplyTo(gameObjectName);
+                    })));
+                }
+
+                // TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
+                if (args.ParentAddonName != "ChatLog")
+                {
+                    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
+                }
+            }));
+
+            if (!removedTags.Any())
+            {
+                addTagItem.Enabled = false;
+            }
+
+            args.Items.Add(addTagItem);
+
+            var addedTags = m_PluginData.CustomTags.Where(tag => tag.IncludesGameObjectNameToApplyTo(gameObjectName));
+
+            var removeTagItem = new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
+            {
+                foreach (var addedTag in addedTags)
+                {
+                    itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
+                    {
+                        addedTag.RemoveGameObjectNameToApplyTo(gameObjectName);
+                    })));
+                }
+
+                // TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
+                if (args.ParentAddonName != "ChatLog")
+                {
+                    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
+                }
+            }));
+
+            if (!addedTags.Any())
+            {
+                removeTagItem.Enabled = false;
+            }
+
+            args.Items.Add(removeTagItem);
+        }
+
         private void UiBuilder_Draw()
         {
             if (m_PluginConfiguration.IsVisible)
             {
-                // Only allow the config to be shown either when in the world, or when explicitly opened 
-                if (ClientState.LocalPlayer != null || m_OpenConfigClicked)
-                {
-                    m_PluginConfigurationUI.Draw();
-                }
-            }
-            else
-            {
-                m_OpenConfigClicked = false;
+                m_PluginConfigurationUI.Draw();
             }
         }
 
         private void UiBuilder_OpenConfigUi()
         {
-            m_OpenConfigClicked = true;
             m_PluginConfiguration.IsVisible = true;
         }
 
