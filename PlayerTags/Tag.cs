@@ -64,6 +64,11 @@ namespace PlayerTags
             }
         }
 
+        public InheritableValue<bool> IsExpanded = new InheritableValue<bool>(false)
+        {
+            Behavior = InheritableBehavior.Enabled
+        };
+
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
         public InheritableValue<bool> IsIconVisibleInChat = new InheritableValue<bool>(false);
         public InheritableValue<bool> IsIconVisibleInNameplates = new InheritableValue<bool>(false);

@@ -144,12 +144,9 @@ namespace PlayerTags
         {
             ImGui.PushID(tag.GetHashCode().ToString());
 
-            string collapsingHeaderId = tag.Name.Value;
             string collapsingHeaderName = tag.Name.Value;
             if (m_PluginData.CustomTags.Contains(tag))
             {
-                collapsingHeaderId = $"Custom_{m_PluginData.CustomTags.IndexOf(tag)}";
-
                 if (tag.Text.InheritedValue != null)
                 {
                     collapsingHeaderName = tag.Text.InheritedValue;
@@ -160,13 +157,12 @@ namespace PlayerTags
                 }
             }
 
-            bool isExpanded = m_PluginConfiguration.ExpandedTags.Contains(collapsingHeaderName);
             bool isVisible = true;
-            if (ImGui.CollapsingHeader($"{collapsingHeaderName}###{tag.GetHashCode()}", ref isVisible, isExpanded ? ImGuiTreeNodeFlags.DefaultOpen : ImGuiTreeNodeFlags.None))
+            if (ImGui.CollapsingHeader($"{collapsingHeaderName}###{tag.GetHashCode()}", ref isVisible, tag.IsExpanded.Value ? ImGuiTreeNodeFlags.DefaultOpen : ImGuiTreeNodeFlags.None))
             {
-                if (!m_PluginConfiguration.ExpandedTags.Contains(collapsingHeaderName))
+                if (!tag.IsExpanded.Value)
                 {
-                    m_PluginConfiguration.ExpandedTags.Add(collapsingHeaderName);
+                    tag.IsExpanded.Value = true;
                     m_PluginConfiguration.Save(m_PluginData);
                 }
 
@@ -366,9 +362,9 @@ namespace PlayerTags
                 ImGui.EndGroup();
                 ImGui.TreePop();
             }
-            else if(!isExpanded && m_PluginConfiguration.ExpandedTags.Contains(collapsingHeaderName))
+            else if (tag.IsExpanded.Value)
             {
-                m_PluginConfiguration.ExpandedTags.Remove(collapsingHeaderName);
+                tag.IsExpanded.Value = false;
                 m_PluginConfiguration.Save(m_PluginData);
             }
 

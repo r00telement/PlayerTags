@@ -29,6 +29,7 @@ namespace PlayerTags
         {
             AllTagsChanges = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 TagPositionInChat = TagPosition.Before,
                 TagPositionInNameplates = TagPosition.Replace,
                 TagTargetInNameplates = NameplateElement.Title,
@@ -37,30 +38,35 @@ namespace PlayerTags
 
             AllRoleTagsChanges = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 IsIconVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
             }.GetChanges();
 
             RoleTagsChanges[Role.LandHand] = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 Icon = BitmapFontIcon.Crafter,
                 TextColor = 3,
             }.GetChanges();
 
             RoleTagsChanges[Role.Tank] = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 Icon = BitmapFontIcon.Tank,
                 TextColor = 546,
             }.GetChanges();
 
             RoleTagsChanges[Role.Healer] = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 Icon = BitmapFontIcon.Healer,
                 TextColor = 43,
             }.GetChanges();
 
             RoleTagsChanges[Role.DPS] = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 Icon = BitmapFontIcon.DPS,
                 TextColor = 508,
             }.GetChanges();
@@ -89,6 +95,7 @@ namespace PlayerTags
 
             AllCustomTagsChanges = new Tag(new LiteralPluginString(""))
             {
+                IsExpanded = true,
                 IsTextVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
             }.GetChanges();
