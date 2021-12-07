@@ -157,8 +157,7 @@ namespace PlayerTags
                 }
             }
 
-            bool isVisible = true;
-            if (ImGui.CollapsingHeader($"{collapsingHeaderName}###{tag.GetHashCode()}", ref isVisible, tag.IsExpanded.Value ? ImGuiTreeNodeFlags.DefaultOpen : ImGuiTreeNodeFlags.None))
+            if (ImGui.CollapsingHeader($"{collapsingHeaderName}###{tag.GetHashCode()}", tag.IsExpanded.Value ? ImGuiTreeNodeFlags.DefaultOpen : ImGuiTreeNodeFlags.None))
             {
                 if (!tag.IsExpanded.Value)
                 {
@@ -336,12 +335,14 @@ namespace PlayerTags
                     {
                         var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
                         {
+                            IsExpanded = true,
                             Text = "",
                             GameObjectNamesToApplyTo = ""
                         };
 
                         m_PluginData.CustomTags.Add(newTag);
                         newTag.Parent = m_PluginData.AllCustomTags;
+                        m_PluginConfiguration.Save(m_PluginData);
                     }
                     ImGui.PopStyleColor();
                     ImGui.PopStyleColor();
