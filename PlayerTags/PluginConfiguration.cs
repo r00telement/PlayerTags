@@ -18,6 +18,8 @@ namespace PlayerTags
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagContextMenuEnabled = true;
 
+        public List<string> ExpandedTags = new List<string>();
+
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();
 
