@@ -331,6 +331,12 @@
   <data name="Loc_TextColor_Description" xml:space="preserve">
     <value>The color of the text in the tag.</value>
   </data>
+  <data name="Loc_TextGlowColor" xml:space="preserve">
+    <value>Text glow color</value>
+  </data>
+  <data name="Loc_TextGlowColor_Description" xml:space="preserve">
+    <value>The glow color of the text in the tag.</value>
+  </data>
   <data name="Loc_IsTextItalic" xml:space="preserve">
     <value>Text italic</value>
   </data> 

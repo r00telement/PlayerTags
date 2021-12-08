@@ -88,6 +88,7 @@ namespace PlayerTags
 
         public InheritableReference<string> Text = new InheritableReference<string>("");
         public InheritableValue<ushort> TextColor = new InheritableValue<ushort>(6);
+        public InheritableValue<ushort> TextGlowColor = new InheritableValue<ushort>(6);
         public InheritableValue<bool> IsTextItalic = new InheritableValue<bool>(false);
         public InheritableValue<bool> IsTextVisibleInChat = new InheritableValue<bool>(false);
         public InheritableValue<bool> IsTextVisibleInNameplates = new InheritableValue<bool>(false);

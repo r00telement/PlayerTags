@@ -592,7 +592,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new custom tag..
+        ///   Looks up a localized string similar to Add a custom tag..
         /// </summary>
         public static string Loc_Static_AddCustomTag_Description {
             get {
@@ -885,6 +885,24 @@ namespace PlayerTags.Resources {
         public static string Loc_TextColor_Description {
             get {
                 return ResourceManager.GetString("Loc_TextColor_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text color.
+        /// </summary>
+        public static string Loc_TextGlowColor {
+            get {
+                return ResourceManager.GetString("Loc_TextGlowColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The glow color of the text in the tag..
+        /// </summary>
+        public static string Loc_TextGlowolor_Description {
+            get {
+                return ResourceManager.GetString("Loc_TextGlowolor_Description", resourceCulture);
             }
         }
     }

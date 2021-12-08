@@ -473,6 +473,9 @@ namespace PlayerTags
                     case nameof(tag.TextColor):
                         DrawInheritable(nameof(tag.TextColor), tag.TextColor);
                         break;
+                    case nameof(tag.TextGlowColor):
+                        DrawInheritable(nameof(tag.TextGlowColor), tag.TextGlowColor);
+                        break;
                     case nameof(tag.IsTextItalic):
                         DrawInheritable(nameof(tag.IsTextItalic), tag.IsTextItalic);
                         break;

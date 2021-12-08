@@ -322,7 +322,17 @@ namespace PlayerTags
                     newPayloads.Add(new UIForegroundPayload(tag.TextColor.InheritedValue.Value));
                 }
 
+                if (tag.TextGlowColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIGlowPayload(tag.TextGlowColor.InheritedValue.Value));
+                }
+
                 newPayloads.Add(new TextPayload(text));
+
+                if (tag.TextGlowColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIGlowPayload(0));
+                }
 
                 if (tag.TextColor.InheritedValue != null)
                 {
