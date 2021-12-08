@@ -227,7 +227,6 @@ namespace PlayerTags
         {
             ImGui.PushID(tag.GetHashCode().ToString());
 
-
             // Build the tree node flags
             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.NoTreePushOnOpen | ImGuiTreeNodeFlags.SpanFullWidth | ImGuiTreeNodeFlags.AllowItemOverlap | ImGuiTreeNodeFlags.FramePadding;
 
@@ -246,19 +245,23 @@ namespace PlayerTags
                 flags |= ImGuiTreeNodeFlags.DefaultOpen;
             }
 
-
             // Render the tree node
+            var beforeItemPos = ImGui.GetCursorScreenPos();
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 3));
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
             bool isOpened = ImGui.TreeNodeEx($"{GetTreeItemName(tag)}###{tag.GetHashCode()}", flags);
             ImGui.PopStyleVar();
             ImGui.PopStyleVar();
+            var afterItemPos = ImGui.GetCursorScreenPos();
 
-            if (ImGui.IsItemClicked())
+            // Don't allow expanding the item to select the item
+            // Don't allow clicking on add/remove buttons to select the item
+            var deadzoneTopLeft = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X - 23, beforeItemPos.Y - 2);
+            var deadzoneBottomRight = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X + 2, afterItemPos.Y + 2);
+            if (!ImGui.IsItemToggledOpen() && !ImGui.IsMouseHoveringRect(deadzoneTopLeft, deadzoneBottomRight) && ImGui.IsItemClicked())
             {
                 Select(tag);
             }
-
 
             // Render the custom tag button
             if (tag == m_PluginData.AllCustomTags)
@@ -267,6 +270,8 @@ namespace PlayerTags
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
+                ImGui.PushStyleVar(ImGuiStyleVar.ItemInnerSpacing, new Vector2(0, 0));
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
                 if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString()))
@@ -284,6 +289,8 @@ namespace PlayerTags
                     Select(newTag);
                 }
                 ImGui.PopFont();
+                ImGui.PopStyleVar();
+                ImGui.PopStyleVar();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
@@ -302,6 +309,8 @@ namespace PlayerTags
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
+                ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
+                ImGui.PushStyleVar(ImGuiStyleVar.ItemInnerSpacing, new Vector2(0, 0));
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
                 if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString()))
@@ -313,6 +322,8 @@ namespace PlayerTags
                     Select(m_PluginData.AllCustomTags);
                 }
                 ImGui.PopFont();
+                ImGui.PopStyleVar();
+                ImGui.PopStyleVar();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
