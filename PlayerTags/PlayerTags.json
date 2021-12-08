@@ -1,7 +1,7 @@
 {
     "Author": "r00telement",
     "Name": "Player Tags",
-    "Description": "See tags for players in nameplates and chat, such as their role and job, or custom tags for players you know.",
+    "Description": "See player jobs and roles in nameplates and chat. Create custom tags and add them to players by right clicking them.",
     "Tags": [ "Jobs", "UI" ],
     "CategoryTags": [ "jobs", "UI" ],
     "RepoUrl": "https://github.com/r00telement/PlayerTags",
