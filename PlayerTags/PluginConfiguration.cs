@@ -17,7 +17,7 @@ namespace PlayerTags
         public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagContextMenuEnabled = true;
-        public bool IsShowInheritedPropertiesEnabled = false;
+        public bool IsShowInheritedPropertiesEnabled = true;
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();

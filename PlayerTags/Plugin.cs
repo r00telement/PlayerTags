@@ -216,6 +216,7 @@ namespace PlayerTags
         private void UiBuilder_OpenConfigUi()
         {
             m_PluginConfiguration.IsVisible = true;
+            m_PluginConfiguration.Save(m_PluginData);
         }
 
         private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)

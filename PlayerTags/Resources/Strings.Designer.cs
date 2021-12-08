@@ -133,7 +133,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable context menu options for custom tags.
+        ///   Looks up a localized string similar to Enable context menu integration.
         /// </summary>
         public static string Loc_IsCustomTagContextMenuEnabled {
             get {
@@ -889,7 +889,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text color.
+        ///   Looks up a localized string similar to Text glow color.
         /// </summary>
         public static string Loc_TextGlowColor {
             get {
@@ -900,9 +900,9 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Looks up a localized string similar to The glow color of the text in the tag..
         /// </summary>
-        public static string Loc_TextGlowolor_Description {
+        public static string Loc_TextGlowColor_Description {
             get {
-                return ResourceManager.GetString("Loc_TextGlowolor_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_TextGlowColor_Description", resourceCulture);
             }
         }
     }

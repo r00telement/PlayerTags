@@ -154,7 +154,7 @@
     <value>Expanded</value>
   </data>
   <data name="Loc_IsCustomTagContextMenuEnabled" xml:space="preserve">
-    <value>Enable context menu options for custom tags</value>
+    <value>Enable context menu integration</value>
   </data>
   <data name="Loc_IsCustomTagContextMenuEnabled_Description" xml:space="preserve">
     <value>When opening the player context menu, options will be available to add and remove custom tags for the selected player.</value>
