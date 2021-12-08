@@ -169,6 +169,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expanded.
+        /// </summary>
+        public static string Loc_IsExpanded {
+            get {
+                return ResourceManager.GetString("Loc_IsExpanded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Icon visible in chat.
         /// </summary>
         public static string Loc_IsIconVisibleInChat {

@@ -144,6 +144,9 @@
   <data name="Loc_Static_Format_AddTagToPlayer" xml:space="preserve">
     <value>Add '{0}' to {1}.</value>
   </data>
+  <data name="Loc_IsExpanded" xml:space="preserve">
+    <value>Expanded</value>
+  </data>
   <data name="Loc_IsCustomTagContextMenuEnabled" xml:space="preserve">
     <value>Enable context menu options for custom tags</value>
   </data>

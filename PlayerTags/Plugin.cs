@@ -139,68 +139,69 @@ namespace PlayerTags
 
         private void ContextMenu_OpenContextMenu(ContextMenuOpenArgs args)
         {
-            if (args.Text == null || !m_PluginConfiguration.IsCustomTagContextMenuEnabled)
+            if (!m_PluginConfiguration.IsCustomTagContextMenuEnabled || !CanContextMenuSupportTagOptions(args))
             {
                 return;
             }
 
-            string gameObjectName = args.Text.TextValue;
+            string gameObjectName = args.Text!.TextValue;
 
-            var removedTags = m_PluginData.CustomTags.Where(tag => !tag.IncludesGameObjectNameToApplyTo(gameObjectName));
-            var addTagItem = new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
+            var notAddedTags = m_PluginData.CustomTags.Where(tag => !tag.IncludesGameObjectNameToApplyTo(gameObjectName));
+            if (notAddedTags.Any())
             {
-                foreach (var removedTag in removedTags)
+                args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
                 {
-                    itemArgs.Items.Add(new NormalContextMenuItem(removedTag.Text.Value, (args =>
+                    foreach (var notAddedTag in notAddedTags)
                     {
-                        removedTag.AddGameObjectNameToApplyTo(gameObjectName);
-                    })));
-                }
-
-                //// TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
-                //if (args.ParentAddonName != "ChatLog")
-                //{
-                //    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
-                //}
-            }));
-
-            if (!removedTags.Any())
-            {
-                addTagItem.Enabled = false;
-            }
-
-            if (removedTags.Any())
-            {
-                args.Items.Add(addTagItem);
+                        itemArgs.Items.Add(new NormalContextMenuItem(notAddedTag.Text.Value, (args =>
+                        {
+                            notAddedTag.AddGameObjectNameToApplyTo(gameObjectName);
+                        })));
+                    }
+                })));
             }
 
             var addedTags = m_PluginData.CustomTags.Where(tag => tag.IncludesGameObjectNameToApplyTo(gameObjectName));
-
-            var removeTagItem = new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
-            {
-                foreach (var addedTag in addedTags)
-                {
-                    itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
-                    {
-                        addedTag.RemoveGameObjectNameToApplyTo(gameObjectName);
-                    })));
-                }
-
-                //// TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
-                //if (args.ParentAddonName != "ChatLog")
-                //{
-                //    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
-                //}
-            }));
-
-            if (!addedTags.Any())
-            {
-                removeTagItem.Enabled = false;
-            }
-
             if (addedTags.Any())
             {
-                args.Items.Add(removeTagItem);
+                args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
+                {
+                    foreach (var addedTag in addedTags)
+                    {
+                        itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
+                        {
+                            addedTag.RemoveGameObjectNameToApplyTo(gameObjectName);
+                        })));
+                    }
+                })));
+            }
+        }
+
+        private bool CanContextMenuSupportTagOptions(BaseContextMenuArgs args)
+        {
+            if (args.Text == null || args.ObjectWorld == 0 || args.ObjectWorld == 65535)
+            {
+                return false;
+            }
+
+            switch (args.ParentAddonName)
+            {
+                case null:
+                case "_PartyList":
+                case "ChatLog":
+                case "ContactList":
+                case "ContentMemberList":
+                case "CrossWorldLinkshell":
+                case "FreeCompany":
+                case "FriendList":
+                case "LookingForGroup":
+                case "LinkShell":
+                case "PartyMemberList":
+                case "SocialList":
+                    return true;
+
+                default:
+                    return false;
             }
         }
 
