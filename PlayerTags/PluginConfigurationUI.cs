@@ -559,7 +559,7 @@ namespace PlayerTags
             if (isDisabled)
             {
                 ImGui.SameLine();
-                ImGui.TextColored(new Vector4(0.66f, 0.5f, 0.5f, 1), Strings.Loc_Static_Inherited);
+                ImGui.Text(Strings.Loc_Static_Inherited);
             }
 
             if (isDisabled)
@@ -605,7 +605,7 @@ namespace PlayerTags
             if (isDisabled)
             {
                 ImGui.SameLine();
-                ImGui.TextColored(new Vector4(0.66f, 0.5f, 0.5f, 1), Strings.Loc_Static_Inherited);
+                ImGui.Text(Strings.Loc_Static_Inherited);
             }
 
             if (isDisabled)
@@ -676,7 +676,7 @@ namespace PlayerTags
             if (isDisabled)
             {
                 ImGui.SameLine();
-                ImGui.TextColored(new Vector4(0.66f, 0.5f, 0.5f, 1), Strings.Loc_Static_Inherited);
+                ImGui.Text(Strings.Loc_Static_Inherited);
             }
 
             if (isDisabled)
@@ -776,7 +776,7 @@ namespace PlayerTags
             if (isDisabled)
             {
                 ImGui.SameLine();
-                ImGui.TextColored(new Vector4(0.66f, 0.5f, 0.5f, 1), Strings.Loc_Static_Inherited);
+                ImGui.Text(Strings.Loc_Static_Inherited);
             }
 
             if (isDisabled)
