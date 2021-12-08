@@ -232,6 +232,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selected.
+        /// </summary>
+        public static string Loc_IsSelected {
+            get {
+                return ResourceManager.GetString("Loc_IsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text italic.
         /// </summary>
         public static string Loc_IsTextItalic {
@@ -565,15 +574,6 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
-        /// </summary>
-        public static string Loc_Static_AddCustomTag {
-            get {
-                return ResourceManager.GetString("Loc_Static_AddCustomTag", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add a new custom tag..
         /// </summary>
         public static string Loc_Static_AddCustomTag_Description {
@@ -637,11 +637,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Inherited&gt;.
+        /// </summary>
+        public static string Loc_Static_Inherited {
+            get {
+                return ResourceManager.GetString("Loc_Static_Inherited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nameplates.
         /// </summary>
         public static string Loc_Static_Nameplates {
             get {
                 return ResourceManager.GetString("Loc_Static_Nameplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New tag.
+        /// </summary>
+        public static string Loc_Static_NewTag {
+            get {
+                return ResourceManager.GetString("Loc_Static_NewTag", resourceCulture);
             }
         }
         
@@ -669,15 +687,6 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_PluginName {
             get {
                 return ResourceManager.GetString("Loc_Static_PluginName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove.
-        /// </summary>
-        public static string Loc_Static_RemoveCustomTag {
-            get {
-                return ResourceManager.GetString("Loc_Static_RemoveCustomTag", resourceCulture);
             }
         }
         

@@ -40,6 +40,21 @@ namespace PlayerTags
 
         public List<Tag> Children { get; } = new List<Tag>();
 
+        public IEnumerable<Tag> Descendents
+        {
+            get
+            {
+                IEnumerable<Tag> descendents = Children.Prepend(this);
+
+                foreach (var child in Children)
+                {
+                    descendents = descendents.Union(child.Descendents);
+                }
+
+                return descendents.Distinct();
+            }
+        }
+
         private Dictionary<string, IInheritable>? m_Inheritables = null;
         public Dictionary<string, IInheritable> Inheritables
         {
@@ -64,10 +79,8 @@ namespace PlayerTags
             }
         }
 
-        public InheritableValue<bool> IsExpanded = new InheritableValue<bool>(false)
-        {
-            Behavior = InheritableBehavior.Enabled
-        };
+        public InheritableValue<bool> IsSelected = new InheritableValue<bool>(false);
+        public InheritableValue<bool> IsExpanded = new InheritableValue<bool>(false);
 
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
         public InheritableValue<bool> IsIconVisibleInChat = new InheritableValue<bool>(false);

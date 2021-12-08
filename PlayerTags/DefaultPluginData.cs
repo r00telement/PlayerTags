@@ -29,6 +29,7 @@ namespace PlayerTags
         {
             AllTagsChanges = new Tag(new LiteralPluginString(""))
             {
+                IsSelected = true,
                 IsExpanded = true,
                 TagPositionInChat = TagPosition.Before,
                 TagPositionInNameplates = TagPosition.Replace,
@@ -38,6 +39,7 @@ namespace PlayerTags
 
             AllRoleTagsChanges = new Tag(new LiteralPluginString(""))
             {
+                IsSelected = false,
                 IsExpanded = true,
                 IsIconVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
@@ -45,28 +47,32 @@ namespace PlayerTags
 
             RoleTagsChanges[Role.LandHand] = new Tag(new LiteralPluginString(""))
             {
-                IsExpanded = true,
+                IsSelected = false,
+                IsExpanded = false,
                 Icon = BitmapFontIcon.Crafter,
                 TextColor = 3,
             }.GetChanges();
 
             RoleTagsChanges[Role.Tank] = new Tag(new LiteralPluginString(""))
             {
-                IsExpanded = true,
+                IsSelected = false,
+                IsExpanded = false,
                 Icon = BitmapFontIcon.Tank,
                 TextColor = 546,
             }.GetChanges();
 
             RoleTagsChanges[Role.Healer] = new Tag(new LiteralPluginString(""))
             {
-                IsExpanded = true,
+                IsSelected = false,
+                IsExpanded = false,
                 Icon = BitmapFontIcon.Healer,
                 TextColor = 43,
             }.GetChanges();
 
             RoleTagsChanges[Role.DPS] = new Tag(new LiteralPluginString(""))
             {
-                IsExpanded = true,
+                IsSelected = false,
+                IsExpanded = false,
                 Icon = BitmapFontIcon.DPS,
                 TextColor = 508,
             }.GetChanges();
@@ -87,6 +93,8 @@ namespace PlayerTags
                     {
                         JobTagsChanges[classJob.Abbreviation.RawString] = new Tag(new LiteralPluginString(""))
                         {
+                            IsSelected = false,
+                            IsExpanded = false,
                             Text = classJob.Abbreviation.RawString,
                         }.GetChanges();
                     }
@@ -95,6 +103,7 @@ namespace PlayerTags
 
             AllCustomTagsChanges = new Tag(new LiteralPluginString(""))
             {
+                IsSelected = false,
                 IsExpanded = true,
                 IsTextVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
