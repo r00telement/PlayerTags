@@ -247,7 +247,15 @@ namespace PlayerTags
             var beforeItemPos = ImGui.GetCursorScreenPos();
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 3));
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
+            if (tag.TextColor.InheritedValue != null)
+            {
+                ImGui.PushStyleColor(ImGuiCol.Text, UIColorHelper.ToColor(tag.TextColor.InheritedValue.Value));
+            }
             bool isOpened = ImGui.TreeNodeEx($"{GetTreeItemName(tag)}###{tag.GetHashCode()}", flags);
+            if (tag.TextColor.InheritedValue != null)
+            {
+                ImGui.PopStyleColor();
+            }
             ImGui.PopStyleVar();
             ImGui.PopStyleVar();
             var afterItemPos = ImGui.GetCursorScreenPos();
