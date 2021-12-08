@@ -8,6 +8,7 @@ using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Resources;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
@@ -77,6 +78,7 @@ namespace PlayerTags
                 ImGui.Spacing();
                 DrawHeading(Strings.Loc_Static_Tags);
                 ImGui.TreePush();
+                DrawCheckbox(nameof(m_PluginConfiguration.IsShowInheritedPropertiesEnabled), true, ref m_PluginConfiguration.IsShowInheritedPropertiesEnabled, () => m_PluginConfiguration.Save(m_PluginData));
                 ImGui.BeginGroup();
                 ImGui.Columns(2);
 
@@ -225,6 +227,8 @@ namespace PlayerTags
         {
             ImGui.PushID(tag.GetHashCode().ToString());
 
+
+            // Build the tree node flags
             ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags.OpenOnArrow | ImGuiTreeNodeFlags.NoTreePushOnOpen | ImGuiTreeNodeFlags.SpanFullWidth | ImGuiTreeNodeFlags.AllowItemOverlap | ImGuiTreeNodeFlags.FramePadding;
 
             if (!tag.Children.Any())
@@ -242,6 +246,8 @@ namespace PlayerTags
                 flags |= ImGuiTreeNodeFlags.DefaultOpen;
             }
 
+
+            // Render the tree node
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 3));
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
             bool isOpened = ImGui.TreeNodeEx($"{GetTreeItemName(tag)}###{tag.GetHashCode()}", flags);
@@ -253,19 +259,15 @@ namespace PlayerTags
                 Select(tag);
             }
 
-            // Add custom tag button
+
+            // Render the custom tag button
             if (tag == m_PluginData.AllCustomTags)
             {
                 ImGui.SameLine();
-
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
                 ImGui.PushFont(UiBuilder.IconFont);
-
-                ImGui.GetCursorPos();
-                ImGui.GetContentRegionAvail();
-
                 ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
                 if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString()))
                 {
@@ -281,7 +283,6 @@ namespace PlayerTags
 
                     Select(newTag);
                 }
-
                 ImGui.PopFont();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
@@ -294,16 +295,14 @@ namespace PlayerTags
             }
 
 
-            // Remove custom tag button
+            // Render the remove custom tag button
             if (m_PluginData.CustomTags.Contains(tag))
             {
                 ImGui.SameLine();
-
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
                 ImGui.PushFont(UiBuilder.IconFont);
-
                 ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
                 if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString()))
                 {
@@ -313,7 +312,6 @@ namespace PlayerTags
 
                     Select(m_PluginData.AllCustomTags);
                 }
-
                 ImGui.PopFont();
                 ImGui.PopStyleColor();
                 ImGui.PopStyleColor();
@@ -324,16 +322,25 @@ namespace PlayerTags
                     ImGui.SetTooltip(Strings.Loc_Static_RemoveCustomTag_Description);
                 }
             }
+                        
+
+            // Save the node expansion state
+            if (isOpened && tag.Children.Any() && !tag.IsExpanded.Value)
+            {
+                tag.IsExpanded.Value = true;
+                m_PluginConfiguration.Save(m_PluginData);
+            }
+            else if (!isOpened && tag.IsExpanded.Value)
+            {
+                tag.IsExpanded.Value = false;
+                m_PluginConfiguration.Save(m_PluginData);
+            }
 
 
+
+            // Render the child nodes
             if (isOpened)
             {
-                if (tag.Children.Any() && !tag.IsExpanded.Value)
-                {
-                    tag.IsExpanded.Value = true;
-                    m_PluginConfiguration.Save(m_PluginData);
-                }
-
                 ImGui.TreePush();
                 foreach (var childTag in tag.Children.OrderBy(child => GetTreeItemName(child)).ToArray())
                 {
@@ -341,11 +348,7 @@ namespace PlayerTags
                 }
                 ImGui.TreePop();
             }
-            else if (tag.IsExpanded.Value)
-            {
-                tag.IsExpanded.Value = false;
-                m_PluginConfiguration.Save(m_PluginData);
-            }
+
 
             ImGui.PopID();
         }
@@ -353,14 +356,10 @@ namespace PlayerTags
         public void DrawControls(Tag tag)
         {
             ImGui.PushID(tag.GetHashCode().ToString());
-
             ImGui.TreePush();
-            ImGui.BeginGroup();
 
 
-
-            ImGui.BeginGroup();
-            var addButtonSize = new Vector2(23, 23);
+            // Render the add property override button and popup
             if (ImGui.IsPopupOpen("AddPopup"))
             {
                 ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.2f, 0.6f, 0.2f, 1));
@@ -375,7 +374,7 @@ namespace PlayerTags
             ImGui.Text("");
 
             ImGui.PushFont(UiBuilder.IconFont);
-            if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString(), addButtonSize))
+            if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString(), new Vector2(23, 23)))
             {
                 ImGui.OpenPopup("AddPopup");
             }
@@ -441,12 +440,16 @@ namespace PlayerTags
             {
                 ImGui.SetTooltip(Strings.Loc_Static_AddPropertyOverride_Description);
             }
-            ImGui.EndGroup();
 
 
+            // Render all the property overrides, and optionally allow the inherited properties to be rendered
+            IEnumerable<KeyValuePair<string, IInheritable>> inheritables = tag.Inheritables;
+            if (!m_PluginConfiguration.IsShowInheritedPropertiesEnabled)
+            {
+                inheritables = inheritables.Where(inheritable => inheritable.Value.Behavior != InheritableBehavior.Inherit);
+            }
 
-
-            var selectedInheritables = tag.Inheritables/*.Where(inheritable => inheritable.Value.Behavior != InheritableBehavior.Inherit)*/.ToDictionary(item => item.Key, item => item.Value);
+            var selectedInheritables = inheritables.ToDictionary(item => item.Key, item => item.Value);
             var selectedInheritablesWithLocalizedNames = selectedInheritables
                 .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
                 .OrderBy(item => item.LocalizedName);
@@ -496,10 +499,12 @@ namespace PlayerTags
                 }
             }
 
+
+            ImGui.TreePop();
             ImGui.PopID();
         }
 
-        private void DrawRemoveButton(IInheritable inheritable)
+        private void DrawRemovePropertyOverrideButton(IInheritable inheritable)
         {
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 0));
             ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
@@ -554,7 +559,7 @@ namespace PlayerTags
                 });
 
                 ImGui.SameLine();
-                DrawRemoveButton(inheritable);
+                DrawRemovePropertyOverrideButton(inheritable);
             }
 
             ImGui.EndChild();
@@ -625,7 +630,7 @@ namespace PlayerTags
                 }
 
                 ImGui.SameLine();
-                DrawRemoveButton(inheritable);
+                DrawRemovePropertyOverrideButton(inheritable);
             }
 
             ImGui.EndChild();
@@ -724,7 +729,7 @@ namespace PlayerTags
                 }
 
                 ImGui.SameLine();
-                DrawRemoveButton(inheritable);
+                DrawRemovePropertyOverrideButton(inheritable);
             }
 
             ImGui.EndChild();
@@ -796,7 +801,7 @@ namespace PlayerTags
                 }
 
                 ImGui.SameLine();
-                DrawRemoveButton(inheritable);
+                DrawRemovePropertyOverrideButton(inheritable);
             }
 
             ImGui.EndChild();

@@ -241,6 +241,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show inherited properties.
+        /// </summary>
+        public static string Loc_IsShowInheritedPropertiesEnabled {
+            get {
+                return ResourceManager.GetString("Loc_IsShowInheritedPropertiesEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inherited properties from parent tags will be shown in the property override editor..
+        /// </summary>
+        public static string Loc_IsShowInheritedPropertiesEnabled_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsShowInheritedPropertiesEnabled_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text italic.
         /// </summary>
         public static string Loc_IsTextItalic {
@@ -583,7 +601,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add an override..
+        ///   Looks up a localized string similar to Add a property override..
         /// </summary>
         public static string Loc_Static_AddPropertyOverride_Description {
             get {
@@ -700,7 +718,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove this override. The value will be inherited..
+        ///   Looks up a localized string similar to Remove this property override. The value will be inherited from the parent tag..
         /// </summary>
         public static string Loc_Static_RemovePropertyOverride_Description {
             get {
