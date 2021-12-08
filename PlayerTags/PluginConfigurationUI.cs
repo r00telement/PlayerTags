@@ -41,11 +41,19 @@ namespace PlayerTags
                 ImGui.TextWrapped(Strings.Loc_Static_WarningMessage);
                 ImGui.PopStyleColor();
 
+
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
                 DrawHeading(Strings.Loc_Static_General);
                 ImGui.TreePush();
                 DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
                 ImGui.TreePop();
 
+
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
                 DrawHeading(Strings.Loc_Static_Nameplates);
                 ImGui.TreePush();
                 DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateFreeCompanyVisibility, () => m_PluginConfiguration.Save(m_PluginData));
@@ -53,18 +61,28 @@ namespace PlayerTags
                 DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateTitlePosition, () => m_PluginConfiguration.Save(m_PluginData));
                 ImGui.TreePop();
 
+
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
                 DrawHeading(Strings.Loc_Static_Development);
                 ImGui.TreePush();
                 DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => m_PluginConfiguration.Save(m_PluginData));
                 ImGui.TreePop();
 
 
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
                 DrawHeading(Strings.Loc_Static_Tags);
                 ImGui.TreePush();
                 Draw(m_PluginData.AllTags);
                 ImGui.TreePop();
 
 
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
                 DrawHeading(Strings.Loc_Static_PartyAssign);
                 ImGui.TreePush();
                 if (ImGui.BeginTable("##PartyAssignTable", 1 + m_PluginData.CustomTags.Count))
@@ -80,13 +98,21 @@ namespace PlayerTags
                     }
                     ImGui.TableHeadersRow();
 
-                    var drawPartyMember = (string playerName) =>
+                    var drawPartyMember = (string playerName, int rowIndex) =>
                     {
                         ImGui.PushID(playerName);
 
                         ImGui.TableNextRow();
 
+                        if (rowIndex % 2 != 0)
+                        {
+                            var backgroundColor = ImGui.ColorConvertFloat4ToU32(new Vector4(1, 1, 1, 0.05f));
+                            ImGui.TableSetBgColor(ImGuiTableBgTarget.RowBg1, backgroundColor);
+                        }
+
                         ImGui.TableNextColumn();
+
+                        ImGui.AlignTextToFramePadding();
                         ImGui.Text(playerName);
 
                         foreach (Tag customTag in m_PluginData.CustomTags)
@@ -96,8 +122,8 @@ namespace PlayerTags
                             ImGui.TableNextColumn();
 
                             bool isTagAssigned = customTag.IncludesGameObjectNameToApplyTo(playerName);
-                            
-                            DrawCheckbox("IsEnabled", false, ref isTagAssigned, () =>
+
+                            DrawSimpleCheckbox(string.Format(Strings.Loc_Static_Format_AddTagToPlayer, customTag.Text.InheritedValue, playerName), ref isTagAssigned, () =>
                             {
                                 if (isTagAssigned)
                                 {
@@ -117,19 +143,27 @@ namespace PlayerTags
                         ImGui.PopID();
                     };
 
+                    int rowIndex = 0;
                     foreach (var partyMember in m_PartyList)
                     {
-                        drawPartyMember(partyMember.Name.TextValue);
+                        drawPartyMember(partyMember.Name.TextValue, rowIndex);
+                        ++rowIndex;
                     }
 
                     if (m_PartyList.Length == 0 && m_ClientState.LocalPlayer != null)
                     {
-                        drawPartyMember(m_ClientState.LocalPlayer.Name.TextValue);
+                        drawPartyMember(m_ClientState.LocalPlayer.Name.TextValue, 0);
                     }
 
                     ImGui.EndTable();
                 }
                 ImGui.TreePop();
+
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
+                ImGui.Spacing();
 
                 ImGui.End();
             }
@@ -182,6 +216,60 @@ namespace PlayerTags
                 ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
 
                 ImGui.Text("");
+
+                // Add custom tag button
+                if (tag == m_PluginData.AllCustomTags)
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
+                    if (ImGui.Button(Strings.Loc_Static_AddCustomTag))
+                    {
+                        var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
+                        {
+                            IsExpanded = true,
+                            Text = "",
+                            GameObjectNamesToApplyTo = ""
+                        };
+
+                        m_PluginData.CustomTags.Add(newTag);
+                        newTag.Parent = m_PluginData.AllCustomTags;
+                        m_PluginConfiguration.Save(m_PluginData);
+                    }
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip(Strings.Loc_Static_AddCustomTag_Description);
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+
+                    ImGui.SameLine();
+                }
+
+                // Remove custom tag button
+                if (m_PluginData.CustomTags.Contains(tag))
+                {
+                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
+                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
+                    if (ImGui.Button(Strings.Loc_Static_RemoveCustomTag))
+                    {
+                        m_PluginData.AllCustomTags.Children.Remove(tag);
+                        m_PluginData.CustomTags.Remove(tag);
+                        m_PluginConfiguration.Save(m_PluginData);
+                    }
+                    if (ImGui.IsItemHovered())
+                    {
+                        ImGui.SetTooltip(Strings.Loc_Static_RemoveCustomTag_Description);
+                    }
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+                    ImGui.PopStyleColor();
+
+                    ImGui.SameLine();
+                }
+
                 if (ImGui.Button("+", addButtonSize))
                 {
                     ImGui.OpenPopup("AddPopup");
@@ -247,6 +335,7 @@ namespace PlayerTags
                 {
                     ImGui.SetTooltip(Strings.Loc_Static_AddPropertyOverride_Description);
                 }
+
                 ImGui.EndGroup();
 
                 var selectedInheritables = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior != InheritableBehavior.Inherit).ToDictionary(item => item.Key, item => item.Value);
@@ -299,54 +388,9 @@ namespace PlayerTags
                     }
                 }
 
-                if (m_PluginData.CustomTags.Contains(tag))
-                {
-                    ImGui.SameLine();
-                    ImGui.BeginGroup();
-                    ImGui.Indent();
-                    ImGui.Text("");
-
-                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
-                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
-                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
-                    if (ImGui.Button(Strings.Loc_Static_RemoveCustomTag))
-                    {
-                        m_PluginData.AllCustomTags.Children.Remove(tag);
-                        m_PluginData.CustomTags.Remove(tag);
-                        m_PluginConfiguration.Save(m_PluginData);
-                    }
-                    ImGui.PopStyleColor();
-                    ImGui.PopStyleColor();
-                    ImGui.PopStyleColor();
-                    ImGui.EndGroup();
-                }
-
                 foreach (var childTag in tag.Children.ToArray())
                 {
                     Draw(childTag);
-                }
-
-                if (tag == m_PluginData.AllCustomTags)
-                {
-                    ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.1f, 0.3f, 0.1f, 1));
-                    ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.2f, 0.6f, 0.2f, 1));
-                    ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
-                    if (ImGui.Button(Strings.Loc_Static_AddCustomTag))
-                    {
-                        var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
-                        {
-                            IsExpanded = true,
-                            Text = "",
-                            GameObjectNamesToApplyTo = ""
-                        };
-
-                        m_PluginData.CustomTags.Add(newTag);
-                        newTag.Parent = m_PluginData.AllCustomTags;
-                        m_PluginConfiguration.Save(m_PluginData);
-                    }
-                    ImGui.PopStyleColor();
-                    ImGui.PopStyleColor();
-                    ImGui.PopStyleColor();
                 }
 
                 ImGui.EndGroup();
@@ -611,6 +655,19 @@ namespace PlayerTags
             if (ImGui.IsItemHovered())
             {
                 ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            }
+        }
+
+        private void DrawSimpleCheckbox(string localizedString, ref bool isChecked, System.Action changed)
+        {
+            if (ImGui.Checkbox($"###{localizedString}", ref isChecked))
+            {
+                changed();
+            }
+
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip(localizedString);
             }
         }
 

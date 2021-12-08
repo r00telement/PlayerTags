@@ -157,11 +157,11 @@ namespace PlayerTags
                     })));
                 }
 
-                // TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
-                if (args.ParentAddonName != "ChatLog")
-                {
-                    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
-                }
+                //// TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
+                //if (args.ParentAddonName != "ChatLog")
+                //{
+                //    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
+                //}
             }));
 
             if (!removedTags.Any())
@@ -186,11 +186,11 @@ namespace PlayerTags
                     })));
                 }
 
-                // TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
-                if (args.ParentAddonName != "ChatLog")
-                {
-                    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
-                }
+                //// TODO: Temp hack because when opening somewhere other than the chat log, the last added item for some reason is added to the <Return button.
+                //if (args.ParentAddonName != "ChatLog")
+                //{
+                //    itemArgs.Items.Add(new NormalContextMenuItem("ReturnDummy", (args => { })));
+                //}
             }));
 
             if (!addedTags.Any())

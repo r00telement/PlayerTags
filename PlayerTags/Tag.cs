@@ -94,7 +94,7 @@ namespace PlayerTags
                     return new string[] { };
                 }
 
-                return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',');
+                return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',').Where(item => !string.IsNullOrEmpty(item)).ToArray();
             }
         }
 
@@ -127,7 +127,7 @@ namespace PlayerTags
 
             newSplitGameObjectNamesToApplyTo.Add(gameObjectName);
 
-            GameObjectNamesToApplyTo = string.Join(";", newSplitGameObjectNamesToApplyTo);
+            GameObjectNamesToApplyTo = string.Join(",", newSplitGameObjectNamesToApplyTo);
         }
 
         public void RemoveGameObjectNameToApplyTo(string gameObjectName)
@@ -142,7 +142,7 @@ namespace PlayerTags
             var index = Array.IndexOf(CleanGameObjectNamesToApplyTo, gameObjectName.ToLower());
             newSplitGameObjectNamesToApplyTo.RemoveAt(index);
 
-            GameObjectNamesToApplyTo = string.Join(";", newSplitGameObjectNamesToApplyTo);
+            GameObjectNamesToApplyTo = string.Join(",", newSplitGameObjectNamesToApplyTo);
         }
 
         public Dictionary<string, InheritableData> GetChanges(Dictionary<string, InheritableData>? defaultChanges = null)

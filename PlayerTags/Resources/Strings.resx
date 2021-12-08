@@ -127,10 +127,10 @@
     <value>General</value>
   </data>
   <data name="Loc_Static_PartyAssign" xml:space="preserve">
-    <value>Assign custom tags to party</value>
+    <value>Add custom tags to party members</value>
   </data>
   <data name="Loc_Static_PlayerName" xml:space="preserve">
-    <value>Player name</value>
+    <value>Player</value>
   </data>
   <data name="Loc_Static_ContextMenu_AddTag" xml:space="preserve">
     <value>Add tag</value>
@@ -140,6 +140,9 @@
   </data>
   <data name="Loc_Static_Nameplates" xml:space="preserve">
     <value>Nameplates</value>
+  </data>
+  <data name="Loc_Static_Format_AddTagToPlayer" xml:space="preserve">
+    <value>Add '{0}' to {1}.</value>
   </data>
   <data name="Loc_IsCustomTagContextMenuEnabled" xml:space="preserve">
     <value>Enable context menu options for custom tags</value>
@@ -274,12 +277,17 @@
     <value>Remove this override. The value will be inherited.</value>
   </data>
   <data name="Loc_Static_AddCustomTag" xml:space="preserve">
-    <value>Add a custom tag</value>
+    <value>Add</value>
+  </data>
+  <data name="Loc_Static_AddCustomTag_Description" xml:space="preserve">
+    <value>Add a new custom tag.</value>
   </data>
   <data name="Loc_Static_RemoveCustomTag" xml:space="preserve">
-    <value>Remove this custom tag</value>
+    <value>Remove</value>
   </data>
-
+  <data name="Loc_Static_RemoveCustomTag_Description" xml:space="preserve">
+    <value>Remove this custom tag.</value>
+  </data>
   <data name="Loc_Icon" xml:space="preserve">
     <value>Icon</value>
   </data>

@@ -556,11 +556,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a custom tag.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Loc_Static_AddCustomTag {
             get {
                 return ResourceManager.GetString("Loc_Static_AddCustomTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new custom tag..
+        /// </summary>
+        public static string Loc_Static_AddCustomTag_Description {
+            get {
+                return ResourceManager.GetString("Loc_Static_AddCustomTag_Description", resourceCulture);
             }
         }
         
@@ -601,6 +610,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add &apos;{0}&apos; to {1}..
+        /// </summary>
+        public static string Loc_Static_Format_AddTagToPlayer {
+            get {
+                return ResourceManager.GetString("Loc_Static_Format_AddTagToPlayer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General.
         /// </summary>
         public static string Loc_Static_General {
@@ -619,7 +637,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assign custom tags to party.
+        ///   Looks up a localized string similar to Add custom tags to party members.
         /// </summary>
         public static string Loc_Static_PartyAssign {
             get {
@@ -628,7 +646,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Player name.
+        ///   Looks up a localized string similar to Player.
         /// </summary>
         public static string Loc_Static_PlayerName {
             get {
@@ -646,11 +664,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove this custom tag.
+        ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Loc_Static_RemoveCustomTag {
             get {
                 return ResourceManager.GetString("Loc_Static_RemoveCustomTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove this custom tag..
+        /// </summary>
+        public static string Loc_Static_RemoveCustomTag_Description {
+            get {
+                return ResourceManager.GetString("Loc_Static_RemoveCustomTag_Description", resourceCulture);
             }
         }
         
