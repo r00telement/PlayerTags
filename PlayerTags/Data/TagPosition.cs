@@ -1,4 +1,4 @@
-﻿namespace PlayerTags
+﻿namespace PlayerTags.Data
 {
     public enum TagPosition
     {

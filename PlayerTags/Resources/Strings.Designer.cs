@@ -135,18 +135,18 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Context menu integration.
         /// </summary>
-        public static string Loc_IsCustomTagContextMenuEnabled {
+        public static string Loc_IsCustomTagsContextMenuEnabled {
             get {
-                return ResourceManager.GetString("Loc_IsCustomTagContextMenuEnabled", resourceCulture);
+                return ResourceManager.GetString("Loc_IsCustomTagsContextMenuEnabled", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Options will be available in context menus for adding and removing custom tags from players..
         /// </summary>
-        public static string Loc_IsCustomTagContextMenuEnabled_Description {
+        public static string Loc_IsCustomTagsContextMenuEnabled_Description {
             get {
-                return ResourceManager.GetString("Loc_IsCustomTagContextMenuEnabled_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsCustomTagsContextMenuEnabled_Description", resourceCulture);
             }
         }
         

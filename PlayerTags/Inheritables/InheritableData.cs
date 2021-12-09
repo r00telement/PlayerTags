@@ -2,7 +2,7 @@
 using Newtonsoft.Json.Converters;
 using System;
 
-namespace PlayerTags
+namespace PlayerTags.Inheritables
 {
     [Serializable]
     public struct InheritableData

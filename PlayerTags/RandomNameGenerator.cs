@@ -10,31 +10,64 @@ namespace PlayerTags
     /// <summary>
     /// Generates names based on an existing list of words.
     /// </summary>
-    public class RandomNameGenerator
+    public static class RandomNameGenerator
     {
-        private const string c_AdjectivesPath = "Resources/Words/Adjectives.txt";
-        private string[]? m_Adjectives;
-
-        private const string c_NounsPath = "Resources/Words/Nouns.txt";
-        private string[]? m_Nouns;
-
-        private Dictionary<int, string> m_GeneratedNames = new Dictionary<int, string>();
-
-        private string? PluginDirectory
+        private static string? PluginDirectory
         {
             get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
         }
 
-        public RandomNameGenerator()
+        private const string c_AdjectivesPath = "Resources/Words/Adjectives.txt";
+        private static string[]? s_Adjectives;
+        private static string[] Adjectives
         {
-            try
+            get
             {
-                m_Adjectives = File.ReadAllLines($"{PluginDirectory}/{c_AdjectivesPath}");
-                m_Nouns = File.ReadAllLines($"{PluginDirectory}/{c_NounsPath}");
+                if (s_Adjectives == null)
+                {
+                    try
+                    {
+                        s_Adjectives = File.ReadAllLines($"{PluginDirectory}/{c_AdjectivesPath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        PluginLog.Error(ex, $"RandomNameGenerator failed to read adjectives");
+                    }
+                }
+
+                if (s_Adjectives != null)
+                {
+                    return s_Adjectives;
+                }
+
+                return new string[] { };
             }
-            catch (Exception ex)
+        }
+
+        private const string c_NounsPath = "Resources/Words/Nouns.txt";
+        private static string[]? s_Nouns;
+        private static string[] Nouns
+        {
+            get
             {
-                PluginLog.Error(ex, $"RandomNameGenerator failed to create");
+                if (s_Nouns == null)
+                {
+                    try
+                    {
+                        s_Nouns = File.ReadAllLines($"{PluginDirectory}/{c_NounsPath}");
+                    }
+                    catch (Exception ex)
+                    {
+                        PluginLog.Error(ex, $"RandomNameGenerator failed to read nouns");
+                    }
+                }
+
+                if (s_Nouns != null)
+                {
+                    return s_Nouns;
+                }
+
+                return new string[] { };
             }
         }
 
@@ -43,27 +76,22 @@ namespace PlayerTags
         /// </summary>
         /// <param name="str">The string to generate a name for.</param>
         /// <returns>A generated name.</returns>
-        public string? GetGeneratedName(string str)
+        public static string? Generate(string str)
         {
-            if (m_Adjectives == null || m_Nouns == null)
+            if (Adjectives == null || Nouns == null)
             {
                 return null;
             }
 
             int hash = GetDeterministicHashCode(str);
 
-            if (!m_GeneratedNames.ContainsKey(hash))
-            {
-                // Use the seed as the hash so that player always gets the same name
-                Random random = new Random(hash);
-                var adjective = m_Adjectives[random.Next(0, m_Adjectives.Length)];
-                var noun = m_Nouns[random.Next(0, m_Nouns.Length)];
-                var generatedName = $"{adjective} {noun}";
+            // Use the seed as the hash so the same player always gets the same name
+            Random random = new Random(hash);
+            var adjective = Adjectives[random.Next(0, Adjectives.Length)];
+            var noun = Nouns[random.Next(0, Nouns.Length)];
+            var generatedName = $"{adjective} {noun}";
 
-                m_GeneratedNames[hash] = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(generatedName);
-            }
-
-            return m_GeneratedNames[hash];
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(generatedName);
         }
 
         /// <summary>

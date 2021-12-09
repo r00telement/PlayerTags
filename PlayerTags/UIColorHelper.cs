@@ -1,5 +1,4 @@
-﻿using Dalamud.Data;
-using ImGuiNET;
+﻿using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
@@ -28,13 +27,47 @@ namespace PlayerTags
             }
         }
 
-        private static UIColor[] s_UIColors = new UIColor[] { };
+        private static UIColor[] s_UIColors = null!;
 
-        public static IEnumerable<UIColor> UIColors { get { return s_UIColors; } }
-
-        public static void Initialize(DataManager dataManager)
+        public static IEnumerable<UIColor> UIColors
         {
-            var uiColors = dataManager.GetExcelSheet<UIColor>();
+            get
+            {
+                if (s_UIColors == null)
+                {
+                    s_UIColors = CreateUIColors();
+                }
+
+                return s_UIColors;
+            }
+        }
+
+        public static Vector4 ToColor(UIColor uiColor)
+        {
+            var uiColorBytes = BitConverter.GetBytes(uiColor.UIForeground);
+            return
+                new Vector4((float)uiColorBytes[3] / 255,
+                (float)uiColorBytes[2] / 255,
+                (float)uiColorBytes[1] / 255,
+                (float)uiColorBytes[0] / 255);
+        }
+
+        public static Vector4 ToColor(ushort colorId)
+        {
+            foreach (var uiColor in UIColors)
+            {
+                if ((ushort)uiColor.RowId == colorId)
+                {
+                    return ToColor(uiColor);
+                }
+            }
+
+            return new Vector4();
+        }
+
+        private static UIColor[] CreateUIColors()
+        {
+            var uiColors = PluginServices.DataManager.GetExcelSheet<UIColor>();
             if (uiColors != null)
             {
                 var filteredUIColors = new List<UIColor>(uiColors.Distinct(new UIColorComparer()).Where(uiColor => uiColor.UIForeground != 0 && uiColor.UIForeground != 255));
@@ -67,31 +100,10 @@ namespace PlayerTags
                     return 0;
                 });
 
-                s_UIColors = filteredUIColors.ToArray();
-            }
-        }
-
-        public static Vector4 ToColor(UIColor uiColor)
-        {
-            var uiColorBytes = BitConverter.GetBytes(uiColor.UIForeground);
-            return
-                new Vector4((float)uiColorBytes[3] / 255,
-                (float)uiColorBytes[2] / 255,
-                (float)uiColorBytes[1] / 255,
-                (float)uiColorBytes[0] / 255);
-        }
-
-        public static Vector4 ToColor(ushort colorId)
-        {
-            foreach (var uiColor in UIColors)
-            {
-                if ((ushort)uiColor.RowId == colorId)
-                {
-                    return ToColor(uiColor);
-                }
+                return filteredUIColors.ToArray();
             }
 
-            return new Vector4();
+            return new UIColor[] { };
         }
     }
 }

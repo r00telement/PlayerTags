@@ -1,7 +1,7 @@
 ﻿using Dalamud.Logging;
 using System;
 
-namespace PlayerTags
+namespace PlayerTags.Inheritables
 {
     public class InheritableValue<T> : IInheritable
         where T : struct

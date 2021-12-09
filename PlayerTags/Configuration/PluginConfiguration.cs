@@ -1,11 +1,13 @@
 ﻿using Dalamud.Configuration;
 using Dalamud.Plugin;
 using Newtonsoft.Json;
+using PlayerTags.Data;
+using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PlayerTags
+namespace PlayerTags.Configuration
 {
     [Serializable]
     public class PluginConfiguration : IPluginConfiguration
@@ -16,7 +18,7 @@ namespace PlayerTags
         public NameplateTitleVisibility NameplateTitleVisibility = NameplateTitleVisibility.WhenHasTags;
         public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
         public bool IsPlayerNameRandomlyGenerated = false;
-        public bool IsCustomTagContextMenuEnabled = true;
+        public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]

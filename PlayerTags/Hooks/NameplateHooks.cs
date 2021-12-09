@@ -1,52 +1,42 @@
 ﻿using Dalamud.Game;
-using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.Gui;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Hooking;
 using Dalamud.Logging;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace PlayerTags
+namespace PlayerTags.Hooks
 {
-    public class PluginHooks : IDisposable
+    public class NameplateHooks : IDisposable
     {
         private class PluginAddressResolver : BaseAddressResolver
         {
-            private const string SetNameplateSignature = "48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2";
-            internal IntPtr SetNameplatePtr;
+            private const string SetPlayerNameplateSignature = "48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2";
+            public IntPtr SetPlayerNameplatePtr { get; private set; }
 
             protected override void Setup64Bit(SigScanner scanner)
             {
-                SetNameplatePtr = scanner.ScanText(SetNameplateSignature);
+                SetPlayerNameplatePtr = scanner.ScanText(SetPlayerNameplateSignature);
             }
         }
 
         private delegate IntPtr SetPlayerNameplateDelegate_Unmanaged(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
 
-        private Framework m_Framework;
-        private ObjectTable m_ObjectTable;
-        private GameGui m_GameGui;
         private SetPlayerNameplateDelegate m_SetPlayerNameplate;
-
         private PluginAddressResolver m_PluginAddressResolver;
         private Hook<SetPlayerNameplateDelegate_Unmanaged> m_SetPlayerNameplateHook;
 
-        public PluginHooks(Framework framework, ObjectTable objectTable, GameGui gameGui, SetPlayerNameplateDelegate setPlayerNameplate)
+        public NameplateHooks(SetPlayerNameplateDelegate setPlayerNameplate)
         {
-            m_Framework = framework;
-            m_ObjectTable = objectTable;
-            m_GameGui = gameGui;
             m_SetPlayerNameplate = setPlayerNameplate;
 
             m_PluginAddressResolver = new PluginAddressResolver();
             m_PluginAddressResolver.Setup();
 
-            m_SetPlayerNameplateHook = new Hook<SetPlayerNameplateDelegate_Unmanaged>(m_PluginAddressResolver.SetNameplatePtr, new SetPlayerNameplateDelegate_Unmanaged(SetPlayerNameplateDetour));
+            m_SetPlayerNameplateHook = new Hook<SetPlayerNameplateDelegate_Unmanaged>(m_PluginAddressResolver.SetPlayerNameplatePtr, new SetPlayerNameplateDelegate_Unmanaged(SetPlayerNameplateDetour));
             m_SetPlayerNameplateHook.Enable();
         }
 
@@ -164,7 +154,7 @@ namespace PlayerTags
             where T : GameObject
         {
             // Get the nameplate object array
-            var nameplateAddonPtr = m_GameGui.GetAddonByName("NamePlate", 1);
+            var nameplateAddonPtr = PluginServices.GameGui.GetAddonByName("NamePlate", 1);
             var nameplateObjectArrayPtrPtr = nameplateAddonPtr + Marshal.OffsetOf(typeof(AddonNamePlate), nameof(AddonNamePlate.NamePlateObjectArray)).ToInt32();
             var nameplateObjectArrayPtr = Marshal.ReadIntPtr(nameplateObjectArrayPtrPtr);
             if (nameplateObjectArrayPtr == IntPtr.Zero)
@@ -195,7 +185,7 @@ namespace PlayerTags
 
             // Return the object for its object id
             var objectId = namePlateInfo.ObjectID.ObjectID;
-            return m_ObjectTable.SearchById(objectId) as T;
+            return PluginServices.ObjectTable.SearchById(objectId) as T;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace PlayerTags
+﻿namespace PlayerTags.Inheritables
 {
     public class InheritableReference<T> : IInheritable
         where T : class

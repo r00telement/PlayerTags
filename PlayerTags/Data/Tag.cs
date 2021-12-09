@@ -1,9 +1,11 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
+using PlayerTags.Inheritables;
+using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PlayerTags
+namespace PlayerTags.Data
 {
     public class Tag
     {

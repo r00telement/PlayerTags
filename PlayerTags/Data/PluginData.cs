@@ -1,8 +1,9 @@
-﻿using Dalamud.Data;
+﻿using PlayerTags.Configuration;
+using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
 
-namespace PlayerTags
+namespace PlayerTags.Data
 {
     public class PluginData
     {
@@ -14,28 +15,20 @@ namespace PlayerTags
         public Tag AllCustomTags;
         public List<Tag> CustomTags;
 
-        public PluginData()
+        public PluginData(PluginConfiguration pluginConfiguration)
         {
             Default = new DefaultPluginData();
-            AllTags = new Tag(new LocalizedPluginString(nameof(AllTags)));
-            AllRoleTags = new Tag(new LocalizedPluginString(nameof(AllRoleTags)));
-            RoleTags = new Dictionary<Role, Tag>();
-            JobTags = new Dictionary<string, Tag>();
-            AllCustomTags = new Tag(new LocalizedPluginString(nameof(AllCustomTags)));
-            CustomTags = new List<Tag>();
-        }
-
-        public void Initialize(DataManager dataManager, PluginConfiguration pluginConfiguration)
-        {
-            Default.Initialize(dataManager);
 
             // Set the default changes and saved changes
+            AllTags = new Tag(new LocalizedPluginString(nameof(AllTags)));
             AllTags.SetChanges(Default.AllTagsChanges);
             AllTags.SetChanges(pluginConfiguration.AllTagsChanges);
 
+            AllRoleTags = new Tag(new LocalizedPluginString(nameof(AllRoleTags)));
             AllRoleTags.SetChanges(Default.AllRoleTagsChanges);
             AllRoleTags.SetChanges(pluginConfiguration.AllRoleTagsChanges);
 
+            RoleTags = new Dictionary<Role, Tag>();
             foreach (var role in Enum.GetValues<Role>())
             {
                 RoleTags[role] = new Tag(new LocalizedPluginString(Localizer.GetName(role)));
@@ -66,6 +59,9 @@ namespace PlayerTags
                     JobTags[jobAbbreviation].SetChanges(savedChanges);
                 }
             }
+
+            AllCustomTags = new Tag(new LocalizedPluginString(nameof(AllCustomTags)));
+            CustomTags = new List<Tag>();
 
             AllCustomTags.SetChanges(Default.AllCustomTagsChanges);
             AllCustomTags.SetChanges(pluginConfiguration.AllCustomTagsChanges);

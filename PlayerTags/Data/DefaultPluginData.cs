@@ -1,32 +1,37 @@
 ﻿using Dalamud.Data;
 using Dalamud.Game.Text.SeStringHandling;
 using Lumina.Excel.GeneratedSheets;
+using PlayerTags.Inheritables;
+using PlayerTags.PluginStrings;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PlayerTags
+namespace PlayerTags.Data
 {
     public class DefaultPluginData
     {
-        public Dictionary<byte, Role> RolesById { get; } = new Dictionary<byte, Role>()
+        public Dictionary<byte, Role> RolesById { get; }
+        public Dictionary<string, Role> RolesByJobAbbreviation { get; }
+
+        public Dictionary<string, InheritableData> AllTagsChanges { get; }
+        public Dictionary<string, InheritableData> AllRoleTagsChanges { get; }
+        public Dictionary<Role, Dictionary<string, InheritableData>> RoleTagsChanges { get; }
+        public Dictionary<string, Dictionary<string, InheritableData>> JobTagsChanges { get; }
+        public Dictionary<string, InheritableData> AllCustomTagsChanges { get; }
+
+        public DefaultPluginData()
         {
-            { 0, Role.LandHand },
-            { 1, Role.Tank },
-            { 2, Role.DPS },
-            { 3, Role.DPS },
-            { 4, Role.Healer },
-        };
+            RolesById = new Dictionary<byte, Role>()
+            {
+                { 0, Role.LandHand },
+                { 1, Role.Tank },
+                { 2, Role.DPS },
+                { 3, Role.DPS },
+                { 4, Role.Healer },
+            };
 
-        public Dictionary<string, Role> RolesByJobAbbreviation { get; } = new Dictionary<string, Role>();
+            RolesByJobAbbreviation = new Dictionary<string, Role>();
 
-        public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();
-        public Dictionary<string, InheritableData> AllRoleTagsChanges = new Dictionary<string, InheritableData>();
-        public Dictionary<Role, Dictionary<string, InheritableData>> RoleTagsChanges = new Dictionary<Role, Dictionary<string, InheritableData>>();
-        public Dictionary<string, Dictionary<string, InheritableData>> JobTagsChanges = new Dictionary<string, Dictionary<string, InheritableData>>();
-        public Dictionary<string, InheritableData> AllCustomTagsChanges = new Dictionary<string, InheritableData>();
-
-        public void Initialize(DataManager dataManager)
-        {
             AllTagsChanges = new Tag(new LiteralPluginString(""))
             {
                 IsSelected = true,
@@ -45,6 +50,7 @@ namespace PlayerTags
                 IsTextVisibleInNameplates = true,
             }.GetChanges();
 
+            RoleTagsChanges = new Dictionary<Role, Dictionary<string, InheritableData>>();
             RoleTagsChanges[Role.LandHand] = new Tag(new LiteralPluginString(""))
             {
                 IsSelected = false,
@@ -77,9 +83,10 @@ namespace PlayerTags
                 TextColor = 508,
             }.GetChanges();
 
+            JobTagsChanges = new Dictionary<string, Dictionary<string, InheritableData>>();
             foreach ((var role, var roleTagChanges) in RoleTagsChanges)
             {
-                var classJobs = dataManager.GetExcelSheet<ClassJob>();
+                var classJobs = PluginServices.DataManager.GetExcelSheet<ClassJob>();
                 if (classJobs == null)
                 {
                     break;

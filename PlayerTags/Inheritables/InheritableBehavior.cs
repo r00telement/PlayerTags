@@ -1,4 +1,4 @@
-﻿namespace PlayerTags
+﻿namespace PlayerTags.Inheritables
 {
     public enum InheritableBehavior
     {

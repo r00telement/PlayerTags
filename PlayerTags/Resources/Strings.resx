@@ -159,10 +159,10 @@
   <data name="Loc_IsExpanded" xml:space="preserve">
     <value>Expanded</value>
   </data>
-  <data name="Loc_IsCustomTagContextMenuEnabled" xml:space="preserve">
+  <data name="Loc_IsCustomTagsContextMenuEnabled" xml:space="preserve">
     <value>Context menu integration</value>
   </data>
-  <data name="Loc_IsCustomTagContextMenuEnabled_Description" xml:space="preserve">
+  <data name="Loc_IsCustomTagsContextMenuEnabled_Description" xml:space="preserve">
     <value>Options will be available in context menus for adding and removing custom tags from players.</value>
   </data>
   <data name="Loc_IsShowInheritedPropertiesEnabled" xml:space="preserve">

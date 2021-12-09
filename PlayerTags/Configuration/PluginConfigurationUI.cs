@@ -1,35 +1,29 @@
-﻿using Dalamud.Game.ClientState;
-using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Party;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Interface;
-using FFXIVClientStructs.FFXIV.Client.Game.Character;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
+using PlayerTags.Data;
+using PlayerTags.Inheritables;
+using PlayerTags.PluginStrings;
 using PlayerTags.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 
-namespace PlayerTags
+namespace PlayerTags.Configuration
 {
     public class PluginConfigurationUI
     {
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
-        private ClientState m_ClientState;
-        private PartyList m_PartyList;
-        private ObjectTable m_ObjectTable;
+
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
 
-        public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData, ClientState clientState, PartyList partyList, ObjectTable objectTable)
+        public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
         {
             m_PluginConfiguration = config;
             m_PluginData = pluginData;
-            m_ClientState = clientState;
-            m_PartyList = partyList;
-            m_ObjectTable = objectTable;
         }
 
         public void Draw()
@@ -54,7 +48,7 @@ namespace PlayerTags
                         ImGui.Spacing();
                         ImGui.Spacing();
                         ImGui.TreePush();
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
                         ImGui.TreePop();
 
 
@@ -124,15 +118,15 @@ namespace PlayerTags
                             ImGui.TableHeadersRow();
 
                             int rowIndex = 0;
-                            foreach (var partyMember in m_PartyList.OrderBy(obj => obj.Name.TextValue).ToArray())
+                            foreach (var partyMember in PluginServices.PartyList.OrderBy(obj => obj.Name.TextValue).ToArray())
                             {
                                 DrawPlayerAssignmentRow(partyMember.Name.TextValue, rowIndex);
                                 ++rowIndex;
                             }
 
-                            if (m_PartyList.Length == 0 && m_ClientState.LocalPlayer != null)
+                            if (PluginServices.PartyList.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawPlayerAssignmentRow(m_ClientState.LocalPlayer.Name.TextValue, 0);
+                                DrawPlayerAssignmentRow(PluginServices.ClientState.LocalPlayer.Name.TextValue, 0);
                             }
 
                             ImGui.EndTable();
@@ -161,15 +155,15 @@ namespace PlayerTags
                             ImGui.TableHeadersRow();
 
                             int rowIndex = 0;
-                            foreach (var gameObject in m_ObjectTable.Where(obj => obj is PlayerCharacter).OrderBy(obj => obj.Name.TextValue))
+                            foreach (var gameObject in PluginServices.ObjectTable.Where(obj => obj is PlayerCharacter).OrderBy(obj => obj.Name.TextValue))
                             {
                                 DrawPlayerAssignmentRow(gameObject.Name.TextValue, rowIndex);
                                 ++rowIndex;
                             }
 
-                            if (m_ObjectTable.Length == 0 && m_ClientState.LocalPlayer != null)
+                            if (PluginServices.ObjectTable.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawPlayerAssignmentRow(m_ClientState.LocalPlayer.Name.TextValue, 0);
+                                DrawPlayerAssignmentRow(PluginServices.ClientState.LocalPlayer.Name.TextValue, 0);
                             }
 
                             ImGui.EndTable();
@@ -204,9 +198,9 @@ namespace PlayerTags
                                 ++rowIndex;
                             }
 
-                            if (m_ObjectTable.Length == 0 && m_ClientState.LocalPlayer != null)
+                            if (PluginServices.ObjectTable.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawPlayerAssignmentRow(m_ClientState.LocalPlayer.Name.TextValue, 0);
+                                DrawPlayerAssignmentRow(PluginServices.ClientState.LocalPlayer.Name.TextValue, 0);
                             }
 
                             ImGui.EndTable();

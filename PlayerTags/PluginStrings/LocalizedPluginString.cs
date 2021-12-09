@@ -1,4 +1,4 @@
-﻿namespace PlayerTags
+﻿namespace PlayerTags.PluginStrings
 {
     public class LocalizedPluginString : IPluginString
     {
