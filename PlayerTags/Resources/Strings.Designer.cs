@@ -133,7 +133,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable context menu integration.
+        ///   Looks up a localized string similar to Context menu integration.
         /// </summary>
         public static string Loc_IsCustomTagContextMenuEnabled {
             get {
@@ -142,7 +142,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When opening the player context menu, options will be available to add and remove custom tags for the selected player..
+        ///   Looks up a localized string similar to Options will be available in context menus for adding and removing custom tags from players..
         /// </summary>
         public static string Loc_IsCustomTagContextMenuEnabled_Description {
             get {
@@ -682,11 +682,11 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add custom tags to party members.
+        ///   Looks up a localized string similar to Party.
         /// </summary>
-        public static string Loc_Static_PartyAssign {
+        public static string Loc_Static_Party {
             get {
-                return ResourceManager.GetString("Loc_Static_PartyAssign", resourceCulture);
+                return ResourceManager.GetString("Loc_Static_Party", resourceCulture);
             }
         }
         
@@ -727,11 +727,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tagged Players.
+        /// </summary>
+        public static string Loc_Static_TaggedPlayers {
+            get {
+                return ResourceManager.GetString("Loc_Static_TaggedPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tags.
         /// </summary>
         public static string Loc_Static_Tags {
             get {
                 return ResourceManager.GetString("Loc_Static_Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vicinity.
+        /// </summary>
+        public static string Loc_Static_Vicinity {
+            get {
+                return ResourceManager.GetString("Loc_Static_Vicinity", resourceCulture);
             }
         }
         

@@ -99,7 +99,7 @@ namespace PlayerTags
 
         public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
 
-        private string[] SplitGameObjectNamesToApplyTo
+        public string[] SplitGameObjectNamesToApplyTo
         {
             get
             {

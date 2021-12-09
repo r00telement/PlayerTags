@@ -69,7 +69,7 @@ namespace PlayerTags
             m_PluginConfiguration = PluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             m_PluginConfiguration.Initialize(PluginInterface);
             m_PluginData.Initialize(DataManager, m_PluginConfiguration);
-            m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData, ClientState, PartyList);
+            m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData, ClientState, PartyList, ObjectTable);
 
             ClientState.Login += ClientState_Login;
             ClientState.Logout += ClientState_Logout;

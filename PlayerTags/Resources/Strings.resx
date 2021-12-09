@@ -126,8 +126,14 @@
   <data name="Loc_Static_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Loc_Static_PartyAssign" xml:space="preserve">
-    <value>Add custom tags to party members</value>
+  <data name="Loc_Static_Party" xml:space="preserve">
+    <value>Party</value>
+  </data>
+  <data name="Loc_Static_Vicinity" xml:space="preserve">
+    <value>Vicinity</value>
+  </data>
+  <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
+    <value>Tagged Players</value>
   </data>
   <data name="Loc_Static_PlayerName" xml:space="preserve">
     <value>Player</value>
@@ -154,10 +160,10 @@
     <value>Expanded</value>
   </data>
   <data name="Loc_IsCustomTagContextMenuEnabled" xml:space="preserve">
-    <value>Enable context menu integration</value>
+    <value>Context menu integration</value>
   </data>
   <data name="Loc_IsCustomTagContextMenuEnabled_Description" xml:space="preserve">
-    <value>When opening the player context menu, options will be available to add and remove custom tags for the selected player.</value>
+    <value>Options will be available in context menus for adding and removing custom tags from players.</value>
   </data>
   <data name="Loc_IsShowInheritedPropertiesEnabled" xml:space="preserve">
     <value>Show inherited properties</value>
