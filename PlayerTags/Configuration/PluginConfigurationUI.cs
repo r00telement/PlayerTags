@@ -138,12 +138,14 @@ namespace PlayerTags.Configuration
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem(Strings.Loc_Static_Vicinity))
+                    if (ImGui.BeginTabItem(Strings.Loc_Static_Proximity))
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
                         ImGui.TreePush();
-                        if (ImGui.BeginTable("##VicinityAssignTable", 1 + m_PluginData.CustomTags.Count))
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsSortedByProximity), true, ref m_PluginConfiguration.IsSortedByProximity, () => m_PluginConfiguration.Save(m_PluginData));
+                        
+                        if (ImGui.BeginTable("##ProximityAssignTable", 1 + m_PluginData.CustomTags.Count))
                         {
                             ImGui.TableHeader(Strings.Loc_Static_PlayerName);
                             ImGui.TableSetupColumn(Strings.Loc_Static_PlayerName);
@@ -156,8 +158,18 @@ namespace PlayerTags.Configuration
                             }
                             ImGui.TableHeadersRow();
 
+                            var players = PluginServices.ObjectTable.Where(gameObject => gameObject is PlayerCharacter);
+                            if (m_PluginConfiguration.IsSortedByProximity && PluginServices.ClientState.LocalPlayer != null)
+                            {
+                                players = players.OrderBy(gameObject => (gameObject.Position - PluginServices.ClientState.LocalPlayer.Position).Length());
+                            }
+                            else
+                            {
+                                players = players.OrderBy(obj => obj.Name.TextValue);
+                            }
+
                             int rowIndex = 0;
-                            foreach (var gameObject in PluginServices.ObjectTable.Where(obj => obj is PlayerCharacter).OrderBy(obj => obj.Name.TextValue))
+                            foreach (var gameObject in players)
                             {
                                 DrawPlayerAssignmentRow(gameObject.Name.TextValue, rowIndex);
                                 ++rowIndex;

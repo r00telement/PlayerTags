@@ -129,8 +129,8 @@
   <data name="Loc_Static_Party" xml:space="preserve">
     <value>Party</value>
   </data>
-  <data name="Loc_Static_Vicinity" xml:space="preserve">
-    <value>Vicinity</value>
+  <data name="Loc_Static_Proximity" xml:space="preserve">
+    <value>Proximity</value>
   </data>
   <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
     <value>Tagged Players</value>
@@ -451,5 +451,12 @@
   </data>
   <data name="Loc_IsVisibleForOtherPlayers" xml:space="preserve">
     <value>Show for others</value>
+  </data>
+
+  <data name="Loc_IsSortedByProximity" xml:space="preserve">
+    <value>Sort by proximity</value>
+  </data>
+  <data name="Loc_IsSortedByProximity_Description" xml:space="preserve">
+    <value>Players that are closer to the local player will be ordered towards the top.</value>
   </data>
 </root>

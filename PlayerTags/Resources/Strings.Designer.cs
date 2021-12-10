@@ -277,6 +277,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sort by proximity.
+        /// </summary>
+        public static string Loc_IsSortedByProximity {
+            get {
+                return ResourceManager.GetString("Loc_IsSortedByProximity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Players that are closer to the local player will be ordered towards the top..
+        /// </summary>
+        public static string Loc_IsSortedByProximity_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsSortedByProximity_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text italic.
         /// </summary>
         public static string Loc_IsTextItalic {
@@ -331,7 +349,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible for alliance players.
+        ///   Looks up a localized string similar to Show for alliance members.
         /// </summary>
         public static string Loc_IsVisibleForAlliancePlayers {
             get {
@@ -340,7 +358,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible for enemy players.
+        ///   Looks up a localized string similar to Show for enemies.
         /// </summary>
         public static string Loc_IsVisibleForEnemyPlayers {
             get {
@@ -349,7 +367,16 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible for other players.
+        ///   Looks up a localized string similar to Show for friends.
+        /// </summary>
+        public static string Loc_IsVisibleForFriendPlayers {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForFriendPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show for others.
         /// </summary>
         public static string Loc_IsVisibleForOtherPlayers {
             get {
@@ -358,7 +385,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible for party players.
+        ///   Looks up a localized string similar to Show for party members.
         /// </summary>
         public static string Loc_IsVisibleForPartyPlayers {
             get {
@@ -367,7 +394,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible for self.
+        ///   Looks up a localized string similar to Show for self.
         /// </summary>
         public static string Loc_IsVisibleForSelf {
             get {
@@ -376,7 +403,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible in overworld.
+        ///   Looks up a localized string similar to Show elsewhere.
         /// </summary>
         public static string Loc_IsVisibleInOverworld {
             get {
@@ -385,7 +412,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible in pve duties.
+        ///   Looks up a localized string similar to Show in pve duties.
         /// </summary>
         public static string Loc_IsVisibleInPveDuties {
             get {
@@ -394,7 +421,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Visible in pvp duties.
+        ///   Looks up a localized string similar to Show in pvp duties.
         /// </summary>
         public static string Loc_IsVisibleInPvpDuties {
             get {
@@ -817,6 +844,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Proximity.
+        /// </summary>
+        public static string Loc_Static_Proximity {
+            get {
+                return ResourceManager.GetString("Loc_Static_Proximity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove this custom tag..
         /// </summary>
         public static string Loc_Static_RemoveCustomTag_Description {
@@ -849,15 +885,6 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_Tags {
             get {
                 return ResourceManager.GetString("Loc_Static_Tags", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Vicinity.
-        /// </summary>
-        public static string Loc_Static_Vicinity {
-            get {
-                return ResourceManager.GetString("Loc_Static_Vicinity", resourceCulture);
             }
         }
         
