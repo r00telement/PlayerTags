@@ -1,5 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface;
+using Dalamud.Logging;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Data;
@@ -448,7 +450,7 @@ namespace PlayerTags.Configuration
         public void DrawControls(Tag tag)
         {
             ImGui.PushID(tag.GetHashCode().ToString());
-            ImGui.TreePush();
+            //ImGui.TreePush();
 
             // Render the add property override button and popup
             if (ImGui.IsPopupOpen("AddPopup"))
@@ -483,36 +485,68 @@ namespace PlayerTags.Configuration
                 ImGui.PushStyleColor(ImGuiCol.FrameBg, new Vector4(0f, 0f, 0f, 0));
                 if (ImGui.BeginListBox("###SelectableInheritables"))
                 {
-                    var selectableInheritables = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior == InheritableBehavior.Inherit).ToDictionary(item => item.Key, item => item.Value);
-                    var selectableInheritablesWithLocalizedNames = selectableInheritables
-                        .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
-                        .OrderBy(item => item.LocalizedName);
-
-                    foreach (var inheritableLocalizedName in selectableInheritablesWithLocalizedNames)
-                    {
-                        bool isSelected = false;
-                        if (ImGui.Selectable(inheritableLocalizedName.LocalizedName, isSelected))
+                    IEnumerable<KeyValuePair<string, IInheritable>> inheritables1 = tag.Inheritables.Where(inheritable => inheritable.Value.Behavior == InheritableBehavior.Inherit);
+                    var selectedInheritables1 = inheritables1
+                        .Select(inheritable =>
                         {
-                            selectableInheritables[inheritableLocalizedName.Name].Behavior = InheritableBehavior.Enabled;
+                            string? categoryId = null;
 
-                            if (selectableInheritables[inheritableLocalizedName.Name] is InheritableValue<bool> inheritableBool)
+                            var field = tag.GetType().GetField(inheritable.Key);
+                            if (field != null)
                             {
-                                inheritableBool.Value = true;
+                                var inheritableCategory = field.GetCustomAttributes(typeof(InheritableCategoryAttribute), false).Cast<InheritableCategoryAttribute>().FirstOrDefault();
+                                if (inheritableCategory != null)
+                                {
+                                    categoryId = inheritableCategory.CategoryId;
+                                }
                             }
 
-                            m_PluginConfiguration.Save(m_PluginData);
-                            ImGui.CloseCurrentPopup();
+                            return new
+                            {
+                                Inheritable = inheritable,
+                                CategoryId = categoryId,
+                                LocalizedName = Localizer.GetString(inheritable.Key, false)
+                            };
+                        }).Where(inheritable => inheritable.CategoryId != null);
+
+                    var inheritableGroups1 = selectedInheritables1.GroupBy(inheritable => inheritable.CategoryId);
+
+                    foreach (var inheritableGroup in inheritableGroups1)
+                    {
+                    
+                        if (inheritableGroup.Key != null)
+                        {
+                            DrawHeading(Localizer.GetString(inheritableGroup.Key, false));
                         }
 
-                        if (isSelected)
+                        ImGui.TreePush();
+                        foreach (var selectedInheritable in inheritableGroup)
                         {
-                            ImGui.SetItemDefaultFocus();
-                        }
+                            bool isSelected = false;
+                            if (ImGui.Selectable(selectedInheritable.LocalizedName, isSelected))
+                            {
+                                selectedInheritable.Inheritable.Value.Behavior = InheritableBehavior.Enabled;
 
-                        if (ImGui.IsItemHovered())
-                        {
-                            ImGui.SetTooltip(Localizer.GetString(inheritableLocalizedName.Name, true));
+                                if (selectedInheritable.Inheritable.Value is InheritableValue<bool> inheritableBool)
+                                {
+                                    inheritableBool.Value = true;
+                                }
+
+                                m_PluginConfiguration.Save(m_PluginData);
+                                ImGui.CloseCurrentPopup();
+                            }
+
+                            if (isSelected)
+                            {
+                                ImGui.SetItemDefaultFocus();
+                            }
+
+                            if (ImGui.IsItemHovered())
+                            {
+                                ImGui.SetTooltip(Localizer.GetString(selectedInheritable.Inheritable.Key, true));
+                            }
                         }
+                        ImGui.TreePop();
                     }
 
                     ImGui.EndListBox();
@@ -538,61 +572,77 @@ namespace PlayerTags.Configuration
                 inheritables = inheritables.Where(inheritable => inheritable.Value.Behavior != InheritableBehavior.Inherit);
             }
 
-            var selectedInheritables = inheritables.ToDictionary(item => item.Key, item => item.Value);
-            var selectedInheritablesWithLocalizedNames = selectedInheritables
-                .Select(inheritable => new { Name = inheritable.Key, LocalizedName = Localizer.GetString(inheritable.Key, false) })
-                .OrderBy(item => item.LocalizedName);
-
-            foreach (var selectedInheritablesWithLocalizedName in selectedInheritablesWithLocalizedNames)
-            {
-                switch (selectedInheritablesWithLocalizedName.Name)
+            var selectedInheritables = inheritables
+                .Select(inheritable =>
                 {
-                    case nameof(tag.Icon):
-                        DrawInheritable(nameof(tag.Icon), false, true, tag.Icon);
-                        break;
-                    case nameof(tag.IsIconVisibleInChat):
-                        DrawInheritable(nameof(tag.IsIconVisibleInChat), tag.IsIconVisibleInChat);
-                        break;
-                    case nameof(tag.IsIconVisibleInNameplates):
-                        DrawInheritable(nameof(tag.IsIconVisibleInNameplates), tag.IsIconVisibleInNameplates);
-                        break;
-                    case nameof(tag.Text):
-                        DrawInheritable(nameof(tag.Text), tag.Text);
-                        break;
-                    case nameof(tag.TextColor):
-                        DrawInheritable(nameof(tag.TextColor), tag.TextColor);
-                        break;
-                    case nameof(tag.TextGlowColor):
-                        DrawInheritable(nameof(tag.TextGlowColor), tag.TextGlowColor);
-                        break;
-                    case nameof(tag.IsTextItalic):
-                        DrawInheritable(nameof(tag.IsTextItalic), tag.IsTextItalic);
-                        break;
-                    case nameof(tag.IsTextVisibleInChat):
-                        DrawInheritable(nameof(tag.IsTextVisibleInChat), tag.IsTextVisibleInChat);
-                        break;
-                    case nameof(tag.IsTextVisibleInNameplates):
-                        DrawInheritable(nameof(tag.IsTextVisibleInNameplates), tag.IsTextVisibleInNameplates);
-                        break;
-                    case nameof(tag.TagPositionInChat):
-                        DrawInheritable(nameof(tag.TagPositionInChat), true, false, tag.TagPositionInChat);
-                        break;
-                    case nameof(tag.TagPositionInNameplates):
-                        DrawInheritable(nameof(tag.TagPositionInNameplates), true, false, tag.TagPositionInNameplates);
-                        break;
-                    case nameof(tag.TagTargetInNameplates):
-                        DrawInheritable(nameof(tag.TagTargetInNameplates), true, false, tag.TagTargetInNameplates);
-                        break;
-                    case nameof(tag.GameObjectNamesToApplyTo):
-                        DrawInheritable(nameof(tag.GameObjectNamesToApplyTo), tag.GameObjectNamesToApplyTo);
-                        break;
-                    default:
-                        break;
+                    string? categoryId = null;
+
+                    var field = tag.GetType().GetField(inheritable.Key);
+                    if (field != null)
+                    {
+                        var inheritableCategory = field.GetCustomAttributes(typeof(InheritableCategoryAttribute), false).Cast<InheritableCategoryAttribute>().FirstOrDefault();
+                        if (inheritableCategory != null)
+                        {
+                            categoryId = inheritableCategory.CategoryId;
+                        }
+                    }
+
+                    return new
+                    {
+                        Inheritable = inheritable,
+                        CategoryId = categoryId,
+                        LocalizedName = Localizer.GetString(inheritable.Key, false)
+                    };
+                }).Where(inheritable => inheritable.CategoryId != null);
+
+            var inheritableGroups = selectedInheritables.GroupBy(inheritable => inheritable.CategoryId);
+
+            foreach (var inheritableGroup in inheritableGroups)
+            {
+                ImGui.Spacing();
+                ImGui.Spacing();
+                if (inheritableGroup.Key != null)
+                {
+                    DrawHeading(Localizer.GetString(inheritableGroup.Key, false));
                 }
+
+                ImGui.TreePush();
+                foreach (var selectedInheritable in inheritableGroup)
+                {
+                    if (selectedInheritable.Inheritable.Value is InheritableValue<bool> inheritableBool)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, inheritableBool);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<ushort> inheritableUshort)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, inheritableUshort);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<BitmapFontIcon> inheritableBitmapFontIcon)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, false, true, inheritableBitmapFontIcon);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<TagPosition> inheritableTagPosition)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, false, true, inheritableTagPosition);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<NameplateElement> inheritableNameplateElement)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableNameplateElement);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableReference<string> inheritableString)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, inheritableString);
+                    }
+                    else
+                    {
+                        PluginLog.Warning($"Rendering for inheritable option not implemented: {selectedInheritable.Inheritable.Key}");
+                    }
+                }
+                ImGui.TreePop();
             }
 
 
-            ImGui.TreePop();
+            //ImGui.TreePop();
             ImGui.PopID();
         }
 

@@ -40,6 +40,17 @@ namespace PlayerTags.Data
                 TagPositionInNameplates = TagPosition.Replace,
                 TagTargetInNameplates = NameplateElement.Title,
                 IsTextItalic = true,
+
+                IsVisibleInOverworld = true,
+                IsVisibleInPveDuties = true,
+                IsVisibleInPvpDuties = true,
+
+                IsVisibleForSelf = true,
+                IsVisibleForFriendPlayers = true,
+                IsVisibleForPartyPlayers = true,
+                IsVisibleForAlliancePlayers = true,
+                IsVisibleForEnemyPlayers = true,
+                IsVisibleForOtherPlayers = true,
             }.GetChanges();
 
             AllRoleTagsChanges = new Tag(new LiteralPluginString(""))

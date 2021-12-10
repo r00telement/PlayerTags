@@ -31,7 +31,6 @@ namespace PlayerTags
             m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData);
 
             m_XivCommon = new XivCommonBase(XivCommon.Hooks.ContextMenu);
-            PluginServices.ClientState.TerritoryChanged += ClientState_TerritoryChanged;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw += UiBuilder_Draw;
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
             PluginServices.CommandManager.AddHandler(c_CommandName, new CommandInfo((string command, string arguments) =>
@@ -44,14 +43,6 @@ namespace PlayerTags
             m_ChatTagTargetFeature = new ChatTagTargetFeature(m_PluginConfiguration, m_PluginData);
         }
 
-        //private ExcelSheet<ContentFinderCondition> _contentFinderConditionsSheet;
-        private void ClientState_TerritoryChanged(object? sender, ushort e)
-        {
-            //_contentFinderConditionsSheet = DataManager.GameData.GetExcelSheet<ContentFinderCondition>();
-            //var content = _contentFinderConditionsSheet.FirstOrDefault(t => t.TerritoryType.Row == PluginServices.ClientState.TerritoryType);
-            //content.ContentMemberType.Row
-        }
-
         public void Dispose()
         {
             m_ChatTagTargetFeature.Dispose();
@@ -60,7 +51,6 @@ namespace PlayerTags
             PluginServices.CommandManager.RemoveHandler(c_CommandName);
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
-            PluginServices.ClientState.TerritoryChanged -= ClientState_TerritoryChanged;
             m_XivCommon.Dispose();
         }
 

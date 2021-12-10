@@ -1,4 +1,4 @@
-﻿namespace PlayerTags.Data
+﻿    namespace PlayerTags.Data
 {
     public enum TagTarget
     {

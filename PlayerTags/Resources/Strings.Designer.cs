@@ -61,6 +61,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Activities.
+        /// </summary>
+        public static string Loc_ActivityVisibility {
+            get {
+                return ResourceManager.GetString("Loc_ActivityVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Custom.
         /// </summary>
         public static string Loc_AllCustomTags {
@@ -97,7 +106,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Game object names to apply to.
+        ///   Looks up a localized string similar to Add to players.
         /// </summary>
         public static string Loc_GameObjectNamesToApplyTo {
             get {
@@ -106,11 +115,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A list of game object names to always apply tags to, separated by commas or semi-colons. E.g. &quot;Cloud Strife, Tifa Lockhart&quot;..
+        ///   Looks up a localized string similar to A list of players to add tags to, separated by commas or semi-colons. E.g. &quot;Cloud Strife, Tifa Lockhart&quot;..
         /// </summary>
         public static string Loc_GameObjectNamesToApplyTo_Description {
             get {
                 return ResourceManager.GetString("Loc_GameObjectNamesToApplyTo_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string Loc_General {
+            get {
+                return ResourceManager.GetString("Loc_General", resourceCulture);
             }
         }
         
@@ -309,6 +327,78 @@ namespace PlayerTags.Resources {
         public static string Loc_IsTextVisibleInNameplates_Description {
             get {
                 return ResourceManager.GetString("Loc_IsTextVisibleInNameplates_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible for alliance players.
+        /// </summary>
+        public static string Loc_IsVisibleForAlliancePlayers {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForAlliancePlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible for enemy players.
+        /// </summary>
+        public static string Loc_IsVisibleForEnemyPlayers {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForEnemyPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible for other players.
+        /// </summary>
+        public static string Loc_IsVisibleForOtherPlayers {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForOtherPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible for party players.
+        /// </summary>
+        public static string Loc_IsVisibleForPartyPlayers {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForPartyPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible for self.
+        /// </summary>
+        public static string Loc_IsVisibleForSelf {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForSelf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible in overworld.
+        /// </summary>
+        public static string Loc_IsVisibleInOverworld {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleInOverworld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible in pve duties.
+        /// </summary>
+        public static string Loc_IsVisibleInPveDuties {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleInPveDuties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visible in pvp duties.
+        /// </summary>
+        public static string Loc_IsVisibleInPvpDuties {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleInPvpDuties", resourceCulture);
             }
         }
         
@@ -552,6 +642,24 @@ namespace PlayerTags.Resources {
         public static string Loc_NameplateTitleVisibility_WhenHasTags_Description {
             get {
                 return ResourceManager.GetString("Loc_NameplateTitleVisibility_WhenHasTags_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string Loc_PlayerVisibility {
+            get {
+                return ResourceManager.GetString("Loc_PlayerVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Loc_Position {
+            get {
+                return ResourceManager.GetString("Loc_Position", resourceCulture);
             }
         }
         

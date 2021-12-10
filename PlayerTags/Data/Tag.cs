@@ -84,22 +84,55 @@ namespace PlayerTags.Data
         public InheritableValue<bool> IsSelected = new InheritableValue<bool>(false);
         public InheritableValue<bool> IsExpanded = new InheritableValue<bool>(false);
 
+        [InheritableCategory("General")]
+        public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
+
+        [InheritableCategory("Icon")]
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
+        [InheritableCategory("Icon")]
         public InheritableValue<bool> IsIconVisibleInChat = new InheritableValue<bool>(false);
+        [InheritableCategory("Icon")]
         public InheritableValue<bool> IsIconVisibleInNameplates = new InheritableValue<bool>(false);
 
+        [InheritableCategory("Text")]
         public InheritableReference<string> Text = new InheritableReference<string>("");
+        [InheritableCategory("Text")]
         public InheritableValue<ushort> TextColor = new InheritableValue<ushort>(6);
+        [InheritableCategory("Text")]
         public InheritableValue<ushort> TextGlowColor = new InheritableValue<ushort>(6);
+        [InheritableCategory("Text")]
         public InheritableValue<bool> IsTextItalic = new InheritableValue<bool>(false);
+        [InheritableCategory("Text")]
         public InheritableValue<bool> IsTextVisibleInChat = new InheritableValue<bool>(false);
+        [InheritableCategory("Text")]
         public InheritableValue<bool> IsTextVisibleInNameplates = new InheritableValue<bool>(false);
 
+        [InheritableCategory("Position")]
         public InheritableValue<TagPosition> TagPositionInChat = new InheritableValue<TagPosition>(TagPosition.Before);
+        [InheritableCategory("Position")]
         public InheritableValue<TagPosition> TagPositionInNameplates = new InheritableValue<TagPosition>(TagPosition.Before);
+        [InheritableCategory("Position")]
         public InheritableValue<NameplateElement> TagTargetInNameplates = new InheritableValue<NameplateElement>(NameplateElement.Name);
 
-        public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
+        [InheritableCategory("ActivityVisibility")]
+        public InheritableValue<bool> IsVisibleInPveDuties = new InheritableValue<bool>(false);
+        [InheritableCategory("ActivityVisibility")]
+        public InheritableValue<bool> IsVisibleInPvpDuties = new InheritableValue<bool>(false);
+        [InheritableCategory("ActivityVisibility")]
+        public InheritableValue<bool> IsVisibleInOverworld = new InheritableValue<bool>(false);
+
+        [InheritableCategory("PlayerVisibility")]
+        public InheritableValue<bool> IsVisibleForSelf = new InheritableValue<bool>(false);
+        [InheritableCategory("PlayerVisibility")]
+        public InheritableValue<bool> IsVisibleForFriendPlayers = new InheritableValue<bool>(false);
+        [InheritableCategory("PlayerVisibility")]
+        public InheritableValue<bool> IsVisibleForPartyPlayers = new InheritableValue<bool>(false);
+        [InheritableCategory("PlayerVisibility")]
+        public InheritableValue<bool> IsVisibleForAlliancePlayers = new InheritableValue<bool>(false);
+        [InheritableCategory("PlayerVisibility")]
+        public InheritableValue<bool> IsVisibleForEnemyPlayers = new InheritableValue<bool>(false);
+        [InheritableCategory("PlayerVisibility")]
+        public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
 
         public string[] SplitGameObjectNamesToApplyTo
         {

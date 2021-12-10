@@ -39,15 +39,7 @@ namespace PlayerTags.Configuration
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public List<Dictionary<string, InheritableData>> CustomTagsChanges = new List<Dictionary<string, InheritableData>>();
 
-        [NonSerialized]
-        private DalamudPluginInterface? m_PluginInterface;
-
         public event System.Action? Saved;
-
-        public void Initialize(DalamudPluginInterface pluginInterface)
-        {
-            m_PluginInterface = pluginInterface;
-        }
 
         public void Save(PluginData pluginData)
         {
@@ -88,11 +80,8 @@ namespace PlayerTags.Configuration
                 CustomTagsChanges.Add(customTag.GetChanges());
             }
 
-            if (m_PluginInterface != null)
-            {
-                m_PluginInterface.SavePluginConfig(this);
-                Saved?.Invoke();
-            };
+            PluginServices.DalamudPluginInterface.SavePluginConfig(this);
+            Saved?.Invoke();
         }
     }
 }

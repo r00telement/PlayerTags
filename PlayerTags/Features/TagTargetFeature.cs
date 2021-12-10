@@ -1,7 +1,11 @@
-﻿using Dalamud.Game.Text.SeStringHandling;
+﻿using Dalamud.Game.ClientState.Objects.Enums;
+using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
+using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +16,7 @@ namespace PlayerTags.Features
     {
         private PluginConfiguration m_PluginConfiguration;
 
+        private ActivityContext m_ActivityContext;
         private Dictionary<Tag, Payload[]> m_TagPayloads;
         private TextPayload m_SpaceTextPayload;
 
@@ -19,14 +24,17 @@ namespace PlayerTags.Features
         {
             m_PluginConfiguration = pluginConfiguration;
 
+            m_ActivityContext = ActivityContext.Overworld;
             m_TagPayloads = new Dictionary<Tag, Payload[]>();
             m_SpaceTextPayload = new TextPayload($" ");
 
             m_PluginConfiguration.Saved += PluginConfiguration_Saved;
+            PluginServices.ClientState.TerritoryChanged += ClientState_TerritoryChanged;
         }
 
         public virtual void Dispose()
         {
+            PluginServices.ClientState.TerritoryChanged -= ClientState_TerritoryChanged;
             m_PluginConfiguration.Saved -= PluginConfiguration_Saved;
         }
 
@@ -36,6 +44,31 @@ namespace PlayerTags.Features
 
         private void PluginConfiguration_Saved()
         {
+            // Invalidate the cached payloads so they get remade
+            m_TagPayloads.Clear();
+        }
+
+        private void ClientState_TerritoryChanged(object? sender, ushort e)
+        {
+            m_ActivityContext = ActivityContext.Overworld;
+
+            var contentFinderConditionsSheet = PluginServices.DataManager.GameData.GetExcelSheet<ContentFinderCondition>();
+            if (contentFinderConditionsSheet != null)
+            {
+                var foundContentFinderCondition = contentFinderConditionsSheet.FirstOrDefault(contentFinderCondition => contentFinderCondition.TerritoryType.Row == PluginServices.ClientState.TerritoryType);
+                if (foundContentFinderCondition != null)
+                {
+                    if (foundContentFinderCondition.PvP)
+                    {
+                        m_ActivityContext = ActivityContext.PvpDuty;
+                    }
+                    else
+                    {
+                        m_ActivityContext = ActivityContext.PveDuty;
+                    }
+                }
+            }
+
             // Invalidate the cached payloads so they get remade
             m_TagPayloads.Clear();
         }
@@ -54,6 +87,104 @@ namespace PlayerTags.Features
 
             m_TagPayloads[tag] = CreatePayloads(tag);
             return m_TagPayloads[tag];
+        }
+
+        private InheritableValue<bool>? GetInheritableVisibilityForActivity(Tag tag, ActivityContext activityContext)
+        {
+            switch (activityContext)
+            {
+                case ActivityContext.Overworld:
+                    return tag.IsVisibleInOverworld;
+                case ActivityContext.PveDuty:
+                    return tag.IsVisibleInPveDuties;
+                case ActivityContext.PvpDuty:
+                    return tag.IsVisibleInPvpDuties;
+            }
+
+            return null;
+        }
+
+        public bool IsVisibleInActivity(Tag tag)
+        {
+            var inheritable = GetInheritableVisibilityForActivity(tag, m_ActivityContext);
+            if (inheritable == null)
+            {
+                return false;
+            }
+
+            if (inheritable.InheritedValue == null || !inheritable.InheritedValue.Value)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private PlayerContext GetContextForPlayer(PlayerCharacter playerCharacter)
+        {
+            if (PluginServices.ClientState.LocalPlayer == playerCharacter)
+            {
+                return PlayerContext.Self;
+            }
+
+            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.Friend))
+            {
+                return PlayerContext.Friend;
+            }
+
+            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.PartyMember))
+            {
+                return PlayerContext.Party;
+            }
+
+            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.AllianceMember))
+            {
+                return PlayerContext.Alliance;
+            }
+
+            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.Hostile))
+            {
+                return PlayerContext.Enemy;
+            }
+
+            return PlayerContext.Other;
+        }
+
+        private InheritableValue<bool>? GetInheritableVisibilityForPlayer(Tag tag, PlayerContext playerContext)
+        {
+            switch (playerContext)
+            {
+                case PlayerContext.Self:
+                    return tag.IsVisibleForSelf;
+                case PlayerContext.Friend:
+                    return tag.IsVisibleForFriendPlayers;
+                case PlayerContext.Party:
+                    return tag.IsVisibleForPartyPlayers;
+                case PlayerContext.Alliance:
+                    return tag.IsVisibleForAlliancePlayers;
+                case PlayerContext.Enemy:
+                    return tag.IsVisibleForEnemyPlayers;
+                case PlayerContext.Other:
+                    return tag.IsVisibleForOtherPlayers;
+            }
+
+            return null;
+        }
+
+        public bool IsVisibleForPlayer(Tag tag, PlayerCharacter playerCharacter)
+        {
+            var inheritable = GetInheritableVisibilityForPlayer(tag, GetContextForPlayer(playerCharacter));
+            if (inheritable == null)
+            {
+                return false;
+            }
+
+            if (inheritable.InheritedValue == null || !inheritable.InheritedValue.Value)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private Payload[] CreatePayloads(Tag tag)

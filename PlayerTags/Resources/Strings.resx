@@ -382,10 +382,10 @@
   </data>
 
   <data name="Loc_GameObjectNamesToApplyTo" xml:space="preserve">
-    <value>Game object names to apply to</value>
+    <value>Add to players</value>
   </data>
   <data name="Loc_GameObjectNamesToApplyTo_Description" xml:space="preserve">
-    <value>A list of game object names to always apply tags to, separated by commas or semi-colons. E.g. "Cloud Strife, Tifa Lockhart".</value>
+    <value>A list of players to add tags to, separated by commas or semi-colons. E.g. "Cloud Strife, Tifa Lockhart".</value>
   </data>
 
   <data name="Loc_TagPosition_After" xml:space="preserve">
@@ -409,5 +409,47 @@
 
   <data name="Loc_IsEnabled" xml:space="preserve">
     <value>Enabled</value>
+  </data>
+
+  <data name="Loc_Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Loc_General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Loc_ActivityVisibility" xml:space="preserve">
+    <value>Activities</value>
+  </data>
+  <data name="Loc_PlayerVisibility" xml:space="preserve">
+    <value>Players</value>
+  </data>
+
+  <data name="Loc_IsVisibleInPveDuties" xml:space="preserve">
+    <value>Show in pve duties</value>
+  </data>
+  <data name="Loc_IsVisibleInPvpDuties" xml:space="preserve">
+    <value>Show in pvp duties</value>
+  </data>
+  <data name="Loc_IsVisibleInOverworld" xml:space="preserve">
+    <value>Show elsewhere</value>
+  </data>
+
+  <data name="Loc_IsVisibleForSelf" xml:space="preserve">
+    <value>Show for self</value>
+  </data>
+  <data name="Loc_IsVisibleForPartyPlayers" xml:space="preserve">
+    <value>Show for party members</value>
+  </data>
+  <data name="Loc_IsVisibleForAlliancePlayers" xml:space="preserve">
+    <value>Show for alliance members</value>
+  </data>
+  <data name="Loc_IsVisibleForFriendPlayers" xml:space="preserve">
+    <value>Show for friends</value>
+  </data>
+  <data name="Loc_IsVisibleForEnemyPlayers" xml:space="preserve">
+    <value>Show for enemies</value>
+  </data>
+  <data name="Loc_IsVisibleForOtherPlayers" xml:space="preserve">
+    <value>Show for others</value>
   </data>
 </root>

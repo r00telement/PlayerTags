@@ -181,12 +181,18 @@ namespace PlayerTags.Features
                 // Add the job tag
                 if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
-                    if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
+                    bool isVisible = IsVisibleInActivity(jobTag) &&
+                        (!(gameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(jobTag, playerCharacter));
+
+                    if (isVisible)
                     {
-                        var payloads = GetPayloads(jobTag);
-                        if (payloads.Any())
+                        if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
                         {
-                            AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            var payloads = GetPayloads(jobTag);
+                            if (payloads.Any())
+                            {
+                                AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            }
                         }
                     }
                 }
@@ -209,14 +215,20 @@ namespace PlayerTags.Features
             // Add the custom tag payloads
             foreach (var customTag in m_PluginData.CustomTags)
             {
-                if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
+                bool isVisible = IsVisibleInActivity(customTag) &&
+                    (!(gameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(customTag, playerCharacter));
+
+                if (isVisible)
                 {
-                    if (customTag.IncludesGameObjectNameToApplyTo(gameObject.Name.TextValue))
+                    if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
                     {
-                        var payloads = GetPayloads(customTag);
-                        if (payloads.Any())
+                        if (customTag.IncludesGameObjectNameToApplyTo(gameObject.Name.TextValue))
                         {
-                            AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            var payloads = GetPayloads(customTag);
+                            if (payloads.Any())
+                            {
+                                AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            }
                         }
                     }
                 }

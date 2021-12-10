@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.Types;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
@@ -181,12 +182,18 @@ namespace PlayerTags.Features
                     // Add the job tag
                     if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
-                        if (jobTag.TagPositionInChat.InheritedValue != null)
+                        bool isVisible = IsVisibleInActivity(jobTag) &&
+                            (!(stringMatch.GameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(jobTag, playerCharacter));
+
+                        if (isVisible)
                         {
-                            var payloads = GetPayloads(jobTag);
-                            if (payloads.Any())
+                            if (jobTag.TagPositionInChat.InheritedValue != null)
                             {
-                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
+                                var payloads = GetPayloads(jobTag);
+                                if (payloads.Any())
+                                {
+                                    AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
+                                }
                             }
                         }
                     }
@@ -209,14 +216,20 @@ namespace PlayerTags.Features
                 // Add the custom tag payloads
                 foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    if (customTag.TagPositionInChat.InheritedValue != null)
+                    bool isVisible = IsVisibleInActivity(customTag) &&
+                        (!(stringMatch.GameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(customTag, playerCharacter));
+
+                    if (isVisible)
                     {
-                        if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
+                        if (customTag.TagPositionInChat.InheritedValue != null)
                         {
-                            var customTagPayloads = GetPayloads(customTag);
-                            if (customTagPayloads.Any())
+                            if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
                             {
-                                AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                                var customTagPayloads = GetPayloads(customTag);
+                                if (customTagPayloads.Any())
+                                {
+                                    AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                                }
                             }
                         }
                     }
