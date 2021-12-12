@@ -146,7 +146,6 @@ namespace PlayerTags.Features
         /// Adds all configured tags to chat.
         /// </summary>
         /// <param name="message">The message to change.</param>
-        /// <param name="isMessageChanged">Whether the message was changed.</param>
         private void AddTagsToChat(SeString message)
         {
             var stringMatches = GetStringMatches(message);
