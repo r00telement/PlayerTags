@@ -176,7 +176,7 @@ namespace PlayerTags.Data
 
             newSplitGameObjectNamesToApplyTo.Add(gameObjectName);
 
-            GameObjectNamesToApplyTo = string.Join(",", newSplitGameObjectNamesToApplyTo);
+            GameObjectNamesToApplyTo.Value = string.Join(",", newSplitGameObjectNamesToApplyTo);
         }
 
         public void RemoveGameObjectNameToApplyTo(string gameObjectName)

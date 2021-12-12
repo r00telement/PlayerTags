@@ -13,13 +13,11 @@ abysmal
 academic
 acceptable
 accessible
-according
 accurate
 accused
 acidic
 acoustic
 acrobatic
-action
 active
 actual
 acute
@@ -29,7 +27,6 @@ adept
 adequate
 administrative
 adorable
-adult
 advanced
 advantageous
 adverse
@@ -44,22 +41,18 @@ after
 afternoon
 aged
 ageless
-agent
 aggressive
 agile
-agitable
-ago
+agitated
 agonizing
 agreeable
 agricultural
 aimless
 airborne
-airline
 airtight
 airy
 alert
 algorithmic
-alien
 alive
 alleged
 allied
@@ -68,8 +61,6 @@ alone
 alpha
 alphabetical
 alphanumeric
-alright
-alterior
 alternative
 altruistic
 amateur
@@ -79,6 +70,7 @@ ambiguous
 ambitious
 amusing
 anaemic
+anal
 ancestral
 ancient
 androgenous
@@ -87,7 +79,6 @@ angelic
 angry
 angsty
 angular
-animal
 animated
 annihilated
 annoying
@@ -97,9 +88,7 @@ another
 antisocial
 anxious
 any
-apart
 apathetic
-aphrodisiac
 appalling
 apparent
 appealing
@@ -122,7 +111,7 @@ arty
 ascendant
 ashamed
 asinine
-asleep
+asocial
 asphyxiated
 aspiring
 assertive
@@ -142,19 +131,15 @@ attractive
 augmented
 aural
 auspicious
-authoritarian
 authoritative
 authorized
 automatic
 available
 average
 aware
-away
 awesome
 awful
 awkward
-background
-backward
 bacterial
 bad
 baffling
@@ -500,6 +485,7 @@ criminal
 cringeworthy
 critical
 crude
+crumbly
 crushing
 crusty
 crying
@@ -735,6 +721,7 @@ dubious
 due
 dumb
 durable
+dusty
 dutiful
 dwarfish
 dying
@@ -1118,7 +1105,6 @@ gnarly
 godforsaken
 godless
 godly
-gold
 golden
 good
 gooey
@@ -1366,7 +1352,6 @@ inevitable
 inexpensive
 inexperienced
 infamous
-infamous
 infantile
 infatuated
 infectious
@@ -1409,7 +1394,6 @@ instant
 institutional
 instrumental
 insufficient
-insulted
 insulting
 insured
 intact
@@ -2039,7 +2023,6 @@ rapid
 rare
 rash
 rational
-rational
 raw
 readied
 ready
@@ -2203,7 +2186,6 @@ ritualistic
 rival
 roastable
 roasted
-roasting
 robotic
 robust
 rocky
@@ -2213,6 +2195,7 @@ romantic
 roomy
 rotatable
 rotten
+rotund
 rough
 round
 rounded
@@ -2226,7 +2209,6 @@ rude
 ruinable
 ruinous
 ruling
-running
 rusted
 rustic
 rusty
@@ -2713,6 +2695,7 @@ tyrannical
 tyrannicidal
 uber
 ugly
+ulterior
 ultimate
 ultrasonic
 unable

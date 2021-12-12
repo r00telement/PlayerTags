@@ -2,7 +2,6 @@ abdomen
 ability
 abolition
 abortion
-abroad
 absolution
 abuse
 access
@@ -15,7 +14,6 @@ acknowledgment
 acquisition
 act
 action
-active
 activity
 actor
 actress
@@ -30,7 +28,6 @@ administration
 adrenaline
 adult
 adulthood
-advance
 advancement
 advantage
 adventure
@@ -38,7 +35,6 @@ advertisement
 advertising
 advice
 affair
-affect
 aftermath
 afternoon
 aftershave
@@ -74,7 +70,6 @@ amount
 amputee
 amulet
 amusement
-anal
 analysis
 analyst
 anatomy
@@ -94,7 +89,6 @@ antihero
 antler
 anus
 anxiety
-anything
 apartment
 ape
 apex
@@ -128,12 +122,10 @@ art
 article
 artisan
 ashtray
-aside
 aspect
 ass
 assessment
 assignment
-assist
 assistance
 assistant
 associate
@@ -154,19 +146,19 @@ attraction
 audience
 audio
 author
+authoritarian
 authority
 authorization
 automaton
 avalanche
-average
 award
 awareness
 baboon
 baby
-back
 backdrop
 background
 backpack
+backside
 badge
 badger
 bafflement
@@ -175,7 +167,6 @@ bagel
 baggage
 bagpipe
 baguette
-bake
 baker
 bakery
 balance
@@ -186,19 +177,16 @@ balloon
 banana
 band
 bandana
-bang
 bangle
 banjo
 bank
 banker
-banquette
 banter
 bar
 barbeque
 barn
 base
 baseball
-basement
 basement
 basis
 basket
@@ -211,7 +199,6 @@ bathtub
 battery
 battle
 battleship
-battletoad
 beach
 beam
 bean
@@ -221,7 +208,6 @@ bear
 beard
 beast
 beat
-beautiful
 beauty
 beaver
 bed
@@ -236,7 +222,6 @@ behavior
 beheading
 belief
 bell
-bellend
 belligerency
 belly
 belt
@@ -258,6 +243,7 @@ bikini
 bill
 billboard
 bin
+binary
 binge
 bingo
 biology
@@ -266,7 +252,6 @@ birth
 birthday
 bit
 bite
-bitter
 bladder
 blade
 blame
@@ -631,6 +616,7 @@ creator
 credit
 crescendo
 crew
+crib
 crime
 criminal
 criteria
@@ -639,7 +625,7 @@ cross
 crotch
 crowd
 crown
-cry
+crumb
 cube
 cucumber
 cuddle
@@ -683,7 +669,6 @@ declination
 decongestant
 decryption
 dedication
-deep
 defense
 deficit
 definition
@@ -729,7 +714,6 @@ diamond
 dictionary
 diet
 difference
-differential
 difficulty
 digestion
 digger
@@ -756,7 +740,6 @@ discrepancy
 discrimination
 discussion
 disease
-disembodiment
 disengagement
 disguise
 disgust
@@ -765,6 +748,7 @@ disk
 disorder
 dispenser
 display
+dispenser
 disposer
 dispute
 disruption
@@ -776,7 +760,6 @@ distrust
 disturbance
 divide
 divider
-diving
 divinity
 division
 divorce
@@ -788,13 +771,11 @@ dolphin
 donkey
 door
 dot
-double
 doubt
 doubter
 downforce
 downgrade
 draft
-drag
 dragon
 drain
 drama
@@ -830,7 +811,6 @@ earplug
 earring
 earth
 earthquake
-ease
 eat
 eavesdropper
 eclipse
@@ -841,7 +821,6 @@ editor
 editorial
 education
 effect
-effective
 efficiency
 effort
 egg
@@ -887,7 +866,6 @@ entry
 environment
 envy
 epitome
-equal
 equipment
 equivalent
 erection
@@ -946,7 +924,6 @@ fact
 factor
 factory
 faculty
-fail
 failure
 fairy
 faith
@@ -958,9 +935,7 @@ fang
 fanny
 farm
 farmer
-farmer
 fart
-fat
 father
 fatigue
 fault
@@ -972,7 +947,6 @@ feature
 feces
 fee
 feedback
-feel
 feeling
 felony
 female
@@ -995,7 +969,6 @@ film
 filth
 final
 finance
-finding
 finger
 finish
 fire
@@ -1032,7 +1005,6 @@ foam
 focus
 fold
 folder
-following
 font
 food
 foot
@@ -1041,7 +1013,6 @@ force
 forecast
 forehead
 forest
-forever
 form
 format
 fort
@@ -1082,7 +1053,6 @@ fur
 furnace
 furniture
 future
-gain
 gallery
 gambit
 game
@@ -1124,7 +1094,6 @@ gossip
 governance
 government
 governor
-grab
 grade
 grain
 grammar
@@ -1176,6 +1145,7 @@ hang
 happiness
 harbor
 hardware
+harlot
 harm
 harmony
 hassle
@@ -1184,7 +1154,6 @@ hate
 hatred
 head
 healer
-healslut
 health
 hearing
 heart
@@ -1241,7 +1210,6 @@ hovercraft
 human
 humidity
 humor
-humping
 hunger
 hunt
 hunter
@@ -1260,12 +1228,10 @@ idea
 ideal
 idealist
 igloo
-illegal
 image
 imagination
 impact
 impeachment
-implement
 importance
 impression
 imprisonment
@@ -1292,7 +1258,6 @@ influence
 information
 infusion
 ingrate
-initial
 initiative
 injection
 injury
@@ -1305,7 +1270,6 @@ inquiry
 inscription
 insect
 insemination
-inside
 insolence
 inspection
 inspector
@@ -1372,7 +1336,6 @@ kerfuffle
 key
 kick
 kid
-kill
 killer
 kind
 kindness
@@ -1410,9 +1373,7 @@ law
 lawn
 lawsuit
 lawyer
-lay
 layer
-lead
 leader
 leadership
 leading
@@ -1432,10 +1393,10 @@ letter
 lettuce
 level
 lever
+liar
 library
 license
 lie
-lier
 life
 lift
 light
@@ -1452,7 +1413,6 @@ lipstick
 liquid
 liquor
 list
-listen
 literature
 litigation
 litter
@@ -1491,7 +1451,6 @@ mail
 mailbox
 mailman
 maintenance
-major
 maker
 makeup
 mall
@@ -1516,11 +1475,9 @@ master
 match
 mate
 material
-mathematic
 mathematics
 matter
 mattress
-maybe
 mayor
 meal
 meaning
@@ -1578,7 +1535,6 @@ mix
 mixer
 mixture
 moan
-moan
 moat
 mobile
 mode
@@ -1604,7 +1560,6 @@ motor
 mound
 mount
 mountain
-mouse
 mouse
 mousse
 mouth
@@ -1737,7 +1692,6 @@ panther
 pantry
 paper
 parachute
-parachute
 parade
 paramedic
 parasite
@@ -1834,7 +1788,6 @@ plaster
 plastic
 plate
 platform
-play
 player
 playground
 playroom
@@ -1846,7 +1799,6 @@ poem
 poet
 poetry
 point
-pokemon
 poking
 police
 policy
@@ -1867,7 +1819,6 @@ postbox
 poster
 posture
 pot
-potato
 potato
 potential
 potion
@@ -1962,12 +1913,10 @@ quarter
 queen
 quest
 question
-quit
 quote
 rabbit
 race
 racism
-racist
 radiator
 radio
 raffle
@@ -1998,7 +1947,6 @@ recording
 recover
 recreation
 recruit
-red
 redesign
 rediscovery
 reduction
@@ -2022,13 +1970,11 @@ reliability
 relief
 religion
 reminder
-remote
 removal
 rendition
 rent
 repair
 reparation
-repeat
 repellent
 replacement
 replication
@@ -2153,10 +2099,9 @@ sector
 security
 seed
 selection
-self
+selfie
 sensation
 sense
-sensitive
 sentence
 series
 servant
@@ -2177,7 +2122,6 @@ shift
 ship
 shirt
 shit
-shitter
 shiver
 shock
 shoe
@@ -2245,6 +2189,7 @@ sock
 software
 soil
 soldier
+solicitor
 solid
 solution
 solvent
@@ -2257,7 +2202,6 @@ soup
 source
 space
 spank
-spankbank
 spark
 spartan
 spasm
@@ -2274,7 +2218,6 @@ spend
 sperm
 sphere
 spirit
-spiritual
 spite
 spitroast
 splash
@@ -2302,6 +2245,7 @@ stance
 stand
 standard
 star
+starlet
 start
 state
 statement
@@ -2333,7 +2277,7 @@ stretch
 strife
 strike
 string
-strip
+stripper
 stroke
 structure
 struggle
@@ -2350,7 +2294,7 @@ subroutine
 substance
 subway
 success
-suck
+sucker
 suffocation
 sugar
 suggestion
@@ -2444,10 +2388,8 @@ toe
 toilet
 tolerance
 tomb
-tomorrow
 tone
 tongue
-tonight
 tool
 tooth
 top
