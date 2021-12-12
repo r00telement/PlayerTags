@@ -117,94 +117,93 @@ namespace PlayerTags.Features
 
         private PlayerContext GetContextForPlayer(PlayerCharacter playerCharacter)
         {
+            PlayerContext playerContext = PlayerContext.None;
+
             if (PluginServices.ClientState.LocalPlayer == playerCharacter)
             {
-                return PlayerContext.Self;
+                playerContext |= PlayerContext.Self;
             }
 
             if (playerCharacter.StatusFlags.HasFlag(StatusFlags.Friend))
             {
-                return PlayerContext.Friend;
+                playerContext |= PlayerContext.Friend;
             }
 
             if (playerCharacter.StatusFlags.HasFlag(StatusFlags.PartyMember))
             {
-                return PlayerContext.Party;
+                playerContext |= PlayerContext.Party;
             }
 
             if (playerCharacter.StatusFlags.HasFlag(StatusFlags.AllianceMember))
             {
-                return PlayerContext.Alliance;
+                playerContext |= PlayerContext.Alliance;
             }
 
             if (playerCharacter.StatusFlags.HasFlag(StatusFlags.Hostile))
             {
-                return PlayerContext.Enemy;
+                playerContext |= PlayerContext.Enemy;
             }
 
-            return PlayerContext.Other;
-        }
-
-        private InheritableValue<bool>? GetInheritableVisibilityForPlayer(Tag tag, PlayerContext playerContext)
-        {
-            switch (playerContext)
-            {
-                case PlayerContext.Self:
-                    return tag.IsVisibleForSelf;
-                case PlayerContext.Friend:
-                    return tag.IsVisibleForFriendPlayers;
-                case PlayerContext.Party:
-                    return tag.IsVisibleForPartyPlayers;
-                case PlayerContext.Alliance:
-                    return tag.IsVisibleForAlliancePlayers;
-                case PlayerContext.Enemy:
-                    return tag.IsVisibleForEnemyPlayers;
-                case PlayerContext.Other:
-                    return tag.IsVisibleForOtherPlayers;
-            }
-
-            return null;
+            return playerContext;
         }
 
         private bool IsVisibleForPlayer(Tag tag, PlayerCharacter playerCharacter)
         {
-            var inheritable = GetInheritableVisibilityForPlayer(tag, GetContextForPlayer(playerCharacter));
-            if (inheritable == null)
-            {
-                return false;
-            }
+            var playerContext = GetContextForPlayer(playerCharacter);
 
-            if (inheritable.InheritedValue == null || !inheritable.InheritedValue.Value)
+            if (playerContext.HasFlag(PlayerContext.Self))
             {
-                return false;
-            }
-
-            return true;
-        }
-
-        private string ExpandTextParameters(GameObject gameObject, string text)
-        {
-            if (gameObject is PlayerCharacter playerCharacter)
-            {
-                var parameterIndex = text.ToLower().IndexOf("{PlayerAverageItemLevel}".ToLower());
-                if (parameterIndex >= 0)
+                if (tag.IsVisibleForSelf.InheritedValue == null || !tag.IsVisibleForSelf.InheritedValue.Value)
                 {
-                    unsafe
-                    {
-                        FFXIVClientStructs.FFXIV.Client.Game.Character.Character character = Marshal.PtrToStructure<FFXIVClientStructs.FFXIV.Client.Game.Character.Character>(playerCharacter.Address);
-                        byte[] equipSlotData = new byte[40];
+                    return false;
+                }
 
-                        for (int index = 0; index < equipSlotData.Length; ++index)
-                        {
-                            equipSlotData[index] = character.EquipSlotData[index];
-                        }
+                return true;
+            }
 
-                        PluginLog.Debug(string.Join(" ", equipSlotData.Select(d => d.ToString("X2"))));
-                    }
+            bool isVisible = false;
+
+            if (playerContext.HasFlag(PlayerContext.Friend))
+            {
+                if (tag.IsVisibleForFriendPlayers.InheritedValue != null)
+                {
+                    isVisible |= tag.IsVisibleForFriendPlayers.InheritedValue.Value;
                 }
             }
 
-            return text;
+            if (playerContext.HasFlag(PlayerContext.Party))
+            {
+                if (tag.IsVisibleForPartyPlayers.InheritedValue != null)
+                {
+                    isVisible |= tag.IsVisibleForPartyPlayers.InheritedValue.Value;
+                }
+            }
+
+            if (!playerContext.HasFlag(PlayerContext.Party) && playerContext.HasFlag(PlayerContext.Alliance))
+            {
+                if (tag.IsVisibleForAlliancePlayers.InheritedValue != null)
+                {
+                    isVisible |= tag.IsVisibleForAlliancePlayers.InheritedValue.Value;
+                }
+            }
+
+            if (playerContext.HasFlag(PlayerContext.Enemy))
+            {
+                if (tag.IsVisibleForEnemyPlayers.InheritedValue != null)
+                {
+                    isVisible |= tag.IsVisibleForEnemyPlayers.InheritedValue.Value;
+                }
+            }
+
+            if (playerContext == PlayerContext.None)
+            {
+                if (tag.IsVisibleForOtherPlayers.InheritedValue != null)
+                {
+                    isVisible |= tag.IsVisibleForOtherPlayers.InheritedValue.Value;
+                }
+            }
+
+            return isVisible;
         }
 
         private Payload[] CreatePayloads(GameObject gameObject, Tag tag)
@@ -230,8 +229,6 @@ namespace PlayerTags.Features
 
             if (!string.IsNullOrWhiteSpace(text))
             {
-                text = ExpandTextParameters(gameObject, text);
-
                 if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
                 {
                     newPayloads.Add(new EmphasisItalicPayload(true));
