@@ -250,6 +250,132 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show alliance members.
+        /// </summary>
+        public static string Loc_IsPlayersTabAllianceVisible {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabAllianceVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show alliance members in the players list..
+        /// </summary>
+        public static string Loc_IsPlayersTabAllianceVisible_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabAllianceVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show enemies.
+        /// </summary>
+        public static string Loc_IsPlayersTabEnemiesVisible {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabEnemiesVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show enemies in the players list..
+        /// </summary>
+        public static string Loc_IsPlayersTabEnemiesVisible_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabEnemiesVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show friends.
+        /// </summary>
+        public static string Loc_IsPlayersTabFriendsVisible {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabFriendsVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show friends in the players list..
+        /// </summary>
+        public static string Loc_IsPlayersTabFriendsVisible_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabFriendsVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order by proximity.
+        /// </summary>
+        public static string Loc_IsPlayersTabOrderedByProximity {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabOrderedByProximity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Players that are closer to the local player will be ordered towards the top..
+        /// </summary>
+        public static string Loc_IsPlayersTabOrderedByProximity_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabOrderedByProximity_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show others.
+        /// </summary>
+        public static string Loc_IsPlayersTabOthersVisible {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabOthersVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show others in the players list..
+        /// </summary>
+        public static string Loc_IsPlayersTabOthersVisible_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabOthersVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show party members.
+        /// </summary>
+        public static string Loc_IsPlayersTabPartyVisible {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabPartyVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show party members in the players list..
+        /// </summary>
+        public static string Loc_IsPlayersTabPartyVisible_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabPartyVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show self.
+        /// </summary>
+        public static string Loc_IsPlayersTabSelfVisible {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabSelfVisible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show yourself in the players list..
+        /// </summary>
+        public static string Loc_IsPlayersTabSelfVisible_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsPlayersTabSelfVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected.
         /// </summary>
         public static string Loc_IsSelected {
@@ -273,24 +399,6 @@ namespace PlayerTags.Resources {
         public static string Loc_IsShowInheritedPropertiesEnabled_Description {
             get {
                 return ResourceManager.GetString("Loc_IsShowInheritedPropertiesEnabled_Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sort by proximity.
-        /// </summary>
-        public static string Loc_IsSortedByProximity {
-            get {
-                return ResourceManager.GetString("Loc_IsSortedByProximity", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Players that are closer to the local player will be ordered towards the top..
-        /// </summary>
-        public static string Loc_IsSortedByProximity_Description {
-            get {
-                return ResourceManager.GetString("Loc_IsSortedByProximity_Description", resourceCulture);
             }
         }
         
@@ -484,7 +592,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Whether the tag should be visible in pvp duties..
+        ///   Looks up a localized string similar to Whether the tag should be visible in pve duties..
         /// </summary>
         public static string Loc_IsVisibleInPveDuties_Description {
             get {
@@ -498,6 +606,15 @@ namespace PlayerTags.Resources {
         public static string Loc_IsVisibleInPvpDuties {
             get {
                 return ResourceManager.GetString("Loc_IsVisibleInPvpDuties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible in pvp duties..
+        /// </summary>
+        public static string Loc_IsVisibleInPvpDuties_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleInPvpDuties_Description", resourceCulture);
             }
         }
         
@@ -889,15 +1006,6 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Party.
-        /// </summary>
-        public static string Loc_Static_Party {
-            get {
-                return ResourceManager.GetString("Loc_Static_Party", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Player.
         /// </summary>
         public static string Loc_Static_PlayerName {
@@ -907,20 +1015,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Players.
+        /// </summary>
+        public static string Loc_Static_Players {
+            get {
+                return ResourceManager.GetString("Loc_Static_Players", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Player Tags.
         /// </summary>
         public static string Loc_Static_PluginName {
             get {
                 return ResourceManager.GetString("Loc_Static_PluginName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proximity.
-        /// </summary>
-        public static string Loc_Static_Proximity {
-            get {
-                return ResourceManager.GetString("Loc_Static_Proximity", resourceCulture);
             }
         }
         

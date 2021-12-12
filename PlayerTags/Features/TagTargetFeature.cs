@@ -19,13 +19,13 @@ namespace PlayerTags.Features
     {
         private PluginConfiguration m_PluginConfiguration;
 
-        private ActivityContext m_ActivityContext;
+        private ActivityContext m_CurrentActivityContext;
 
         public TagTargetFeature(PluginConfiguration pluginConfiguration)
         {
             m_PluginConfiguration = pluginConfiguration;
 
-            m_ActivityContext = ActivityContext.Overworld;
+            m_CurrentActivityContext = ActivityContext.None;
 
             PluginServices.ClientState.TerritoryChanged += ClientState_TerritoryChanged;
         }
@@ -41,7 +41,7 @@ namespace PlayerTags.Features
 
         private void ClientState_TerritoryChanged(object? sender, ushort e)
         {
-            m_ActivityContext = ActivityContext.Overworld;
+            m_CurrentActivityContext = ActivityContext.None;
 
             var contentFinderConditionsSheet = PluginServices.DataManager.GameData.GetExcelSheet<ContentFinderCondition>();
             if (contentFinderConditionsSheet != null)
@@ -51,11 +51,11 @@ namespace PlayerTags.Features
                 {
                     if (foundContentFinderCondition.PvP)
                     {
-                        m_ActivityContext = ActivityContext.PvpDuty;
+                        m_CurrentActivityContext = ActivityContext.PvpDuty;
                     }
                     else
                     {
-                        m_ActivityContext = ActivityContext.PveDuty;
+                        m_CurrentActivityContext = ActivityContext.PveDuty;
                     }
                 }
             }
@@ -69,141 +69,33 @@ namespace PlayerTags.Features
         /// <returns>A list of payloads for the given tag.</returns>
         protected IEnumerable<Payload> GetPayloads(GameObject gameObject, Tag tag)
         {
-            // Only get payloads when in allowed activity contexts
-            if (!IsVisibleInActivity(tag))
+            bool isVisibleForActivity = ActivityContextHelper.GetIsVisible(m_CurrentActivityContext,
+                tag.IsVisibleInPveDuties.InheritedValue ?? false,
+                tag.IsVisibleInPvpDuties.InheritedValue ?? false,
+                tag.IsVisibleInOverworld.InheritedValue ?? false);
+
+            if (!isVisibleForActivity)
             {
                 return Enumerable.Empty<Payload>();
             }
 
-            // Only get payloads for player characters for allowed player contexts
-            if (gameObject is PlayerCharacter playerCharacter && !IsVisibleForPlayer(tag, playerCharacter))
+            if (gameObject is PlayerCharacter playerCharacter)
             {
-                return Enumerable.Empty<Payload>();
+                bool isVisibleForPlayer = PlayerContextHelper.GetIsVisible(playerCharacter,
+                    tag.IsVisibleForSelf.InheritedValue ?? false,
+                    tag.IsVisibleForFriendPlayers.InheritedValue ?? false,
+                    tag.IsVisibleForPartyPlayers.InheritedValue ?? false,
+                    tag.IsVisibleForAlliancePlayers.InheritedValue ?? false,
+                    tag.IsVisibleForEnemyPlayers.InheritedValue ?? false,
+                    tag.IsVisibleForOtherPlayers.InheritedValue ?? false);
+
+                if (!isVisibleForPlayer)
+                {
+                    return Enumerable.Empty<Payload>();
+                }
             }
 
             return CreatePayloads(gameObject, tag);
-        }
-
-        private InheritableValue<bool>? GetInheritableVisibilityForActivity(Tag tag, ActivityContext activityContext)
-        {
-            switch (activityContext)
-            {
-                case ActivityContext.Overworld:
-                    return tag.IsVisibleInOverworld;
-                case ActivityContext.PveDuty:
-                    return tag.IsVisibleInPveDuties;
-                case ActivityContext.PvpDuty:
-                    return tag.IsVisibleInPvpDuties;
-            }
-
-            return null;
-        }
-
-        private bool IsVisibleInActivity(Tag tag)
-        {
-            var inheritable = GetInheritableVisibilityForActivity(tag, m_ActivityContext);
-            if (inheritable == null)
-            {
-                return false;
-            }
-
-            if (inheritable.InheritedValue == null || !inheritable.InheritedValue.Value)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private PlayerContext GetContextForPlayer(PlayerCharacter playerCharacter)
-        {
-            PlayerContext playerContext = PlayerContext.None;
-
-            if (PluginServices.ClientState.LocalPlayer == playerCharacter)
-            {
-                playerContext |= PlayerContext.Self;
-            }
-
-            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.Friend))
-            {
-                playerContext |= PlayerContext.Friend;
-            }
-
-            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.PartyMember))
-            {
-                playerContext |= PlayerContext.Party;
-            }
-
-            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.AllianceMember))
-            {
-                playerContext |= PlayerContext.Alliance;
-            }
-
-            if (playerCharacter.StatusFlags.HasFlag(StatusFlags.Hostile))
-            {
-                playerContext |= PlayerContext.Enemy;
-            }
-
-            return playerContext;
-        }
-
-        private bool IsVisibleForPlayer(Tag tag, PlayerCharacter playerCharacter)
-        {
-            var playerContext = GetContextForPlayer(playerCharacter);
-
-            if (playerContext.HasFlag(PlayerContext.Self))
-            {
-                if (tag.IsVisibleForSelf.InheritedValue == null || !tag.IsVisibleForSelf.InheritedValue.Value)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            bool isVisible = false;
-
-            if (playerContext.HasFlag(PlayerContext.Friend))
-            {
-                if (tag.IsVisibleForFriendPlayers.InheritedValue != null)
-                {
-                    isVisible |= tag.IsVisibleForFriendPlayers.InheritedValue.Value;
-                }
-            }
-
-            if (playerContext.HasFlag(PlayerContext.Party))
-            {
-                if (tag.IsVisibleForPartyPlayers.InheritedValue != null)
-                {
-                    isVisible |= tag.IsVisibleForPartyPlayers.InheritedValue.Value;
-                }
-            }
-
-            if (!playerContext.HasFlag(PlayerContext.Party) && playerContext.HasFlag(PlayerContext.Alliance))
-            {
-                if (tag.IsVisibleForAlliancePlayers.InheritedValue != null)
-                {
-                    isVisible |= tag.IsVisibleForAlliancePlayers.InheritedValue.Value;
-                }
-            }
-
-            if (playerContext.HasFlag(PlayerContext.Enemy))
-            {
-                if (tag.IsVisibleForEnemyPlayers.InheritedValue != null)
-                {
-                    isVisible |= tag.IsVisibleForEnemyPlayers.InheritedValue.Value;
-                }
-            }
-
-            if (playerContext == PlayerContext.None)
-            {
-                if (tag.IsVisibleForOtherPlayers.InheritedValue != null)
-                {
-                    isVisible |= tag.IsVisibleForOtherPlayers.InheritedValue.Value;
-                }
-            }
-
-            return isVisible;
         }
 
         private Payload[] CreatePayloads(GameObject gameObject, Tag tag)

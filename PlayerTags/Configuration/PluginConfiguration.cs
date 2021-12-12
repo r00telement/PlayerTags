@@ -1,5 +1,4 @@
 ﻿using Dalamud.Configuration;
-using Dalamud.Plugin;
 using Newtonsoft.Json;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
@@ -20,7 +19,13 @@ namespace PlayerTags.Configuration
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
-        public bool IsSortedByProximity = true;
+        public bool IsPlayersTabOrderedByProximity = true;
+        public bool IsPlayersTabSelfVisible = true;
+        public bool IsPlayersTabFriendsVisible = true;
+        public bool IsPlayersTabPartyVisible = true;
+        public bool IsPlayersTabAllianceVisible = true;
+        public bool IsPlayersTabEnemiesVisible = true;
+        public bool IsPlayersTabOthersVisible = false;
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();

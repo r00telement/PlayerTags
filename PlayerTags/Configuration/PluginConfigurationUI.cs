@@ -17,6 +17,12 @@ namespace PlayerTags.Configuration
 {
     public class PluginConfigurationUI
     {
+        private struct PlayerInfo
+        {
+            public PlayerContext PlayerContext;
+            public float Proximity;
+        }
+
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
 
@@ -101,12 +107,20 @@ namespace PlayerTags.Configuration
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem(Strings.Loc_Static_Party))
+                    if (ImGui.BeginTabItem(Strings.Loc_Static_Players))
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
                         ImGui.TreePush();
-                        if (ImGui.BeginTable("##PartyAssignTable", 1 + m_PluginData.CustomTags.Count))
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOrderedByProximity), true, ref m_PluginConfiguration.IsPlayersTabOrderedByProximity, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabSelfVisible), true, ref m_PluginConfiguration.IsPlayersTabSelfVisible, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabFriendsVisible), true, ref m_PluginConfiguration.IsPlayersTabFriendsVisible, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabPartyVisible), true, ref m_PluginConfiguration.IsPlayersTabPartyVisible, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabAllianceVisible), true, ref m_PluginConfiguration.IsPlayersTabAllianceVisible, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabEnemiesVisible), true, ref m_PluginConfiguration.IsPlayersTabEnemiesVisible, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOthersVisible), true, ref m_PluginConfiguration.IsPlayersTabOthersVisible, () => m_PluginConfiguration.Save(m_PluginData));
+
+                        if (ImGui.BeginTable("##PlayersTable", 1 + m_PluginData.CustomTags.Count))
                         {
                             ImGui.TableHeader(Strings.Loc_Static_PlayerName);
                             ImGui.TableSetupColumn(Strings.Loc_Static_PlayerName);
@@ -119,65 +133,52 @@ namespace PlayerTags.Configuration
                             }
                             ImGui.TableHeadersRow();
 
-                            int rowIndex = 0;
-                            foreach (var partyMember in PluginServices.PartyList.OrderBy(obj => obj.Name.TextValue).ToArray())
+                            if (PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawPlayerAssignmentRow(partyMember.Name.TextValue, rowIndex);
-                                ++rowIndex;
-                            }
+                                Dictionary<string, PlayerInfo> playerNameContexts = PluginServices.ObjectTable
+                                    .Where(gameObject => gameObject is PlayerCharacter)
+                                    .Select(gameObject => gameObject as PlayerCharacter)
+                                    .ToDictionary(
+                                        playerCharacter => playerCharacter!.Name.TextValue,
+                                        playerCharacter => new PlayerInfo()
+                                        {
+                                            PlayerContext = PlayerContextHelper.GetPlayerContext(playerCharacter!),
+                                            Proximity = (playerCharacter!.Position - PluginServices.ClientState.LocalPlayer.Position).Length()
+                                        });
 
-                            if (PluginServices.PartyList.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
-                            {
-                                DrawPlayerAssignmentRow(PluginServices.ClientState.LocalPlayer.Name.TextValue, 0);
-                            }
+                                // Include party members that aren't in the game object list
+                                foreach (var partyMember in PluginServices.PartyList)
+                                {
+                                    if (!playerNameContexts.ContainsKey(partyMember.Name.TextValue))
+                                    {
+                                        playerNameContexts[partyMember.Name.TextValue] = new PlayerInfo()
+                                        {
+                                            PlayerContext = PlayerContext.Party,
+                                            Proximity = int.MaxValue
+                                        };
+                                    }
+                                }
 
-                            ImGui.EndTable();
-                        }
-                        ImGui.TreePop();
+                                var filteredPlayerNameContexts = playerNameContexts.Where(player => PlayerContextHelper.GetIsVisible(player.Value.PlayerContext,
+                                    m_PluginConfiguration.IsPlayersTabSelfVisible,
+                                    m_PluginConfiguration.IsPlayersTabFriendsVisible,
+                                    m_PluginConfiguration.IsPlayersTabPartyVisible,
+                                    m_PluginConfiguration.IsPlayersTabAllianceVisible,
+                                    m_PluginConfiguration.IsPlayersTabEnemiesVisible,
+                                    m_PluginConfiguration.IsPlayersTabOthersVisible));
 
-                        ImGui.EndTabItem();
-                    }
+                                var orderedPlayerNameContexts = filteredPlayerNameContexts.OrderBy(player => player.Key);
+                                if (m_PluginConfiguration.IsPlayersTabOrderedByProximity)
+                                {
+                                    orderedPlayerNameContexts = filteredPlayerNameContexts.OrderBy(player => player.Value.Proximity);
+                                }
 
-                    if (ImGui.BeginTabItem(Strings.Loc_Static_Proximity))
-                    {
-                        ImGui.Spacing();
-                        ImGui.Spacing();
-                        ImGui.TreePush();
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsSortedByProximity), true, ref m_PluginConfiguration.IsSortedByProximity, () => m_PluginConfiguration.Save(m_PluginData));
-                        
-                        if (ImGui.BeginTable("##ProximityAssignTable", 1 + m_PluginData.CustomTags.Count))
-                        {
-                            ImGui.TableHeader(Strings.Loc_Static_PlayerName);
-                            ImGui.TableSetupColumn(Strings.Loc_Static_PlayerName);
-                            ImGui.NextColumn();
-                            foreach (var customTag in m_PluginData.CustomTags)
-                            {
-                                ImGui.TableHeader(customTag.Text.InheritedValue);
-                                ImGui.TableSetupColumn(customTag.Text.InheritedValue);
-                                ImGui.NextColumn();
-                            }
-                            ImGui.TableHeadersRow();
-
-                            var players = PluginServices.ObjectTable.Where(gameObject => gameObject is PlayerCharacter);
-                            if (m_PluginConfiguration.IsSortedByProximity && PluginServices.ClientState.LocalPlayer != null)
-                            {
-                                players = players.OrderBy(gameObject => (gameObject.Position - PluginServices.ClientState.LocalPlayer.Position).Length());
-                            }
-                            else
-                            {
-                                players = players.OrderBy(obj => obj.Name.TextValue);
-                            }
-
-                            int rowIndex = 0;
-                            foreach (var gameObject in players)
-                            {
-                                DrawPlayerAssignmentRow(gameObject.Name.TextValue, rowIndex);
-                                ++rowIndex;
-                            }
-
-                            if (PluginServices.ObjectTable.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
-                            {
-                                DrawPlayerAssignmentRow(PluginServices.ClientState.LocalPlayer.Name.TextValue, 0);
+                                int rowIndex = 0;
+                                foreach (var player in orderedPlayerNameContexts)
+                                {
+                                    DrawPlayerAssignmentRow(player.Key, rowIndex);
+                                    ++rowIndex;
+                                }
                             }
 
                             ImGui.EndTable();

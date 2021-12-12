@@ -126,11 +126,8 @@
   <data name="Loc_Static_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Loc_Static_Party" xml:space="preserve">
-    <value>Party</value>
-  </data>
-  <data name="Loc_Static_Proximity" xml:space="preserve">
-    <value>Proximity</value>
+  <data name="Loc_Static_Players" xml:space="preserve">
+    <value>Players</value>
   </data>
   <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
     <value>Tagged Players</value>
@@ -480,10 +477,52 @@
     <value>Whether the tag should be visible for players in other circumstances for which there is no specific option.</value>
   </data>
 
-  <data name="Loc_IsSortedByProximity" xml:space="preserve">
-    <value>Sort by proximity</value>
+  <data name="Loc_IsPlayersTabOrderedByProximity" xml:space="preserve">
+    <value>Order by proximity</value>
   </data>
-  <data name="Loc_IsSortedByProximity_Description" xml:space="preserve">
+  <data name="Loc_IsPlayersTabOrderedByProximity_Description" xml:space="preserve">
     <value>Players that are closer to the local player will be ordered towards the top.</value>
+  </data>
+
+  <data name="Loc_IsPlayersTabSelfVisible" xml:space="preserve">
+    <value>Show self</value>
+  </data>
+  <data name="Loc_IsPlayersTabSelfVisible_Description" xml:space="preserve">
+    <value>Show yourself in the players list.</value>
+  </data>
+
+  <data name="Loc_IsPlayersTabFriendsVisible" xml:space="preserve">
+    <value>Show friends</value>
+  </data>
+  <data name="Loc_IsPlayersTabFriendsVisible_Description" xml:space="preserve">
+    <value>Show friends in the players list.</value>
+  </data>
+
+  <data name="Loc_IsPlayersTabPartyVisible" xml:space="preserve">
+    <value>Show party members</value>
+  </data>
+  <data name="Loc_IsPlayersTabPartyVisible_Description" xml:space="preserve">
+    <value>Show party members in the players list.</value>
+  </data>
+
+  <data name="Loc_IsPlayersTabAllianceVisible" xml:space="preserve">
+    <value>Show alliance members</value>
+  </data>
+  <data name="Loc_IsPlayersTabAllianceVisible_Description" xml:space="preserve">
+    <value>Show alliance members in the players list.</value>
+  </data>
+
+  <data name="Loc_IsPlayersTabEnemiesVisible" xml:space="preserve">
+    <value>Show enemies</value>
+  </data>
+  <data name="Loc_IsPlayersTabEnemiesVisible_Description" xml:space="preserve">
+    <value>Show enemies in the players list.</value>
+  </data>
+
+  <data name="Loc_IsPlayersTabOthersVisible" xml:space="preserve">
+    <value>Show others</value>
+  </data>
+  <data name="Loc_IsPlayersTabOthersVisible_Description" xml:space="preserve">
+    <value>Show others in the players list.</value>
   </data>
 </root>
