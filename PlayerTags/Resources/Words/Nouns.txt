@@ -2011,7 +2011,6 @@ rhetoric
 rhyme
 rhythm
 rice
-rich
 riddle
 ride
 ring
