@@ -256,7 +256,7 @@
     <value>Randomly generate player names</value>
   </data>
   <data name="Loc_IsPlayerNameRandomlyGenerated_Description" xml:space="preserve">
-    <value>Use tags to replace every player's name with a randomly generated one. Helpful for preserving anonymity when taking screenshots.</value>
+    <value>Replace every player's name with a randomly generated one.</value>
   </data>
   <data name="Loc_Static_Tags" xml:space="preserve">
     <value>Tags</value>

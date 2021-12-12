@@ -142,7 +142,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The icon that will be displayed in the tag..
+        ///   Looks up a localized string similar to The icon that will be displayed..
         /// </summary>
         public static string Loc_Icon_Description {
             get {
@@ -196,7 +196,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icon visible in chat.
+        ///   Looks up a localized string similar to Show in chat.
         /// </summary>
         public static string Loc_IsIconVisibleInChat {
             get {
@@ -205,7 +205,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Whether the icon is visible in the tag in chat..
+        ///   Looks up a localized string similar to Whether the icon will be shown in chat..
         /// </summary>
         public static string Loc_IsIconVisibleInChat_Description {
             get {
@@ -214,7 +214,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Icon visible in nameplates.
+        ///   Looks up a localized string similar to Show in nameplates.
         /// </summary>
         public static string Loc_IsIconVisibleInNameplates {
             get {
@@ -223,7 +223,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Whether the icon is visible in the tag in nameplates..
+        ///   Looks up a localized string similar to Whether the icon will be shown in nameplates..
         /// </summary>
         public static string Loc_IsIconVisibleInNameplates_Description {
             get {
@@ -241,7 +241,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use tags to replace every player&apos;s name with a randomly generated one. Helpful for preserving anonymity when taking screenshots..
+        ///   Looks up a localized string similar to Replace every player&apos;s name with a randomly generated one..
         /// </summary>
         public static string Loc_IsPlayerNameRandomlyGenerated_Description {
             get {
@@ -313,7 +313,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Players that are closer to the local player will be ordered towards the top..
+        ///   Looks up a localized string similar to Players that are closer to you will be ordered towards the top..
         /// </summary>
         public static string Loc_IsPlayersTabOrderedByProximity_Description {
             get {
@@ -412,7 +412,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Whether the text in the tag is italic..
+        ///   Looks up a localized string similar to Whether the text will be italic..
         /// </summary>
         public static string Loc_IsTextItalic_Description {
             get {
@@ -421,7 +421,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text visible in chat.
+        ///   Looks up a localized string similar to Show in chat.
         /// </summary>
         public static string Loc_IsTextVisibleInChat {
             get {
@@ -430,7 +430,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Whether the text is visible in the tag in chat..
+        ///   Looks up a localized string similar to Whether the text will be shown in chat..
         /// </summary>
         public static string Loc_IsTextVisibleInChat_Description {
             get {
@@ -439,7 +439,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text visible in nameplates.
+        ///   Looks up a localized string similar to Show in nameplates.
         /// </summary>
         public static string Loc_IsTextVisibleInNameplates {
             get {
@@ -448,7 +448,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Whether the text is visible in the tag in nameplates..
+        ///   Looks up a localized string similar to Whether the text will be shown in nameplates..
         /// </summary>
         public static string Loc_IsTextVisibleInNameplates_Description {
             get {
@@ -1132,7 +1132,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag position in chat.
+        ///   Looks up a localized string similar to Position in chat.
         /// </summary>
         public static string Loc_TagPositionInChat {
             get {
@@ -1141,7 +1141,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Where the tag should be positioned in chat..
+        ///   Looks up a localized string similar to Where the tag will be positioned in chat..
         /// </summary>
         public static string Loc_TagPositionInChat_Description {
             get {
@@ -1150,7 +1150,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag position in nameplates.
+        ///   Looks up a localized string similar to Position in nameplates.
         /// </summary>
         public static string Loc_TagPositionInNameplates {
             get {
@@ -1159,7 +1159,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Where the tag should be positioned in nameplates..
+        ///   Looks up a localized string similar to Where the tag will be positioned in nameplates..
         /// </summary>
         public static string Loc_TagPositionInNameplates_Description {
             get {
@@ -1168,7 +1168,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tag target in nameplates.
+        ///   Looks up a localized string similar to Target in nameplates.
         /// </summary>
         public static string Loc_TagTargetInNameplates {
             get {
@@ -1195,7 +1195,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The text that will be displayed in the tag..
+        ///   Looks up a localized string similar to The text that will be displayed..
         /// </summary>
         public static string Loc_Text_Description {
             get {
@@ -1204,7 +1204,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text color.
+        ///   Looks up a localized string similar to Color.
         /// </summary>
         public static string Loc_TextColor {
             get {
@@ -1213,7 +1213,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The color of the text in the tag..
+        ///   Looks up a localized string similar to The color of the text..
         /// </summary>
         public static string Loc_TextColor_Description {
             get {
@@ -1222,7 +1222,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text glow color.
+        ///   Looks up a localized string similar to Glow color.
         /// </summary>
         public static string Loc_TextGlowColor {
             get {
@@ -1231,7 +1231,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The glow color of the text in the tag..
+        ///   Looks up a localized string similar to The glow color of the text..
         /// </summary>
         public static string Loc_TextGlowColor_Description {
             get {

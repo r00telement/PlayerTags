@@ -700,7 +700,9 @@ namespace PlayerTags.Configuration
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
             {
+                ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 1f);
                 ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+                ImGui.PopStyleVar();
             }
 
             if (isDisabled)
@@ -751,7 +753,9 @@ namespace PlayerTags.Configuration
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
             {
+                ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 1f);
                 ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+                ImGui.PopStyleVar();
             }
 
             if (isDisabled)
@@ -827,7 +831,9 @@ namespace PlayerTags.Configuration
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
             {
+                ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 1f);
                 ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+                ImGui.PopStyleVar();
             }
 
             if (isDisabled)
@@ -932,7 +938,9 @@ namespace PlayerTags.Configuration
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
             {
+                ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 1f);
                 ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+                ImGui.PopStyleVar();
             }
 
             if (isDisabled)
