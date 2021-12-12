@@ -55,27 +55,21 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        ImGui.TreePush();
                         DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
-                        ImGui.TreePop();
 
 
                         ImGui.Spacing();
                         ImGui.Spacing();
                         DrawHeading(Strings.Loc_Static_Nameplates);
-                        ImGui.TreePush();
                         DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateFreeCompanyVisibility, () => m_PluginConfiguration.Save(m_PluginData));
                         DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateTitleVisibility, () => m_PluginConfiguration.Save(m_PluginData));
                         DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateTitlePosition, () => m_PluginConfiguration.Save(m_PluginData));
-                        ImGui.TreePop();
 
 
                         ImGui.Spacing();
                         ImGui.Spacing();
                         DrawHeading(Strings.Loc_Static_Development);
-                        ImGui.TreePush();
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => m_PluginConfiguration.Save(m_PluginData));
-                        ImGui.TreePop();
 
                         ImGui.EndTabItem();
                     }
@@ -84,7 +78,6 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        ImGui.TreePush();
                         DrawCheckbox(nameof(m_PluginConfiguration.IsShowInheritedPropertiesEnabled), true, ref m_PluginConfiguration.IsShowInheritedPropertiesEnabled, () => m_PluginConfiguration.Save(m_PluginData));
                         ImGui.BeginGroup();
                         ImGui.Columns(2);
@@ -103,7 +96,6 @@ namespace PlayerTags.Configuration
                         }
 
                         ImGui.EndGroup();
-                        ImGui.TreePop();
                         ImGui.Columns(1);
 
                         ImGui.EndTabItem();
@@ -113,7 +105,6 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        ImGui.TreePush();
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOrderedByProximity), true, ref m_PluginConfiguration.IsPlayersTabOrderedByProximity, () => m_PluginConfiguration.Save(m_PluginData));
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabSelfVisible), true, ref m_PluginConfiguration.IsPlayersTabSelfVisible, () => m_PluginConfiguration.Save(m_PluginData));
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabFriendsVisible), true, ref m_PluginConfiguration.IsPlayersTabFriendsVisible, () => m_PluginConfiguration.Save(m_PluginData));
@@ -187,7 +178,6 @@ namespace PlayerTags.Configuration
 
                             ImGui.EndTable();
                         }
-                        ImGui.TreePop();
 
                         ImGui.EndTabItem();
                     }
@@ -196,7 +186,6 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        ImGui.TreePush();
                         if (ImGui.BeginTable("##TaggedPlayersTable", 1 + m_PluginData.CustomTags.Count))
                         {
                             ImGui.TableHeader(Strings.Loc_Static_PlayerName);
@@ -224,7 +213,6 @@ namespace PlayerTags.Configuration
 
                             ImGui.EndTable();
                         }
-                        ImGui.TreePop();
 
                         ImGui.EndTabItem();
                     }
@@ -467,7 +455,6 @@ namespace PlayerTags.Configuration
         public void DrawControls(Tag tag)
         {
             ImGui.PushID(tag.GetHashCode().ToString());
-            //ImGui.TreePush();
 
             // Render the add property override button and popup
             if (ImGui.IsPopupOpen("AddPopup"))
@@ -536,7 +523,6 @@ namespace PlayerTags.Configuration
                             DrawHeading(Localizer.GetString(inheritableGroup.Key, false));
                         }
 
-                        ImGui.TreePush();
                         foreach (var selectedInheritable in inheritableGroup)
                         {
                             bool isSelected = false;
@@ -563,7 +549,6 @@ namespace PlayerTags.Configuration
                                 ImGui.SetTooltip(Localizer.GetString(selectedInheritable.Inheritable.Key, true));
                             }
                         }
-                        ImGui.TreePop();
                     }
 
                     ImGui.EndListBox();
@@ -623,7 +608,6 @@ namespace PlayerTags.Configuration
                     DrawHeading(Localizer.GetString(inheritableGroup.Key, false));
                 }
 
-                ImGui.TreePush();
                 foreach (var selectedInheritable in inheritableGroup)
                 {
                     if (selectedInheritable.Inheritable.Value is InheritableValue<bool> inheritableBool)
@@ -655,11 +639,9 @@ namespace PlayerTags.Configuration
                         PluginLog.Warning($"Rendering for inheritable option not implemented: {selectedInheritable.Inheritable.Key}");
                     }
                 }
-                ImGui.TreePop();
             }
 
 
-            //ImGui.TreePop();
             ImGui.PopID();
         }
 

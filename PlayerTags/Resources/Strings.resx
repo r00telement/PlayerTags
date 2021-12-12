@@ -166,7 +166,7 @@
     <value>Show inherited properties</value>
   </data>
   <data name="Loc_IsShowInheritedPropertiesEnabled_Description" xml:space="preserve">
-    <value>Inherited properties from parent tags will be shown in the property override editor.</value>
+    <value>Properties inherited from parent nodes will be shown in the editor.</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility" xml:space="preserve">
     <value>Free company visibility</value>
@@ -341,7 +341,7 @@
     <value>The glow color of the text.</value>
   </data>
   <data name="Loc_IsTextItalic" xml:space="preserve">
-    <value>Text italic</value>
+    <value>Italic</value>
   </data> 
   <data name="Loc_IsTextItalic_Description" xml:space="preserve">
     <value>Whether the text will be italic.</value>
@@ -408,17 +408,23 @@
     <value>Enabled</value>
   </data>
 
-  <data name="Loc_Position" xml:space="preserve">
-    <value>Position</value>
+  <data name="Loc_GeneralCategory" xml:space="preserve">
+    <value>General properties</value>
   </data>
-  <data name="Loc_General" xml:space="preserve">
-    <value>General</value>
+  <data name="Loc_IconCategory" xml:space="preserve">
+    <value>Icon properties</value>
   </data>
-  <data name="Loc_ActivityVisibility" xml:space="preserve">
-    <value>Activities</value>
+  <data name="Loc_TextCategory" xml:space="preserve">
+    <value>Text properties</value>
   </data>
-  <data name="Loc_PlayerVisibility" xml:space="preserve">
-    <value>Players</value>
+  <data name="Loc_PositionCategory" xml:space="preserve">
+    <value>Position properties</value>
+  </data>
+  <data name="Loc_ActivityCategory" xml:space="preserve">
+    <value>Activity properties</value>
+  </data>
+  <data name="Loc_PlayerCategory" xml:space="preserve">
+    <value>Player properties</value>
   </data>
 
   <data name="Loc_IsVisibleInPveDuties" xml:space="preserve">

@@ -61,11 +61,11 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Activities.
+        ///   Looks up a localized string similar to Activity properties.
         /// </summary>
-        public static string Loc_ActivityVisibility {
+        public static string Loc_ActivityCategory {
             get {
-                return ResourceManager.GetString("Loc_ActivityVisibility", resourceCulture);
+                return ResourceManager.GetString("Loc_ActivityCategory", resourceCulture);
             }
         }
         
@@ -124,11 +124,11 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to General.
+        ///   Looks up a localized string similar to General properties.
         /// </summary>
-        public static string Loc_General {
+        public static string Loc_GeneralCategory {
             get {
-                return ResourceManager.GetString("Loc_General", resourceCulture);
+                return ResourceManager.GetString("Loc_GeneralCategory", resourceCulture);
             }
         }
         
@@ -147,6 +147,15 @@ namespace PlayerTags.Resources {
         public static string Loc_Icon_Description {
             get {
                 return ResourceManager.GetString("Loc_Icon_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Icon properties.
+        /// </summary>
+        public static string Loc_IconCategory {
+            get {
+                return ResourceManager.GetString("Loc_IconCategory", resourceCulture);
             }
         }
         
@@ -394,7 +403,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inherited properties from parent tags will be shown in the property override editor..
+        ///   Looks up a localized string similar to Properties inherited from parent nodes will be shown in the editor..
         /// </summary>
         public static string Loc_IsShowInheritedPropertiesEnabled_Description {
             get {
@@ -403,7 +412,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text italic.
+        ///   Looks up a localized string similar to Italic.
         /// </summary>
         public static string Loc_IsTextItalic {
             get {
@@ -862,20 +871,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Players.
+        ///   Looks up a localized string similar to Player properties.
         /// </summary>
-        public static string Loc_PlayerVisibility {
+        public static string Loc_PlayerCategory {
             get {
-                return ResourceManager.GetString("Loc_PlayerVisibility", resourceCulture);
+                return ResourceManager.GetString("Loc_PlayerCategory", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Position.
+        ///   Looks up a localized string similar to Position properties.
         /// </summary>
-        public static string Loc_Position {
+        public static string Loc_PositionCategory {
             get {
-                return ResourceManager.GetString("Loc_Position", resourceCulture);
+                return ResourceManager.GetString("Loc_PositionCategory", resourceCulture);
             }
         }
         
@@ -1200,6 +1209,15 @@ namespace PlayerTags.Resources {
         public static string Loc_Text_Description {
             get {
                 return ResourceManager.GetString("Loc_Text_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text properties.
+        /// </summary>
+        public static string Loc_TextCategory {
+            get {
+                return ResourceManager.GetString("Loc_TextCategory", resourceCulture);
             }
         }
         
