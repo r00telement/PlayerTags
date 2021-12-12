@@ -79,8 +79,8 @@ namespace PlayerTags.Features
 
         private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            AddTagsToChat(sender, out _);
-            AddTagsToChat(message, out _);
+            AddTagsToChat(sender);
+            AddTagsToChat(message);
         }
 
         protected override bool IsIconVisible(Tag tag)
@@ -137,26 +137,6 @@ namespace PlayerTags.Features
                         PluginLog.Error("Expected payload after player payload to be a text payload but it wasn't");
                     }
                 }
-
-                /// TODO: Not sure if this is desirable. Enabling this allows tags to appear next to the name of the local player by text in chat because the local player doesn't have a player payload.
-                /// But because it's just a simple string comparison, it won't work in all circumstances. E.g. in party chat the player name is wrapped in (). To be comprehensive we need to search substring.
-                /// This means we would need to think about breaking down existing payloads to split them out.
-                /// If we decide to do that, we could even for example find unlinked player names in chat and add player payloads for them.
-                // If it's just a text payload then either a character NEEDS to exist for it, or it needs to be identified as a character by custom tag configs
-                //else if (payload is TextPayload textPayload)
-                //{
-                //    var gameObject = ObjectTable.FirstOrDefault(gameObject => gameObject.Name.TextValue == textPayload.Text);
-                //    var isIncludedInCustomTagConfig = m_Config.CustomTags.Any(customTagConfig => customTagConfig.IncludesGameObjectName(textPayload.Text));
-
-                //    if (gameObject != null || isIncludedInCustomTagConfig)
-                //    {
-                //        var stringMatch = new StringMatch(seString, textPayload)
-                //        {
-                //            GameObject = gameObject
-                //        };
-                //        stringMatches.Add(stringMatch);
-                //    }
-                //}
             }
 
             return stringMatches;
@@ -167,20 +147,17 @@ namespace PlayerTags.Features
         /// </summary>
         /// <param name="message">The message to change.</param>
         /// <param name="isMessageChanged">Whether the message was changed.</param>
-        private void AddTagsToChat(SeString message, out bool isMessageChanged)
+        private void AddTagsToChat(SeString message)
         {
-            isMessageChanged = false;
-
             var stringMatches = GetStringMatches(message);
             foreach (var stringMatch in stringMatches)
             {
                 Dictionary<TagPosition, List<Payload>> stringChanges = new Dictionary<TagPosition, List<Payload>>();
 
-                // The role tag payloads
-                if (stringMatch.GameObject is Character character)
+                if (stringMatch.GameObject is PlayerCharacter playerCharacter)
                 {
                     // Add the job tag
-                    if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
+                    if (m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
                         if (jobTag.TagPositionInChat.InheritedValue != null)
                         {
@@ -205,26 +182,25 @@ namespace PlayerTags.Features
                             }
                         }
                     }
-                }
 
-                // Add the custom tag payloads
-                foreach (var customTag in m_PluginData.CustomTags)
-                {
-                    if (customTag.TagPositionInChat.InheritedValue != null)
+                    // Add the custom tag payloads
+                    foreach (var customTag in m_PluginData.CustomTags)
                     {
-                        if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
+                        if (customTag.TagPositionInChat.InheritedValue != null)
                         {
-                            var customTagPayloads = GetPayloads(stringMatch.GameObject, customTag);
-                            if (customTagPayloads.Any())
+                            if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
                             {
-                                AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                                var customTagPayloads = GetPayloads(stringMatch.GameObject, customTag);
+                                if (customTagPayloads.Any())
+                                {
+                                    AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                                }
                             }
                         }
                     }
                 }
 
                 ApplyStringChanges(message, stringChanges, stringMatch.TextPayload);
-                isMessageChanged = true;
             }
         }
     }
