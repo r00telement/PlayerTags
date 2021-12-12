@@ -1,13 +1,14 @@
 {
-    "Author": "r00telement",
-    "Name": "Player Tags",
-    "Description": "Lightweight job visibility in nameplates and chat. Create custom tags and add them to players with the context menu.",
-    "Tags": [ "Jobs", "UI" ],
-    "CategoryTags": [ "jobs", "UI" ],
-    "RepoUrl": "https://github.com/r00telement/PlayerTags",
-    "IconUrl": "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Icon.png",
-    "ImageUrls": [
-        "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png",
-        "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png"
-    ]
+  "Author": "r00telement",
+  "Name": "Player Tags",
+  "Description": "Lightweight job visibility in nameplates and chat. Create custom tags and add them to players with the context menu.",
+  "Tags": [ "Jobs", "UI" ],
+  "CategoryTags": [ "jobs", "UI" ],
+  "RepoUrl": "https://github.com/r00telement/PlayerTags",
+  "IconUrl": "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Icon.png",
+  "ImageUrls": [
+    "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png",
+    "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png"
+  ],
+  "Changelog": "- Overhauled tag editor.\n- Added visibility properties for activities: pve duties, pvp duties, others.\n- Added visibility properties for players: self, friends, party members, alliance members, enemies, others.\n- Added text glow color property.\n- Added Quick Tag feature to quickly tag nearby players.\n- Added Tagged Players feature to see a list of all players you have tagged.\n- Added context menu integration to add and remove custom tags for players when right clicking them."
 }
