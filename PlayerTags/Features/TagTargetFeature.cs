@@ -1,7 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects.Enums;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Dalamud.Logging;
 using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
@@ -9,6 +11,7 @@ using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace PlayerTags.Features
 {
@@ -17,36 +20,24 @@ namespace PlayerTags.Features
         private PluginConfiguration m_PluginConfiguration;
 
         private ActivityContext m_ActivityContext;
-        private Dictionary<Tag, Payload[]> m_TagPayloads;
-        private TextPayload m_SpaceTextPayload;
 
         public TagTargetFeature(PluginConfiguration pluginConfiguration)
         {
             m_PluginConfiguration = pluginConfiguration;
 
             m_ActivityContext = ActivityContext.Overworld;
-            m_TagPayloads = new Dictionary<Tag, Payload[]>();
-            m_SpaceTextPayload = new TextPayload($" ");
 
-            m_PluginConfiguration.Saved += PluginConfiguration_Saved;
             PluginServices.ClientState.TerritoryChanged += ClientState_TerritoryChanged;
         }
 
         public virtual void Dispose()
         {
             PluginServices.ClientState.TerritoryChanged -= ClientState_TerritoryChanged;
-            m_PluginConfiguration.Saved -= PluginConfiguration_Saved;
         }
 
-        protected abstract BitmapFontIcon? GetIcon(Tag tag);
+        protected abstract bool IsIconVisible(Tag tag);
 
-        protected abstract string? GetText(Tag tag);
-
-        private void PluginConfiguration_Saved()
-        {
-            // Invalidate the cached payloads so they get remade
-            m_TagPayloads.Clear();
-        }
+        protected abstract bool IsTextVisible(Tag tag);
 
         private void ClientState_TerritoryChanged(object? sender, ushort e)
         {
@@ -68,25 +59,29 @@ namespace PlayerTags.Features
                     }
                 }
             }
-
-            // Invalidate the cached payloads so they get remade
-            m_TagPayloads.Clear();
         }
 
         /// <summary>
-        /// Gets the payloads for the given tag. If the payloads don't yet exist then they will be created.
+        /// Gets the payloads for the given game object tag. If the payloads don't yet exist then they will be created.
         /// </summary>
+        /// <param name="gameObject">The game object to get payloads for.</param>
         /// <param name="tag">The tag config to get payloads for.</param>
         /// <returns>A list of payloads for the given tag.</returns>
-        protected IEnumerable<Payload> GetPayloads(Tag tag)
+        protected IEnumerable<Payload> GetPayloads(GameObject gameObject, Tag tag)
         {
-            if (m_TagPayloads.TryGetValue(tag, out var payloads))
+            // Only get payloads when in allowed activity contexts
+            if (!IsVisibleInActivity(tag))
             {
-                return payloads;
+                return Enumerable.Empty<Payload>();
             }
 
-            m_TagPayloads[tag] = CreatePayloads(tag);
-            return m_TagPayloads[tag];
+            // Only get payloads for player characters for allowed player contexts
+            if (gameObject is PlayerCharacter playerCharacter && !IsVisibleForPlayer(tag, playerCharacter))
+            {
+                return Enumerable.Empty<Payload>();
+            }
+
+            return CreatePayloads(gameObject, tag);
         }
 
         private InheritableValue<bool>? GetInheritableVisibilityForActivity(Tag tag, ActivityContext activityContext)
@@ -104,7 +99,7 @@ namespace PlayerTags.Features
             return null;
         }
 
-        public bool IsVisibleInActivity(Tag tag)
+        private bool IsVisibleInActivity(Tag tag)
         {
             var inheritable = GetInheritableVisibilityForActivity(tag, m_ActivityContext);
             if (inheritable == null)
@@ -171,7 +166,7 @@ namespace PlayerTags.Features
             return null;
         }
 
-        public bool IsVisibleForPlayer(Tag tag, PlayerCharacter playerCharacter)
+        private bool IsVisibleForPlayer(Tag tag, PlayerCharacter playerCharacter)
         {
             var inheritable = GetInheritableVisibilityForPlayer(tag, GetContextForPlayer(playerCharacter));
             if (inheritable == null)
@@ -187,19 +182,56 @@ namespace PlayerTags.Features
             return true;
         }
 
-        private Payload[] CreatePayloads(Tag tag)
+        private string ExpandTextParameters(GameObject gameObject, string text)
+        {
+            if (gameObject is PlayerCharacter playerCharacter)
+            {
+                var parameterIndex = text.ToLower().IndexOf("{PlayerAverageItemLevel}".ToLower());
+                if (parameterIndex >= 0)
+                {
+                    unsafe
+                    {
+                        FFXIVClientStructs.FFXIV.Client.Game.Character.Character character = Marshal.PtrToStructure<FFXIVClientStructs.FFXIV.Client.Game.Character.Character>(playerCharacter.Address);
+                        byte[] equipSlotData = new byte[40];
+
+                        for (int index = 0; index < equipSlotData.Length; ++index)
+                        {
+                            equipSlotData[index] = character.EquipSlotData[index];
+                        }
+
+                        PluginLog.Debug(string.Join(" ", equipSlotData.Select(d => d.ToString("X2"))));
+                    }
+                }
+            }
+
+            return text;
+        }
+
+        private Payload[] CreatePayloads(GameObject gameObject, Tag tag)
         {
             List<Payload> newPayloads = new List<Payload>();
 
-            BitmapFontIcon? icon = GetIcon(tag);
+            BitmapFontIcon? icon = null;
+            if (IsIconVisible(tag))
+            {
+                icon = tag.Icon.InheritedValue;
+            }
+
             if (icon != null && icon.Value != BitmapFontIcon.None)
             {
                 newPayloads.Add(new IconPayload(icon.Value));
             }
 
-            string? text = GetText(tag);
+            string? text = null;
+            if (IsTextVisible(tag))
+            {
+                text = tag.Text.InheritedValue;
+            }
+
             if (!string.IsNullOrWhiteSpace(text))
             {
+                text = ExpandTextParameters(gameObject, text);
+
                 if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
                 {
                     newPayloads.Add(new EmphasisItalicPayload(true));
@@ -275,7 +307,7 @@ namespace PlayerTags.Features
 
             foreach (var indexToInsertSpaceAt in indicesToInsertSpacesAt)
             {
-                payloads.Insert(indexToInsertSpaceAt, m_SpaceTextPayload);
+                payloads.Insert(indexToInsertSpaceAt, new TextPayload($" "));
             }
 
             // Decide whether to add a space to the end
@@ -284,7 +316,7 @@ namespace PlayerTags.Features
                 var significantPayloads = payloads.Where(payload => payload is TextPayload || payload is IconPayload);
                 if (significantPayloads.Last() is TextPayload)
                 {
-                    payloads.Add(m_SpaceTextPayload);
+                    payloads.Add(new TextPayload($" "));
                 }
             }
             // Decide whether to add a space to the beginning
@@ -293,7 +325,7 @@ namespace PlayerTags.Features
                 var significantPayloads = payloads.Where(payload => payload is TextPayload || payload is IconPayload);
                 if (significantPayloads.First() is TextPayload)
                 {
-                    payloads.Insert(0, m_SpaceTextPayload);
+                    payloads.Insert(0, new TextPayload($" "));
                 }
             }
         }

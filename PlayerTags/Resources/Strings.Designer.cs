@@ -358,11 +358,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible for alliance members who are not in the current party..
+        /// </summary>
+        public static string Loc_IsVisibleForAlliancePlayers_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForAlliancePlayers_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show for enemies.
         /// </summary>
         public static string Loc_IsVisibleForEnemyPlayers {
             get {
                 return ResourceManager.GetString("Loc_IsVisibleForEnemyPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible for enemies in pvp..
+        /// </summary>
+        public static string Loc_IsVisibleForEnemyPlayers_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForEnemyPlayers_Description", resourceCulture);
             }
         }
         
@@ -376,11 +394,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible for friends..
+        /// </summary>
+        public static string Loc_IsVisibleForFriendPlayers_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForFriendPlayers_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show for others.
         /// </summary>
         public static string Loc_IsVisibleForOtherPlayers {
             get {
                 return ResourceManager.GetString("Loc_IsVisibleForOtherPlayers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible for players in other circumstances for which there is no specific option..
+        /// </summary>
+        public static string Loc_IsVisibleForOtherPlayers_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForOtherPlayers_Description", resourceCulture);
             }
         }
         
@@ -394,11 +430,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible for party members..
+        /// </summary>
+        public static string Loc_IsVisibleForPartyPlayers_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForPartyPlayers_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show for self.
         /// </summary>
         public static string Loc_IsVisibleForSelf {
             get {
                 return ResourceManager.GetString("Loc_IsVisibleForSelf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible for the local player..
+        /// </summary>
+        public static string Loc_IsVisibleForSelf_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleForSelf_Description", resourceCulture);
             }
         }
         
@@ -412,11 +466,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible in other circumstances for which there is no specific option..
+        /// </summary>
+        public static string Loc_IsVisibleInOverworld_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleInOverworld_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show in pve duties.
         /// </summary>
         public static string Loc_IsVisibleInPveDuties {
             get {
                 return ResourceManager.GetString("Loc_IsVisibleInPveDuties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the tag should be visible in pvp duties..
+        /// </summary>
+        public static string Loc_IsVisibleInPveDuties_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsVisibleInPveDuties_Description", resourceCulture);
             }
         }
         

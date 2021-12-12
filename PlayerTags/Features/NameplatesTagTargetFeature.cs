@@ -64,24 +64,24 @@ namespace PlayerTags.Features
             Unhook();
         }
 
-        protected override BitmapFontIcon? GetIcon(Tag tag)
+        protected override bool IsIconVisible(Tag tag)
         {
-            if (tag.IsIconVisibleInNameplates.InheritedValue != null && tag.IsIconVisibleInNameplates.InheritedValue.Value)
+            if (tag.IsIconVisibleInNameplates.InheritedValue != null)
             {
-                return tag.Icon.InheritedValue;
+                return tag.IsIconVisibleInNameplates.InheritedValue.Value;
             }
 
-            return null;
+            return false;
         }
 
-        protected override string? GetText(Tag tag)
+        protected override bool IsTextVisible(Tag tag)
         {
-            if (tag.IsTextVisibleInNameplates.InheritedValue != null && tag.IsTextVisibleInNameplates.InheritedValue.Value)
+            if (tag.IsTextVisibleInNameplates.InheritedValue != null)
             {
-                return tag.Text.InheritedValue;
+                return tag.IsTextVisibleInNameplates.InheritedValue.Value;
             }
 
-            return null;
+            return false;
         }
 
         /// <summary>
@@ -181,18 +181,12 @@ namespace PlayerTags.Features
                 // Add the job tag
                 if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
-                    bool isVisible = IsVisibleInActivity(jobTag) &&
-                        (!(gameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(jobTag, playerCharacter));
-
-                    if (isVisible)
+                    if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
                     {
-                        if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
+                        var payloads = GetPayloads(gameObject, jobTag);
+                        if (payloads.Any())
                         {
-                            var payloads = GetPayloads(jobTag);
-                            if (payloads.Any())
-                            {
-                                AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
-                            }
+                            AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
                         }
                     }
                 }
@@ -215,20 +209,14 @@ namespace PlayerTags.Features
             // Add the custom tag payloads
             foreach (var customTag in m_PluginData.CustomTags)
             {
-                bool isVisible = IsVisibleInActivity(customTag) &&
-                    (!(gameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(customTag, playerCharacter));
-
-                if (isVisible)
+                if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
                 {
-                    if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
+                    if (customTag.IncludesGameObjectNameToApplyTo(gameObject.Name.TextValue))
                     {
-                        if (customTag.IncludesGameObjectNameToApplyTo(gameObject.Name.TextValue))
+                        var payloads = GetPayloads(gameObject, customTag);
+                        if (payloads.Any())
                         {
-                            var payloads = GetPayloads(customTag);
-                            if (payloads.Any())
-                            {
-                                AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
-                            }
+                            AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
                         }
                     }
                 }

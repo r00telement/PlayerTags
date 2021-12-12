@@ -13,50 +13,6 @@ namespace PlayerTags.Features
 {
     public class ChatTagTargetFeature : TagTargetFeature
     {
-        private PluginConfiguration m_PluginConfiguration;
-        private PluginData m_PluginData;
-
-        public ChatTagTargetFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
-             : base(pluginConfiguration)
-        {
-            m_PluginConfiguration = pluginConfiguration;
-            m_PluginData = pluginData;
-
-            PluginServices.ChatGui.ChatMessage += Chat_ChatMessage;
-        }
-
-        public override void Dispose()
-        {
-            PluginServices.ChatGui.ChatMessage -= Chat_ChatMessage;
-            base.Dispose();
-        }
-
-        private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
-        {
-            AddTagsToChat(sender, out _);
-            AddTagsToChat(message, out _);
-        }
-
-        protected override BitmapFontIcon? GetIcon(Tag tag)
-        {
-            if (tag.IsIconVisibleInChat.InheritedValue != null && tag.IsIconVisibleInChat.InheritedValue.Value)
-            {
-                return tag.Icon.InheritedValue;
-            }
-
-            return null;
-        }
-
-        protected override string? GetText(Tag tag)
-        {
-            if (tag.IsTextVisibleInChat.InheritedValue != null && tag.IsTextVisibleInChat.InheritedValue.Value)
-            {
-                return tag.Text.InheritedValue;
-            }
-
-            return null;
-        }
-
         /// <summary>
         /// A match found within a string.
         /// </summary>
@@ -101,6 +57,50 @@ namespace PlayerTags.Features
 
                 return TextPayload.Text;
             }
+        }
+
+        private PluginConfiguration m_PluginConfiguration;
+        private PluginData m_PluginData;
+
+        public ChatTagTargetFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
+             : base(pluginConfiguration)
+        {
+            m_PluginConfiguration = pluginConfiguration;
+            m_PluginData = pluginData;
+
+            PluginServices.ChatGui.ChatMessage += Chat_ChatMessage;
+        }
+
+        public override void Dispose()
+        {
+            PluginServices.ChatGui.ChatMessage -= Chat_ChatMessage;
+            base.Dispose();
+        }
+
+        private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
+        {
+            AddTagsToChat(sender, out _);
+            AddTagsToChat(message, out _);
+        }
+
+        protected override bool IsIconVisible(Tag tag)
+        {
+            if (tag.IsIconVisibleInChat.InheritedValue != null)
+            {
+                return tag.IsIconVisibleInChat.InheritedValue.Value;
+            }
+
+            return false;
+        }
+
+        protected override bool IsTextVisible(Tag tag)
+        {
+            if (tag.IsTextVisibleInChat.InheritedValue != null)
+            {
+                return tag.IsTextVisibleInChat.InheritedValue.Value;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -182,18 +182,12 @@ namespace PlayerTags.Features
                     // Add the job tag
                     if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
-                        bool isVisible = IsVisibleInActivity(jobTag) &&
-                            (!(stringMatch.GameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(jobTag, playerCharacter));
-
-                        if (isVisible)
+                        if (jobTag.TagPositionInChat.InheritedValue != null)
                         {
-                            if (jobTag.TagPositionInChat.InheritedValue != null)
+                            var payloads = GetPayloads(stringMatch.GameObject, jobTag);
+                            if (payloads.Any())
                             {
-                                var payloads = GetPayloads(jobTag);
-                                if (payloads.Any())
-                                {
-                                    AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
-                                }
+                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
                             }
                         }
                     }
@@ -216,20 +210,14 @@ namespace PlayerTags.Features
                 // Add the custom tag payloads
                 foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    bool isVisible = IsVisibleInActivity(customTag) &&
-                        (!(stringMatch.GameObject is PlayerCharacter playerCharacter) || IsVisibleForPlayer(customTag, playerCharacter));
-
-                    if (isVisible)
+                    if (customTag.TagPositionInChat.InheritedValue != null)
                     {
-                        if (customTag.TagPositionInChat.InheritedValue != null)
+                        if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
                         {
-                            if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
+                            var customTagPayloads = GetPayloads(stringMatch.GameObject, customTag);
+                            if (customTagPayloads.Any())
                             {
-                                var customTagPayloads = GetPayloads(customTag);
-                                if (customTagPayloads.Any())
-                                {
-                                    AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
-                                }
+                                AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
                             }
                         }
                     }

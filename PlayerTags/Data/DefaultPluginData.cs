@@ -14,9 +14,11 @@ namespace PlayerTags.Data
         public Dictionary<string, Role> RolesByJobAbbreviation { get; }
 
         public Dictionary<string, InheritableData> AllTagsChanges { get; }
+
         public Dictionary<string, InheritableData> AllRoleTagsChanges { get; }
         public Dictionary<Role, Dictionary<string, InheritableData>> RoleTagsChanges { get; }
         public Dictionary<string, Dictionary<string, InheritableData>> JobTagsChanges { get; }
+
         public Dictionary<string, InheritableData> AllCustomTagsChanges { get; }
 
         public DefaultPluginData()
