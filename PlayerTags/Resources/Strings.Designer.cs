@@ -1015,20 +1015,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Players.
-        /// </summary>
-        public static string Loc_Static_Players {
-            get {
-                return ResourceManager.GetString("Loc_Static_Players", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Player Tags.
         /// </summary>
         public static string Loc_Static_PluginName {
             get {
                 return ResourceManager.GetString("Loc_Static_PluginName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quick Tag.
+        /// </summary>
+        public static string Loc_Static_QuickTag {
+            get {
+                return ResourceManager.GetString("Loc_Static_QuickTag", resourceCulture);
             }
         }
         

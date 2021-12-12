@@ -12,6 +12,7 @@ namespace PlayerTags.Configuration
     public class PluginConfiguration : IPluginConfiguration
     {
         public int Version { get; set; } = 0;
+
         public bool IsVisible = false;
         public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Default;
         public NameplateTitleVisibility NameplateTitleVisibility = NameplateTitleVisibility.WhenHasTags;
@@ -19,7 +20,7 @@ namespace PlayerTags.Configuration
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
-        public bool IsPlayersTabOrderedByProximity = true;
+        public bool IsPlayersTabOrderedByProximity = false;
         public bool IsPlayersTabSelfVisible = true;
         public bool IsPlayersTabFriendsVisible = true;
         public bool IsPlayersTabPartyVisible = true;

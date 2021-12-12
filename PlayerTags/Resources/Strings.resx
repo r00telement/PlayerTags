@@ -126,8 +126,8 @@
   <data name="Loc_Static_General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Loc_Static_Players" xml:space="preserve">
-    <value>Players</value>
+  <data name="Loc_Static_QuickTag" xml:space="preserve">
+    <value>Quick Tag</value>
   </data>
   <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
     <value>Tagged Players</value>
@@ -307,72 +307,72 @@
     <value>Icon</value>
   </data>
   <data name="Loc_Icon_Description" xml:space="preserve">
-    <value>The icon that will be displayed in the tag.</value>
+    <value>The icon that will be displayed.</value>
   </data>
   <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
-    <value>Icon visible in chat</value>
+    <value>Show in chat</value>
   </data>
   <data name="Loc_IsIconVisibleInChat_Description" xml:space="preserve">
-    <value>Whether the icon is visible in the tag in chat.</value>
+    <value>Whether the icon will be shown in chat.</value>
   </data>
   <data name="Loc_IsIconVisibleInNameplates" xml:space="preserve">
-    <value>Icon visible in nameplates</value>
+    <value>Show in nameplates</value>
   </data>
   <data name="Loc_IsIconVisibleInNameplates_Description" xml:space="preserve">
-    <value>Whether the icon is visible in the tag in nameplates.</value>
+    <value>Whether the icon will be shown in nameplates.</value>
   </data>
 
   <data name="Loc_Text" xml:space="preserve">
     <value>Text</value>
   </data>
   <data name="Loc_Text_Description" xml:space="preserve">
-    <value>The text that will be displayed in the tag.</value>
+    <value>The text that will be displayed.</value>
   </data>
   <data name="Loc_TextColor" xml:space="preserve">
-    <value>Text color</value>
+    <value>Color</value>
   </data>
   <data name="Loc_TextColor_Description" xml:space="preserve">
-    <value>The color of the text in the tag.</value>
+    <value>The color of the text.</value>
   </data>
   <data name="Loc_TextGlowColor" xml:space="preserve">
-    <value>Text glow color</value>
+    <value>Glow color</value>
   </data>
   <data name="Loc_TextGlowColor_Description" xml:space="preserve">
-    <value>The glow color of the text in the tag.</value>
+    <value>The glow color of the text.</value>
   </data>
   <data name="Loc_IsTextItalic" xml:space="preserve">
     <value>Text italic</value>
   </data> 
   <data name="Loc_IsTextItalic_Description" xml:space="preserve">
-    <value>Whether the text in the tag is italic.</value>
+    <value>Whether the text will be italic.</value>
   </data>
   <data name="Loc_IsTextVisibleInChat" xml:space="preserve">
-    <value>Text visible in chat</value>
+    <value>Show in chat</value>
   </data>
   <data name="Loc_IsTextVisibleInChat_Description" xml:space="preserve">
-    <value>Whether the text is visible in the tag in chat.</value>
+    <value>Whether the text will be shown in chat.</value>
   </data>
   <data name="Loc_IsTextVisibleInNameplates" xml:space="preserve">
-    <value>Text visible in nameplates</value>
+    <value>Show in nameplates</value>
   </data>
   <data name="Loc_IsTextVisibleInNameplates_Description" xml:space="preserve">
-    <value>Whether the text is visible in the tag in nameplates.</value>
+    <value>Whether the text will be shown in nameplates.</value>
   </data>
 
   <data name="Loc_TagPositionInChat" xml:space="preserve">
-    <value>Tag position in chat</value>
+    <value>Position in chat</value>
   </data>
   <data name="Loc_TagPositionInChat_Description" xml:space="preserve">
-    <value>Where the tag should be positioned in chat.</value>
+    <value>Where the tag will be positioned in chat.</value>
   </data>
   <data name="Loc_TagPositionInNameplates" xml:space="preserve">
-    <value>Tag position in nameplates</value>
+    <value>Position in nameplates</value>
   </data>
   <data name="Loc_TagPositionInNameplates_Description" xml:space="preserve">
-    <value>Where the tag should be positioned in nameplates.</value>
+    <value>Where the tag will be positioned in nameplates.</value>
   </data>
   <data name="Loc_TagTargetInNameplates" xml:space="preserve">
-    <value>Tag target in nameplates</value>
+    <value>Target in nameplates</value>
   </data>
   <data name="Loc_TagTargetInNameplates_Description" xml:space="preserve">
     <value>The element that the tag should target in nameplates.</value>
@@ -481,7 +481,7 @@
     <value>Order by proximity</value>
   </data>
   <data name="Loc_IsPlayersTabOrderedByProximity_Description" xml:space="preserve">
-    <value>Players that are closer to the local player will be ordered towards the top.</value>
+    <value>Players that are closer to you will be ordered towards the top.</value>
   </data>
 
   <data name="Loc_IsPlayersTabSelfVisible" xml:space="preserve">

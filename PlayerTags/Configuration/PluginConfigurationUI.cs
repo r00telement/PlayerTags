@@ -89,6 +89,8 @@ namespace PlayerTags.Configuration
                         ImGui.BeginGroup();
                         ImGui.Columns(2);
 
+                        ImGui.Spacing();
+                        ImGui.Spacing();
                         ImGui.BeginGroup();
                         DrawTree(m_PluginData.AllTags);
                         ImGui.EndGroup();
@@ -107,7 +109,7 @@ namespace PlayerTags.Configuration
                         ImGui.EndTabItem();
                     }
 
-                    if (ImGui.BeginTabItem(Strings.Loc_Static_Players))
+                    if (ImGui.BeginTabItem(Strings.Loc_Static_QuickTag))
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
@@ -120,6 +122,8 @@ namespace PlayerTags.Configuration
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabEnemiesVisible), true, ref m_PluginConfiguration.IsPlayersTabEnemiesVisible, () => m_PluginConfiguration.Save(m_PluginData));
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOthersVisible), true, ref m_PluginConfiguration.IsPlayersTabOthersVisible, () => m_PluginConfiguration.Save(m_PluginData));
 
+                        ImGui.Spacing();
+                        ImGui.Spacing();
                         if (ImGui.BeginTable("##PlayersTable", 1 + m_PluginData.CustomTags.Count))
                         {
                             ImGui.TableHeader(Strings.Loc_Static_PlayerName);
@@ -636,7 +640,7 @@ namespace PlayerTags.Configuration
                     }
                     else if (selectedInheritable.Inheritable.Value is InheritableValue<TagPosition> inheritableTagPosition)
                     {
-                        DrawInheritable(selectedInheritable.Inheritable.Key, false, true, inheritableTagPosition);
+                        DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableTagPosition);
                     }
                     else if (selectedInheritable.Inheritable.Value is InheritableValue<NameplateElement> inheritableNameplateElement)
                     {
@@ -694,6 +698,11 @@ namespace PlayerTags.Configuration
             ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0    , 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            }
+
             if (isDisabled)
             {
                 ImGui.SameLine();
@@ -740,6 +749,11 @@ namespace PlayerTags.Configuration
             ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            }
+
             if (isDisabled)
             {
                 ImGui.SameLine();
@@ -811,6 +825,11 @@ namespace PlayerTags.Configuration
             ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            }
+
             if (isDisabled)
             {
                 ImGui.SameLine();
@@ -911,6 +930,11 @@ namespace PlayerTags.Configuration
             ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            }
+
             if (isDisabled)
             {
                 ImGui.SameLine();
