@@ -171,7 +171,7 @@ namespace PlayerTags.Configuration
                                 int rowIndex = 0;
                                 foreach (var player in orderedPlayerNameContexts)
                                 {
-                                    DrawPlayerAssignmentRow(player.Key, rowIndex);
+                                    DrawQuickAddRow(new Identity(player.Key), rowIndex);
                                     ++rowIndex;
                                 }
                             }
@@ -200,15 +200,15 @@ namespace PlayerTags.Configuration
                             ImGui.TableHeadersRow();
 
                             int rowIndex = 0;
-                            foreach (var gameObjectName in m_PluginData.CustomTags.SelectMany(customTag => customTag.SplitGameObjectNamesToApplyTo).Distinct().OrderBy(name => name).ToArray())
+                            foreach (var identity in m_PluginData.CustomTags.SelectMany(customTag => customTag.IdentitiesToAddTo).Distinct().OrderBy(name => name).ToArray())
                             {
-                                DrawPlayerAssignmentRow(gameObjectName, rowIndex);
+                                DrawQuickAddRow(identity, rowIndex);
                                 ++rowIndex;
                             }
 
                             if (PluginServices.ObjectTable.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawPlayerAssignmentRow(PluginServices.ClientState.LocalPlayer.Name.TextValue, 0);
+                                DrawQuickAddRow(new Identity(PluginServices.ClientState.LocalPlayer.Name.TextValue), 0);
                             }
 
                             ImGui.EndTable();
@@ -229,9 +229,9 @@ namespace PlayerTags.Configuration
             }
         }
 
-        void DrawPlayerAssignmentRow(string playerName, int rowIndex)
+        void DrawQuickAddRow(Identity identity, int rowIndex)
         {
-            ImGui.PushID(playerName);
+            ImGui.PushID(identity.ToString());
 
             ImGui.TableNextRow();
 
@@ -244,7 +244,7 @@ namespace PlayerTags.Configuration
             ImGui.TableNextColumn();
 
             ImGui.AlignTextToFramePadding();
-            ImGui.Text(playerName);
+            ImGui.Text(identity.Name);
 
             foreach (Tag customTag in m_PluginData.CustomTags)
             {
@@ -252,17 +252,17 @@ namespace PlayerTags.Configuration
 
                 ImGui.TableNextColumn();
 
-                bool isTagAssigned = customTag.IncludesGameObjectNameToApplyTo(playerName);
+                bool isTagAssigned = customTag.CanAddToIdentity(identity);
 
-                DrawSimpleCheckbox(string.Format(Strings.Loc_Static_Format_AddTagToPlayer, customTag.Text.InheritedValue, playerName), ref isTagAssigned, () =>
+                DrawSimpleCheckbox(string.Format(Strings.Loc_Static_Format_AddTagToPlayer, customTag.Text.InheritedValue, identity.Name), ref isTagAssigned, () =>
                 {
                     if (isTagAssigned)
                     {
-                        customTag.AddGameObjectNameToApplyTo(playerName);
+                        customTag.AddIdentityToAddTo(identity);
                     }
                     else
                     {
-                        customTag.RemoveGameObjectNameToApplyTo(playerName);
+                        customTag.RemoveIdentityToAddTo(identity);
                     }
 
                     m_PluginConfiguration.Save(m_PluginData);

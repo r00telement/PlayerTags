@@ -63,7 +63,6 @@ namespace PlayerTags.Features
         private PluginData m_PluginData;
 
         public ChatTagTargetFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
-             : base(pluginConfiguration)
         {
             m_PluginConfiguration = pluginConfiguration;
             m_PluginData = pluginData;
@@ -160,7 +159,7 @@ namespace PlayerTags.Features
                     {
                         if (jobTag.TagPositionInChat.InheritedValue != null)
                         {
-                            var payloads = GetPayloads(stringMatch.GameObject, jobTag);
+                            var payloads = GetPayloads(jobTag, stringMatch.GameObject);
                             if (payloads.Any())
                             {
                                 AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
@@ -181,18 +180,63 @@ namespace PlayerTags.Features
                             }
                         }
                     }
+                }
 
-                    // Add the custom tag payloads
+                if (stringMatch.PlayerPayload != null)
+                {
+                    // Add all other tags
                     foreach (var customTag in m_PluginData.CustomTags)
                     {
-                        if (customTag.TagPositionInChat.InheritedValue != null)
+                        if (customTag.CanAddToIdentity(new Identity(stringMatch.PlayerPayload.PlayerName)))
                         {
-                            if (customTag.IncludesGameObjectNameToApplyTo(stringMatch.GetMatchText()))
+                            if (customTag.TagPositionInChat.InheritedValue != null)
                             {
-                                var customTagPayloads = GetPayloads(stringMatch.GameObject, customTag);
+                                var customTagPayloads = GetPayloads(customTag, stringMatch.GameObject);
                                 if (customTagPayloads.Any())
                                 {
                                     AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // An additional step to apply text color to additional locations
+                if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
+                {
+                    if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                    {
+                        if (IsTagVisible(jobTag, stringMatch.GameObject))
+                        {
+                            if (jobTag.TextColor.InheritedValue != null)
+                            {
+                                if (jobTag.IsTextColorAppliedToChatName.InheritedValue != null && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
+                                {
+                                    int payloadIndex = message.Payloads.IndexOf(stringMatch.TextPayload);
+                                    message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
+                                    message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (stringMatch.PlayerPayload != null)
+                {
+                    foreach (var customTag in m_PluginData.CustomTags)
+                    {
+                        if (customTag.CanAddToIdentity(new Identity(stringMatch.PlayerPayload.PlayerName)))
+                        {
+                            if (IsTagVisible(customTag, stringMatch.GameObject))
+                            {
+                                if (customTag.TextColor.InheritedValue != null)
+                                {
+                                    if (customTag.IsTextColorAppliedToChatName.InheritedValue != null && customTag.IsTextColorAppliedToChatName.InheritedValue.Value)
+                                    {
+                                        int payloadIndex = message.Payloads.IndexOf(stringMatch.TextPayload);
+                                        message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
+                                        message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                    }
                                 }
                             }
                         }

@@ -81,8 +81,15 @@ namespace PlayerTags.Data
             }
         }
 
-        public InheritableValue<bool> IsSelected = new InheritableValue<bool>(false);
-        public InheritableValue<bool> IsExpanded = new InheritableValue<bool>(false);
+        public InheritableValue<bool> IsSelected = new InheritableValue<bool>(false)
+        {
+            Behavior = InheritableBehavior.Enabled
+        };
+
+        public InheritableValue<bool> IsExpanded = new InheritableValue<bool>(false)
+        {
+            Behavior = InheritableBehavior.Enabled
+        };
 
         [InheritableCategory("GeneralCategory")]
         public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
@@ -106,6 +113,14 @@ namespace PlayerTags.Data
         public InheritableValue<bool> IsTextVisibleInChat = new InheritableValue<bool>(false);
         [InheritableCategory("TextCategory")]
         public InheritableValue<bool> IsTextVisibleInNameplates = new InheritableValue<bool>(false);
+        [InheritableCategory("TextCategory")]
+        public InheritableValue<bool> IsTextColorAppliedToChatName = new InheritableValue<bool>(false);
+        [InheritableCategory("TextCategory")]
+        public InheritableValue<bool> IsTextColorAppliedToNameplateName = new InheritableValue<bool>(false);
+        [InheritableCategory("TextCategory")]
+        public InheritableValue<bool> IsTextColorAppliedToNameplateTitle = new InheritableValue<bool>(false);
+        [InheritableCategory("TextCategory")]
+        public InheritableValue<bool> IsTextColorAppliedToNameplateFreeCompany = new InheritableValue<bool>(false);
 
         [InheritableCategory("PositionCategory")]
         public InheritableValue<TagPosition> TagPositionInChat = new InheritableValue<TagPosition>(TagPosition.Before);
@@ -134,7 +149,7 @@ namespace PlayerTags.Data
         [InheritableCategory("PlayerCategory")]
         public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
 
-        public string[] SplitGameObjectNamesToApplyTo
+        private string[] IdentityDatasToAddTo
         {
             get
             {
@@ -147,11 +162,26 @@ namespace PlayerTags.Data
             }
         }
 
-        private string[] CleanGameObjectNamesToApplyTo
+        private Identity GetIdentity(string identityData)
+        {
+            var identity = new Identity();
+
+            var IdParts = identityData.Split(':');
+            if (IdParts.Length > 1)
+            {
+                identity.Id = IdParts[1];
+            }
+
+            identity.Name = IdParts[0];
+
+            return identity;
+        }
+
+        public Identity[] IdentitiesToAddTo
         {
             get
             {
-                return SplitGameObjectNamesToApplyTo.Select(gameObjectName => gameObjectName.ToLower().Trim()).ToArray();
+                return IdentityDatasToAddTo.Select(identityData => GetIdentity(identityData)).ToArray();
             }
         }
 
@@ -160,38 +190,29 @@ namespace PlayerTags.Data
             Name = name;
         }
 
-        public bool IncludesGameObjectNameToApplyTo(string gameObjectName)
+        public bool CanAddToIdentity(Identity identity)
         {
-            return CleanGameObjectNamesToApplyTo.Contains(gameObjectName.ToLower());
+            return IdentitiesToAddTo.Contains(identity);
         }
 
-        public void AddGameObjectNameToApplyTo(string gameObjectName)
+        public void AddIdentityToAddTo(Identity identity)
         {
-            if (IncludesGameObjectNameToApplyTo(gameObjectName))
+            if (CanAddToIdentity(identity))
             {
                 return;
             }
 
-            List<string> newSplitGameObjectNamesToApplyTo = SplitGameObjectNamesToApplyTo.ToList();
-
-            newSplitGameObjectNamesToApplyTo.Add(gameObjectName);
-
-            GameObjectNamesToApplyTo.Value = string.Join(",", newSplitGameObjectNamesToApplyTo);
+            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Append(identity));
         }
 
-        public void RemoveGameObjectNameToApplyTo(string gameObjectName)
+        public void RemoveIdentityToAddTo(Identity identity)
         {
-            if (!IncludesGameObjectNameToApplyTo(gameObjectName))
+            if (!CanAddToIdentity(identity))
             {
                 return;
             }
 
-            List<string> newSplitGameObjectNamesToApplyTo = SplitGameObjectNamesToApplyTo.ToList();
-
-            var index = Array.IndexOf(CleanGameObjectNamesToApplyTo, gameObjectName.ToLower());
-            newSplitGameObjectNamesToApplyTo.RemoveAt(index);
-
-            GameObjectNamesToApplyTo = string.Join(",", newSplitGameObjectNamesToApplyTo);
+            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Where(identityToAddTo => identityToAddTo != identity));
         }
 
         public Dictionary<string, InheritableData> GetChanges(Dictionary<string, InheritableData>? defaultChanges = null)

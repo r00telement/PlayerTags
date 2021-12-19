@@ -60,7 +60,9 @@ namespace PlayerTags.Data
                 IsSelected = false,
                 IsExpanded = true,
                 IsIconVisibleInChat = true,
+                IsTextVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
+                IsTextColorAppliedToChatName = true
             }.GetChanges();
 
             RoleTagsChanges = new Dictionary<Role, Dictionary<string, InheritableData>>();

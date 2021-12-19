@@ -531,4 +531,32 @@
   <data name="Loc_IsPlayersTabOthersVisible_Description" xml:space="preserve">
     <value>Show others in the players list.</value>
   </data>
+
+  <data name="Loc_IsTextColorAppliedToChatName" xml:space="preserve">
+    <value>Apply color to chat name</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToChatName_Description" xml:space="preserve">
+    <value>Whether the color will be applied to the name in chat.</value>
+  </data>
+
+  <data name="Loc_IsTextColorAppliedToNameplateName" xml:space="preserve">
+    <value>Apply color to nameplate name</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateName_Description" xml:space="preserve">
+    <value>Whether the color will be applied to the name in nameplates.</value>
+  </data>
+
+  <data name="Loc_IsTextColorAppliedToNameplateTitle" xml:space="preserve">
+    <value>Apply color to nameplate title</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateTitle_Description" xml:space="preserve">
+    <value>Whether the color will be applied to title in nameplates.</value>
+  </data>
+
+  <data name="Loc_IsTextColorAppliedToNameplateFreeCompany" xml:space="preserve">
+    <value>Apply color to nameplate free company</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateFreeCompany_Description" xml:space="preserve">
+    <value>Whether the color will be applied to the free company in nameplates.</value>
+  </data>
 </root>

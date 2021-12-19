@@ -17,13 +17,10 @@ namespace PlayerTags.Features
 {
     public abstract class TagTargetFeature : IDisposable
     {
-        private PluginConfiguration m_PluginConfiguration;
-
         private ActivityContext m_CurrentActivityContext;
 
-        public TagTargetFeature(PluginConfiguration pluginConfiguration)
+        public TagTargetFeature()
         {
-            m_PluginConfiguration = pluginConfiguration;
 
             m_CurrentActivityContext = ActivityContext.None;
 
@@ -61,13 +58,7 @@ namespace PlayerTags.Features
             }
         }
 
-        /// <summary>
-        /// Gets the payloads for the given game object tag. If the payloads don't yet exist then they will be created.
-        /// </summary>
-        /// <param name="gameObject">The game object to get payloads for.</param>
-        /// <param name="tag">The tag config to get payloads for.</param>
-        /// <returns>A list of payloads for the given tag.</returns>
-        protected IEnumerable<Payload> GetPayloads(GameObject gameObject, Tag tag)
+        protected bool IsTagVisible(Tag tag, GameObject? gameObject)
         {
             bool isVisibleForActivity = ActivityContextHelper.GetIsVisible(m_CurrentActivityContext,
                 tag.IsVisibleInPveDuties.InheritedValue ?? false,
@@ -76,7 +67,7 @@ namespace PlayerTags.Features
 
             if (!isVisibleForActivity)
             {
-                return Enumerable.Empty<Payload>();
+                return false;
             }
 
             if (gameObject is PlayerCharacter playerCharacter)
@@ -91,14 +82,30 @@ namespace PlayerTags.Features
 
                 if (!isVisibleForPlayer)
                 {
-                    return Enumerable.Empty<Payload>();
+                    return false;
                 }
             }
 
-            return CreatePayloads(gameObject, tag);
+            return true;
         }
 
-        private Payload[] CreatePayloads(GameObject gameObject, Tag tag)
+        /// <summary>
+        /// Gets the payloads for the given game object tag. If the payloads don't yet exist then they will be created.
+        /// </summary>
+        /// <param name="gameObject">The game object to get payloads for.</param>
+        /// <param name="tag">The tag config to get payloads for.</param>
+        /// <returns>A list of payloads for the given tag.</returns>
+        protected IEnumerable<Payload> GetPayloads(Tag tag, GameObject? gameObject)
+        {
+            if (!IsTagVisible(tag, gameObject))
+            {
+                return Enumerable.Empty<Payload>();
+            }
+
+            return CreatePayloads(tag);
+        }
+
+        private Payload[] CreatePayloads(Tag tag)
         {
             List<Payload> newPayloads = new List<Payload>();
 

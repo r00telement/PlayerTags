@@ -19,7 +19,6 @@ namespace PlayerTags.Features
         private NameplateHooks? m_NameplateHooks;
 
         public NameplatesTagTargetFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
-            : base(pluginConfiguration)
         {
             m_PluginConfiguration = pluginConfiguration;
             m_PluginData = pluginData;
@@ -176,14 +175,14 @@ namespace PlayerTags.Features
 
             Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges = new Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>>();
 
-            if (gameObject is Character character)
+            if (gameObject is PlayerCharacter playerCharacter)
             {
                 // Add the job tags
-                if (m_PluginData.JobTags.TryGetValue(character.ClassJob.GameData.Abbreviation, out var jobTag))
+                if (m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
                     if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
                     {
-                        var payloads = GetPayloads(gameObject, jobTag);
+                        var payloads = GetPayloads(jobTag, gameObject);
                         if (payloads.Any())
                         {
                             AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
@@ -194,7 +193,7 @@ namespace PlayerTags.Features
                 // Add the randomly generated name tag payload
                 if (m_PluginConfiguration.IsPlayerNameRandomlyGenerated)
                 {
-                    var characterName = character.Name.TextValue;
+                    var characterName = playerCharacter.Name.TextValue;
                     if (characterName != null)
                     {
                         var generatedName = RandomNameGenerator.Generate(characterName);
@@ -204,19 +203,19 @@ namespace PlayerTags.Features
                         }
                     }
                 }
-            }
 
-            // Add all other tags
-            foreach (var customTag in m_PluginData.AllTags.Descendents)
-            {
-                if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
+                // Add all other tags
+                foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    if (customTag.IncludesGameObjectNameToApplyTo(gameObject.Name.TextValue))
+                    if (customTag.CanAddToIdentity(new Identity(gameObject.Name.TextValue)))
                     {
-                        var payloads = GetPayloads(gameObject, customTag);
-                        if (payloads.Any())
+                        if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
                         {
-                            AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            var payloads = GetPayloads(customTag, gameObject);
+                            if (payloads.Any())
+                            {
+                                AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            }
                         }
                     }
                 }
@@ -245,6 +244,73 @@ namespace PlayerTags.Features
                 if (seString != null)
                 {
                     ApplyStringChanges(seString, stringChanges);
+                }
+            }
+
+            // An additional step to apply text color to additional locations
+            if (gameObject is PlayerCharacter playerCharacter1)
+            {
+                if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                {
+                    if (IsTagVisible(jobTag, gameObject))
+                    {
+                        if (jobTag.TextColor.InheritedValue != null)
+                        {
+                            if (jobTag.IsTextColorAppliedToNameplateName.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                            {
+                                name.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                name.Payloads.Add(new UIForegroundPayload(0));
+                                isNameChanged = true;
+                            }
+
+                            if (jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
+                            {
+                                title.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                title.Payloads.Add(new UIForegroundPayload(0));
+                                isTitleChanged = true;
+                            }
+
+                            if (jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
+                            {
+                                freeCompany.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                freeCompany.Payloads.Add(new UIForegroundPayload(0));
+                                isFreeCompanyChanged = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var customTag in m_PluginData.CustomTags)
+            {
+                if (customTag.CanAddToIdentity(new Identity(gameObject.Name.TextValue)))
+                {
+                    if (IsTagVisible(customTag, gameObject))
+                    {
+                        if (customTag.TextColor.InheritedValue != null)
+                        {
+                            if (customTag.IsTextColorAppliedToNameplateName.InheritedValue != null && customTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                            {
+                                name.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                name.Payloads.Add(new UIForegroundPayload(0));
+                                isNameChanged = true;
+                            }
+
+                            if (customTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
+                            {
+                                title.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                title.Payloads.Add(new UIForegroundPayload(0));
+                                isTitleChanged = true;
+                            }
+
+                            if (customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
+                            {
+                                freeCompany.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                freeCompany.Payloads.Add(new UIForegroundPayload(0));
+                                isFreeCompanyChanged = true;
+                            }
+                        }
+                    }
                 }
             }
         }

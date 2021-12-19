@@ -53,7 +53,10 @@ namespace PlayerTags.Features
 
             string gameObjectName = args.Text!.TextValue;
 
-            var notAddedTags = m_PluginData.CustomTags.Where(tag => !tag.IncludesGameObjectNameToApplyTo(gameObjectName));
+            var notAddedTags = m_PluginData.CustomTags.Where(tag => !tag.CanAddToIdentity(new Identity()
+            {
+                Name = gameObjectName
+            }));
             if (notAddedTags.Any())
             {
                 args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
@@ -62,13 +65,21 @@ namespace PlayerTags.Features
                     {
                         itemArgs.Items.Add(new NormalContextMenuItem(notAddedTag.Text.Value, (args =>
                         {
-                            notAddedTag.AddGameObjectNameToApplyTo(gameObjectName);
+                            notAddedTag.AddIdentityToAddTo(new Identity()
+                            {
+                                Name = gameObjectName
+                            });
+
+                            m_PluginConfiguration.Save(m_PluginData);
                         })));
                     }
                 })));
             }
 
-            var addedTags = m_PluginData.CustomTags.Where(tag => tag.IncludesGameObjectNameToApplyTo(gameObjectName));
+            var addedTags = m_PluginData.CustomTags.Where(tag => tag.CanAddToIdentity(new Identity()
+            {
+                Name = gameObjectName
+            }));
             if (addedTags.Any())
             {
                 args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
@@ -77,7 +88,12 @@ namespace PlayerTags.Features
                     {
                         itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
                         {
-                            addedTag.RemoveGameObjectNameToApplyTo(gameObjectName);
+                            addedTag.RemoveIdentityToAddTo(new Identity()
+                            {
+                                Name = gameObjectName
+                            });
+
+                            m_PluginConfiguration.Save(m_PluginData);
                         })));
                     }
                 })));

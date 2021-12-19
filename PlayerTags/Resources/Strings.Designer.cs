@@ -412,6 +412,78 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply color to chat name.
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToChatName {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToChatName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the color will be applied to the name in chat..
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToChatName_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToChatName_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply color to nameplate free company.
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToNameplateFreeCompany {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToNameplateFreeCompany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the color will be applied to the free company in nameplates..
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToNameplateFreeCompany_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToNameplateFreeCompany_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply color to nameplate name.
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToNameplateName {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToNameplateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the color will be applied to the name in nameplates..
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToNameplateName_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToNameplateName_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Apply color to nameplate title.
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToNameplateTitle {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToNameplateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Whether the color will be applied to title in nameplates..
+        /// </summary>
+        public static string Loc_IsTextColorAppliedToNameplateTitle_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsTextColorAppliedToNameplateTitle_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Italic.
         /// </summary>
         public static string Loc_IsTextItalic {
