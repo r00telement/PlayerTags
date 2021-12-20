@@ -4,7 +4,7 @@ namespace PlayerTags.Data
 {
     // FirstName LastName
     // FirstName LastName:Id
-    public struct Identity : IEquatable<Identity>
+    public struct Identity : IComparable<Identity>, IEquatable<Identity>
     {
         public string Name;
         public string? Id;
@@ -69,6 +69,11 @@ namespace PlayerTags.Data
             }
 
             return hashCode;
+        }
+
+        public int CompareTo(Identity other)
+        {
+            return Name.CompareTo(other.Name);
         }
     }
 }

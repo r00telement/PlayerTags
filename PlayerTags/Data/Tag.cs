@@ -158,7 +158,7 @@ namespace PlayerTags.Data
                     return new string[] { };
                 }
 
-                return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',').Where(item => !string.IsNullOrEmpty(item)).ToArray();
+                return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',').Where(item => !string.IsNullOrEmpty(item)).Select(item => item.Trim()).ToArray();
             }
         }
 
