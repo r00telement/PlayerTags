@@ -10,5 +10,5 @@
     "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png",
     "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png"
   ],
-  "Changelog": "- Added experimental option to apply tags to self in chat.\n- Added separate melee and ranged inheritance under dps.\n- Added separate magical and physical inheritance under ranged dps.\n- Added separate land and hand inheritance under land/land."
+  "Changelog": "- Added experimental option to apply tags to self in chat.\n- Added separate melee and ranged inheritance under dps.\n- Added separate magical and physical inheritance under ranged dps.\n- Added separate land and hand inheritance under land/land.\n- Added option to reset a selected item to its defaults."
 }

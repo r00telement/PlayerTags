@@ -94,7 +94,7 @@ namespace PlayerTags.Data
             DpsRoleTags[DpsRole.Ranged] = new Tag()
             {
                 IsSelected = false,
-                IsExpanded = false,
+                IsExpanded = true,
             };
 
             RangedDpsRoleTags = new Dictionary<RangedDpsRole, Tag>();
