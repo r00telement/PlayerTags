@@ -39,6 +39,15 @@ namespace PlayerTags.Configuration
         public Dictionary<Role, Dictionary<string, InheritableData>> RoleTagsChanges = new Dictionary<Role, Dictionary<string, InheritableData>>();
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
+        public Dictionary<DpsRole, Dictionary<string, InheritableData>> DpsRoleTagsChanges = new Dictionary<DpsRole, Dictionary<string, InheritableData>>();
+
+        [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
+        public Dictionary<RangedDpsRole, Dictionary<string, InheritableData>> RangedDpsRoleTagsChanges = new Dictionary<RangedDpsRole, Dictionary<string, InheritableData>>();
+
+        [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
+        public Dictionary<LandHandRole, Dictionary<string, InheritableData>> LandHandRoleTagsChanges = new Dictionary<LandHandRole, Dictionary<string, InheritableData>>();
+
+        [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, Dictionary<string, InheritableData>> JobTagsChanges = new Dictionary<string, Dictionary<string, InheritableData>>();
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
@@ -64,6 +73,45 @@ namespace PlayerTags.Configuration
                 if (changes.Any())
                 {
                     RoleTagsChanges[role] = changes;
+                }
+            }
+
+            DpsRoleTagsChanges = new Dictionary<DpsRole, Dictionary<string, InheritableData>>();
+            foreach ((var dpsRole, var dpsRoleTag) in pluginData.DpsRoleTags)
+            {
+                Dictionary<string, InheritableData>? defaultChanges;
+                pluginData.Default.DpsRoleTagsChanges.TryGetValue(dpsRole, out defaultChanges);
+
+                var changes = dpsRoleTag.GetChanges(defaultChanges);
+                if (changes.Any())
+                {
+                    DpsRoleTagsChanges[dpsRole] = changes;
+                }
+            }
+
+            RangedDpsRoleTagsChanges = new Dictionary<RangedDpsRole, Dictionary<string, InheritableData>>();
+            foreach ((var rangedDpsRole, var rangedDpsRoleTag) in pluginData.RangedDpsRoleTags)
+            {
+                Dictionary<string, InheritableData>? defaultChanges;
+                pluginData.Default.RangedDpsRoleTagsChanges.TryGetValue(rangedDpsRole, out defaultChanges);
+
+                var changes = rangedDpsRoleTag.GetChanges(defaultChanges);
+                if (changes.Any())
+                {
+                    RangedDpsRoleTagsChanges[rangedDpsRole] = changes;
+                }
+            }
+
+            LandHandRoleTagsChanges = new Dictionary<LandHandRole, Dictionary<string, InheritableData>>();
+            foreach ((var landHandRole, var landHandRoleTag) in pluginData.LandHandRoleTags)
+            {
+                Dictionary<string, InheritableData>? defaultChanges;
+                pluginData.Default.LandHandRoleTagsChanges.TryGetValue(landHandRole, out defaultChanges);
+
+                var changes = landHandRoleTag.GetChanges(defaultChanges);
+                if (changes.Any())
+                {
+                    LandHandRoleTagsChanges[landHandRole] = changes;
                 }
             }
 

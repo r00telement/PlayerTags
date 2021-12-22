@@ -70,7 +70,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All Custom.
+        ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string Loc_AllCustomTags {
             get {
@@ -79,7 +79,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All Roles.
+        ///   Looks up a localized string similar to Roles.
         /// </summary>
         public static string Loc_AllRoleTags {
             get {
@@ -102,6 +102,24 @@ namespace PlayerTags.Resources {
         public static string Loc_CustomTags {
             get {
                 return ResourceManager.GetString("Loc_CustomTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Melee.
+        /// </summary>
+        public static string Loc_DpsRole_Melee {
+            get {
+                return ResourceManager.GetString("Loc_DpsRole_Melee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ranged.
+        /// </summary>
+        public static string Loc_DpsRole_Ranged {
+            get {
+                return ResourceManager.GetString("Loc_DpsRole_Ranged", resourceCulture);
             }
         }
         
@@ -718,6 +736,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hand.
+        /// </summary>
+        public static string Loc_LandHandRole_Hand {
+            get {
+                return ResourceManager.GetString("Loc_LandHandRole_Hand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Land.
+        /// </summary>
+        public static string Loc_LandHandRole_Land {
+            get {
+                return ResourceManager.GetString("Loc_LandHandRole_Land", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Free company.
         /// </summary>
         public static string Loc_NameplateElement_FreeCompany {
@@ -979,11 +1015,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Magical.
+        /// </summary>
+        public static string Loc_RangedDpsRole_Magical {
+            get {
+                return ResourceManager.GetString("Loc_RangedDpsRole_Magical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Physical.
+        /// </summary>
+        public static string Loc_RangedDpsRole_Physical {
+            get {
+                return ResourceManager.GetString("Loc_RangedDpsRole_Physical", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DPS.
         /// </summary>
-        public static string Loc_Role_DPS {
+        public static string Loc_Role_Dps {
             get {
-                return ResourceManager.GetString("Loc_Role_DPS", resourceCulture);
+                return ResourceManager.GetString("Loc_Role_Dps", resourceCulture);
             }
         }
         

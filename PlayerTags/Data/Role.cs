@@ -5,6 +5,6 @@
         LandHand,
         Tank,
         Healer,
-        DPS
+        Dps,
     }
 }

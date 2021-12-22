@@ -277,7 +277,7 @@
     <value>All</value>
   </data>
   <data name="Loc_AllRoleTags" xml:space="preserve">
-    <value>All Roles</value>
+    <value>Roles</value>
   </data>
   <data name="Loc_Role_LandHand" xml:space="preserve">
     <value>Land/Hand</value>
@@ -288,11 +288,29 @@
   <data name="Loc_Role_Healer" xml:space="preserve">
     <value>Healer</value>
   </data>
-  <data name="Loc_Role_DPS" xml:space="preserve">
+  <data name="Loc_Role_Dps" xml:space="preserve">
     <value>DPS</value>
   </data>
+  <data name="Loc_DpsRole_Melee" xml:space="preserve">
+    <value>Melee</value>
+  </data>
+  <data name="Loc_DpsRole_Ranged" xml:space="preserve">
+    <value>Ranged</value>
+  </data>
+  <data name="Loc_RangedDpsRole_Magical" xml:space="preserve">
+    <value>Magical</value>
+  </data>
+  <data name="Loc_RangedDpsRole_Physical" xml:space="preserve">
+    <value>Physical</value>
+  </data>
+  <data name="Loc_LandHandRole_Hand" xml:space="preserve">
+    <value>Hand</value>
+  </data>
+  <data name="Loc_LandHandRole_Land" xml:space="preserve">
+    <value>Land</value>
+  </data>
   <data name="Loc_AllCustomTags" xml:space="preserve">
-    <value>All Custom</value>
+    <value>Custom</value>
   </data>
   <data name="Loc_CustomTags" xml:space="preserve">
     <value>Custom</value>
