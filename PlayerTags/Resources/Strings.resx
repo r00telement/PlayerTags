@@ -271,7 +271,7 @@
     <value>Reset this item to its defaults.</value>
   </data>
   <data name="Loc_Static_ResetAllDefault_Description" xml:space="preserve">
-    <value>Reset all items to their defaults.</value>
+    <value>Reset all items to their defaults. Custom tags will not be touched.</value>
   </data>
   <data name="Loc_Static_Tags" xml:space="preserve">
     <value>Tags</value>
