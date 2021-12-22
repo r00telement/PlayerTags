@@ -185,9 +185,29 @@ namespace PlayerTags.Data
             }
         }
 
+        private Tag? m_Defaults;
+        public bool HasDefaults
+        {
+            get { return m_Defaults != null; }
+        }
+
+        public Tag()
+        {
+            Name = new LiteralPluginString("");
+            m_Defaults = null;
+        }
+
         public Tag(IPluginString name)
         {
             Name = name;
+            m_Defaults = null;
+        }
+
+        public Tag(IPluginString name, Tag defaults)
+        {
+            Name = name;
+            m_Defaults = defaults;
+            SetChanges(defaults.GetChanges());
         }
 
         public bool CanAddToIdentity(Identity identity)
@@ -241,11 +261,32 @@ namespace PlayerTags.Data
             return changes;
         }
 
-        public void SetChanges(Dictionary<string, InheritableData> changes)
+        public void SetChanges(IEnumerable<KeyValuePair<string, InheritableData>> changes)
         {
             foreach ((var name, var inheritableData) in changes)
             {
                 Inheritables[name].SetData(inheritableData);
+            }
+        }
+
+        private Dictionary<string, InheritableData> GetAllAsChanges()
+        {
+            Dictionary<string, InheritableData> changes = new Dictionary<string, InheritableData>();
+
+            foreach ((var name, var inheritable) in Inheritables)
+            {
+                changes[name] = inheritable.GetData();
+            }
+
+            return changes;
+        }
+
+        public void SetDefaults()
+        {
+            if (m_Defaults != null)
+            {
+                // Exclude IsSelected and IsExpanded for UX purposes
+                SetChanges(m_Defaults.GetAllAsChanges().Where(change => change.Key != nameof(IsSelected) && change.Key != nameof(IsExpanded)));
             }
         }
     }

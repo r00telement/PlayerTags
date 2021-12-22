@@ -267,6 +267,12 @@
   <data name="Loc_IsLinkSelfInChatEnabled_Description" xml:space="preserve">
     <value>Attempts to detect references to self in chat. This allows tags to appear in chat for yourself.</value>
   </data>
+  <data name="Loc_Static_ResetDefault_Description" xml:space="preserve">
+    <value>Reset this item to its defaults.</value>
+  </data>
+  <data name="Loc_Static_ResetAllDefault_Description" xml:space="preserve">
+    <value>Reset all items to their defaults.</value>
+  </data>
   <data name="Loc_Static_Tags" xml:space="preserve">
     <value>Tags</value>
   </data>
@@ -322,7 +328,7 @@
     <value>Add a property override.</value>
   </data>
   <data name="Loc_Static_RemovePropertyOverride_Description" xml:space="preserve">
-    <value>Remove this property override. The value will be inherited from the parent tag.</value>
+    <value>Remove this property override. The value will be inherited from the parent item.</value>
   </data>
   <data name="Loc_Static_NewTag" xml:space="preserve">
     <value>New tag</value>

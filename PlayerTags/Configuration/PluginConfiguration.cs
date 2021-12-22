@@ -60,14 +60,17 @@ namespace PlayerTags.Configuration
 
         public void Save(PluginData pluginData)
         {
-            AllTagsChanges = pluginData.AllTags.GetChanges(pluginData.Default.AllTagsChanges);
-            AllRoleTagsChanges = pluginData.AllRoleTags.GetChanges(pluginData.Default.AllRoleTagsChanges);
+            AllTagsChanges = pluginData.AllTags.GetChanges(pluginData.Default.AllTags.GetChanges());
+            AllRoleTagsChanges = pluginData.AllRoleTags.GetChanges(pluginData.Default.AllRoleTags.GetChanges());
 
             RoleTagsChanges = new Dictionary<Role, Dictionary<string, InheritableData>>();
             foreach ((var role, var roleTag) in pluginData.RoleTags)
             {
-                Dictionary<string, InheritableData>? defaultChanges;
-                pluginData.Default.RoleTagsChanges.TryGetValue(role, out defaultChanges);
+                Dictionary<string, InheritableData>? defaultChanges = new Dictionary<string, InheritableData>();
+                if (pluginData.Default.RoleTags.TryGetValue(role, out var defaultTag))
+                {
+                    defaultChanges = defaultTag.GetChanges();
+                }
 
                 var changes = roleTag.GetChanges(defaultChanges);
                 if (changes.Any())
@@ -79,8 +82,11 @@ namespace PlayerTags.Configuration
             DpsRoleTagsChanges = new Dictionary<DpsRole, Dictionary<string, InheritableData>>();
             foreach ((var dpsRole, var dpsRoleTag) in pluginData.DpsRoleTags)
             {
-                Dictionary<string, InheritableData>? defaultChanges;
-                pluginData.Default.DpsRoleTagsChanges.TryGetValue(dpsRole, out defaultChanges);
+                Dictionary<string, InheritableData>? defaultChanges = new Dictionary<string, InheritableData>();
+                if (pluginData.Default.DpsRoleTags.TryGetValue(dpsRole, out var defaultTag))
+                {
+                    defaultChanges = defaultTag.GetChanges();
+                }
 
                 var changes = dpsRoleTag.GetChanges(defaultChanges);
                 if (changes.Any())
@@ -92,8 +98,11 @@ namespace PlayerTags.Configuration
             RangedDpsRoleTagsChanges = new Dictionary<RangedDpsRole, Dictionary<string, InheritableData>>();
             foreach ((var rangedDpsRole, var rangedDpsRoleTag) in pluginData.RangedDpsRoleTags)
             {
-                Dictionary<string, InheritableData>? defaultChanges;
-                pluginData.Default.RangedDpsRoleTagsChanges.TryGetValue(rangedDpsRole, out defaultChanges);
+                Dictionary<string, InheritableData>? defaultChanges = new Dictionary<string, InheritableData>();
+                if (pluginData.Default.RangedDpsRoleTags.TryGetValue(rangedDpsRole, out var defaultTag))
+                {
+                    defaultChanges = defaultTag.GetChanges();
+                }
 
                 var changes = rangedDpsRoleTag.GetChanges(defaultChanges);
                 if (changes.Any())
@@ -105,8 +114,11 @@ namespace PlayerTags.Configuration
             LandHandRoleTagsChanges = new Dictionary<LandHandRole, Dictionary<string, InheritableData>>();
             foreach ((var landHandRole, var landHandRoleTag) in pluginData.LandHandRoleTags)
             {
-                Dictionary<string, InheritableData>? defaultChanges;
-                pluginData.Default.LandHandRoleTagsChanges.TryGetValue(landHandRole, out defaultChanges);
+                Dictionary<string, InheritableData>? defaultChanges = new Dictionary<string, InheritableData>();
+                if (pluginData.Default.LandHandRoleTags.TryGetValue(landHandRole, out var defaultTag))
+                {
+                    defaultChanges = defaultTag.GetChanges();
+                }
 
                 var changes = landHandRoleTag.GetChanges(defaultChanges);
                 if (changes.Any())
@@ -118,8 +130,11 @@ namespace PlayerTags.Configuration
             JobTagsChanges = new Dictionary<string, Dictionary<string, InheritableData>>();
             foreach ((var jobAbbreviation, var jobTag) in pluginData.JobTags)
             {
-                Dictionary<string, InheritableData>? defaultChanges;
-                pluginData.Default.JobTagsChanges.TryGetValue(jobAbbreviation, out defaultChanges);
+                Dictionary<string, InheritableData>? defaultChanges = new Dictionary<string, InheritableData>();
+                if (pluginData.Default.JobTags.TryGetValue(jobAbbreviation, out var defaultTag))
+                {
+                    defaultChanges = defaultTag.GetChanges();
+                }
 
                 var changes = jobTag.GetChanges(defaultChanges);
                 if (changes.Any())
@@ -128,7 +143,7 @@ namespace PlayerTags.Configuration
                 }
             }
 
-            AllCustomTagsChanges = pluginData.AllCustomTags.GetChanges(pluginData.Default.AllCustomTagsChanges);
+            AllCustomTagsChanges = pluginData.AllCustomTags.GetChanges(pluginData.Default.AllCustomTags.GetChanges());
 
             CustomTagsChanges = new List<Dictionary<string, InheritableData>>();
             foreach (var customTag in pluginData.CustomTags)

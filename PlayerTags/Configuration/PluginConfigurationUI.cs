@@ -567,6 +567,22 @@ namespace PlayerTags.Configuration
                 ImGui.SetTooltip(Strings.Loc_Static_AddPropertyOverride_Description);
             }
 
+            if (tag.HasDefaults)
+            {
+                ImGui.SameLine();
+                ImGui.PushFont(UiBuilder.IconFont);
+                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
+                if (ImGui.Button(FontAwesomeIcon.Recycle.ToIconString()))
+                {
+                    tag.SetDefaults();
+                }
+                ImGui.PopFont();
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip(Strings.Loc_Static_ResetDefault_Description);
+                }
+            }
+
             // Render all the property overrides, and optionally allow the inherited properties to be rendered
             IEnumerable<KeyValuePair<string, IInheritable>> inheritables = tag.Inheritables;
             if (!m_PluginConfiguration.IsShowInheritedPropertiesEnabled)

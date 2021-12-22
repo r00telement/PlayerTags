@@ -23,100 +23,81 @@ namespace PlayerTags.Data
             Default = new DefaultPluginData();
 
             // Set the default changes and saved changes
-            AllTags = new Tag(new LocalizedPluginString(nameof(AllTags)));
-            AllTags.SetChanges(Default.AllTagsChanges);
+            AllTags = new Tag(new LocalizedPluginString(nameof(AllTags)), Default.AllTags);
             AllTags.SetChanges(pluginConfiguration.AllTagsChanges);
 
-            AllRoleTags = new Tag(new LocalizedPluginString(nameof(AllRoleTags)));
-            AllRoleTags.SetChanges(Default.AllRoleTagsChanges);
+            AllRoleTags = new Tag(new LocalizedPluginString(nameof(AllRoleTags)), Default.AllRoleTags);
             AllRoleTags.SetChanges(pluginConfiguration.AllRoleTagsChanges);
 
             RoleTags = new Dictionary<Role, Tag>();
             foreach (var role in Enum.GetValues<Role>())
             {
-                RoleTags[role] = new Tag(new LocalizedPluginString(Localizer.GetName(role)));
-
-                if (Default.RoleTagsChanges.TryGetValue(role, out var defaultChanges))
+                if (Default.RoleTags.TryGetValue(role, out var defaultTag))
                 {
-                    RoleTags[role].SetChanges(defaultChanges);
-                }
-
-                if (pluginConfiguration.RoleTagsChanges.TryGetValue(role, out var savedChanges))
-                {
-                    RoleTags[role].SetChanges(savedChanges);
+                    RoleTags[role] = new Tag(new LocalizedPluginString(Localizer.GetName(role)), defaultTag);
+                    if (pluginConfiguration.RoleTagsChanges.TryGetValue(role, out var savedChanges))
+                    {
+                        RoleTags[role].SetChanges(savedChanges);
+                    }
                 }
             }
 
             DpsRoleTags = new Dictionary<DpsRole, Tag>();
             foreach (var dpsRole in Enum.GetValues<DpsRole>())
             {
-                DpsRoleTags[dpsRole] = new Tag(new LocalizedPluginString(Localizer.GetName(dpsRole)));
-
-                if (Default.DpsRoleTagsChanges.TryGetValue(dpsRole, out var defaultChanges))
+                if (Default.DpsRoleTags.TryGetValue(dpsRole, out var defaultTag))
                 {
-                    DpsRoleTags[dpsRole].SetChanges(defaultChanges);
-                }
-
-                if (pluginConfiguration.DpsRoleTagsChanges.TryGetValue(dpsRole, out var savedChanges))
-                {
-                    DpsRoleTags[dpsRole].SetChanges(savedChanges);
+                    DpsRoleTags[dpsRole] = new Tag(new LocalizedPluginString(Localizer.GetName(dpsRole)), defaultTag);
+                    if (pluginConfiguration.DpsRoleTagsChanges.TryGetValue(dpsRole, out var savedChanges))
+                    {
+                        DpsRoleTags[dpsRole].SetChanges(savedChanges);
+                    }
                 }
             }
 
             RangedDpsRoleTags = new Dictionary<RangedDpsRole, Tag>();
             foreach (var rangedDpsRole in Enum.GetValues<RangedDpsRole>())
             {
-                RangedDpsRoleTags[rangedDpsRole] = new Tag(new LocalizedPluginString(Localizer.GetName(rangedDpsRole)));
-
-                if (Default.RangedDpsRoleTagsChanges.TryGetValue(rangedDpsRole, out var defaultChanges))
+                if (Default.RangedDpsRoleTags.TryGetValue(rangedDpsRole, out var defaultTag))
                 {
-                    RangedDpsRoleTags[rangedDpsRole].SetChanges(defaultChanges);
-                }
-
-                if (pluginConfiguration.RangedDpsRoleTagsChanges.TryGetValue(rangedDpsRole, out var savedChanges))
-                {
-                    RangedDpsRoleTags[rangedDpsRole].SetChanges(savedChanges);
+                    RangedDpsRoleTags[rangedDpsRole] = new Tag(new LocalizedPluginString(Localizer.GetName(rangedDpsRole)), defaultTag);
+                    if (pluginConfiguration.RangedDpsRoleTagsChanges.TryGetValue(rangedDpsRole, out var savedChanges))
+                    {
+                        RangedDpsRoleTags[rangedDpsRole].SetChanges(savedChanges);
+                    }
                 }
             }
 
             LandHandRoleTags = new Dictionary<LandHandRole, Tag>();
             foreach (var landHandRole in Enum.GetValues<LandHandRole>())
             {
-                LandHandRoleTags[landHandRole] = new Tag(new LocalizedPluginString(Localizer.GetName(landHandRole)));
-
-                if (Default.LandHandRoleTagsChanges.TryGetValue(landHandRole, out var defaultChanges))
+                if (Default.LandHandRoleTags.TryGetValue(landHandRole, out var defaultChanges))
                 {
-                    LandHandRoleTags[landHandRole].SetChanges(defaultChanges);
-                }
-
-                if (pluginConfiguration.LandHandRoleTagsChanges.TryGetValue(landHandRole, out var savedChanges))
-                {
-                    LandHandRoleTags[landHandRole].SetChanges(savedChanges);
+                    LandHandRoleTags[landHandRole] = new Tag(new LocalizedPluginString(Localizer.GetName(landHandRole)), defaultChanges);
+                    if (pluginConfiguration.LandHandRoleTagsChanges.TryGetValue(landHandRole, out var savedChanges))
+                    {
+                        LandHandRoleTags[landHandRole].SetChanges(savedChanges);
+                    }
                 }
             }
 
             JobTags = new Dictionary<string, Tag>();
             foreach ((var jobAbbreviation, var role) in RoleHelper.RolesByJobAbbreviation)
             {
-                JobTags[jobAbbreviation] = new Tag(new LiteralPluginString(jobAbbreviation));
-
-                if (Default.JobTagsChanges.TryGetValue(jobAbbreviation, out var defaultChanges))
+                if (Default.JobTags.TryGetValue(jobAbbreviation, out var defaultChanges))
                 {
-                    JobTags[jobAbbreviation].SetChanges(defaultChanges);
-                }
-
-                if (pluginConfiguration.JobTagsChanges.TryGetValue(jobAbbreviation, out var savedChanges))
-                {
-                    JobTags[jobAbbreviation].SetChanges(savedChanges);
+                    JobTags[jobAbbreviation] = new Tag(new LiteralPluginString(jobAbbreviation), defaultChanges);
+                    if (pluginConfiguration.JobTagsChanges.TryGetValue(jobAbbreviation, out var savedChanges))
+                    {
+                        JobTags[jobAbbreviation].SetChanges(savedChanges);
+                    }
                 }
             }
 
-            AllCustomTags = new Tag(new LocalizedPluginString(nameof(AllCustomTags)));
-            CustomTags = new List<Tag>();
-
-            AllCustomTags.SetChanges(Default.AllCustomTagsChanges);
+            AllCustomTags = new Tag(new LocalizedPluginString(nameof(AllCustomTags)), Default.AllCustomTags);
             AllCustomTags.SetChanges(pluginConfiguration.AllCustomTagsChanges);
 
+            CustomTags = new List<Tag>();
             foreach (var savedChanges in pluginConfiguration.CustomTagsChanges)
             {
                 var tag = new Tag(new LocalizedPluginString(nameof(CustomTags)));

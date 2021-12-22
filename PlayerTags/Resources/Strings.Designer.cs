@@ -1213,11 +1213,29 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove this property override. The value will be inherited from the parent tag..
+        ///   Looks up a localized string similar to Remove this property override. The value will be inherited from the parent item..
         /// </summary>
         public static string Loc_Static_RemovePropertyOverride_Description {
             get {
                 return ResourceManager.GetString("Loc_Static_RemovePropertyOverride_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset all items to their defaults..
+        /// </summary>
+        public static string Loc_Static_ResetAllDefault_Description {
+            get {
+                return ResourceManager.GetString("Loc_Static_ResetAllDefault_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset this item to its defaults..
+        /// </summary>
+        public static string Loc_Static_ResetDefault_Description {
+            get {
+                return ResourceManager.GetString("Loc_Static_ResetDefault_Description", resourceCulture);
             }
         }
         

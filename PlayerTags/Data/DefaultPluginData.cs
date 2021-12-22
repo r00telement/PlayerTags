@@ -1,7 +1,5 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
 using Lumina.Excel.GeneratedSheets;
-using PlayerTags.Inheritables;
-using PlayerTags.PluginStrings;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,20 +7,20 @@ namespace PlayerTags.Data
 {
     public class DefaultPluginData
     {
-        public Dictionary<string, InheritableData> AllTagsChanges { get; }
+        public Tag AllTags { get; }
 
-        public Dictionary<string, InheritableData> AllRoleTagsChanges { get; }
-        public Dictionary<Role, Dictionary<string, InheritableData>> RoleTagsChanges { get; }
-        public Dictionary<DpsRole, Dictionary<string, InheritableData>> DpsRoleTagsChanges { get; }
-        public Dictionary<RangedDpsRole, Dictionary<string, InheritableData>> RangedDpsRoleTagsChanges { get; }
-        public Dictionary<LandHandRole, Dictionary<string, InheritableData>> LandHandRoleTagsChanges { get; }
-        public Dictionary<string, Dictionary<string, InheritableData>> JobTagsChanges { get; }
+        public Tag AllRoleTags { get; }
+        public Dictionary<Role, Tag> RoleTags { get; }
+        public Dictionary<DpsRole, Tag> DpsRoleTags { get; }
+        public Dictionary<RangedDpsRole, Tag> RangedDpsRoleTags { get; }
+        public Dictionary<LandHandRole, Tag> LandHandRoleTags { get; }
+        public Dictionary<string, Tag> JobTags { get; }
 
-        public Dictionary<string, InheritableData> AllCustomTagsChanges { get; }
+        public Tag AllCustomTags { get; }
 
         public DefaultPluginData()
         {
-            AllTagsChanges = new Tag(new LiteralPluginString(""))
+            AllTags = new Tag()
             {
                 IsSelected = true,
                 IsExpanded = true,
@@ -41,9 +39,9 @@ namespace PlayerTags.Data
                 IsVisibleForAlliancePlayers = true,
                 IsVisibleForEnemyPlayers = true,
                 IsVisibleForOtherPlayers = true,
-            }.GetChanges();
+            };
 
-            AllRoleTagsChanges = new Tag(new LiteralPluginString(""))
+            AllRoleTags = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = true,
@@ -51,109 +49,109 @@ namespace PlayerTags.Data
                 IsTextVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
                 IsTextColorAppliedToChatName = true
-            }.GetChanges();
+            };
 
-            RoleTagsChanges = new Dictionary<Role, Dictionary<string, InheritableData>>();
-            RoleTagsChanges[Role.LandHand] = new Tag(new LiteralPluginString(""))
+            RoleTags = new Dictionary<Role, Tag>();
+            RoleTags[Role.LandHand] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
                 Icon = BitmapFontIcon.Crafter,
                 TextColor = 3,
-            }.GetChanges();
+            };
 
-            RoleTagsChanges[Role.Tank] = new Tag(new LiteralPluginString(""))
+            RoleTags[Role.Tank] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
                 Icon = BitmapFontIcon.Tank,
                 TextColor = 546,
-            }.GetChanges();
+            };
 
-            RoleTagsChanges[Role.Healer] = new Tag(new LiteralPluginString(""))
+            RoleTags[Role.Healer] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
                 Icon = BitmapFontIcon.Healer,
                 TextColor = 43,
-            }.GetChanges();
+            };
 
-            RoleTagsChanges[Role.Dps] = new Tag(new LiteralPluginString(""))
+            RoleTags[Role.Dps] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = true,
                 Icon = BitmapFontIcon.DPS,
                 TextColor = 508,
-            }.GetChanges();
+            };
 
-            DpsRoleTagsChanges = new Dictionary<DpsRole, Dictionary<string, InheritableData>>();
-            DpsRoleTagsChanges[DpsRole.Melee] = new Tag(new LiteralPluginString(""))
+            DpsRoleTags = new Dictionary<DpsRole, Tag>();
+            DpsRoleTags[DpsRole.Melee] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
-            }.GetChanges();
+            };
 
-            DpsRoleTagsChanges[DpsRole.Ranged] = new Tag(new LiteralPluginString(""))
+            DpsRoleTags[DpsRole.Ranged] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
-            }.GetChanges();
+            };
 
-            RangedDpsRoleTagsChanges = new Dictionary<RangedDpsRole, Dictionary<string, InheritableData>>();
-            RangedDpsRoleTagsChanges[RangedDpsRole.Magical] = new Tag(new LiteralPluginString(""))
+            RangedDpsRoleTags = new Dictionary<RangedDpsRole, Tag>();
+            RangedDpsRoleTags[RangedDpsRole.Magical] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
-            }.GetChanges();
+            };
 
-            RangedDpsRoleTagsChanges[RangedDpsRole.Physical] = new Tag(new LiteralPluginString(""))
+            RangedDpsRoleTags[RangedDpsRole.Physical] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
-            }.GetChanges();
+            };
 
-            LandHandRoleTagsChanges = new Dictionary<LandHandRole, Dictionary<string, InheritableData>>();
-            LandHandRoleTagsChanges[LandHandRole.Land] = new Tag(new LiteralPluginString(""))
+            LandHandRoleTags = new Dictionary<LandHandRole, Tag>();
+            LandHandRoleTags[LandHandRole.Land] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
-            }.GetChanges();
+            };
 
-            LandHandRoleTagsChanges[LandHandRole.Hand] = new Tag(new LiteralPluginString(""))
+            LandHandRoleTags[LandHandRole.Hand] = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = false,
-            }.GetChanges();
+            };
 
-            JobTagsChanges = new Dictionary<string, Dictionary<string, InheritableData>>();
+            JobTags = new Dictionary<string, Tag>();
 
             var classJobs = PluginServices.DataManager.GetExcelSheet<ClassJob>();
             if (classJobs != null)
             {
-                foreach ((var role, var roleTagChanges) in RoleTagsChanges)
+                foreach ((var role, var roleTagChanges) in RoleTags)
                 {
                     foreach (var classJob in classJobs.Where(classJob => RoleHelper.RolesByRoleId[classJob.Role] == role && !string.IsNullOrEmpty(classJob.Abbreviation.RawString)))
                     {
-                        if (!JobTagsChanges.ContainsKey(classJob.Abbreviation.RawString))
+                        if (!JobTags.ContainsKey(classJob.Abbreviation.RawString))
                         {
-                            JobTagsChanges[classJob.Abbreviation.RawString] = new Tag(new LiteralPluginString(""))
+                            JobTags[classJob.Abbreviation.RawString] = new Tag()
                             {
                                 IsSelected = false,
                                 IsExpanded = false,
                                 Text = classJob.Abbreviation.RawString,
-                            }.GetChanges();
+                            };
                         }
                     }
                 }
             }
 
-            AllCustomTagsChanges = new Tag(new LiteralPluginString(""))
+            AllCustomTags = new Tag()
             {
                 IsSelected = false,
                 IsExpanded = true,
                 IsTextVisibleInChat = true,
                 IsTextVisibleInNameplates = true,
-            }.GetChanges();
+            };
         }
     }
 }
