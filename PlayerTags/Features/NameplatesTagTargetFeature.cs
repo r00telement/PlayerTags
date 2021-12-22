@@ -248,39 +248,6 @@ namespace PlayerTags.Features
             }
 
             // An additional step to apply text color to additional locations
-            if (gameObject is PlayerCharacter playerCharacter1)
-            {
-                if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
-                {
-                    if (IsTagVisible(jobTag, gameObject))
-                    {
-                        if (jobTag.TextColor.InheritedValue != null)
-                        {
-                            if (jobTag.IsTextColorAppliedToNameplateName.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
-                            {
-                                name.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                name.Payloads.Add(new UIForegroundPayload(0));
-                                isNameChanged = true;
-                            }
-
-                            if (jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
-                            {
-                                title.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                title.Payloads.Add(new UIForegroundPayload(0));
-                                isTitleChanged = true;
-                            }
-
-                            if (jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
-                            {
-                                freeCompany.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                freeCompany.Payloads.Add(new UIForegroundPayload(0));
-                                isFreeCompanyChanged = true;
-                            }
-                        }
-                    }
-                }
-            }
-
             foreach (var customTag in m_PluginData.CustomTags)
             {
                 if (customTag.CanAddToIdentity(new Identity(gameObject.Name.TextValue)))
@@ -306,6 +273,39 @@ namespace PlayerTags.Features
                             if (customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
                             {
                                 freeCompany.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                freeCompany.Payloads.Add(new UIForegroundPayload(0));
+                                isFreeCompanyChanged = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (gameObject is PlayerCharacter playerCharacter1)
+            {
+                if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                {
+                    if (IsTagVisible(jobTag, gameObject))
+                    {
+                        if (jobTag.TextColor.InheritedValue != null)
+                        {
+                            if (jobTag.IsTextColorAppliedToNameplateName.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                            {
+                                name.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                name.Payloads.Add(new UIForegroundPayload(0));
+                                isNameChanged = true;
+                            }
+
+                            if (jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
+                            {
+                                title.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                title.Payloads.Add(new UIForegroundPayload(0));
+                                isTitleChanged = true;
+                            }
+
+                            if (jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
+                            {
+                                freeCompany.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
                                 freeCompany.Payloads.Add(new UIForegroundPayload(0));
                                 isFreeCompanyChanged = true;
                             }
