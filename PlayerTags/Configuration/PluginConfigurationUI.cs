@@ -68,8 +68,9 @@ namespace PlayerTags.Configuration
 
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        DrawHeading(Strings.Loc_Static_Development);
+                        DrawHeading(Strings.Loc_Static_Experimental);
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsLinkSelfInChatEnabled), true, ref m_PluginConfiguration.IsLinkSelfInChatEnabled, () => m_PluginConfiguration.Save(m_PluginData));
 
                         ImGui.EndTabItem();
                     }
@@ -279,13 +280,13 @@ namespace PlayerTags.Configuration
             string itemName = tag.Name.Value;
             if (m_PluginData.CustomTags.Contains(tag))
             {
-                if (tag.Text.InheritedValue != null)
+                if (!string.IsNullOrWhiteSpace(tag.Text.InheritedValue))
                 {
                     itemName = tag.Text.InheritedValue;
                 }
                 else
                 {
-                    itemName = "";
+                    itemName = Strings.Loc_Static_NoText;
                 }
             }
 
@@ -565,7 +566,6 @@ namespace PlayerTags.Configuration
             {
                 ImGui.SetTooltip(Strings.Loc_Static_AddPropertyOverride_Description);
             }
-
 
             // Render all the property overrides, and optionally allow the inherited properties to be rendered
             IEnumerable<KeyValuePair<string, IInheritable>> inheritables = tag.Inheritables;

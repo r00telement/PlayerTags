@@ -26,7 +26,7 @@ namespace PlayerTags.Features
             /// <summary>
             /// The matching text payload.
             /// </summary>
-            public TextPayload TextPayload { get; init; }
+            public TextPayload? TextPayload { get; init; }
 
             /// <summary>
             /// The matching game object if one exists
@@ -38,10 +38,22 @@ namespace PlayerTags.Features
             /// </summary>
             public PlayerPayload? PlayerPayload { get; init; }
 
-            public StringMatch(SeString seString, TextPayload textPayload)
+            public Payload? PreferredPayload
+            {
+                get
+                {
+                    if (TextPayload != null)
+                    {
+                        return TextPayload;
+                    }
+
+                    return PlayerPayload;
+                }
+            }
+
+            public StringMatch(SeString seString)
             {
                 SeString = seString;
-                TextPayload = textPayload;
             }
 
             /// <summary>
@@ -55,7 +67,17 @@ namespace PlayerTags.Features
                     return GameObject.Name.TextValue;
                 }
 
-                return TextPayload.Text;
+                if (TextPayload != null)
+                {
+                    return TextPayload.Text;
+                }
+
+                if (PlayerPayload != null)
+                {
+                    return PlayerPayload.PlayerName;
+                }
+
+                return SeString.TextValue;
             }
         }
 
@@ -118,23 +140,24 @@ namespace PlayerTags.Features
                 {
                     var gameObject = PluginServices.ObjectTable.FirstOrDefault(gameObject => gameObject.Name.TextValue == playerPayload.PlayerName);
 
+                    TextPayload? textPayload = null;
+
                     // The next payload MUST be a text payload
-                    if (payloadIndex + 1 < seString.Payloads.Count && seString.Payloads[payloadIndex + 1] is TextPayload textPayload)
+                    if (payloadIndex + 1 < seString.Payloads.Count)
                     {
-                        var stringMatch = new StringMatch(seString, textPayload)
-                        {
-                            GameObject = gameObject,
-                            PlayerPayload = playerPayload
-                        };
-                        stringMatches.Add(stringMatch);
+                        textPayload = seString.Payloads[payloadIndex + 1] as TextPayload;
 
                         // Don't handle the text payload twice
                         payloadIndex++;
                     }
-                    else
+
+                    var stringMatch = new StringMatch(seString)
                     {
-                        PluginLog.Error("Expected payload after player payload to be a text payload but it wasn't");
-                    }
+                        GameObject = gameObject,
+                        PlayerPayload = playerPayload,
+                        TextPayload = textPayload
+                    };
+                    stringMatches.Add(stringMatch);
                 }
             }
 
@@ -202,26 +225,7 @@ namespace PlayerTags.Features
                 }
 
                 // An additional step to apply text color to additional locations
-                if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
-                {
-                    if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
-                    {
-                        if (IsTagVisible(jobTag, stringMatch.GameObject))
-                        {
-                            if (jobTag.TextColor.InheritedValue != null)
-                            {
-                                if (jobTag.IsTextColorAppliedToChatName.InheritedValue != null && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
-                                {
-                                    int payloadIndex = message.Payloads.IndexOf(stringMatch.TextPayload);
-                                    message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
-                                    message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (stringMatch.PlayerPayload != null)
+                if (stringMatch.PlayerPayload != null && stringMatch.PreferredPayload != null)
                 {
                     foreach (var customTag in m_PluginData.CustomTags)
                     {
@@ -233,7 +237,7 @@ namespace PlayerTags.Features
                                 {
                                     if (customTag.IsTextColorAppliedToChatName.InheritedValue != null && customTag.IsTextColorAppliedToChatName.InheritedValue.Value)
                                     {
-                                        int payloadIndex = message.Payloads.IndexOf(stringMatch.TextPayload);
+                                        int payloadIndex = message.Payloads.IndexOf(stringMatch.PreferredPayload);
                                         message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
                                         message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
                                     }
@@ -241,9 +245,28 @@ namespace PlayerTags.Features
                             }
                         }
                     }
+
+                    if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
+                    {
+                        if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                        {
+                            if (IsTagVisible(jobTag, stringMatch.GameObject))
+                            {
+                                if (jobTag.TextColor.InheritedValue != null)
+                                {
+                                    if (jobTag.IsTextColorAppliedToChatName.InheritedValue != null && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
+                                    {
+                                        int payloadIndex = message.Payloads.IndexOf(stringMatch.PreferredPayload);
+                                        message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
+                                        message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
-                ApplyStringChanges(message, stringChanges, stringMatch.TextPayload);
+                ApplyStringChanges(message, stringChanges, stringMatch.PreferredPayload);
             }
         }
     }

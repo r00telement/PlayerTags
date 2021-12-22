@@ -18,6 +18,7 @@ namespace PlayerTags
         private PluginData m_PluginData;
         private PluginConfigurationUI m_PluginConfigurationUI;
 
+        private LinkSelfInChatFeature m_LinkSelfInChatFeature;
         private CustomTagsContextMenuFeature m_CustomTagsContextMenuFeature;
         private NameplatesTagTargetFeature m_NameplatesTagTargetFeature;
         private ChatTagTargetFeature m_ChatTagTargetFeature;
@@ -38,6 +39,7 @@ namespace PlayerTags
                 m_PluginConfiguration.IsVisible = true;
                 m_PluginConfiguration.Save(m_PluginData);
             }) { HelpMessage = "Shows the config" });
+            m_LinkSelfInChatFeature = new LinkSelfInChatFeature(m_PluginConfiguration, m_PluginData);
             m_CustomTagsContextMenuFeature = new CustomTagsContextMenuFeature(m_XivCommon, m_PluginConfiguration, m_PluginData);
             m_NameplatesTagTargetFeature = new NameplatesTagTargetFeature(m_PluginConfiguration, m_PluginData);
             m_ChatTagTargetFeature = new ChatTagTargetFeature(m_PluginConfiguration, m_PluginData);
@@ -47,7 +49,8 @@ namespace PlayerTags
         {
             m_ChatTagTargetFeature.Dispose();
             m_NameplatesTagTargetFeature.Dispose();
-            m_CustomTagsContextMenuFeature.Dispose();                    
+            m_CustomTagsContextMenuFeature.Dispose();
+            m_LinkSelfInChatFeature.Dispose();
             PluginServices.CommandManager.RemoveHandler(c_CommandName);
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw -= UiBuilder_Draw;

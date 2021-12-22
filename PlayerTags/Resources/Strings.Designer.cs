@@ -241,6 +241,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Detect references to self in chat.
+        /// </summary>
+        public static string Loc_IsLinkSelfInChatEnabled {
+            get {
+                return ResourceManager.GetString("Loc_IsLinkSelfInChatEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Attempts to detect references to self in chat. This allows tags to appear in chat for yourself..
+        /// </summary>
+        public static string Loc_IsLinkSelfInChatEnabled_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsLinkSelfInChatEnabled_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Randomly generate player names.
         /// </summary>
         public static string Loc_IsPlayerNameRandomlyGenerated {
@@ -1042,6 +1060,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Experimental.
+        /// </summary>
+        public static string Loc_Static_Experimental {
+            get {
+                return ResourceManager.GetString("Loc_Static_Experimental", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add &apos;{0}&apos; to {1}..
         /// </summary>
         public static string Loc_Static_Format_AddTagToPlayer {
@@ -1083,6 +1110,15 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_NewTag {
             get {
                 return ResourceManager.GetString("Loc_Static_NewTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;No text&gt;.
+        /// </summary>
+        public static string Loc_Static_NoText {
+            get {
+                return ResourceManager.GetString("Loc_Static_NoText", resourceCulture);
             }
         }
         
