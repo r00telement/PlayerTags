@@ -262,10 +262,10 @@
     <value>Replace every player's name with a randomly generated one.</value>
   </data>
   <data name="Loc_IsLinkSelfInChatEnabled" xml:space="preserve">
-    <value>Detect references to self in chat</value>
+    <value>Apply tags to self in chat</value>
   </data>
   <data name="Loc_IsLinkSelfInChatEnabled_Description" xml:space="preserve">
-    <value>Attempts to detect references to self in chat. This allows tags to appear in chat for yourself.</value>
+    <value>Attempts to link your chat name to your character, allowing tags to be applied to self in chat.</value>
   </data>
   <data name="Loc_Static_ResetDefault_Description" xml:space="preserve">
     <value>Reset this item to its defaults.</value>

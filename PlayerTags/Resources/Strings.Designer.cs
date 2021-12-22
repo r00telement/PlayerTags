@@ -259,7 +259,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detect references to self in chat.
+        ///   Looks up a localized string similar to Apply tags to self in chat.
         /// </summary>
         public static string Loc_IsLinkSelfInChatEnabled {
             get {
@@ -268,7 +268,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attempts to detect references to self in chat. This allows tags to appear in chat for yourself..
+        ///   Looks up a localized string similar to Attempts to link your chat name to your character, allowing tags to be applied to self in chat..
         /// </summary>
         public static string Loc_IsLinkSelfInChatEnabled_Description {
             get {
@@ -1222,7 +1222,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reset all items to their defaults..
+        ///   Looks up a localized string similar to Reset all items to their defaults. Custom tags will not be touched..
         /// </summary>
         public static string Loc_Static_ResetAllDefault_Description {
             get {
