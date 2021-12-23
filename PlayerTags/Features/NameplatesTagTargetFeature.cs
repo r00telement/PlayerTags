@@ -207,7 +207,7 @@ namespace PlayerTags.Features
                 // Add all other tags
                 foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    if (customTag.CanAddToIdentity(new Identity(gameObject.Name.TextValue)))
+                    if (customTag.CanAddToIdentity(Identity.From(playerCharacter)))
                     {
                         if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
                         {
@@ -247,48 +247,48 @@ namespace PlayerTags.Features
                 }
             }
 
-            // An additional step to apply text color to additional locations
-            foreach (var customTag in m_PluginData.CustomTags)
+            if (gameObject is PlayerCharacter playerCharacter1)
             {
-                if (customTag.CanAddToIdentity(new Identity(gameObject.Name.TextValue)))
+                // An additional step to apply text color to additional locations
+                foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    if (IsTagVisible(customTag, gameObject))
+                    if (customTag.CanAddToIdentity(Identity.From(playerCharacter1)))
                     {
-                        if (customTag.TextColor.InheritedValue != null)
+                        if (IsTagVisible(customTag, gameObject))
                         {
-                            if (name.Payloads.Any(payload => payload is TextPayload)
-                                && customTag.IsTextColorAppliedToNameplateName.InheritedValue != null
-                                && customTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                            if (customTag.TextColor.InheritedValue != null)
                             {
-                                name.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                name.Payloads.Add(new UIForegroundPayload(0));
-                                isNameChanged = true;
-                            }
+                                if (name.Payloads.Any(payload => payload is TextPayload)
+                                    && customTag.IsTextColorAppliedToNameplateName.InheritedValue != null
+                                    && customTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                                {
+                                    name.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                    name.Payloads.Add(new UIForegroundPayload(0));
+                                    isNameChanged = true;
+                                }
 
-                            if (title.Payloads.Any(payload => payload is TextPayload)
-                                && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null
-                                && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
-                            {
-                                title.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                title.Payloads.Add(new UIForegroundPayload(0));
-                                isTitleChanged = true;
-                            }
+                                if (title.Payloads.Any(payload => payload is TextPayload)
+                                    && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null
+                                    && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
+                                {
+                                    title.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                    title.Payloads.Add(new UIForegroundPayload(0));
+                                    isTitleChanged = true;
+                                }
 
-                            if (freeCompany.Payloads.Any(payload => payload is TextPayload)
-                                && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null
-                                && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
-                            {
-                                freeCompany.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                freeCompany.Payloads.Add(new UIForegroundPayload(0));
-                                isFreeCompanyChanged = true;
+                                if (freeCompany.Payloads.Any(payload => payload is TextPayload)
+                                    && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null
+                                    && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
+                                {
+                                    freeCompany.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
+                                    freeCompany.Payloads.Add(new UIForegroundPayload(0));
+                                    isFreeCompanyChanged = true;
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            if (gameObject is PlayerCharacter playerCharacter1)
-            {
                 if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
                     if (IsTagVisible(jobTag, gameObject))
@@ -323,7 +323,7 @@ namespace PlayerTags.Features
                             }
                         }
                     }
-                }
+                }                
             }
         }
     }

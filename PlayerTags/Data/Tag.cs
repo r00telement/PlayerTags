@@ -206,7 +206,7 @@ namespace PlayerTags.Data
                 return;
             }
 
-            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Append(identity));
+            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Append(identity).Select(id => id.ToDataString()));
         }
 
         public void RemoveIdentityToAddTo(Identity identity)
@@ -216,7 +216,7 @@ namespace PlayerTags.Data
                 return;
             }
 
-            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Where(identityToAddTo => identityToAddTo != identity));
+            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Where(identityToAddTo => identityToAddTo != identity).Select(id => id.ToDataString()));
         }
 
         public Dictionary<string, InheritableData> GetChanges(Dictionary<string, InheritableData>? defaultChanges = null)

@@ -1,4 +1,5 @@
-﻿using PlayerTags.Configuration;
+﻿using Dalamud.Logging;
+using PlayerTags.Configuration;
 using PlayerTags.Data;
 using PlayerTags.Resources;
 using System;
@@ -51,12 +52,13 @@ namespace PlayerTags.Features
                 return;
             }
 
-            string gameObjectName = args.Text!.TextValue;
-
-            var notAddedTags = m_PluginData.CustomTags.Where(tag => !tag.CanAddToIdentity(new Identity()
+            var identity = new Identity()
             {
-                Name = gameObjectName
-            }));
+                Name = args.Text!.TextValue,
+                WorldId = args.ObjectWorld
+            };
+
+            var notAddedTags = m_PluginData.CustomTags.Where(tag => !tag.CanAddToIdentity(identity));
             if (notAddedTags.Any())
             {
                 args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
@@ -65,21 +67,14 @@ namespace PlayerTags.Features
                     {
                         itemArgs.Items.Add(new NormalContextMenuItem(notAddedTag.Text.Value, (args =>
                         {
-                            notAddedTag.AddIdentityToAddTo(new Identity()
-                            {
-                                Name = gameObjectName
-                            });
-
+                            notAddedTag.AddIdentityToAddTo(identity);
                             m_PluginConfiguration.Save(m_PluginData);
                         })));
                     }
                 })));
             }
 
-            var addedTags = m_PluginData.CustomTags.Where(tag => tag.CanAddToIdentity(new Identity()
-            {
-                Name = gameObjectName
-            }));
+            var addedTags = m_PluginData.CustomTags.Where(tag => tag.CanAddToIdentity(identity));
             if (addedTags.Any())
             {
                 args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
@@ -88,11 +83,7 @@ namespace PlayerTags.Features
                     {
                         itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
                         {
-                            addedTag.RemoveIdentityToAddTo(new Identity()
-                            {
-                                Name = gameObjectName
-                            });
-
+                            addedTag.RemoveIdentityToAddTo(identity);
                             m_PluginConfiguration.Save(m_PluginData);
                         })));
                     }

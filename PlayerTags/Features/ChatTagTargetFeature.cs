@@ -210,7 +210,7 @@ namespace PlayerTags.Features
                     // Add all other tags
                     foreach (var customTag in m_PluginData.CustomTags)
                     {
-                        if (customTag.CanAddToIdentity(new Identity(stringMatch.PlayerPayload.PlayerName)))
+                        if (customTag.CanAddToIdentity(Identity.From(stringMatch.PlayerPayload)))
                         {
                             if (customTag.TagPositionInChat.InheritedValue != null)
                             {
@@ -229,13 +229,13 @@ namespace PlayerTags.Features
                 {
                     foreach (var customTag in m_PluginData.CustomTags)
                     {
-                        if (customTag.CanAddToIdentity(new Identity(stringMatch.PlayerPayload.PlayerName)))
+                        if (customTag.CanAddToIdentity(Identity.From(stringMatch.PlayerPayload)))
                         {
                             if (IsTagVisible(customTag, stringMatch.GameObject))
                             {
                                 if (customTag.TextColor.InheritedValue != null)
                                 {
-                                    if (message.Payloads.Any(payload => payload is TextPayload)
+                                    if (message.Payloads.Any(payload => payload is TextPayload || payload is PlayerPayload)
                                         && customTag.IsTextColorAppliedToChatName.InheritedValue != null
                                         && customTag.IsTextColorAppliedToChatName.InheritedValue.Value)
                                     {
@@ -256,7 +256,7 @@ namespace PlayerTags.Features
                             {
                                 if (jobTag.TextColor.InheritedValue != null)
                                 {
-                                    if (message.Payloads.Any(payload => payload is TextPayload)
+                                    if (message.Payloads.Any(payload => payload is TextPayload || payload is PlayerPayload)
                                         && jobTag.IsTextColorAppliedToChatName.InheritedValue != null
                                         && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
                                     {

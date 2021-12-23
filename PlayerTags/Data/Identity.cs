@@ -1,5 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Party;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,18 +15,40 @@ namespace PlayerTags.Data
     public struct Identity : IComparable<Identity>, IEquatable<Identity>
     {
         public string Name;
-        public string? World;
+        public uint? WorldId;
         public string? Id;
 
-        public Identity(string name)
+        public string? World
         {
-            Name = name;
-            World = null;
-            Id = null;
+            get
+            {
+                var worldId = WorldId;
+                if (worldId != null)
+                {
+                    var worlds = PluginServices.DataManager.GetExcelSheet<World>();
+                    if (worlds != null)
+                    {
+                        var world = worlds.FirstOrDefault(world => world.RowId == worldId.Value);
+                        if (world != null)
+                        {
+                            return world.Name.RawString;
+                        }
+                    }
+                }
+
+                return null;
+            }
         }
 
         private static Regex s_WorldRegex = new Regex(@"@([a-zA-Z0-9]+)");
         private static Regex s_IdRegex = new Regex(@"@([a-zA-Z0-9]+)");
+
+        public Identity(string name)
+        {
+            Name = name;
+            WorldId = null;
+            Id = null;
+        }
 
         public static Identity From(string str)
         {
@@ -32,7 +56,11 @@ namespace PlayerTags.Data
 
             while (s_WorldRegex.Match(str) is Match match && match.Success)
             {
-                identity.World = match.Groups.Values.Last().Value;
+                if (uint.TryParse(match.Groups.Values.Last().Value, out var value))
+                {
+                    identity.WorldId = value;
+                }
+
                 str = str.Replace(match.Value, "");
             }
 
@@ -51,7 +79,7 @@ namespace PlayerTags.Data
         {
             return new Identity(playerCharacter.Name.TextValue)
             {
-                World = playerCharacter.HomeWorld.GameData.Name.RawString
+                WorldId = playerCharacter.HomeWorld.GameData.RowId
             };
         }
 
@@ -59,17 +87,30 @@ namespace PlayerTags.Data
         {
             return new Identity(partyMember.Name.TextValue)
             {
-                World = partyMember.World.GameData.Name.RawString
+                WorldId = partyMember.World.GameData.RowId
+            };
+        }
+
+        public static Identity From(PlayerPayload playerPayload)
+        {
+            return new Identity(playerPayload.PlayerName)
+            {
+                WorldId = playerPayload.World.RowId
             };
         }
 
         public override string ToString()
         {
+            return Name;
+        }
+
+        public string ToDataString()
+        {
             string str = Name;
 
-            if (World != null)
+            if (WorldId != null)
             {
-                str += $"@{World}";
+                str += $"@{WorldId}";
             }
 
             if (Id != null)
@@ -97,7 +138,12 @@ namespace PlayerTags.Data
                 return first.Id == second.Id;
             }
 
-            return first.Name.ToLower().Trim() == second.Name.ToLower().Trim();
+            bool areNamesEqual = first.Name.ToLower().Trim() == second.Name.ToLower().Trim();
+
+            // If one of the worlds are null then it's technically equal as it could be promoted to the identity that does have a world
+            bool areWorldsEqual = first.WorldId == null || second.WorldId == null || first.WorldId == second.WorldId;
+
+            return areNamesEqual && areWorldsEqual;
         }
 
         public static bool operator !=(Identity first, Identity second)
