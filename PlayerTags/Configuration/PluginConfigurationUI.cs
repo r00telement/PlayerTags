@@ -131,11 +131,11 @@ namespace PlayerTags.Configuration
 
                             if (PluginServices.ClientState.LocalPlayer != null)
                             {
-                                Dictionary<string, PlayerInfo> playerNameContexts = PluginServices.ObjectTable
+                                Dictionary<Identity, PlayerInfo> playerNameContexts = PluginServices.ObjectTable
                                     .Where(gameObject => gameObject is PlayerCharacter)
                                     .Select(gameObject => gameObject as PlayerCharacter)
                                     .ToDictionary(
-                                        playerCharacter => playerCharacter!.Name.TextValue,
+                                        playerCharacter => Identity.From(playerCharacter!),
                                         playerCharacter => new PlayerInfo()
                                         {
                                             PlayerContext = PlayerContextHelper.GetPlayerContext(playerCharacter!),
@@ -145,9 +145,11 @@ namespace PlayerTags.Configuration
                                 // Include party members that aren't in the game object list
                                 foreach (var partyMember in PluginServices.PartyList)
                                 {
-                                    if (!playerNameContexts.ContainsKey(partyMember.Name.TextValue))
+                                    var partyMemberIdentity = Identity.From(partyMember);
+
+                                    if (!playerNameContexts.ContainsKey(partyMemberIdentity))
                                     {
-                                        playerNameContexts[partyMember.Name.TextValue] = new PlayerInfo()
+                                        playerNameContexts[partyMemberIdentity] = new PlayerInfo()
                                         {
                                             PlayerContext = PlayerContext.Party,
                                             Proximity = int.MaxValue
@@ -172,7 +174,7 @@ namespace PlayerTags.Configuration
                                 int rowIndex = 0;
                                 foreach (var player in orderedPlayerNameContexts)
                                 {
-                                    DrawQuickAddRow(new Identity(player.Key), rowIndex);
+                                    DrawQuickAddRow(player.Key, rowIndex);
                                     ++rowIndex;
                                 }
                             }
@@ -201,7 +203,7 @@ namespace PlayerTags.Configuration
                             ImGui.TableHeadersRow();
 
                             int rowIndex = 0;
-                            foreach (var identity in m_PluginData.CustomTags.SelectMany(customTag => customTag.IdentitiesToAddTo).Distinct().OrderBy(name => name).ToArray())
+                            foreach (var identity in m_PluginData.CustomTags.SelectMany(customTag => customTag.IdentitiesToAddTo).Distinct().OrderBy(name => name))
                             {
                                 DrawQuickAddRow(identity, rowIndex);
                                 ++rowIndex;
@@ -209,7 +211,7 @@ namespace PlayerTags.Configuration
 
                             if (PluginServices.ObjectTable.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawQuickAddRow(new Identity(PluginServices.ClientState.LocalPlayer.Name.TextValue), 0);
+                                DrawQuickAddRow(Identity.From(PluginServices.ClientState.LocalPlayer), 0);
                             }
 
                             ImGui.EndTable();
@@ -245,7 +247,7 @@ namespace PlayerTags.Configuration
             ImGui.TableNextColumn();
 
             ImGui.AlignTextToFramePadding();
-            ImGui.Text(identity.Name);
+            ImGui.Text(identity.ToString());
 
             foreach (Tag customTag in m_PluginData.CustomTags)
             {

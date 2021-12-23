@@ -10,7 +10,7 @@ namespace PlayerTags.Features
 {
     public class CustomTagsContextMenuFeature : IDisposable
     {
-        private string?[] CustomTagsSupportedAddonNames = new string?[]
+        private string?[] SupportedAddonNames = new string?[]
         {
             null,
             "_PartyList",
@@ -107,7 +107,7 @@ namespace PlayerTags.Features
                 return false;
             }
 
-            return CustomTagsSupportedAddonNames.Contains(args.ParentAddonName);
+            return SupportedAddonNames.Contains(args.ParentAddonName);
         }
     }
 }

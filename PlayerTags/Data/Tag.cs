@@ -91,7 +91,6 @@ namespace PlayerTags.Data
             Behavior = InheritableBehavior.Enabled
         };
 
-        [InheritableCategory("GeneralCategory")]
         public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
 
         [InheritableCategory("IconCategory")]
@@ -162,26 +161,11 @@ namespace PlayerTags.Data
             }
         }
 
-        private Identity GetIdentity(string identityData)
-        {
-            var identity = new Identity();
-
-            var IdParts = identityData.Split(':');
-            if (IdParts.Length > 1)
-            {
-                identity.Id = IdParts[1];
-            }
-
-            identity.Name = IdParts[0];
-
-            return identity;
-        }
-
         public Identity[] IdentitiesToAddTo
         {
             get
             {
-                return IdentityDatasToAddTo.Select(identityData => GetIdentity(identityData)).ToArray();
+                return IdentityDatasToAddTo.Select(identityData => Identity.From(identityData)).ToArray();
             }
         }
 
