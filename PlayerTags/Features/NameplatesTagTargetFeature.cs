@@ -256,21 +256,27 @@ namespace PlayerTags.Features
                     {
                         if (customTag.TextColor.InheritedValue != null)
                         {
-                            if (customTag.IsTextColorAppliedToNameplateName.InheritedValue != null && customTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                            if (name.Payloads.Any(payload => payload is TextPayload)
+                                && customTag.IsTextColorAppliedToNameplateName.InheritedValue != null
+                                && customTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
                             {
                                 name.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
                                 name.Payloads.Add(new UIForegroundPayload(0));
                                 isNameChanged = true;
                             }
 
-                            if (customTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
+                            if (title.Payloads.Any(payload => payload is TextPayload)
+                                && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null
+                                && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
                             {
                                 title.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
                                 title.Payloads.Add(new UIForegroundPayload(0));
                                 isTitleChanged = true;
                             }
 
-                            if (customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
+                            if (freeCompany.Payloads.Any(payload => payload is TextPayload)
+                                && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null
+                                && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
                             {
                                 freeCompany.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
                                 freeCompany.Payloads.Add(new UIForegroundPayload(0));
@@ -289,21 +295,27 @@ namespace PlayerTags.Features
                     {
                         if (jobTag.TextColor.InheritedValue != null)
                         {
-                            if (jobTag.IsTextColorAppliedToNameplateName.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
+                            if (name.Payloads.Any(payload => payload is TextPayload)
+                                && jobTag.IsTextColorAppliedToNameplateName.InheritedValue != null
+                                && jobTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
                             {
                                 name.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
                                 name.Payloads.Add(new UIForegroundPayload(0));
                                 isNameChanged = true;
                             }
 
-                            if (jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
+                            if (title.Payloads.Any(payload => payload is TextPayload)
+                                && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null
+                                && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
                             {
                                 title.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
                                 title.Payloads.Add(new UIForegroundPayload(0));
                                 isTitleChanged = true;
                             }
 
-                            if (jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
+                            if (freeCompany.Payloads.Any(payload => payload is TextPayload)
+                                && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null
+                                && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
                             {
                                 freeCompany.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
                                 freeCompany.Payloads.Add(new UIForegroundPayload(0));

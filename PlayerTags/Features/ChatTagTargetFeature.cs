@@ -235,7 +235,9 @@ namespace PlayerTags.Features
                             {
                                 if (customTag.TextColor.InheritedValue != null)
                                 {
-                                    if (customTag.IsTextColorAppliedToChatName.InheritedValue != null && customTag.IsTextColorAppliedToChatName.InheritedValue.Value)
+                                    if (message.Payloads.Any(payload => payload is TextPayload)
+                                        && customTag.IsTextColorAppliedToChatName.InheritedValue != null
+                                        && customTag.IsTextColorAppliedToChatName.InheritedValue.Value)
                                     {
                                         int payloadIndex = message.Payloads.IndexOf(stringMatch.PreferredPayload);
                                         message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
@@ -254,7 +256,9 @@ namespace PlayerTags.Features
                             {
                                 if (jobTag.TextColor.InheritedValue != null)
                                 {
-                                    if (jobTag.IsTextColorAppliedToChatName.InheritedValue != null && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
+                                    if (message.Payloads.Any(payload => payload is TextPayload)
+                                        && jobTag.IsTextColorAppliedToChatName.InheritedValue != null
+                                        && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
                                     {
                                         int payloadIndex = message.Payloads.IndexOf(stringMatch.PreferredPayload);
                                         message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
