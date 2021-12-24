@@ -1,14 +1,10 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
-using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.Text;
+﻿using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using Dalamud.Logging;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PlayerTags.Features
 {

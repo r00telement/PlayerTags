@@ -247,7 +247,14 @@ namespace PlayerTags.Configuration
             ImGui.TableNextColumn();
 
             ImGui.AlignTextToFramePadding();
-            ImGui.Text(identity.ToString());
+            ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(4, 0));
+            ImGui.Text(identity.Name);
+            if (identity.WorldId != null)
+            {
+                ImGui.SameLine();
+                ImGui.TextColored(new Vector4(1, 1, 1, 0.25f), $"@{identity.World}");
+            }
+            ImGui.PopStyleVar();
 
             foreach (Tag customTag in m_PluginData.CustomTags)
             {

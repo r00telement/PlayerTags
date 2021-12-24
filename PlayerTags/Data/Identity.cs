@@ -101,7 +101,19 @@ namespace PlayerTags.Data
 
         public override string ToString()
         {
-            return Name;
+            string str = Name;
+
+            if (WorldId != null)
+            {
+                str += $"@{World}";
+            }
+
+            if (Id != null)
+            {
+                str += $":{Id}";
+            }
+
+            return str;
         }
 
         public string ToDataString()
