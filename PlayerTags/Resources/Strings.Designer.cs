@@ -1267,7 +1267,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This plugin can modify nameplates. When combined with other plugins that modify nameplates, you are likely to see unexpected behavior..
+        ///   Looks up a localized string similar to This plugin can modify nameplates and chat. When combined with other plugins that modify these things, you are likely to see unexpected behavior..
         /// </summary>
         public static string Loc_Static_WarningMessage {
             get {

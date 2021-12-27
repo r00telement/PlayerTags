@@ -121,7 +121,7 @@
     <value>Player Tags</value>
   </data>
   <data name="Loc_Static_WarningMessage" xml:space="preserve">
-    <value>This plugin can modify nameplates. When combined with other plugins that modify nameplates, you are likely to see unexpected behavior.</value>
+    <value>This plugin can modify nameplates and chat. When combined with other plugins that modify these things, you are likely to see unexpected behavior. The load order of your plugins may make a difference.</value>
   </data>
   <data name="Loc_Static_General" xml:space="preserve">
     <value>General</value>
