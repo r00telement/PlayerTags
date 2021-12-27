@@ -52,42 +52,40 @@ namespace PlayerTags.Features
                 return;
             }
 
-            var identity = new Identity()
+            Identity? identity = m_PluginData.GetIdentity(args);
+            if (identity != null)
             {
-                Name = args.Text!.TextValue,
-                WorldId = args.ObjectWorld
-            };
-
-            var notAddedTags = m_PluginData.CustomTags.Where(tag => !tag.CanAddToIdentity(identity));
-            if (notAddedTags.Any())
-            {
-                args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
+                var notAddedTags = m_PluginData.CustomTags.Where(customTag => !identity.CustomTagIds.Contains(customTag.CustomId.Value));
+                if (notAddedTags.Any())
                 {
-                    foreach (var notAddedTag in notAddedTags)
+                    args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
                     {
-                        itemArgs.Items.Add(new NormalContextMenuItem(notAddedTag.Text.Value, (args =>
+                        foreach (var notAddedTag in notAddedTags)
                         {
-                            notAddedTag.AddIdentityToAddTo(identity);
-                            m_PluginConfiguration.Save(m_PluginData);
-                        })));
-                    }
-                })));
-            }
+                            itemArgs.Items.Add(new NormalContextMenuItem(notAddedTag.Text.Value, (args =>
+                            {
+                                m_PluginData.AddCustomTagToIdentity(notAddedTag, identity);
+                                m_PluginConfiguration.Save(m_PluginData);
+                            })));
+                        }
+                    })));
+                }
 
-            var addedTags = m_PluginData.CustomTags.Where(tag => tag.CanAddToIdentity(identity));
-            if (addedTags.Any())
-            {
-                args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
+                var addedTags = m_PluginData.CustomTags.Where(customTag => identity.CustomTagIds.Contains(customTag.CustomId.Value));
+                if (addedTags.Any())
                 {
-                    foreach (var addedTag in addedTags)
+                    args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
                     {
-                        itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
+                        foreach (var addedTag in addedTags)
                         {
-                            addedTag.RemoveIdentityToAddTo(identity);
-                            m_PluginConfiguration.Save(m_PluginData);
-                        })));
-                    }
-                })));
+                            itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
+                            {
+                                m_PluginData.RemoveCustomTagFromIdentity(addedTag, identity);
+                                m_PluginConfiguration.Save(m_PluginData);
+                            })));
+                        }
+                    })));
+                }
             }
         }
 

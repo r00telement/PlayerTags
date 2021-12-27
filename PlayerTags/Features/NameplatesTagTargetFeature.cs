@@ -204,10 +204,12 @@ namespace PlayerTags.Features
                     }
                 }
 
-                // Add all other tags
-                foreach (var customTag in m_PluginData.CustomTags)
+                // Add custom tags
+                Identity identity = m_PluginData.GetIdentity(playerCharacter);
+                foreach (var customTagId in identity.CustomTagIds)
                 {
-                    if (customTag.CanAddToIdentity(Identity.From(playerCharacter)))
+                    var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
+                    if (customTag != null)
                     {
                         if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
                         {
@@ -250,9 +252,11 @@ namespace PlayerTags.Features
             if (gameObject is PlayerCharacter playerCharacter1)
             {
                 // An additional step to apply text color to additional locations
-                foreach (var customTag in m_PluginData.CustomTags)
+                Identity identity = m_PluginData.GetIdentity(playerCharacter1);
+                foreach (var customTagId in identity.CustomTagIds)
                 {
-                    if (customTag.CanAddToIdentity(Identity.From(playerCharacter1)))
+                    var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
+                    if (customTag != null)
                     {
                         if (IsTagVisible(customTag, gameObject))
                         {

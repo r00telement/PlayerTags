@@ -91,7 +91,11 @@ namespace PlayerTags.Data
             Behavior = InheritableBehavior.Enabled
         };
 
+        // Deprecated
+        [InheritableCategory("General")]
         public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
+
+        public InheritableValue<Guid> CustomId = new InheritableValue<Guid>(Guid.Empty);
 
         [InheritableCategory("IconCategory")]
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
@@ -148,7 +152,7 @@ namespace PlayerTags.Data
         [InheritableCategory("PlayerCategory")]
         public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
 
-        private string[] IdentityDatasToAddTo
+        public string[] IdentitiesToAddTo
         {
             get
             {
@@ -158,14 +162,6 @@ namespace PlayerTags.Data
                 }
 
                 return GameObjectNamesToApplyTo.InheritedValue.Split(';', ',').Where(item => !string.IsNullOrEmpty(item)).Select(item => item.Trim()).ToArray();
-            }
-        }
-
-        public Identity[] IdentitiesToAddTo
-        {
-            get
-            {
-                return IdentityDatasToAddTo.Select(identityData => Identity.From(identityData)).ToArray();
             }
         }
 
@@ -192,31 +188,6 @@ namespace PlayerTags.Data
             Name = name;
             m_Defaults = defaults;
             SetChanges(defaults.GetChanges());
-        }
-
-        public bool CanAddToIdentity(Identity identity)
-        {
-            return IdentitiesToAddTo.Contains(identity);
-        }
-
-        public void AddIdentityToAddTo(Identity identity)
-        {
-            if (CanAddToIdentity(identity))
-            {
-                return;
-            }
-
-            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Append(identity).Select(id => id.ToDataString()));
-        }
-
-        public void RemoveIdentityToAddTo(Identity identity)
-        {
-            if (!CanAddToIdentity(identity))
-            {
-                return;
-            }
-
-            GameObjectNamesToApplyTo.Value = string.Join(", ", IdentitiesToAddTo.Where(identityToAddTo => identityToAddTo != identity).Select(id => id.ToDataString()));
         }
 
         public Dictionary<string, InheritableData> GetChanges(Dictionary<string, InheritableData>? defaultChanges = null)

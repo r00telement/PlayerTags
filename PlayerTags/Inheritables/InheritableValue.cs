@@ -67,6 +67,10 @@ namespace PlayerTags.Inheritables
                     // This should never happen
                     PluginLog.Error($"Expected value of type {Value.GetType()} but received null");
                 }
+                else if (typeof(T) == typeof(Guid) && inheritableData.Value is string strValue)
+                {
+                    Value = (T)(object)Guid.Parse(strValue);
+                }
                 else
                 {
                     Value = (T)Convert.ChangeType(inheritableData.Value, typeof(T));

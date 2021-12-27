@@ -205,12 +205,14 @@ namespace PlayerTags.Features
                     }
                 }
 
+                // Add custom tags
                 if (stringMatch.PlayerPayload != null)
                 {
-                    // Add all other tags
-                    foreach (var customTag in m_PluginData.CustomTags)
+                    Identity identity = m_PluginData.GetIdentity(stringMatch.PlayerPayload);
+                    foreach (var customTagId in identity.CustomTagIds)
                     {
-                        if (customTag.CanAddToIdentity(Identity.From(stringMatch.PlayerPayload)))
+                        var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
+                        if (customTag != null)
                         {
                             if (customTag.TagPositionInChat.InheritedValue != null)
                             {
@@ -227,9 +229,11 @@ namespace PlayerTags.Features
                 // An additional step to apply text color to additional locations
                 if (stringMatch.PlayerPayload != null && stringMatch.PreferredPayload != null)
                 {
-                    foreach (var customTag in m_PluginData.CustomTags)
+                    Identity identity = m_PluginData.GetIdentity(stringMatch.PlayerPayload);
+                    foreach (var customTagId in identity.CustomTagIds)
                     {
-                        if (customTag.CanAddToIdentity(Identity.From(stringMatch.PlayerPayload)))
+                        var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
+                        if (customTag != null)
                         {
                             if (IsTagVisible(customTag, stringMatch.GameObject))
                             {

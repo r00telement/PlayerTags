@@ -135,7 +135,7 @@ namespace PlayerTags.Configuration
                                     .Where(gameObject => gameObject is PlayerCharacter)
                                     .Select(gameObject => gameObject as PlayerCharacter)
                                     .ToDictionary(
-                                        playerCharacter => Identity.From(playerCharacter!),
+                                        playerCharacter => m_PluginData.GetIdentity(playerCharacter!),
                                         playerCharacter => new PlayerInfo()
                                         {
                                             PlayerContext = PlayerContextHelper.GetPlayerContext(playerCharacter!),
@@ -145,7 +145,7 @@ namespace PlayerTags.Configuration
                                 // Include party members that aren't in the game object list
                                 foreach (var partyMember in PluginServices.PartyList)
                                 {
-                                    var partyMemberIdentity = Identity.From(partyMember);
+                                    var partyMemberIdentity = m_PluginData.GetIdentity(partyMember);
 
                                     if (!playerNameContexts.ContainsKey(partyMemberIdentity))
                                     {
@@ -203,7 +203,7 @@ namespace PlayerTags.Configuration
                             ImGui.TableHeadersRow();
 
                             int rowIndex = 0;
-                            foreach (var identity in m_PluginData.CustomTags.SelectMany(customTag => customTag.IdentitiesToAddTo).Distinct().OrderBy(name => name))
+                            foreach (var identity in m_PluginData.Identities.ToArray())
                             {
                                 DrawQuickAddRow(identity, rowIndex);
                                 ++rowIndex;
@@ -211,7 +211,7 @@ namespace PlayerTags.Configuration
 
                             if (PluginServices.ObjectTable.Length == 0 && PluginServices.ClientState.LocalPlayer != null)
                             {
-                                DrawQuickAddRow(Identity.From(PluginServices.ClientState.LocalPlayer), 0);
+                                DrawQuickAddRow(m_PluginData.GetIdentity(PluginServices.ClientState.LocalPlayer), 0);
                             }
 
                             ImGui.EndTable();
@@ -262,20 +262,20 @@ namespace PlayerTags.Configuration
 
                 ImGui.TableNextColumn();
 
-                bool isTagAssigned = customTag.CanAddToIdentity(identity);
+                bool isTagAssigned = identity.CustomTagIds.Contains(customTag.CustomId.Value);
 
                 DrawSimpleCheckbox(string.Format(Strings.Loc_Static_Format_AddTagToPlayer, customTag.Text.InheritedValue, identity.Name), ref isTagAssigned, () =>
                 {
                     if (isTagAssigned)
                     {
-                        customTag.AddIdentityToAddTo(identity);
+                        m_PluginData.AddCustomTagToIdentity(customTag, identity);
+                        m_PluginConfiguration.Save(m_PluginData);
                     }
                     else
                     {
-                        customTag.RemoveIdentityToAddTo(identity);
+                        m_PluginData.RemoveCustomTagFromIdentity(customTag, identity);
+                        m_PluginConfiguration.Save(m_PluginData);
                     }
-
-                    m_PluginConfiguration.Save(m_PluginData);
                 });
 
                 ImGui.PopID();
@@ -378,7 +378,7 @@ namespace PlayerTags.Configuration
                     {
                         IsExpanded = true,
                         Text = Strings.Loc_Static_NewTag,
-                        GameObjectNamesToApplyTo = ""
+                        CustomId = Guid.NewGuid()
                     };
 
                     m_PluginData.CustomTags.Add(newTag);
@@ -413,6 +413,7 @@ namespace PlayerTags.Configuration
                 ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
                 if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString()))
                 {
+                    m_PluginData.RemoveCustomTagFromIdentities(tag);
                     m_PluginData.AllCustomTags.Children.Remove(tag);
                     m_PluginData.CustomTags.Remove(tag);
                     m_PluginConfiguration.Save(m_PluginData);

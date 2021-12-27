@@ -1,7 +1,12 @@
-﻿using PlayerTags.Configuration;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.ClientState.Party;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
+using PlayerTags.Configuration;
 using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using XivCommon.Functions.ContextMenu;
 
 namespace PlayerTags.Data
 {
@@ -17,9 +22,14 @@ namespace PlayerTags.Data
         public Dictionary<string, Tag> JobTags;
         public Tag AllCustomTags;
         public List<Tag> CustomTags;
+        public List<Identity> Identities;
+
+        private PluginConfiguration m_PluginConfiguration;
 
         public PluginData(PluginConfiguration pluginConfiguration)
         {
+            m_PluginConfiguration = pluginConfiguration;
+
             Default = new DefaultPluginData();
 
             // Set the default changes and saved changes
@@ -166,6 +176,132 @@ namespace PlayerTags.Data
             {
                 tag.Parent = AllCustomTags;
             }
+
+            Identities = pluginConfiguration.Identities;
+
+            // Migrate old custom tag identity assignments
+            bool customTagsMigrated = false;
+            foreach (var customTag in CustomTags)
+            {
+                if (customTag.CustomId.Value == Guid.Empty)
+                {
+                    customTag.CustomId.Behavior = Inheritables.InheritableBehavior.Enabled;
+                    customTag.CustomId.Value = Guid.NewGuid();
+                    customTagsMigrated = true;
+                }
+
+                foreach (string identityToAddTo in customTag.IdentitiesToAddTo)
+                {
+                    Identity? identity = Identities.FirstOrDefault(identity => identity.Name.ToLower() == identityToAddTo.ToLower());
+                    if (identity == null)
+                    {
+                        identity = new Identity(identityToAddTo);
+                        Identities.Add(identity);
+                    }
+
+                    if (identity != null)
+                    {
+                        identity.CustomTagIds.Add(customTag.CustomId.Value);
+                        customTagsMigrated = true;
+                    }
+                }
+
+                if (customTag.GameObjectNamesToApplyTo.Behavior != Inheritables.InheritableBehavior.Inherit)
+                {
+                    customTag.GameObjectNamesToApplyTo.Behavior = Inheritables.InheritableBehavior.Inherit;
+                    customTag.GameObjectNamesToApplyTo.Value = "";
+                    customTagsMigrated = true;
+                }
+            }
+
+            if (customTagsMigrated)
+            {
+                pluginConfiguration.Save(this);
+            }
+        }
+
+        public void AddCustomTagToIdentity(Tag customTag, Identity identity)
+        {
+            if (!identity.CustomTagIds.Contains(customTag.CustomId.Value))
+            {
+                identity.CustomTagIds.Add(customTag.CustomId.Value);
+            }
+
+            if (!Identities.Contains(identity))
+            {
+                Identities.Add(identity);
+            }
+        }
+
+        public void RemoveCustomTagFromIdentity(Tag customTag, Identity identity)
+        {
+            identity.CustomTagIds.Remove(customTag.CustomId.Value);
+
+            if (!identity.CustomTagIds.Any())
+            {
+                Identities.Remove(identity);
+            }
+        }
+
+        public void RemoveCustomTagFromIdentities(Tag customTag)
+        {
+            foreach (var identity in Identities)
+            {
+                RemoveCustomTagFromIdentity(customTag, identity);
+            }
+        }
+
+        public Identity GetIdentity(string name, uint? worldId)
+        {
+            foreach (var identity in Identities)
+            {
+                if (identity.Name.ToLower().Trim() == name.ToLower().Trim())
+                {
+                    if (identity.WorldId == null && worldId != null)
+                    {
+                        identity.WorldId = worldId;
+                        m_PluginConfiguration.Save(this);
+
+                        return identity;
+                    }
+                    else
+                    {
+                        return identity;
+                    }
+                }
+            }
+
+            return new Identity(name)
+            {
+                WorldId = worldId
+            };
+        }
+
+        public Identity? GetIdentity(ContextMenuOpenArgs contextMenuOpenArgs)
+        {
+            if (contextMenuOpenArgs.Text == null
+                || contextMenuOpenArgs.ObjectWorld == 0
+                || contextMenuOpenArgs.ObjectWorld == 65535)
+            {
+                return null;
+            }
+
+            return GetIdentity(contextMenuOpenArgs.Text!.TextValue, contextMenuOpenArgs.ObjectWorld);
+        }
+
+        public Identity GetIdentity(PlayerCharacter playerCharacter)
+        {
+            return GetIdentity(playerCharacter.Name.TextValue, playerCharacter.HomeWorld.GameData.RowId);
+        }
+
+        public Identity GetIdentity(PartyMember partyMember)
+        {
+            return GetIdentity(partyMember.Name.TextValue, partyMember.World.GameData.RowId);
+        }
+
+        public Identity GetIdentity(PlayerPayload playerPayload)
+        {
+            return GetIdentity(playerPayload.PlayerName, playerPayload.World.RowId);
         }
     }
 }

@@ -56,6 +56,9 @@ namespace PlayerTags.Configuration
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public List<Dictionary<string, InheritableData>> CustomTagsChanges = new List<Dictionary<string, InheritableData>>();
 
+        [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
+        public List<Identity> Identities = new List<Identity>();
+
         public event System.Action? Saved;
 
         public void Save(PluginData pluginData)
@@ -150,6 +153,8 @@ namespace PlayerTags.Configuration
             {
                 CustomTagsChanges.Add(customTag.GetChanges());
             }
+
+            Identities = pluginData.Identities;
 
             PluginServices.DalamudPluginInterface.SavePluginConfig(this);
             Saved?.Invoke();
