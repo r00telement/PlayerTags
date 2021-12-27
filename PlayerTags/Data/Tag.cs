@@ -92,7 +92,6 @@ namespace PlayerTags.Data
         };
 
         // Deprecated
-        [InheritableCategory("General")]
         public InheritableReference<string> GameObjectNamesToApplyTo = new InheritableReference<string>("");
 
         public InheritableValue<Guid> CustomId = new InheritableValue<Guid>(Guid.Empty);

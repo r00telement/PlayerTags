@@ -6,6 +6,7 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Logging;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -100,8 +101,11 @@ namespace PlayerTags.Features
 
         private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            AddTagsToChat(sender);
-            AddTagsToChat(message);
+            if (Enum.IsDefined(type))
+            {
+                AddTagsToChat(sender);
+                AddTagsToChat(message);
+            }
         }
 
         protected override bool IsIconVisible(Tag tag)

@@ -68,6 +68,10 @@ namespace PlayerTags.Features
                                 m_PluginConfiguration.Save(m_PluginData);
                             })));
                         }
+
+                        itemArgs.Items.Add(new NormalContextMenuItem("<Do nothing>", (args =>
+                        {
+                        })));
                     })));
                 }
 
@@ -84,6 +88,10 @@ namespace PlayerTags.Features
                                 m_PluginConfiguration.Save(m_PluginData);
                             })));
                         }
+
+                        itemArgs.Items.Add(new NormalContextMenuItem("<Do nothing>", (args =>
+                        {
+                        })));
                     })));
                 }
             }

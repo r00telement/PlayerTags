@@ -528,9 +528,9 @@ namespace PlayerTags.Configuration
 
                     foreach (var inheritableGroup in inheritableGroups1)
                     {
-                    
                         if (inheritableGroup.Key != null)
                         {
+                            ImGui.PushID(inheritableGroup.Key);
                             DrawHeading(Localizer.GetString(inheritableGroup.Key, false));
                         }
 
@@ -559,6 +559,11 @@ namespace PlayerTags.Configuration
                             {
                                 ImGui.SetTooltip(Localizer.GetString(selectedInheritable.Inheritable.Key, true));
                             }
+                        }
+
+                        if (inheritableGroup.Key != null)
+                        {
+                            ImGui.PopID();
                         }
                     }
 

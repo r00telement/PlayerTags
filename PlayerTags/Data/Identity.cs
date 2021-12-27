@@ -1,46 +1,21 @@
-﻿using Lumina.Excel.GeneratedSheets;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PlayerTags.Data
 {
-    [Serializable]
     public class Identity : IComparable<Identity>
     {
-        public string Name;
-        public uint? WorldId;
-
-        public List<Guid> CustomTagIds = new List<Guid>();
+        public string Name { get; init; }
+        public uint? WorldId { get; set; } = null;
+        public List<Guid> CustomTagIds { get; init; } = new List<Guid>();
 
         [JsonIgnore]
-        public string? World
-        {
-            get
-            {
-                var worldId = WorldId;
-                if (worldId != null)
-                {
-                    var worlds = PluginServices.DataManager.GetExcelSheet<World>();
-                    if (worlds != null)
-                    {
-                        var world = worlds.FirstOrDefault(world => world.RowId == worldId.Value);
-                        if (world != null)
-                        {
-                            return world.Name.RawString;
-                        }
-                    }
-                }
-
-                return null;
-            }
-        }
+        public string? World => WorldHelper.GetWorldName(WorldId);
 
         public Identity(string name)
         {
             Name = name;
-            WorldId = null;
         }
 
         public override string ToString()
@@ -57,13 +32,7 @@ namespace PlayerTags.Data
 
         public int CompareTo(Identity? other)
         {
-            string? otherName = null;
-            if (other != null)
-            {
-                otherName = other.Name;
-            }
-
-            return Name.CompareTo(otherName);
+            return ToString().CompareTo(other != null ? other.ToString() : null);
         }
     }
 }
