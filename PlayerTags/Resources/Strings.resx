@@ -444,6 +444,10 @@
     <value>Enabled</value>
   </data>
 
+  <data name="Loc_CustomId" xml:space="preserve">
+    <value>Custom id</value>
+  </data>
+
   <data name="Loc_GeneralCategory" xml:space="preserve">
     <value>General properties</value>
   </data>

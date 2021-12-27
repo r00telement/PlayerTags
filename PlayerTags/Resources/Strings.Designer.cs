@@ -97,6 +97,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom id.
+        /// </summary>
+        public static string Loc_CustomId {
+            get {
+                return ResourceManager.GetString("Loc_CustomId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         public static string Loc_CustomTags {

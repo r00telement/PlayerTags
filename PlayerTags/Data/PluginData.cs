@@ -245,7 +245,7 @@ namespace PlayerTags.Data
 
         public void RemoveCustomTagFromIdentities(Tag customTag)
         {
-            foreach (var identity in Identities)
+            foreach (var identity in Identities.ToArray())
             {
                 RemoveCustomTagFromIdentity(customTag, identity);
             }
