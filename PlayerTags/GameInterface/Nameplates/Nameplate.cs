@@ -107,38 +107,38 @@ namespace PlayerTags.GameInterface.Nameplates
                     bool hasNameChanged = beforeNameHashCode != playerNameplateUpdatedArgs.Name.GetHashCode();
                     if (hasNameChanged)
                     {
-                        newNamePtr = GameInterfaceHelper.Allocate(playerNameplateUpdatedArgs.Name);
+                        newNamePtr = GameInterfaceHelper.PluginAllocate(playerNameplateUpdatedArgs.Name);
                     }
 
                     IntPtr newTitlePtr = titlePtr;
                     bool hasTitleChanged = beforeTitleHashCode != playerNameplateUpdatedArgs.Title.GetHashCode();
                     if (hasTitleChanged)
                     {
-                        newTitlePtr = GameInterfaceHelper.Allocate(playerNameplateUpdatedArgs.Title);
+                        newTitlePtr = GameInterfaceHelper.PluginAllocate(playerNameplateUpdatedArgs.Title);
                     }
 
                     IntPtr newFreeCompanyPtr = freeCompanyPtr;
                     bool hasFreeCompanyChanged = beforeFreeCompanyHashCode != playerNameplateUpdatedArgs.FreeCompany.GetHashCode();
                     if (hasFreeCompanyChanged)
                     {
-                        newFreeCompanyPtr = GameInterfaceHelper.Allocate(playerNameplateUpdatedArgs.FreeCompany);
+                        newFreeCompanyPtr = GameInterfaceHelper.PluginAllocate(playerNameplateUpdatedArgs.FreeCompany);
                     }
 
                     var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, playerNameplateUpdatedArgs.IsTitleAboveName, playerNameplateUpdatedArgs.IsTitleVisible, newNamePtr, newTitlePtr, newFreeCompanyPtr, playerNameplateUpdatedArgs.IconId);
 
                     if (hasNameChanged)
                     {
-                        GameInterfaceHelper.Free(ref newNamePtr);
+                        GameInterfaceHelper.PluginFree(ref newNamePtr);
                     }
 
                     if (hasTitleChanged)
                     {
-                        GameInterfaceHelper.Free(ref newTitlePtr);
+                        GameInterfaceHelper.PluginFree(ref newTitlePtr);
                     }
 
                     if (hasFreeCompanyChanged)
                     {
-                        GameInterfaceHelper.Free(ref newFreeCompanyPtr);
+                        GameInterfaceHelper.PluginFree(ref newFreeCompanyPtr);
                     }
 
                     return result;

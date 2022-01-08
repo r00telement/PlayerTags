@@ -287,7 +287,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             // Allocate the new array. We have to do a little dance with the first 8 bytes which represents the array count
             const int arrayCountSize = 8;
             var newAtkValuesArraySize = arrayCountSize + Marshal.SizeOf<AtkValue>() * newAtkValuesCount;
-            var newAtkValuesArray = (IntPtr)IMemorySpace.GetUISpace()->Malloc((ulong)newAtkValuesArraySize, 0);
+            var newAtkValuesArray = GameInterfaceHelper.GameUIAllocate((ulong)newAtkValuesArraySize);
             if (newAtkValuesArray == IntPtr.Zero)
             {
                 return;

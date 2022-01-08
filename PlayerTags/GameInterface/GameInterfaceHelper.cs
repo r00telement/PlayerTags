@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
+using FFXIVClientStructs.FFXIV.Client.System.Memory;
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -73,7 +74,7 @@ namespace PlayerTags.GameInterface
             return true;
         }
 
-        public static IntPtr Allocate(SeString seString)
+        public static IntPtr PluginAllocate(SeString seString)
         {
             var bytes = seString.Encode();
 
@@ -84,7 +85,7 @@ namespace PlayerTags.GameInterface
             return pointer;
         }
 
-        public static void Free(ref IntPtr ptr)
+        public static void PluginFree(ref IntPtr ptr)
         {
             Marshal.FreeHGlobal(ptr);
             ptr = IntPtr.Zero;
@@ -102,6 +103,21 @@ namespace PlayerTags.GameInterface
             }
 
             return bytes;
+        }
+
+        public static unsafe IntPtr GameUIAllocate(ulong size)
+        {
+            return (IntPtr)IMemorySpace.GetUISpace()->Malloc(size, 0);
+        }
+
+        public static unsafe void GameFree(ref IntPtr ptr, ulong size)
+        {
+            if (ptr == IntPtr.Zero)
+            {
+                return;
+            }
+
+            IMemorySpace.Free((void*)ptr, size);
         }
     }
 }

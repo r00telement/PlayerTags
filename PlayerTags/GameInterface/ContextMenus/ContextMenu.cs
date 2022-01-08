@@ -148,7 +148,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         private const int MaxContextMenuItemsPerContextMenu = 32;
 
         private IntPtr m_CurrentContextMenuAgent;
-        private IntPtr m_SubContextMenuTitle;
+        private IntPtr m_CurrentSubContextMenuTitle;
 
         private ContextMenuOpenedArgs? m_ContextMenuOpenedArgs;
         private OpenSubContextMenuItem? m_OpenSubContextMenuItem;
@@ -390,20 +390,12 @@ namespace PlayerTags.GameInterface.ContextMenus
                 m_OpenSubContextMenu(agent);
 
                 // Free any sub context menu title we've already allocated
-                if (m_SubContextMenuTitle != IntPtr.Zero)
-                {
-                    unsafe
-                    {
-                        IMemorySpace.Free((void*)m_SubContextMenuTitle, (ulong)IntPtr.Size);
-                    }
-
-                    m_SubContextMenuTitle = IntPtr.Zero;
-                }
+                GameInterfaceHelper.GameFree(ref m_CurrentSubContextMenuTitle, (ulong)IntPtr.Size);
 
                 // Allocate a new 1 byte title. Without this, a title won't be rendered.
                 // The actual value doesn't matter at this point, we'll set it later.
-                m_SubContextMenuTitle = (IntPtr)IMemorySpace.GetUISpace()->Malloc(1, 0);
-                *(&agentContext->SubContextMenuTitle) = (byte*)m_SubContextMenuTitle;
+                m_CurrentSubContextMenuTitle = GameInterfaceHelper.GameUIAllocate(1);
+                *(&agentContext->SubContextMenuTitle) = (byte*)m_CurrentSubContextMenuTitle;
             }
 
             //*(&a->SelectedIndex) = s;
