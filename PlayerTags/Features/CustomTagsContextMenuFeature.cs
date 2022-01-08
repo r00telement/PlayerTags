@@ -1,11 +1,11 @@
 ﻿using Dalamud.Logging;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
+using PlayerTags.GameInterface.ContextMenus;
 using PlayerTags.Resources;
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using XivCommon;
-using XivCommon.Functions.ContextMenu;
 
 namespace PlayerTags.Features
 {
@@ -27,84 +27,128 @@ namespace PlayerTags.Features
             "SocialList",
         };
 
-        private XivCommonBase m_XivCommon;
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
 
-        public CustomTagsContextMenuFeature(XivCommonBase xivCommon, PluginConfiguration pluginConfiguration, PluginData pluginData)
+        private ContextMenu? m_ContextMenu;
+
+        public CustomTagsContextMenuFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
         {
-            m_XivCommon = xivCommon;
             m_PluginConfiguration = pluginConfiguration;
             m_PluginData = pluginData;
 
-            m_XivCommon.Functions.ContextMenu.OpenContextMenu += ContextMenu_OpenContextMenu;
+            m_ContextMenu = new ContextMenu();
+            if (!m_ContextMenu.IsValid)
+            {
+                m_ContextMenu = null;
+            }
+
+            if (m_ContextMenu != null)
+            {
+                m_ContextMenu.ContextMenuOpened += ContextMenuHooks_ContextMenuOpened;
+            }
         }
 
         public void Dispose()
         {
-            m_XivCommon.Functions.ContextMenu.OpenContextMenu -= ContextMenu_OpenContextMenu;
+            if (m_ContextMenu != null)
+            {
+                m_ContextMenu.ContextMenuOpened -= ContextMenuHooks_ContextMenuOpened;
+
+                m_ContextMenu.Dispose();
+                m_ContextMenu = null;
+            }
         }
 
-        private void ContextMenu_OpenContextMenu(ContextMenuOpenArgs args)
+        private void ContextMenuHooks_ContextMenuOpened(ContextMenuOpenedArgs contextMenuOpenedArgs)
         {
-            if (!m_PluginConfiguration.IsCustomTagsContextMenuEnabled || !DoesContextMenuSupportCustomTags(args))
+            if (contextMenuOpenedArgs.GameObjectContext != null)
+            {
+                PluginLog.Debug($"ContextMenuHooks_ContextMenuOpened   {contextMenuOpenedArgs.GameObjectContext?.Id}   {contextMenuOpenedArgs.GameObjectContext?.ContentIdLower}   '{contextMenuOpenedArgs.GameObjectContext?.Name}'   {contextMenuOpenedArgs.GameObjectContext?.WorldId}");
+            }
+
+            if (contextMenuOpenedArgs.ItemContext != null)
+            {
+                PluginLog.Debug($"ContextMenuHooks_ContextMenuOpened   {contextMenuOpenedArgs.ItemContext?.Id}   {contextMenuOpenedArgs.ItemContext?.Count}   {contextMenuOpenedArgs.ItemContext?.IsHighQuality}");
+            }
+
+            contextMenuOpenedArgs.ContextMenuItems.Add(new CustomContextMenuItem("Root1", (itemSelectedArgs =>
+            {
+                PluginLog.Debug("Executed Root1");
+            })));
+
+            contextMenuOpenedArgs.ContextMenuItems.Add(new OpenSubContextMenuItem("Root2", (subContextMenuOpenedArgs =>
+            {
+                PluginLog.Debug("Executed Root2");
+
+                List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
+                newContextMenuItems.Add(new OpenSubContextMenuItem("Inner1", (subContextMenuOpenedArgs2 =>
+                {
+                    PluginLog.Debug("Executed Inner1");
+
+                    List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
+                    newContextMenuItems.Add(new CustomContextMenuItem("Inner3", (itemSelectedArgs =>
+                    {
+                        PluginLog.Debug("Executed Inner3");
+                    })));
+
+                    subContextMenuOpenedArgs2.ContextMenuItems.InsertRange(0, newContextMenuItems);
+                })));
+
+                newContextMenuItems.Add(new CustomContextMenuItem("Inner2", (itemSelectedArgs =>
+                {
+                    PluginLog.Debug("Executed Inner2");
+                })));
+
+                subContextMenuOpenedArgs.ContextMenuItems.InsertRange(0, newContextMenuItems);
+            })));
+
+            if (!m_PluginConfiguration.IsCustomTagsContextMenuEnabled || !SupportedAddonNames.Contains(contextMenuOpenedArgs.ParentAddonName))
             {
                 return;
             }
 
-            Identity? identity = m_PluginData.GetIdentity(args);
+            Identity? identity = m_PluginData.GetIdentity(contextMenuOpenedArgs);
             if (identity != null)
             {
                 var notAddedTags = m_PluginData.CustomTags.Where(customTag => !identity.CustomTagIds.Contains(customTag.CustomId.Value));
                 if (notAddedTags.Any())
                 {
-                    args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (itemArgs =>
+                    contextMenuOpenedArgs.ContextMenuItems.Add(new OpenSubContextMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (subContextMenuOpenedArgs =>
                     {
+                        List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
                         foreach (var notAddedTag in notAddedTags)
                         {
-                            itemArgs.Items.Add(new NormalContextMenuItem(notAddedTag.Text.Value, (args =>
+                            newContextMenuItems.Add(new CustomContextMenuItem(notAddedTag.Text.Value, (args =>
                             {
                                 m_PluginData.AddCustomTagToIdentity(notAddedTag, identity);
                                 m_PluginConfiguration.Save(m_PluginData);
                             })));
                         }
 
-                        itemArgs.Items.Add(new NormalContextMenuItem("<Do nothing>", (args =>
-                        {
-                        })));
+                        subContextMenuOpenedArgs.ContextMenuItems.InsertRange(0, newContextMenuItems);
                     })));
                 }
 
                 var addedTags = m_PluginData.CustomTags.Where(customTag => identity.CustomTagIds.Contains(customTag.CustomId.Value));
                 if (addedTags.Any())
                 {
-                    args.Items.Add(new NormalContextSubMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (itemArgs =>
+                    contextMenuOpenedArgs.ContextMenuItems.Add(new OpenSubContextMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (subContextMenuOpenedArgs =>
                     {
+                        List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
                         foreach (var addedTag in addedTags)
                         {
-                            itemArgs.Items.Add(new NormalContextMenuItem(addedTag.Text.Value, (args =>
+                            newContextMenuItems.Add(new CustomContextMenuItem(addedTag.Text.Value, (args =>
                             {
                                 m_PluginData.RemoveCustomTagFromIdentity(addedTag, identity);
                                 m_PluginConfiguration.Save(m_PluginData);
                             })));
                         }
 
-                        itemArgs.Items.Add(new NormalContextMenuItem("<Do nothing>", (args =>
-                        {
-                        })));
+                        subContextMenuOpenedArgs.ContextMenuItems.InsertRange(0, newContextMenuItems);
                     })));
                 }
             }
-        }
-
-        private bool DoesContextMenuSupportCustomTags(BaseContextMenuArgs args)
-        {
-            if (args.Text == null || args.ObjectWorld == 0 || args.ObjectWorld == 65535)
-            {
-                return false;
-            }
-
-            return SupportedAddonNames.Contains(args.ParentAddonName);
         }
     }
 }

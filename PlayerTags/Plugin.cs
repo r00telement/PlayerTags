@@ -3,7 +3,6 @@ using Dalamud.Plugin;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using PlayerTags.Features;
-using XivCommon;
 
 namespace PlayerTags
 {
@@ -12,15 +11,13 @@ namespace PlayerTags
         public string Name => "Player Tags";
         private const string c_CommandName = "/playertags";
 
-        private XivCommonBase m_XivCommon;
-
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
         private PluginConfigurationUI m_PluginConfigurationUI;
 
         private LinkSelfInChatFeature m_LinkSelfInChatFeature;
         private CustomTagsContextMenuFeature m_CustomTagsContextMenuFeature;
-        private NameplatesTagTargetFeature m_NameplatesTagTargetFeature;
+        private NameplateTagTargetFeature m_NameplatesTagTargetFeature;
         private ChatTagTargetFeature m_ChatTagTargetFeature;
 
         public Plugin(DalamudPluginInterface pluginInterface)
@@ -31,17 +28,15 @@ namespace PlayerTags
             m_PluginData = new PluginData(m_PluginConfiguration);
             m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData);
 
-            m_XivCommon = new XivCommonBase(XivCommon.Hooks.ContextMenu);
             PluginServices.DalamudPluginInterface.UiBuilder.Draw += UiBuilder_Draw;
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
             PluginServices.CommandManager.AddHandler(c_CommandName, new CommandInfo((string command, string arguments) =>
             {
-                m_PluginConfiguration.IsVisible = true;
-                m_PluginConfiguration.Save(m_PluginData);
+                UiBuilder_OpenConfigUi();
             }) { HelpMessage = "Shows the config" });
             m_LinkSelfInChatFeature = new LinkSelfInChatFeature(m_PluginConfiguration, m_PluginData);
-            m_CustomTagsContextMenuFeature = new CustomTagsContextMenuFeature(m_XivCommon, m_PluginConfiguration, m_PluginData);
-            m_NameplatesTagTargetFeature = new NameplatesTagTargetFeature(m_PluginConfiguration, m_PluginData);
+            m_CustomTagsContextMenuFeature = new CustomTagsContextMenuFeature(m_PluginConfiguration, m_PluginData);
+            m_NameplatesTagTargetFeature = new NameplateTagTargetFeature(m_PluginConfiguration, m_PluginData);
             m_ChatTagTargetFeature = new ChatTagTargetFeature(m_PluginConfiguration, m_PluginData);
         }
 
@@ -54,7 +49,6 @@ namespace PlayerTags
             PluginServices.CommandManager.RemoveHandler(c_CommandName);
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
-            m_XivCommon.Dispose();
         }
 
         private void UiBuilder_Draw()

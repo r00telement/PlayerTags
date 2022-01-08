@@ -252,7 +252,7 @@ namespace PlayerTags.Configuration
             if (identity.WorldId != null)
             {
                 ImGui.SameLine();
-                ImGui.TextColored(new Vector4(1, 1, 1, 0.25f), $"@{identity.World}");
+                ImGui.TextColored(new Vector4(1, 1, 1, 0.25f), $"@{identity.WorldName}");
             }
             ImGui.PopStyleVar();
 

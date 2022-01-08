@@ -1,20 +1,18 @@
-﻿using Dalamud.Game.ClientState.Objects.Enums;
-using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using Dalamud.Logging;
 using Lumina.Excel.GeneratedSheets;
-using PlayerTags.Configuration;
 using PlayerTags.Data;
-using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace PlayerTags.Features
 {
+    /// <summary>
+    /// The base of a feature that adds tags to UI elements.
+    /// </summary>
     public abstract class TagTargetFeature : IDisposable
     {
         private ActivityContext m_CurrentActivityContext;
@@ -90,21 +88,26 @@ namespace PlayerTags.Features
         }
 
         /// <summary>
-        /// Gets the payloads for the given game object tag. If the payloads don't yet exist then they will be created.
+        /// Gets the payloads for the given tag and game object depending on visibility conditions.
         /// </summary>
         /// <param name="gameObject">The game object to get payloads for.</param>
         /// <param name="tag">The tag config to get payloads for.</param>
         /// <returns>A list of payloads for the given tag.</returns>
-        protected IEnumerable<Payload> GetPayloads(Tag tag, GameObject? gameObject)
+        protected Payload[] GetPayloads(Tag tag, GameObject? gameObject)
         {
             if (!IsTagVisible(tag, gameObject))
             {
-                return Enumerable.Empty<Payload>();
+                return Array.Empty<Payload>();
             }
 
             return CreatePayloads(tag);
         }
 
+        /// <summary>
+        /// Creates payloads for the given tag.
+        /// </summary>
+        /// <param name="tag">The tag to create payloads for.</param>
+        /// <returns>The payloads for the given tag.</returns>
         private Payload[] CreatePayloads(Tag tag)
         {
             List<Payload> newPayloads = new List<Payload>();

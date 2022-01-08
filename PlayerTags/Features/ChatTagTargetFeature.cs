@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using Dalamud.Logging;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using System;
@@ -12,6 +11,9 @@ using System.Linq;
 
 namespace PlayerTags.Features
 {
+    /// <summary>
+    /// A feature that adds tags to chat messages.
+    /// </summary>
     public class ChatTagTargetFeature : TagTargetFeature
     {
         /// <summary>
@@ -169,7 +171,7 @@ namespace PlayerTags.Features
         }
 
         /// <summary>
-        /// Adds all configured tags to chat.
+        /// Adds all configured tags to a chat message.
         /// </summary>
         /// <param name="message">The message to change.</param>
         private void AddTagsToChat(SeString message)

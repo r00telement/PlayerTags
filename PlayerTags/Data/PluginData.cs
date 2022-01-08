@@ -2,11 +2,11 @@
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using PlayerTags.Configuration;
+using PlayerTags.GameInterface.ContextMenus;
 using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using XivCommon.Functions.ContextMenu;
 
 namespace PlayerTags.Data
 {
@@ -277,16 +277,17 @@ namespace PlayerTags.Data
             };
         }
 
-        public Identity? GetIdentity(ContextMenuOpenArgs contextMenuOpenArgs)
+        public Identity? GetIdentity(ContextMenuOpenedArgs contextMenuOpenedArgs)
         {
-            if (contextMenuOpenArgs.Text == null
-                || contextMenuOpenArgs.ObjectWorld == 0
-                || contextMenuOpenArgs.ObjectWorld == 65535)
+            if (contextMenuOpenedArgs.GameObjectContext == null
+                || contextMenuOpenedArgs.GameObjectContext.Name == null
+                || contextMenuOpenedArgs.GameObjectContext.WorldId == 0
+                || contextMenuOpenedArgs.GameObjectContext.WorldId == 65535)
             {
                 return null;
             }
 
-            return GetIdentity(contextMenuOpenArgs.Text!.TextValue, contextMenuOpenArgs.ObjectWorld);
+            return GetIdentity(contextMenuOpenedArgs.GameObjectContext.Name.TextValue, contextMenuOpenedArgs.GameObjectContext.WorldId);
         }
 
         public Identity GetIdentity(PlayerCharacter playerCharacter)
