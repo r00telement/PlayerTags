@@ -278,11 +278,11 @@ namespace PlayerTags.GameInterface.ContextMenus
             return gameContextMenuItems.ToArray();
         }
 
-        public unsafe void Write(OpenSubContextMenuItem? selectedOpenSubContextMenuItem, IEnumerable<ContextMenuItem> contextMenuItems, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
+        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
         {
             Print();
 
-            var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuItems.Count() * TotalDesiredAtkValuesPerContextMenuItem);
+            var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuOpenedArgs.ContextMenuItems.Count() * TotalDesiredAtkValuesPerContextMenuItem);
 
             // Allocate the new array. We have to do a little dance with the first 8 bytes which represents the array count
             const int arrayCountSize = 8;
@@ -311,11 +311,11 @@ namespace PlayerTags.GameInterface.ContextMenus
             m_AtkValueCount = newAtkValuesCount;
             m_AtkValues = newAtkValues;
 
-            // Set the title
-            if (selectedOpenSubContextMenuItem != null)
+            // Set the custom title if appropriate
+            if (contextMenuOpenedArgs.SelectedItem is OpenSubContextMenuItem)
             {
                 var titleAtkValue = &m_AtkValues[1];
-                fixed (byte* TtlePtr = selectedOpenSubContextMenuItem.Name.Encode().NullTerminate())
+                fixed (byte* TtlePtr = contextMenuOpenedArgs.SelectedItem.Name.Encode().NullTerminate())
                 {
                     atkValueSetString(titleAtkValue, TtlePtr);
                 }
@@ -324,7 +324,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             // Set the context menu item count
             const int contextMenuItemCountAtkValueIndex = 0;
             var contextMenuItemCountAtkValue = &m_AtkValues[contextMenuItemCountAtkValueIndex];
-            contextMenuItemCountAtkValue->UInt = (uint)contextMenuItems.Count();
+            contextMenuItemCountAtkValue->UInt = (uint)contextMenuOpenedArgs.ContextMenuItems.Count();
 
             // Clear the previous arrow flags
             var hasPreviousArrowAtkValue = &m_AtkValues[HasPreviousArrowFlagsIndex];
@@ -334,9 +334,9 @@ namespace PlayerTags.GameInterface.ContextMenus
             var subContextMenusFlagsAtkValue = &m_AtkValues[HasNextArrowFlagsIndex];
             subContextMenusFlagsAtkValue->UInt = 0;
 
-            for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuItems.Count(); ++contextMenuItemIndex)
+            for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuOpenedArgs.ContextMenuItems.Count(); ++contextMenuItemIndex)
             {
-                var contextMenuItem = contextMenuItems.ElementAt(contextMenuItemIndex);
+                var contextMenuItem = contextMenuOpenedArgs.ContextMenuItems.ElementAt(contextMenuItemIndex);
 
                 var contextMenuItemAtkValueBaseIndex = FirstContextMenuItemIndex + (contextMenuItemIndex * SequentialAtkValuesPerContextMenuItem);
 

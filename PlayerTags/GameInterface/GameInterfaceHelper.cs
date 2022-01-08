@@ -74,15 +74,18 @@ namespace PlayerTags.GameInterface
             return true;
         }
 
-        public static IntPtr PluginAllocate(SeString seString)
+        public static IntPtr PluginAllocate(byte[] bytes)
         {
-            var bytes = seString.Encode();
-
             IntPtr pointer = Marshal.AllocHGlobal(bytes.Length + 1);
             Marshal.Copy(bytes, 0, pointer, bytes.Length);
             Marshal.WriteByte(pointer, bytes.Length, 0);
 
             return pointer;
+        }
+
+        public static IntPtr PluginAllocate(SeString seString)
+        {
+            return PluginAllocate(seString.Encode());
         }
 
         public static void PluginFree(ref IntPtr ptr)

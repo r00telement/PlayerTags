@@ -4,12 +4,12 @@ namespace PlayerTags.GameInterface.ContextMenus
 {
     public class CustomContextMenuItem : ContextMenuItem
     {
-        public CustomContextMenuItemSelectedDelegate CustomAction { get; }
+        public CustomContextMenuItemSelectedDelegate ItemSelected { get; }
 
-        internal CustomContextMenuItem(SeString name, CustomContextMenuItemSelectedDelegate customAction)
+        internal CustomContextMenuItem(SeString name, CustomContextMenuItemSelectedDelegate itemSelected)
             : base(name)
         {
-            CustomAction = customAction;
+            ItemSelected = itemSelected;
         }
     }
 }

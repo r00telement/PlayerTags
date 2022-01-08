@@ -7,6 +7,7 @@ using Dalamud.Logging;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace PlayerTags.GameInterface.Nameplates
 {
@@ -97,34 +98,38 @@ namespace PlayerTags.GameInterface.Nameplates
                         isTitleAboveName,
                         iconId);
 
-                    var beforeNameHashCode = playerNameplateUpdatedArgs.Name.GetHashCode();
-                    var beforeTitleHashCode = playerNameplateUpdatedArgs.Title.GetHashCode();
-                    var beforeFreeCompanyHashCode = playerNameplateUpdatedArgs.FreeCompany.GetHashCode();
+                    byte[] beforeNameBytes = playerNameplateUpdatedArgs.Name.Encode();
+                    byte[] beforeTitleBytes = playerNameplateUpdatedArgs.Title.Encode();
+                    byte[] beforeFreeCompanyBytes = playerNameplateUpdatedArgs.FreeCompany.Encode();
 
                     PlayerNameplateUpdated?.Invoke(playerNameplateUpdatedArgs);
 
+                    byte[] afterNameBytes = playerNameplateUpdatedArgs.Name.Encode();
+                    byte[] afterTitleBytes = playerNameplateUpdatedArgs.Title.Encode();
+                    byte[] afterFreeCompanyBytes = playerNameplateUpdatedArgs.FreeCompany.Encode();
+
                     IntPtr newNamePtr = namePtr;
-                    bool hasNameChanged = beforeNameHashCode != playerNameplateUpdatedArgs.Name.GetHashCode();
+                    bool hasNameChanged = !beforeNameBytes.SequenceEqual(afterNameBytes);
                     if (hasNameChanged)
                     {
-                        newNamePtr = GameInterfaceHelper.PluginAllocate(playerNameplateUpdatedArgs.Name);
+                        newNamePtr = GameInterfaceHelper.PluginAllocate(afterNameBytes);
                     }
 
                     IntPtr newTitlePtr = titlePtr;
-                    bool hasTitleChanged = beforeTitleHashCode != playerNameplateUpdatedArgs.Title.GetHashCode();
+                    bool hasTitleChanged = !beforeTitleBytes.SequenceEqual(afterTitleBytes);
                     if (hasTitleChanged)
                     {
-                        newTitlePtr = GameInterfaceHelper.PluginAllocate(playerNameplateUpdatedArgs.Title);
+                        newTitlePtr = GameInterfaceHelper.PluginAllocate(afterTitleBytes);
                     }
 
                     IntPtr newFreeCompanyPtr = freeCompanyPtr;
-                    bool hasFreeCompanyChanged = beforeFreeCompanyHashCode != playerNameplateUpdatedArgs.FreeCompany.GetHashCode();
+                    bool hasFreeCompanyChanged = !beforeFreeCompanyBytes.SequenceEqual(afterFreeCompanyBytes);
                     if (hasFreeCompanyChanged)
                     {
-                        newFreeCompanyPtr = GameInterfaceHelper.PluginAllocate(playerNameplateUpdatedArgs.FreeCompany);
+                        newFreeCompanyPtr = GameInterfaceHelper.PluginAllocate(afterFreeCompanyBytes);
                     }
 
-                    var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, playerNameplateUpdatedArgs.IsTitleAboveName, playerNameplateUpdatedArgs.IsTitleVisible, newNamePtr, newTitlePtr, newFreeCompanyPtr, playerNameplateUpdatedArgs.IconId);
+                    var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, playerNameplateUpdatedArgs.IsTitleAboveName, playerNameplateUpdatedArgs.IsTitleVisible, newTitlePtr, newNamePtr, newFreeCompanyPtr, playerNameplateUpdatedArgs.IconId);
 
                     if (hasNameChanged)
                     {

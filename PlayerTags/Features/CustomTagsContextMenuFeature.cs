@@ -9,6 +9,9 @@ using System.Linq;
 
 namespace PlayerTags.Features
 {
+    /// <summary>
+    /// A feature that adds options for the management of custom tags to context menus.
+    /// </summary>
     public class CustomTagsContextMenuFeature : IDisposable
     {
         private string?[] SupportedAddonNames = new string?[]
@@ -62,47 +65,6 @@ namespace PlayerTags.Features
 
         private void ContextMenuHooks_ContextMenuOpened(ContextMenuOpenedArgs contextMenuOpenedArgs)
         {
-            if (contextMenuOpenedArgs.GameObjectContext != null)
-            {
-                PluginLog.Debug($"ContextMenuHooks_ContextMenuOpened   {contextMenuOpenedArgs.GameObjectContext?.Id}   {contextMenuOpenedArgs.GameObjectContext?.ContentIdLower}   '{contextMenuOpenedArgs.GameObjectContext?.Name}'   {contextMenuOpenedArgs.GameObjectContext?.WorldId}");
-            }
-
-            if (contextMenuOpenedArgs.ItemContext != null)
-            {
-                PluginLog.Debug($"ContextMenuHooks_ContextMenuOpened   {contextMenuOpenedArgs.ItemContext?.Id}   {contextMenuOpenedArgs.ItemContext?.Count}   {contextMenuOpenedArgs.ItemContext?.IsHighQuality}");
-            }
-
-            contextMenuOpenedArgs.ContextMenuItems.Add(new CustomContextMenuItem("Root1", (itemSelectedArgs =>
-            {
-                PluginLog.Debug("Executed Root1");
-            })));
-
-            contextMenuOpenedArgs.ContextMenuItems.Add(new OpenSubContextMenuItem("Root2", (subContextMenuOpenedArgs =>
-            {
-                PluginLog.Debug("Executed Root2");
-
-                List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
-                newContextMenuItems.Add(new OpenSubContextMenuItem("Inner1", (subContextMenuOpenedArgs2 =>
-                {
-                    PluginLog.Debug("Executed Inner1");
-
-                    List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
-                    newContextMenuItems.Add(new CustomContextMenuItem("Inner3", (itemSelectedArgs =>
-                    {
-                        PluginLog.Debug("Executed Inner3");
-                    })));
-
-                    subContextMenuOpenedArgs2.ContextMenuItems.InsertRange(0, newContextMenuItems);
-                })));
-
-                newContextMenuItems.Add(new CustomContextMenuItem("Inner2", (itemSelectedArgs =>
-                {
-                    PluginLog.Debug("Executed Inner2");
-                })));
-
-                subContextMenuOpenedArgs.ContextMenuItems.InsertRange(0, newContextMenuItems);
-            })));
-
             if (!m_PluginConfiguration.IsCustomTagsContextMenuEnabled || !SupportedAddonNames.Contains(contextMenuOpenedArgs.ParentAddonName))
             {
                 return;

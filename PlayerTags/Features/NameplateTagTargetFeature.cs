@@ -97,7 +97,7 @@ namespace PlayerTags.Features
 
         private void Nameplate_PlayerNameplateUpdated(PlayerNameplateUpdatedArgs args)
         {
-            var beforeTitleHashCode = args.Title.GetHashCode();
+            var beforeTitleBytes = args.Title.Encode();
             AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany/*, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged*/);
 
             if (m_PluginConfiguration.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
@@ -122,7 +122,7 @@ namespace PlayerTags.Features
             }
             else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.WhenHasTags)
             {
-                bool hasTitleChanged = beforeTitleHashCode != args.Title.GetHashCode();
+                bool hasTitleChanged = !beforeTitleBytes.SequenceEqual(args.Title.Encode());
                 args.IsTitleVisible = hasTitleChanged;
             }
 
@@ -132,7 +132,6 @@ namespace PlayerTags.Features
             else if (m_PluginConfiguration.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Never)
             {
                 args.FreeCompany.Payloads.Clear();
-                //isFreeCompanyChanged = true;
             }
         }
 

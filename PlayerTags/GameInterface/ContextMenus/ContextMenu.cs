@@ -121,20 +121,20 @@ namespace PlayerTags.GameInterface.ContextMenus
         private delegate IntPtr GetAddonByIdDelegate_Unmanaged(IntPtr raptureAtkUnitManager, ushort id);
         private readonly GetAddonByIdDelegate_Unmanaged? m_GetAddonById;
 
-        private delegate byte OpenSubContextMenuDelegate_Unmanaged(IntPtr agent);
+        private delegate bool OpenSubContextMenuDelegate_Unmanaged(IntPtr agent);
         private readonly OpenSubContextMenuDelegate_Unmanaged? m_OpenSubContextMenu;
 
         private delegate IntPtr ContextMenuOpeningDelegate_Unmanaged(IntPtr a1, IntPtr a2, IntPtr a3, uint a4, IntPtr a5, IntPtr agent, IntPtr a7, ushort a8);
         private Hook<ContextMenuOpeningDelegate_Unmanaged>? m_ContextMenuOpeningHook;
 
-        private unsafe delegate byte ContextMenuOpenedDelegate_Unmanaged(IntPtr addon, int menuSize, AtkValue* atkValueArgs);
+        private unsafe delegate bool ContextMenuOpenedDelegate_Unmanaged(IntPtr addon, int menuSize, AtkValue* atkValueArgs);
         private Hook<ContextMenuOpenedDelegate_Unmanaged>? m_ContextMenuOpenedHook;
         private Hook<ContextMenuOpenedDelegate_Unmanaged>? m_SubContextMenuOpenedHook;
 
-        private delegate byte ContextMenuItemSelectedDelegate_Unmanaged(IntPtr addon, int index, byte a3);
+        private delegate bool ContextMenuItemSelectedDelegate_Unmanaged(IntPtr addon, int index, byte a3);
         private Hook<ContextMenuItemSelectedDelegate_Unmanaged>? m_ContextMenuItemSelectedHook;
 
-        private delegate byte SubContextMenuOpeningDelegate_Unmanaged(IntPtr agent);
+        private delegate bool SubContextMenuOpeningDelegate_Unmanaged(IntPtr agent);
         private Hook<SubContextMenuOpeningDelegate_Unmanaged>? m_SubContextMenuOpeningHook;
 
         private delegate IntPtr OpenInventoryContextMenuDelegate_Unmanaged(IntPtr agent, byte hasTitle, byte zero);
@@ -150,8 +150,8 @@ namespace PlayerTags.GameInterface.ContextMenus
         private IntPtr m_CurrentContextMenuAgent;
         private IntPtr m_CurrentSubContextMenuTitle;
 
-        private ContextMenuOpenedArgs? m_ContextMenuOpenedArgs;
-        private OpenSubContextMenuItem? m_OpenSubContextMenuItem;
+        private ContextMenuItem? m_CurrentSelectedItem;
+        private ContextMenuOpenedArgs? m_CurrentContextMenuOpenedArgs;
 
         /// <summary>
         /// Occurs when a context menu is opened by the game.
@@ -279,12 +279,12 @@ namespace PlayerTags.GameInterface.ContextMenus
             return m_ContextMenuOpeningHook!.Original(a1, a2, a3, a4, a5, agent, a7, a8);
         }
 
-        private unsafe byte ContextMenuOpenedDetour(IntPtr addon, int atkValueCount, AtkValue* atkValues)
+        private unsafe bool ContextMenuOpenedDetour(IntPtr addon, int atkValueCount, AtkValue* atkValues)
         {
             PluginLog.Debug($"ContextMenuOpenedDetour");
             if (m_ContextMenuOpenedHook == null)
             {
-                return 0;
+                return false;
             }
 
             var addonContext = (AddonContext*)addon;
@@ -306,7 +306,7 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         private unsafe void ContextMenuOpenedImplementation(IntPtr addon, ref int atkValueCount, ref AtkValue* atkValues)
         {
-            PluginLog.Debug($"ContextMenuOpenedImplementation");
+            PluginLog.Debug($"ContextMenuOpenedImplementation   {m_CurrentSelectedItem}");
 
             if (m_AtkValueChangeType == null
                 || m_AtkValueSetString == null
@@ -316,19 +316,21 @@ namespace PlayerTags.GameInterface.ContextMenus
                 return;
             }
 
-            ContextMenuReaderWriter contextMenuReaderWriter = new ContextMenuReaderWriter(m_CurrentContextMenuAgent, atkValueCount, atkValues);
-
-            // Read the context menu items from the game, then allow subscribers to modify them
-            if (m_ContextMenuOpenedArgs == null)
+            ContextMenuOpenedDelegate contextMenuOpenedDelegate = ContextMenuOpened;
+            if (m_CurrentSelectedItem is OpenSubContextMenuItem openSubContextMenuItem)
             {
-                m_ContextMenuOpenedArgs = NotifyContextMenuOpened(addon, m_CurrentContextMenuAgent, ContextMenuOpened, contextMenuReaderWriter.Read());
-                if (m_ContextMenuOpenedArgs == null)
-                {
-                    return;
-                }
+                contextMenuOpenedDelegate = openSubContextMenuItem.OpenedAction;
             }
 
-            contextMenuReaderWriter.Write(null, m_ContextMenuOpenedArgs.ContextMenuItems, m_AtkValueChangeType, m_AtkValueSetString);
+            // Read the context menu items from the game, then allow subscribers to modify them
+            ContextMenuReaderWriter contextMenuReaderWriter = new ContextMenuReaderWriter(m_CurrentContextMenuAgent, atkValueCount, atkValues);
+            m_CurrentContextMenuOpenedArgs = NotifyContextMenuOpened(addon, m_CurrentContextMenuAgent, m_CurrentSelectedItem, contextMenuOpenedDelegate, contextMenuReaderWriter.Read());
+            if (m_CurrentContextMenuOpenedArgs == null)
+            {
+                return;
+            }
+
+            contextMenuReaderWriter.Write(m_CurrentContextMenuOpenedArgs, m_AtkValueChangeType, m_AtkValueSetString);
 
             // Update the addon
             var addonContext = (AddonContext*)addon;
@@ -336,17 +338,17 @@ namespace PlayerTags.GameInterface.ContextMenus
             atkValues = *(&addonContext->AtkValues) = contextMenuReaderWriter.AtkValues;
         }
 
-        private byte SubContextMenuOpeningDetour(IntPtr agent)
+        private bool SubContextMenuOpeningDetour(IntPtr agent)
         {
             PluginLog.Debug($"SubContextMenuOpeningDetour");
             if (m_SubContextMenuOpeningHook == null)
             {
-                return 0;
+                return false;
             }
 
             if (SubContextMenuOpeningImplementation(agent))
             {
-                return 0x0;
+                return true;
             }
 
             return m_SubContextMenuOpeningHook.Original(agent);
@@ -354,26 +356,15 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         private unsafe bool SubContextMenuOpeningImplementation(IntPtr agent)
         {
-            PluginLog.Debug($"SubContextMenuOpeningImplementation   {m_OpenSubContextMenuItem}");
+            PluginLog.Debug($"SubContextMenuOpeningImplementation   {m_CurrentSelectedItem}");
 
             if (m_OpenSubContextMenu == null
                 || m_OpenInventoryContextMenu == null
                 || m_AtkValueChangeType == null
-                || m_OpenSubContextMenuItem == null)
+                || !(m_CurrentSelectedItem is OpenSubContextMenuItem))
             {
                 return false;
             }
-
-            // This isn't our own sub context menu -- don't go any further
-            //if (m_OpenSubContextMenuItem == null)
-            //{
-            //    return false;
-            //}
-
-            //var a = (AgentContext*)agent;
-            //var s = a->SelectedIndex;
-
-            //*(&a->SelectedIndex) = 0xff;
 
             // The important things to make this work are:
             // 1. Temporary allocate a sub context menu title
@@ -398,8 +389,6 @@ namespace PlayerTags.GameInterface.ContextMenus
                 *(&agentContext->SubContextMenuTitle) = (byte*)m_CurrentSubContextMenuTitle;
             }
 
-            //*(&a->SelectedIndex) = s;
-
             var atkValues = &agentContext->ItemData->AtkValues;
 
             // Let the game know the context menu will have at least 1 item in it
@@ -412,22 +401,17 @@ namespace PlayerTags.GameInterface.ContextMenus
             return true;
         }
 
-        private unsafe byte SubContextMenuOpenedDetour(IntPtr addon, int atkValueCount, AtkValue* atkValues)
+        private unsafe bool SubContextMenuOpenedDetour(IntPtr addon, int atkValueCount, AtkValue* atkValues)
         {
             PluginLog.Debug($"SubContextMenuOpenedDetour");
             if (m_SubContextMenuOpenedHook == null)
             {
-                return 0;
+                return false;
             }
-
-            var addonContext = (AddonContext*)addon;
-            PluginLog.Debug($"SubContextMenuOpenedDetour   addonContext->IsInitialMenu={addonContext->IsInitialMenu}");
-
-            ContextMenuReaderWriter.Print(atkValueCount, atkValues);
 
             try
             {
-                SubContextMenuOpenedImplementation(addon, ref atkValueCount, ref atkValues);
+                ContextMenuOpenedImplementation(addon, ref atkValueCount, ref atkValues);
             }
             catch (Exception ex)
             {
@@ -437,57 +421,16 @@ namespace PlayerTags.GameInterface.ContextMenus
             return m_SubContextMenuOpenedHook.Original(addon, atkValueCount, atkValues);
         }
 
-        private unsafe void SubContextMenuOpenedImplementation(IntPtr addon, ref int atkValueCount, ref AtkValue* atkValues)
-        {
-            PluginLog.Debug($"SubContextMenuOpenedImplementation");
-
-            if (m_AtkValueSetString == null
-                || m_AtkValueChangeType == null
-                || ContextMenuOpened == null)
-            {
-                return;
-            }
-
-            ContextMenuReaderWriter contextMenuReader = new ContextMenuReaderWriter(m_CurrentContextMenuAgent, atkValueCount, atkValues);
-
-            if (m_OpenSubContextMenuItem != null)
-            {
-                m_ContextMenuOpenedArgs = NotifyContextMenuOpened(addon, m_CurrentContextMenuAgent, m_OpenSubContextMenuItem.OpenedAction, contextMenuReader.Read());
-                if (m_ContextMenuOpenedArgs == null)
-                {
-                    return;
-                }
-            }
-            else
-            {
-                m_ContextMenuOpenedArgs = NotifyContextMenuOpened(addon, m_CurrentContextMenuAgent, ContextMenuOpened, contextMenuReader.Read());
-                if (m_ContextMenuOpenedArgs == null)
-                {
-                    return;
-                }
-            }
-
-            contextMenuReader.Write(m_OpenSubContextMenuItem, m_ContextMenuOpenedArgs.ContextMenuItems, m_AtkValueChangeType, m_AtkValueSetString);
-
-            // Update the addon
-            var addonContext = (AddonContext*)addon;
-            atkValueCount = *(&addonContext->AtkValuesCount) = (ushort)contextMenuReader.AtkValueCount;
-            atkValues = *(&addonContext->AtkValues) = contextMenuReader.AtkValues;
-        }
-
-        private unsafe ContextMenuOpenedArgs? NotifyContextMenuOpened(IntPtr addon, IntPtr agent, ContextMenuOpenedDelegate contextMenuOpenedDelegate, IEnumerable<ContextMenuItem> initialContextMenuItems)
+        private unsafe ContextMenuOpenedArgs? NotifyContextMenuOpened(IntPtr addon, IntPtr agent, ContextMenuItem? selectedContextMenuItem, ContextMenuOpenedDelegate contextMenuOpenedDelegate, IEnumerable<ContextMenuItem> initialContextMenuItems)
         {
             var parentAddonName = GetParentAddonName(addon);
 
-            ContextMenuOpenedArgs contextMenuOpenedArgs;
+            ItemContext? itemContext = null;
+            GameObjectContext? gameObjectContext = null;
             if (IsInventoryContext(agent))
             {
                 var agentInventoryContext = (AgentInventoryContext*)agent;
-
-                contextMenuOpenedArgs = new ContextMenuOpenedArgs(addon, agent, parentAddonName, initialContextMenuItems)
-                {
-                    ItemContext = new ItemContext(agentInventoryContext->ItemId, agentInventoryContext->ItemCount, agentInventoryContext->IsHighQuality)
-                };
+                itemContext = new ItemContext(agentInventoryContext->ItemId, agentInventoryContext->ItemCount, agentInventoryContext->IsHighQuality);
             }
             else
             {
@@ -499,11 +442,15 @@ namespace PlayerTags.GameInterface.ContextMenus
                     objectName = GameInterfaceHelper.ReadSeString((IntPtr)agentContext->ObjectName.StringPtr);
                 }
 
-                contextMenuOpenedArgs = new ContextMenuOpenedArgs(addon, agent, parentAddonName, initialContextMenuItems)
-                {
-                    GameObjectContext = new GameObjectContext(agentContext->ObjectId, agentContext->ObjectContentIdLower, objectName, agentContext->ObjectWorldId)
-                };
+                gameObjectContext = new GameObjectContext(agentContext->ObjectId, agentContext->ObjectContentIdLower, objectName, agentContext->ObjectWorldId);
             }
+
+            var contextMenuOpenedArgs = new ContextMenuOpenedArgs(addon, agent, parentAddonName, initialContextMenuItems)
+            {
+                SelectedItem = selectedContextMenuItem,
+                ItemContext = itemContext,
+                GameObjectContext = gameObjectContext
+            };
 
             try
             {
@@ -529,12 +476,12 @@ namespace PlayerTags.GameInterface.ContextMenus
             return contextMenuOpenedArgs;
         }
 
-        private unsafe byte ContextMenuItemSelectedDetour(IntPtr addon, int index, byte a3)
+        private unsafe bool ContextMenuItemSelectedDetour(IntPtr addon, int index, byte a3)
         {
-            PluginLog.Debug($"ContextMenuItemSelectedDetour");
+            PluginLog.Debug($"ContextMenuItemSelectedDetour   index={index}");
             if (m_ContextMenuItemSelectedHook == null)
             {
-                return 0;
+                return false;
             }
 
             try
@@ -553,10 +500,10 @@ namespace PlayerTags.GameInterface.ContextMenus
         {
             PluginLog.Debug($"ContextMenuItemSelectedImplementation   index={index}");
 
-            if (m_ContextMenuOpenedArgs == null)
+            if (m_CurrentContextMenuOpenedArgs == null)
             {
-                m_ContextMenuOpenedArgs = null;
-                m_OpenSubContextMenuItem = null;
+                m_CurrentContextMenuOpenedArgs = null;
+                m_CurrentSelectedItem = null;
                 return;
             }
                     
@@ -564,39 +511,31 @@ namespace PlayerTags.GameInterface.ContextMenus
             var addonContext = (AddonContext*)addon;
             ContextMenuReaderWriter.Print(addonContext->AtkValuesCount, addonContext->AtkValues);
 
-            var contextMenuItem = m_ContextMenuOpenedArgs.ContextMenuItems.ElementAtOrDefault(index);
+            var contextMenuItem = m_CurrentContextMenuOpenedArgs.ContextMenuItems.ElementAtOrDefault(index);
             if (contextMenuItem == null)
             {
-                m_ContextMenuOpenedArgs = null;
-                m_OpenSubContextMenuItem = null;
+                m_CurrentContextMenuOpenedArgs = null;
+                m_CurrentSelectedItem = null;
                 return;
             }
 
-            if (contextMenuItem is OpenSubContextMenuItem openSubContextMenuItem)
+            if (contextMenuItem is CustomContextMenuItem customContextMenuItem)
             {
-                m_OpenSubContextMenuItem = openSubContextMenuItem;
-            }
-            else if (contextMenuItem is CustomContextMenuItem customContextMenuItem)
-            {
-                var args = new CustomContextMenuItemSelectedArgs(m_ContextMenuOpenedArgs, customContextMenuItem);
-
                 try
                 {
-                    customContextMenuItem.CustomAction(args);
+                    var customContextMenuItemSelectedArgs = new CustomContextMenuItemSelectedArgs(m_CurrentContextMenuOpenedArgs, customContextMenuItem);
+                    customContextMenuItem.ItemSelected(customContextMenuItemSelectedArgs);
                 }
                 catch (Exception ex)
                 {
                     PluginLog.LogError(ex, "ContextMenuItemSelectedImplementation");
                 }
+            }
 
-                m_ContextMenuOpenedArgs = null;
-                m_OpenSubContextMenuItem = null;
-            }
-            else
-            {
-                m_ContextMenuOpenedArgs = null;
-                m_OpenSubContextMenuItem = null;
-            }
+            m_CurrentSelectedItem = contextMenuItem;// is OpenSubContextMenuItem ? contextMenuItem : null;
+            m_CurrentContextMenuOpenedArgs = null;
+
+            PluginLog.Debug($"ContextMenuItemSelectedImplementation   index={index} dddddddddddddd");
         }
 
         private void InventoryContextMenuEvent30Detour(IntPtr agent, IntPtr a2, int a3, int a4, short a5)
