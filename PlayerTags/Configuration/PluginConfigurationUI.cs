@@ -71,6 +71,7 @@ namespace PlayerTags.Configuration
                         DrawHeading(Strings.Loc_Static_Experimental);
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => m_PluginConfiguration.Save(m_PluginData));
                         DrawCheckbox(nameof(m_PluginConfiguration.IsLinkSelfInChatEnabled), true, ref m_PluginConfiguration.IsLinkSelfInChatEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsApplyTagsToAllChatMessagesEnabled), true, ref m_PluginConfiguration.IsApplyTagsToAllChatMessagesEnabled, () => m_PluginConfiguration.Save(m_PluginData));
 
                         ImGui.EndTabItem();
                     }

@@ -187,6 +187,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Apply tags to all chat messages.
+        /// </summary>
+        public static string Loc_IsApplyTagsToAllChatMessagesEnabled {
+            get {
+                return ResourceManager.GetString("Loc_IsApplyTagsToAllChatMessagesEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Applies tags to all chat messages, including non-social messages and messages you may not be able to see..
+        /// </summary>
+        public static string Loc_IsApplyTagsToAllChatMessagesEnabled_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsApplyTagsToAllChatMessagesEnabled_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Context menu integration.
         /// </summary>
         public static string Loc_IsCustomTagsContextMenuEnabled {
@@ -1267,7 +1285,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This plugin can modify nameplates and chat. When combined with other plugins that modify these things, you are likely to see unexpected behavior..
+        ///   Looks up a localized string similar to This plugin can modify nameplates and chat. When combined with other plugins that modify these things, you are likely to see unexpected behavior. The load order of your plugins may make a difference..
         /// </summary>
         public static string Loc_Static_WarningMessage {
             get {

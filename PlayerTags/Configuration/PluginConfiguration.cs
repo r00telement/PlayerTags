@@ -28,6 +28,7 @@ namespace PlayerTags.Configuration
         public bool IsPlayersTabEnemiesVisible = true;
         public bool IsPlayersTabOthersVisible = false;
         public bool IsLinkSelfInChatEnabled = false;
+        public bool IsApplyTagsToAllChatMessagesEnabled = true;
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();
