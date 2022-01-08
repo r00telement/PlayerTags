@@ -300,7 +300,10 @@ namespace PlayerTags.GameInterface.ContextMenus
             Buffer.MemoryCopy(m_AtkValues, newAtkValues, newAtkValuesArraySize - arrayCountSize, (long)sizeof(AtkValue) * FirstContextMenuItemIndex);
 
             // Free the old array
-            IMemorySpace.Free((void*)((IntPtr)(m_AtkValues) - arrayCountSize), arrayCountSize + (ulong)sizeof(AtkValue) * *(ulong*)((IntPtr)m_AtkValues - 8));
+            IntPtr oldArray = (IntPtr)m_AtkValues - arrayCountSize;
+            ulong oldArrayCount = *(ulong*)oldArray;
+            ulong oldArraySize = arrayCountSize + ((ulong)sizeof(AtkValue) * oldArrayCount);
+            GameInterfaceHelper.GameFree(ref oldArray, oldArraySize);
 
             // Set the array count
             *(ulong*)newAtkValuesArray = (ulong)newAtkValuesCount;
