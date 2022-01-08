@@ -194,7 +194,6 @@ namespace PlayerTags.GameInterface.ContextMenus
                 return;
             }
 
-
             if (m_PluginAddressResolver.AtkValueChangeTypePtr.HasValue)
             {
                 m_AtkValueChangeType = Marshal.GetDelegateForFunctionPointer<AtkValueChangeTypeDelegate_Unmanaged>(m_PluginAddressResolver.AtkValueChangeTypePtr.Value);
@@ -505,7 +504,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 SeString objectName;
                 unsafe
                 {
-                    objectName = Helper.ReadSeString((IntPtr)agentContext->ObjectName.StringPtr);
+                    objectName = GameInterfaceHelper.ReadSeString((IntPtr)agentContext->ObjectName.StringPtr);
                 }
 
                 contextMenuOpenedArgs = new ContextMenuOpenedArgs(addon, agent, parentAddonName, initialContextMenuItems)
@@ -624,16 +623,6 @@ namespace PlayerTags.GameInterface.ContextMenus
             m_InventoryContextMenuEvent30Hook.Original(agent, a2, a3, a4, a5);
         }
 
-        private void SetFlag(ref uint mask, int itemIndex, bool value)
-        {
-            mask &= ~((uint)1 << itemIndex);
-
-            if (value)
-            {
-                mask |= (uint)(1 << itemIndex);
-            }
-        }
-
         private unsafe string? GetParentAddonName(IntPtr addon)
         {
             if (m_GetAddonById == null)
@@ -650,7 +639,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             var atkStage = AtkStage.GetSingleton();
             var parentAddonPtr = m_GetAddonById((IntPtr)atkStage->RaptureAtkUnitManager, parentAddonId);
 
-            return Helper.ReadString(parentAddonPtr + 8);
+            return GameInterfaceHelper.ReadString(parentAddonPtr + 8);
         }
 
         private unsafe bool IsInventoryContext(IntPtr agent)

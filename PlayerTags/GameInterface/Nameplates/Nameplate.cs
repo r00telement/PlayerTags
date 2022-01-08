@@ -88,57 +88,57 @@ namespace PlayerTags.GameInterface.Nameplates
                 PlayerCharacter? playerCharacter = GetNameplateGameObject<PlayerCharacter>(playerNameplateObjectPtr);
                 if (playerCharacter != null)
                 {
-                    PlayerNameplateUpdatedArgs playerNameplateOpenedArgs = new PlayerNameplateUpdatedArgs(
+                    PlayerNameplateUpdatedArgs playerNameplateUpdatedArgs = new PlayerNameplateUpdatedArgs(
                         playerCharacter,
-                        Helper.ReadSeString(namePtr),
-                        Helper.ReadSeString(titlePtr),
-                        Helper.ReadSeString(freeCompanyPtr),
+                        GameInterfaceHelper.ReadSeString(namePtr),
+                        GameInterfaceHelper.ReadSeString(titlePtr),
+                        GameInterfaceHelper.ReadSeString(freeCompanyPtr),
                         isTitleVisible,
                         isTitleAboveName,
                         iconId);
 
-                    var beforeNameHashCode = playerNameplateOpenedArgs.Name.GetHashCode();
-                    var beforeTitleHashCode = playerNameplateOpenedArgs.Title.GetHashCode();
-                    var beforeFreeCompanyHashCode = playerNameplateOpenedArgs.FreeCompany.GetHashCode();
+                    var beforeNameHashCode = playerNameplateUpdatedArgs.Name.GetHashCode();
+                    var beforeTitleHashCode = playerNameplateUpdatedArgs.Title.GetHashCode();
+                    var beforeFreeCompanyHashCode = playerNameplateUpdatedArgs.FreeCompany.GetHashCode();
 
-                    PlayerNameplateUpdated?.Invoke(playerNameplateOpenedArgs);
+                    PlayerNameplateUpdated?.Invoke(playerNameplateUpdatedArgs);
 
                     IntPtr newNamePtr = namePtr;
-                    bool hasNameChanged = beforeNameHashCode != playerNameplateOpenedArgs.Name.GetHashCode();
+                    bool hasNameChanged = beforeNameHashCode != playerNameplateUpdatedArgs.Name.GetHashCode();
                     if (hasNameChanged)
                     {
-                        newNamePtr = Helper.Allocate(playerNameplateOpenedArgs.Name);
+                        newNamePtr = GameInterfaceHelper.Allocate(playerNameplateUpdatedArgs.Name);
                     }
 
                     IntPtr newTitlePtr = titlePtr;
-                    bool hasTitleChanged = beforeTitleHashCode != playerNameplateOpenedArgs.Title.GetHashCode();
+                    bool hasTitleChanged = beforeTitleHashCode != playerNameplateUpdatedArgs.Title.GetHashCode();
                     if (hasTitleChanged)
                     {
-                        newTitlePtr = Helper.Allocate(playerNameplateOpenedArgs.Title);
+                        newTitlePtr = GameInterfaceHelper.Allocate(playerNameplateUpdatedArgs.Title);
                     }
 
                     IntPtr newFreeCompanyPtr = freeCompanyPtr;
-                    bool hasFreeCompanyChanged = beforeFreeCompanyHashCode != playerNameplateOpenedArgs.FreeCompany.GetHashCode();
+                    bool hasFreeCompanyChanged = beforeFreeCompanyHashCode != playerNameplateUpdatedArgs.FreeCompany.GetHashCode();
                     if (hasFreeCompanyChanged)
                     {
-                        newFreeCompanyPtr = Helper.Allocate(playerNameplateOpenedArgs.FreeCompany);
+                        newFreeCompanyPtr = GameInterfaceHelper.Allocate(playerNameplateUpdatedArgs.FreeCompany);
                     }
 
-                    var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, isTitleAboveName, isTitleVisible, newNamePtr, newTitlePtr, newFreeCompanyPtr, iconId);
+                    var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, playerNameplateUpdatedArgs.IsTitleAboveName, playerNameplateUpdatedArgs.IsTitleVisible, newNamePtr, newTitlePtr, newFreeCompanyPtr, playerNameplateUpdatedArgs.IconId);
 
                     if (hasNameChanged)
                     {
-                        Helper.Free(ref newNamePtr);
+                        GameInterfaceHelper.Free(ref newNamePtr);
                     }
 
                     if (hasTitleChanged)
                     {
-                        Helper.Free(ref newTitlePtr);
+                        GameInterfaceHelper.Free(ref newTitlePtr);
                     }
 
                     if (hasFreeCompanyChanged)
                     {
-                        Helper.Free(ref newFreeCompanyPtr);
+                        GameInterfaceHelper.Free(ref newFreeCompanyPtr);
                     }
 
                     return result;

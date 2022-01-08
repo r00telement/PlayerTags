@@ -53,7 +53,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 {
                     try
                     {
-                        Helper.TryReadSeString((IntPtr)(&m_AtkValues[1])->String, out var str);
+                        GameInterfaceHelper.TryReadSeString((IntPtr)(&m_AtkValues[1])->String, out var str);
                         return str;
                     }
                     catch (Exception ex)
@@ -231,7 +231,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 {
                     continue;
                 }
-                var name = Helper.ReadSeString((IntPtr)nameAtkValue->String);
+                var name = GameInterfaceHelper.ReadSeString((IntPtr)nameAtkValue->String);
 
                 // Get the enabled state. Note that SE stores this as IsDisabled, NOT IsEnabled (those heathens)
                 var isEnabled = true;
@@ -448,7 +448,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                     || (int)atkValue->Type == 38
                     || (int)atkValue->Type == 8)
                 {
-                    if (Helper.TryReadSeString((IntPtr)atkValue->String, out var str))
+                    if (GameInterfaceHelper.TryReadSeString((IntPtr)atkValue->String, out var str))
                     {
                         value = str;
                     }

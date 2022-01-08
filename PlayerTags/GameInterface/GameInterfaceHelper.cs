@@ -1,13 +1,11 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
-using Dalamud.Logging;
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
 namespace PlayerTags.GameInterface
 {
-    public static class Helper
+    public static class GameInterfaceHelper
     {
         public static SeString ReadSeString(IntPtr ptr)
         {
