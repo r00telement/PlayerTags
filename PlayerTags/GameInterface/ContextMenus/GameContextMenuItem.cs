@@ -1,16 +1,26 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
-using System;
 
 namespace PlayerTags.GameInterface.ContextMenus
 {
+    /// <summary>
+    /// An item in a context menu that with a specific game action.
+    /// </summary>
     public class GameContextMenuItem : ContextMenuItem
     {
-        public byte Action { get; }
+        /// <summary>
+        /// The game action that will be handled when the item is selected.
+        /// </summary>
+        public byte ItemSelectedAction { get; }
 
-        public GameContextMenuItem(SeString name, byte action)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameContextMenuItem"/> class.
+        /// </summary>
+        /// <param name="name">The name of the item.</param>
+        /// <param name="itemSelectedAction">The game action that will be handled when the item is selected.</param>
+        public GameContextMenuItem(SeString name, byte itemSelectedAction)
             : base(name)
         {
-            Action = action;
+            ItemSelectedAction = itemSelectedAction;
         }
     }
 }

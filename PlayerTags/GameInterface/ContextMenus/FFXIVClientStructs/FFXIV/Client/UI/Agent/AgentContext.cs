@@ -16,9 +16,9 @@ namespace FFXIVClientStructs.FFXIV.Client.UI.Agent
         [FieldOffset(0xD08)] public byte* SubContextMenuTitle;
         [FieldOffset(0xD18)] public unsafe AgentContextItemData* ItemData;
         [FieldOffset(0xE08)] public Utf8String ObjectName;
-        [FieldOffset(0xEE0)] public uint ObjectContentIdLower;
-        [FieldOffset(0xEF0)] public uint ObjectId;
-        [FieldOffset(0xF00)] public ushort ObjectWorldId;
+        [FieldOffset(0xEE0)] public uint GameObjectContentIdLower;
+        [FieldOffset(0xEF0)] public uint GameObjectId;
+        [FieldOffset(0xF00)] public ushort GameObjectWorldId;
         [FieldOffset(0x1740)] public bool IsSubContextMenu;
     }
 }

@@ -319,7 +319,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             ContextMenuOpenedDelegate contextMenuOpenedDelegate = ContextMenuOpened;
             if (m_CurrentSelectedItem is OpenSubContextMenuItem openSubContextMenuItem)
             {
-                contextMenuOpenedDelegate = openSubContextMenuItem.OpenedAction;
+                contextMenuOpenedDelegate = openSubContextMenuItem.Opened;
             }
 
             // Read the context menu items from the game, then allow subscribers to modify them
@@ -442,7 +442,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                     objectName = GameInterfaceHelper.ReadSeString((IntPtr)agentContext->ObjectName.StringPtr);
                 }
 
-                gameObjectContext = new GameObjectContext(agentContext->ObjectId, agentContext->ObjectContentIdLower, objectName, agentContext->ObjectWorldId);
+                gameObjectContext = new GameObjectContext(agentContext->GameObjectId, agentContext->GameObjectContentIdLower, objectName, agentContext->GameObjectWorldId);
             }
 
             var contextMenuOpenedArgs = new ContextMenuOpenedArgs(addon, agent, parentAddonName, initialContextMenuItems)

@@ -65,7 +65,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
-        public int HasPreviousArrowFlagsIndex
+        public int HasPreviousIndicatorFlagsIndex
         {
             get
             {
@@ -78,7 +78,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
-        public int HasNextArrowFlagsIndex
+        public int HasNextIndicatorFlagsIndex
         {
             get
             {
@@ -254,25 +254,34 @@ namespace PlayerTags.GameInterface.ContextMenus
                 }
                 byte action = *(actions + contextMenuItemAtkValueBaseIndex);
 
-                // Get the has previous arrow flag
-                var hasPreviousArrowFlagsAtkValue = &m_AtkValues[HasPreviousArrowFlagsIndex];
-                var hasPreviousArrow = HasFlag(hasPreviousArrowFlagsAtkValue->UInt, contextMenuItemIndex);
+                // Get the has previous indicator flag
+                var hasPreviousIndicatorFlagsAtkValue = &m_AtkValues[HasPreviousIndicatorFlagsIndex];
+                var hasPreviousIndicator = HasFlag(hasPreviousIndicatorFlagsAtkValue->UInt, contextMenuItemIndex);
 
-                // Get the has next arrow flag
-                var hasNextArrowFlagsAtkValue = &m_AtkValues[HasNextArrowFlagsIndex];
-                var hasNextArrow = HasFlag(hasNextArrowFlagsAtkValue->UInt, contextMenuItemIndex);
+                // Get the has next indicator flag
+                var hasNextIndicatorlagsAtkValue = &m_AtkValues[HasNextIndicatorFlagsIndex];
+                var hasNextIndicator = HasFlag(hasNextIndicatorlagsAtkValue->UInt, contextMenuItemIndex);
+
+                ContextMenuItemIndicator indicator = ContextMenuItemIndicator.None;
+                if (hasPreviousIndicator)
+                {
+                    indicator = ContextMenuItemIndicator.Previous;
+                }
+                else if (hasNextIndicator)
+                {
+                    indicator = ContextMenuItemIndicator.Next;
+                }
 
                 var gameContextMenuItem = new GameContextMenuItem(name, action)
                 {
                     Agent = m_Agent,
                     IsEnabled = isEnabled,
-                    HasPreviousArrow = hasPreviousArrow,
-                    HasNextArrow = hasNextArrow
+                    Indicator = indicator
                 };
 
                 gameContextMenuItems.Add(gameContextMenuItem);
 
-                PluginLog.Debug($"Read   Name={gameContextMenuItem.Name}   Action={gameContextMenuItem.Action}   IsEnabled={gameContextMenuItem.IsEnabled}   HasPreviousArrow={gameContextMenuItem.HasPreviousArrow}   HasNextArrow={gameContextMenuItem.HasNextArrow}");
+                PluginLog.Debug($"Read   Name={gameContextMenuItem.Name}   Action={gameContextMenuItem.ItemSelectedAction}   IsEnabled={gameContextMenuItem.IsEnabled}   Indicator={gameContextMenuItem.Indicator}");
             }
 
             return gameContextMenuItems.ToArray();
@@ -327,12 +336,12 @@ namespace PlayerTags.GameInterface.ContextMenus
             contextMenuItemCountAtkValue->UInt = (uint)contextMenuOpenedArgs.ContextMenuItems.Count();
 
             // Clear the previous arrow flags
-            var hasPreviousArrowAtkValue = &m_AtkValues[HasPreviousArrowFlagsIndex];
-            hasPreviousArrowAtkValue->UInt = 0;
+            var hasPreviousIndicatorAtkValue = &m_AtkValues[HasPreviousIndicatorFlagsIndex];
+            hasPreviousIndicatorAtkValue->UInt = 0;
 
             // Clear the next arrow flags
-            var subContextMenusFlagsAtkValue = &m_AtkValues[HasNextArrowFlagsIndex];
-            subContextMenusFlagsAtkValue->UInt = 0;
+            var hasNextIndiactorFlagsAtkValue = &m_AtkValues[HasNextIndicatorFlagsIndex];
+            hasNextIndiactorFlagsAtkValue->UInt = 0;
 
             for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuOpenedArgs.ContextMenuItems.Count(); ++contextMenuItemIndex)
             {
@@ -357,7 +366,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 byte action = 0;
                 if (contextMenuItem is GameContextMenuItem gameContextMenuItem)
                 {
-                    action = gameContextMenuItem.Action;
+                    action = gameContextMenuItem.ItemSelectedAction;
                 }
                 else if (contextMenuItem is CustomContextMenuItem customContextMenuItem)
                 {
@@ -393,10 +402,16 @@ namespace PlayerTags.GameInterface.ContextMenus
                 }
                 *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = action;
 
-                SetFlag(ref hasPreviousArrowAtkValue->UInt, contextMenuItemIndex, contextMenuItem.HasPreviousArrow);
-                SetFlag(ref subContextMenusFlagsAtkValue->UInt, contextMenuItemIndex, contextMenuItem.HasNextArrow);
+                if (contextMenuItem.Indicator == ContextMenuItemIndicator.Previous)
+                {
+                    SetFlag(ref hasPreviousIndicatorAtkValue->UInt, contextMenuItemIndex, true);
+                }
+                else if (contextMenuItem.Indicator == ContextMenuItemIndicator.Next)
+                {
+                    SetFlag(ref hasNextIndiactorFlagsAtkValue->UInt, contextMenuItemIndex, true);
+                }
 
-                PluginLog.Debug($"Write   Name={contextMenuItem.Name}   Action={action}   IsEnabled={contextMenuItem.IsEnabled}   HasPreviousArrow={contextMenuItem.HasPreviousArrow}   HasNextArrow={contextMenuItem.HasNextArrow}");
+                PluginLog.Debug($"Write   Name={contextMenuItem.Name}   Action={action}   IsEnabled={contextMenuItem.IsEnabled}   Indicator={contextMenuItem.Indicator}");
             }
 
             Print();

@@ -3,18 +3,35 @@ using System;
 
 namespace PlayerTags.GameInterface.ContextMenus
 {
+    /// <summary>
+    /// An item in a context menu.
+    /// </summary>
     public abstract class ContextMenuItem
     {
+        /// <summary>
+        /// The name of the item.
+        /// </summary>
         public SeString Name { get; set; }
 
+        /// <summary>
+        /// Whether the item is enabled. When enabled, an item is selectable.
+        /// </summary>
         public bool IsEnabled { get; set; } = true;
 
-        public bool HasPreviousArrow { get; set; } = false;
+        /// <summary>
+        /// The indicator of the item.
+        /// </summary>
+        public ContextMenuItemIndicator Indicator { get; set; } = ContextMenuItemIndicator.None;
 
-        public bool HasNextArrow { get; set; } = false;
-
+        /// <summary>
+        /// The agent of the item.
+        /// </summary>
         internal IntPtr Agent { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContextMenuItem"/> class.
+        /// </summary>
+        /// <param name="name">The name of the item.</param>
         public ContextMenuItem(SeString name)
         {
             Name = name;

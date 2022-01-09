@@ -121,6 +121,7 @@ namespace PlayerTags.GameInterface
             }
 
             IMemorySpace.Free((void*)ptr, size);
+            ptr = IntPtr.Zero;
         }
     }
 }

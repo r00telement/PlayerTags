@@ -7,7 +7,7 @@ using System.Reflection;
 namespace PlayerTags
 {
     /// <summary>
-    /// Generates names based on an existing list of words.
+    /// Generates names based on existing lists of words.
     /// </summary>
     public static class RandomNameGenerator
     {
@@ -94,7 +94,7 @@ namespace PlayerTags
         }
 
         /// <summary>
-        /// Gets a deterministic hash code for the given string/
+        /// Gets a deterministic hash code for the given string.
         /// </summary>
         /// <param name="str">The string to hash.</param>
         /// <returns>A deterministic hash code.</returns>
