@@ -2,7 +2,6 @@
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Hooking;
 using Dalamud.Logging;
-using FFXIVClientStructs.FFXIV.Client.System.Memory;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
@@ -365,7 +364,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             {
                 return false;
             }
-
+        
             // The important things to make this work are:
             // 1. Temporary allocate a sub context menu title
             // 1. Temporarily increase the atk value count by 1 so the game knows to expect at least 1 context menu item

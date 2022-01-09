@@ -15,7 +15,7 @@ namespace FFXIVClientStructs.FFXIV.Client.UI.Agent
         [FieldOffset(0x604)] public bool IsHighQuality;
         [FieldOffset(0x670)] public unsafe byte SelectedIndex;
         [FieldOffset(0x690)] public byte* Unk1;
-        [FieldOffset(/*0xD08*/0x690 + 0x678)] public byte* SubContextMenuTitle;
+        [FieldOffset(0xD08)] public byte* SubContextMenuTitle;
         [FieldOffset(0x1740)] public bool IsSubContextMenu;
     }
 }

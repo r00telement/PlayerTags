@@ -1,6 +1,5 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Logging;
-using FFXIVClientStructs.FFXIV.Client.System.Memory;
 using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;

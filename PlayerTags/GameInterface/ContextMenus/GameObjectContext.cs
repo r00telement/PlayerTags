@@ -20,7 +20,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <summary>
         /// The name of the game object.
         /// </summary>
-        public SeString? Name { get; }
+        public SeString Name { get; }
 
         /// <summary>
         /// The world id of the game object.
