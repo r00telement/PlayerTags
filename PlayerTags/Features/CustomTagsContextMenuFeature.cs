@@ -65,7 +65,8 @@ namespace PlayerTags.Features
 
         private void ContextMenuHooks_ContextMenuOpened(ContextMenuOpenedArgs contextMenuOpenedArgs)
         {
-            if (!m_PluginConfiguration.IsCustomTagsContextMenuEnabled || !SupportedAddonNames.Contains(contextMenuOpenedArgs.ParentAddonName))
+            if (!m_PluginConfiguration.IsCustomTagsContextMenuEnabled
+                || !SupportedAddonNames.Contains(contextMenuOpenedArgs.ParentAddonName))
             {
                 return;
             }

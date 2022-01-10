@@ -14,8 +14,6 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         public List<ContextMenuItem> ContextMenuItems { get; }
 
-        public ContextMenuItem? SelectedItem { get; init; }
-
         public GameObjectContext? GameObjectContext { get; init; }
 
         public ItemContext? ItemContext { get; init; }

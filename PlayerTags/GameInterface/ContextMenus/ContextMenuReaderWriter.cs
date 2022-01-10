@@ -12,6 +12,12 @@ namespace PlayerTags.GameInterface.ContextMenus
 {
     internal unsafe class ContextMenuReaderWriter
     {
+        private enum SubContextMenuStructLayout
+        {
+            Main,
+            Alternate
+        }
+
         private IntPtr m_Agent;
 
         private int m_AtkValueCount;
@@ -168,13 +174,20 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
-        public enum SubContextMenuStructLayout
+        public unsafe bool IsInventoryContext
         {
-            Main,
-            Alternate
+            get
+            {
+                if (m_Agent == (IntPtr)AgentInventoryContext.Instance())
+                {
+                    return true;
+                }
+
+                return false;
+            }
         }
 
-        public SubContextMenuStructLayout? StructLayout
+        private SubContextMenuStructLayout? StructLayout
         {
             get
             {
@@ -194,19 +207,6 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
-        private unsafe bool IsInventoryContext
-        {
-            get
-            {
-                if (m_Agent == (IntPtr)AgentInventoryContext.Instance())
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
         public ContextMenuReaderWriter(IntPtr agent, int atkValueCount, AtkValue* atkValues)
         {
             m_Agent = agent;
@@ -216,8 +216,6 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         public GameContextMenuItem[] Read()
         {
-            Print();
-
             List<GameContextMenuItem> gameContextMenuItems = new List<GameContextMenuItem>();
             for (var contextMenuItemIndex = 0; contextMenuItemIndex < ContextMenuItemCount; contextMenuItemIndex++)
             {
@@ -278,17 +276,13 @@ namespace PlayerTags.GameInterface.ContextMenus
                 };
 
                 gameContextMenuItems.Add(gameContextMenuItem);
-
-                PluginLog.Debug($"Read   Name={gameContextMenuItem.Name}   Action={gameContextMenuItem.ItemSelectedAction}   IsEnabled={gameContextMenuItem.IsEnabled}   Indicator={gameContextMenuItem.Indicator}");
             }
 
             return gameContextMenuItems.ToArray();
         }
 
-        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
+        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, ContextMenuItem selectedContextMenuItem, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
         {
-            Print();
-
             var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuOpenedArgs.ContextMenuItems.Count() * TotalDesiredAtkValuesPerContextMenuItem);
 
             // Allocate the new array. We have to do a little dance with the first 8 bytes which represents the array count
@@ -319,10 +313,10 @@ namespace PlayerTags.GameInterface.ContextMenus
             m_AtkValues = newAtkValues;
 
             // Set the custom title if appropriate
-            if (contextMenuOpenedArgs.SelectedItem is OpenSubContextMenuItem)
+            if (selectedContextMenuItem is OpenSubContextMenuItem)
             {
                 var titleAtkValue = &m_AtkValues[1];
-                fixed (byte* TtlePtr = contextMenuOpenedArgs.SelectedItem.Name.Encode().NullTerminate())
+                fixed (byte* TtlePtr = selectedContextMenuItem.Name.Encode().NullTerminate())
                 {
                     atkValueSetString(titleAtkValue, TtlePtr);
                 }
@@ -408,11 +402,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 {
                     SetFlag(ref hasNextIndiactorFlagsAtkValue->UInt, contextMenuItemIndex, true);
                 }
-
-                PluginLog.Debug($"Write   Name={contextMenuItem.Name}   Action={action}   IsEnabled={contextMenuItem.IsEnabled}   Indicator={contextMenuItem.Indicator}");
             }
-
-            Print();
         }
 
         private bool HasFlag(uint mask, int itemIndex)
@@ -430,12 +420,12 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
-        public void Print()
+        public void Log()
         {
-            Print(m_AtkValueCount, m_AtkValues);
+            Log(m_AtkValueCount, m_AtkValues);
         }
 
-        public static void Print(int atkValueCount, AtkValue* atkValues)
+        public static void Log(int atkValueCount, AtkValue* atkValues)
         {
             PluginLog.Debug($"ContextMenuReader.Print");
 

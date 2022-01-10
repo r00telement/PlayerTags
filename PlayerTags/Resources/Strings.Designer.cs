@@ -196,7 +196,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Applies tags to all chat messages, including non-social messages and messages you may not be able to see..
+        ///   Looks up a localized string similar to Applies tags to all chat messages, including non-social messages..
         /// </summary>
         public static string Loc_IsApplyTagsToAllChatMessagesEnabled_Description {
             get {
