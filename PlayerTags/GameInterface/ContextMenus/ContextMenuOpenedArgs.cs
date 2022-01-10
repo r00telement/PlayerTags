@@ -39,6 +39,13 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// </summary>
         public ItemContext? ItemContext { get; init; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContextMenuOpenedArgs"/> class.
+        /// </summary>
+        /// <param name="addon">The addon associated with the context menu.</param>
+        /// <param name="agent">The agent associated with the context menu.</param>
+        /// <param name="parentAddonName">The the name of the parent addon associated with the context menu.</param>
+        /// <param name="contextMenuItems">The items in the context menu.</param>
         public ContextMenuOpenedArgs(IntPtr addon, IntPtr agent, string? parentAddonName, IEnumerable<ContextMenuItem> contextMenuItems)
         {
             Addon = addon;
