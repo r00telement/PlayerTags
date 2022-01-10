@@ -396,7 +396,6 @@ namespace PlayerTags.GameInterface.ContextMenus
                 return false;
             }
 
-
             try
             {
                 SubContextMenuOpenedImplementation(addon, ref atkValueCount, ref atkValues);
