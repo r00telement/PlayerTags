@@ -222,7 +222,6 @@ namespace PlayerTags.GameInterface.ContextMenus
             for (var contextMenuItemIndex = 0; contextMenuItemIndex < ContextMenuItemCount; contextMenuItemIndex++)
             {
                 var contextMenuItemAtkValueBaseIndex = FirstContextMenuItemIndex + (contextMenuItemIndex * SequentialAtkValuesPerContextMenuItem);
-                PluginLog.Debug($"{contextMenuItemAtkValueBaseIndex}={FirstContextMenuItemIndex}+({contextMenuItemIndex}*{SequentialAtkValuesPerContextMenuItem})");
 
                 // Get the name
                 var nameAtkValue = &m_AtkValues[contextMenuItemAtkValueBaseIndex + NameIndexOffset];
