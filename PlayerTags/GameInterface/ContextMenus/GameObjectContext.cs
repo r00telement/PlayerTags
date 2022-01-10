@@ -13,9 +13,9 @@ namespace PlayerTags.GameInterface.ContextMenus
         public uint Id { get; }
 
         /// <summary>
-        /// The lower content id of the game object.
+        /// The content id of the game object.
         /// </summary>
-        public uint LowerContentId { get; }
+        public ulong ContentId { get; }
 
         /// <summary>
         /// The name of the game object.
@@ -31,13 +31,13 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// Initializes a new instance of the <see cref="GameObjectContext"/> class.
         /// </summary>
         /// <param name="id">The id of the game object.</param>
-        /// <param name="lowerContentId">The lower content id of the game object.</param>
+        /// <param name="contentId">The lower content id of the game object.</param>
         /// <param name="name">The name of the game object.</param>
         /// <param name="worldId">The world id of the game object.</param>
-        public GameObjectContext(uint id, uint lowerContentId, SeString name, ushort worldId)
+        public GameObjectContext(uint id, ulong contentId, SeString name, ushort worldId)
         {
             Id = id;
-            LowerContentId = lowerContentId;
+            ContentId = contentId;
             Name = name;
             WorldId = worldId;
         }

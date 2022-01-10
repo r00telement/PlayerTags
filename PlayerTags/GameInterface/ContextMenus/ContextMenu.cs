@@ -429,7 +429,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             else
             {
                 var agentContext = (AgentContext*)agent;
-                if (agentContext->GameObjectLowerContentId != 0 || agentContext->GameObjectWorldId != 0)
+                if (agentContext->GameObjectContentId != 0 || agentContext->GameObjectWorldId != 0)
                 {
                     SeString objectName;
                     unsafe
@@ -437,7 +437,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                         objectName = GameInterfaceHelper.ReadSeString((IntPtr)agentContext->ObjectName.StringPtr);
                     }
 
-                    gameObjectContext = new GameObjectContext(agentContext->GameObjectId, agentContext->GameObjectLowerContentId, objectName, agentContext->GameObjectWorldId);
+                    gameObjectContext = new GameObjectContext(agentContext->GameObjectId, agentContext->GameObjectContentId, objectName, agentContext->GameObjectWorldId);
                 }
             }
 
@@ -496,7 +496,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         {
             PluginLog.Debug($"ContextMenuItemSelectedImplementation");
 
-            if (m_CurrentContextMenuOpenedArgs == null)
+            if (m_CurrentContextMenuOpenedArgs == null || selectedIndex == -1)
             {
                 m_CurrentContextMenuOpenedArgs = null;
                 m_CurrentSelectedItem = null;
@@ -508,8 +508,12 @@ namespace PlayerTags.GameInterface.ContextMenus
             ContextMenuReaderWriter contextMenuReaderWriter = new ContextMenuReaderWriter(m_CurrentContextMenuAgent, addonContext->AtkValuesCount, addonContext->AtkValues);
             var gameContextMenuItems = contextMenuReaderWriter.Read();
             var gameSelectedItem = gameContextMenuItems.ElementAtOrDefault(selectedIndex);
+
+            // This should be impossible
             if (gameSelectedItem == null)
             {
+                m_CurrentContextMenuOpenedArgs = null;
+                m_CurrentSelectedItem = null;
                 return;
             }
 
