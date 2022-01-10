@@ -353,7 +353,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             {
                 return false;
             }
-        
+
             // The important things to make this work are:
             // 1. Allocate a temporary sub context menu title. The value doesn't matter, we'll set it later.
             // 2. Context menu item count must equal 1 to tell the game there is enough space for the "< Return" item.
@@ -382,6 +382,9 @@ namespace PlayerTags.GameInterface.ContextMenus
 
             var atkValues = &agentContext->ItemData->AtkValues;
             atkValues[0].UInt = 1;
+
+            // This isn't needed by the game, it's needed by ContextMenuReaderWriter which uses this to check if it's a context menu
+            m_AtkValueChangeType(&atkValues[1], FFXIVClientStructs.FFXIV.Component.GUI.ValueType.String);
 
             ContextMenuReaderWriter contextMenuReaderWriter = new ContextMenuReaderWriter(agent, agentContext->ItemData->AtkValuesCount, atkValues);
             *(&agentContext->ItemData->AtkValuesCount) = (ushort)contextMenuReaderWriter.FirstContextMenuItemIndex;

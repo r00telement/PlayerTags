@@ -46,7 +46,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                     || (int)m_AtkValues[1].Type == 38
                     || m_AtkValues[1].Type == FFXIVClientStructs.FFXIV.Component.GUI.ValueType.String;
 
-                return isStringType && m_AtkValues[1].Int != 0;
+                return isStringType;
             }
         }
 
