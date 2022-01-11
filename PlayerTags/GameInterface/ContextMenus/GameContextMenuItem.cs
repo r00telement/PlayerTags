@@ -10,17 +10,17 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <summary>
         /// The game action that will be handled when the item is selected.
         /// </summary>
-        public byte ItemSelectedAction { get; }
+        public byte SelectedAction { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameContextMenuItem"/> class.
         /// </summary>
         /// <param name="name">The name of the item.</param>
-        /// <param name="itemSelectedAction">The game action that will be handled when the item is selected.</param>
-        public GameContextMenuItem(SeString name, byte itemSelectedAction)
+        /// <param name="selectedAction">The game action that will be handled when the item is selected.</param>
+        public GameContextMenuItem(SeString name, byte selectedAction)
             : base(name)
         {
-            ItemSelectedAction = itemSelectedAction;
+            SelectedAction = selectedAction;
         }
     }
 }

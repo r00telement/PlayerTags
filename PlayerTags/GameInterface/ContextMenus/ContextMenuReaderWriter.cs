@@ -239,16 +239,22 @@ namespace PlayerTags.GameInterface.ContextMenus
                 }
 
                 // Get the action
-                byte* actions = null;
+                byte action = 0;
                 if (IsInventoryContext)
                 {
-                    actions = &((AgentInventoryContext*)m_Agent)->Actions;
+                    var actions = &((AgentInventoryContext*)m_Agent)->Actions;
+                    action = *(actions + contextMenuItemAtkValueBaseIndex);
+                }
+                else if (StructLayout != null && StructLayout.Value == SubContextMenuStructLayout.Alternate)
+                {
+                    var actions = &((AgentContext*)m_Agent)->ItemData->RedButtonActions;
+                    action = (byte)*(actions + contextMenuItemIndex);
                 }
                 else
                 {
-                    actions = &((AgentContext*)m_Agent)->ItemData->Actions;
-                }
-                byte action = *(actions + contextMenuItemAtkValueBaseIndex);
+                    var actions = &((AgentContext*)m_Agent)->ItemData->Actions;
+                    action = *(actions + contextMenuItemAtkValueBaseIndex);
+                }                
 
                 // Get the has previous indicator flag
                 var hasPreviousIndicatorFlagsAtkValue = &m_AtkValues[HasPreviousIndicatorFlagsIndex];
@@ -281,7 +287,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             return gameContextMenuItems.ToArray();
         }
 
-        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, ContextMenuItem selectedContextMenuItem, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
+        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, ContextMenuItem? selectedContextMenuItem, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
         {
             var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuOpenedArgs.ContextMenuItems.Count() * TotalDesiredAtkValuesPerContextMenuItem);
 
@@ -358,7 +364,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 byte action = 0;
                 if (contextMenuItem is GameContextMenuItem gameContextMenuItem)
                 {
-                    action = gameContextMenuItem.ItemSelectedAction;
+                    action = gameContextMenuItem.SelectedAction;
                 }
                 else if (contextMenuItem is CustomContextMenuItem customContextMenuItem)
                 {
@@ -375,7 +381,8 @@ namespace PlayerTags.GameInterface.ContextMenus
                 {
                     if (IsInventoryContext)
                     {
-                        action = 0x30;
+                        // TODO: Fix inventory sub context menus
+                        action = /*0x30*/ 0xff;
                     }
                     else
                     {
@@ -383,16 +390,21 @@ namespace PlayerTags.GameInterface.ContextMenus
                     }
                 }
 
-                byte* actions = null;
                 if (IsInventoryContext)
                 {
-                    actions = &((AgentInventoryContext*)m_Agent)->Actions;
+                    var actions = &((AgentInventoryContext*)m_Agent)->Actions;
+                    *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = action;
+                }
+                else if (StructLayout != null && StructLayout.Value == SubContextMenuStructLayout.Alternate)
+                {
+                    var actions = &((AgentContext*)m_Agent)->ItemData->RedButtonActions;
+                    *(actions + contextMenuItemIndex) = action;
                 }
                 else
                 {
-                    actions = &((AgentContext*)m_Agent)->ItemData->Actions;
+                    var actions = &((AgentContext*)m_Agent)->ItemData->Actions;
+                    *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = action;
                 }
-                *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = action;
 
                 if (contextMenuItem.Indicator == ContextMenuItemIndicator.Previous)
                 {
@@ -436,7 +448,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 object? value = null;
                 if (atkValue->Type == FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int)
                 {
-                    value = atkValue->Int;
+                    value = $"{atkValue->Int:X}";
                 }
                 else if (atkValue->Type == FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Bool)
                 {

@@ -9,5 +9,6 @@ namespace FFXIVClientStructs.FFXIV.Client.UI.Agent
         [FieldOffset(0x0)] public ushort AtkValuesCount;
         [FieldOffset(0x8)] public AtkValue AtkValues;
         [FieldOffset(0x428)] public byte Actions;
+        [FieldOffset(0x598)] public ulong RedButtonActions;
     }
 }

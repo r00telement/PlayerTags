@@ -314,7 +314,14 @@ namespace PlayerTags.GameInterface.ContextMenus
 
             // Read the context menu items from the game, then allow subscribers to modify them
             ContextMenuReaderWriter contextMenuReaderWriter = new ContextMenuReaderWriter(m_CurrentContextMenuAgent, atkValueCount, atkValues);
-            m_CurrentContextMenuOpenedArgs = NotifyContextMenuOpened(addon, m_CurrentContextMenuAgent, contextMenuOpenedDelegate, contextMenuReaderWriter.Read());
+
+            string? title = null;
+            if (contextMenuReaderWriter.Title != null)
+            {
+                title = contextMenuReaderWriter.Title.TextValue;
+            }
+
+            m_CurrentContextMenuOpenedArgs = NotifyContextMenuOpened(addon, m_CurrentContextMenuAgent, title, contextMenuOpenedDelegate, contextMenuReaderWriter.Read());
             if (m_CurrentContextMenuOpenedArgs == null)
             {
                 return;
@@ -413,17 +420,10 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         private unsafe void SubContextMenuOpenedImplementation(IntPtr addon, ref int atkValueCount, ref AtkValue* atkValues)
         {
-            // For now, don't allow to modifying sub context menus unless we created them.
-            // TODO: May want to allow this.
-            if (m_CurrentSelectedItem == null)
-            {
-                return;
-            }
-
             ContextMenuOpenedImplementation(addon, ref atkValueCount, ref atkValues);
         }
 
-        private unsafe ContextMenuOpenedArgs? NotifyContextMenuOpened(IntPtr addon, IntPtr agent, ContextMenuOpenedDelegate contextMenuOpenedDelegate, IEnumerable<ContextMenuItem> initialContextMenuItems)
+        private unsafe ContextMenuOpenedArgs? NotifyContextMenuOpened(IntPtr addon, IntPtr agent, string? title, ContextMenuOpenedDelegate contextMenuOpenedDelegate, IEnumerable<ContextMenuItem> initialContextMenuItems)
         {
             var parentAddonName = GetParentAddonName(addon);
 
@@ -451,6 +451,7 @@ namespace PlayerTags.GameInterface.ContextMenus
 
             var contextMenuOpenedArgs = new ContextMenuOpenedArgs(addon, agent, parentAddonName, initialContextMenuItems)
             {
+                Title = title,
                 ItemContext = itemContext,
                 GameObjectContext = gameObjectContext
             };

@@ -25,6 +25,11 @@ namespace PlayerTags.GameInterface.ContextMenus
         public string? ParentAddonName { get; }
 
         /// <summary>
+        /// The title of the context menu.
+        /// </summary>
+        public string? Title { get; init; }
+
+        /// <summary>
         /// The items in the context menu.
         /// </summary>
         public List<ContextMenuItem> ContextMenuItems { get; }
