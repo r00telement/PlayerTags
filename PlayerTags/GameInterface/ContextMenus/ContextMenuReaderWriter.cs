@@ -56,14 +56,8 @@ namespace PlayerTags.GameInterface.ContextMenus
             {
                 if (HasTitle)
                 {
-                    try
-                    {
-                        GameInterfaceHelper.TryReadSeString((IntPtr)(&m_AtkValues[1])->String, out var str);
-                        return str;
-                    }
-                    catch (Exception ex)
-                    {
-                    }
+                    GameInterfaceHelper.TryReadSeString((IntPtr)(&m_AtkValues[1])->String, out var str);
+                    return str;
                 }
 
                 return null;
