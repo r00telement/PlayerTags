@@ -18,7 +18,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             Alternate
         }
 
-        private IntPtr m_Agent;
+        private AgentContextInterface* m_AgentContextInterface;
 
         private int m_AtkValueCount;
         public int AtkValueCount
@@ -129,6 +129,22 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
+        /// <summary>
+        /// 0x14000000 | action
+        /// </summary>
+        public int? MaskedActionIndexOffset
+        {
+            get
+            {
+                if (HasTitle && StructLayout == SubContextMenuStructLayout.Alternate)
+                {
+                    return 3;
+                }
+
+                return null;
+            }
+        }
+
         public int SequentialAtkValuesPerContextMenuItem
         {
             get
@@ -172,7 +188,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         {
             get
             {
-                if (m_Agent == (IntPtr)AgentInventoryContext.Instance())
+                if ((IntPtr)m_AgentContextInterface == (IntPtr)AgentInventoryContext.Instance())
                 {
                     return true;
                 }
@@ -201,9 +217,53 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
         }
 
-        public ContextMenuReaderWriter(IntPtr agent, int atkValueCount, AtkValue* atkValues)
+        public byte NoopAction
         {
-            m_Agent = agent;
+            get
+            {
+                if (IsInventoryContext)
+                {
+                    return 0xff;
+                }
+                else
+                {
+                    return 0x67;
+                }
+            }
+        }
+
+        public byte OpenSubContextMenuAction
+        {
+            get
+            {
+                if (IsInventoryContext)
+                {
+                    // This is actually the action to open the Second Tier context menu and we just hack around it
+                    return 0x31;
+                }
+                else
+                {
+                    return 0x66;
+                }
+            }
+        }
+
+        public byte? FirstUnhandledAction
+        {
+            get
+            {
+                if (StructLayout != null && StructLayout == SubContextMenuStructLayout.Alternate)
+                {
+                    return 0x68;
+                }
+
+                return null;
+            }
+        }
+
+        public ContextMenuReaderWriter(AgentContextInterface* agentContextInterface, int atkValueCount, AtkValue* atkValues)
+        {
+            m_AgentContextInterface = agentContextInterface;
             m_AtkValueCount = atkValueCount;
             m_AtkValues = atkValues;
         }
@@ -236,17 +296,17 @@ namespace PlayerTags.GameInterface.ContextMenus
                 byte action = 0;
                 if (IsInventoryContext)
                 {
-                    var actions = &((AgentInventoryContext*)m_Agent)->Actions;
+                    var actions = &((AgentInventoryContext*)m_AgentContextInterface)->Actions;
                     action = *(actions + contextMenuItemAtkValueBaseIndex);
                 }
                 else if (StructLayout != null && StructLayout.Value == SubContextMenuStructLayout.Alternate)
                 {
-                    var actions = &((AgentContext*)m_Agent)->ItemData->RedButtonActions;
-                    action = (byte)*(actions + contextMenuItemIndex);
+                    var redButtonActions = &((AgentContext*)m_AgentContextInterface)->Items->RedButtonActions;
+                    action = (byte)*(redButtonActions + contextMenuItemIndex);
                 }
                 else
                 {
-                    var actions = &((AgentContext*)m_Agent)->ItemData->Actions;
+                    var actions = &((AgentContext*)m_AgentContextInterface)->Items->Actions;
                     action = *(actions + contextMenuItemAtkValueBaseIndex);
                 }                
 
@@ -270,7 +330,7 @@ namespace PlayerTags.GameInterface.ContextMenus
 
                 var gameContextMenuItem = new GameContextMenuItem(name, action)
                 {
-                    Agent = m_Agent,
+                    Agent = (IntPtr)m_AgentContextInterface,
                     IsEnabled = isEnabled,
                     Indicator = indicator
                 };
@@ -281,36 +341,39 @@ namespace PlayerTags.GameInterface.ContextMenus
             return gameContextMenuItems.ToArray();
         }
 
-        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, ContextMenuItem? selectedContextMenuItem, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString)
+        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, ContextMenuItem? selectedContextMenuItem, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString, bool allowReallocate = true)
         {
-            var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuOpenedArgs.ContextMenuItems.Count() * TotalDesiredAtkValuesPerContextMenuItem);
-
-            // Allocate the new array. We have to do a little dance with the first 8 bytes which represents the array count
-            const int arrayCountSize = 8;
-            var newAtkValuesArraySize = arrayCountSize + Marshal.SizeOf<AtkValue>() * newAtkValuesCount;
-            var newAtkValuesArray = GameInterfaceHelper.GameUIAllocate((ulong)newAtkValuesArraySize);
-            if (newAtkValuesArray == IntPtr.Zero)
+            if (allowReallocate)
             {
-                return;
+                var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuOpenedArgs.Items.Count() * TotalDesiredAtkValuesPerContextMenuItem);
+
+                // Allocate the new array. We have to do a little dance with the first 8 bytes which represents the array count
+                const int arrayCountSize = 8;
+                var newAtkValuesArraySize = arrayCountSize + Marshal.SizeOf<AtkValue>() * newAtkValuesCount;
+                var newAtkValuesArray = GameInterfaceHelper.GameUIAllocate((ulong)newAtkValuesArraySize);
+                if (newAtkValuesArray == IntPtr.Zero)
+                {
+                    return;
+                }
+
+                var newAtkValues = (AtkValue*)(newAtkValuesArray + arrayCountSize);
+
+                // Zero the memory, then copy the atk values up to the first context menu item atk value
+                Marshal.Copy(new byte[newAtkValuesArraySize], 0, newAtkValuesArray, newAtkValuesArraySize);
+                Buffer.MemoryCopy(m_AtkValues, newAtkValues, newAtkValuesArraySize - arrayCountSize, (long)sizeof(AtkValue) * FirstContextMenuItemIndex);
+
+                // Free the old array
+                IntPtr oldArray = (IntPtr)m_AtkValues - arrayCountSize;
+                ulong oldArrayCount = *(ulong*)oldArray;
+                ulong oldArraySize = arrayCountSize + ((ulong)sizeof(AtkValue) * oldArrayCount);
+                GameInterfaceHelper.GameFree(ref oldArray, oldArraySize);
+
+                // Set the array count
+                *(ulong*)newAtkValuesArray = (ulong)newAtkValuesCount;
+
+                m_AtkValueCount = newAtkValuesCount;
+                m_AtkValues = newAtkValues;
             }
-
-            var newAtkValues = (AtkValue*)(newAtkValuesArray + arrayCountSize);
-
-            // Zero the memory, then copy the atk values up to the first context menu item atk value
-            Marshal.Copy(new byte[newAtkValuesArraySize], 0, newAtkValuesArray, newAtkValuesArraySize);
-            Buffer.MemoryCopy(m_AtkValues, newAtkValues, newAtkValuesArraySize - arrayCountSize, (long)sizeof(AtkValue) * FirstContextMenuItemIndex);
-
-            // Free the old array
-            IntPtr oldArray = (IntPtr)m_AtkValues - arrayCountSize;
-            ulong oldArrayCount = *(ulong*)oldArray;
-            ulong oldArraySize = arrayCountSize + ((ulong)sizeof(AtkValue) * oldArrayCount);
-            GameInterfaceHelper.GameFree(ref oldArray, oldArraySize);
-
-            // Set the array count
-            *(ulong*)newAtkValuesArray = (ulong)newAtkValuesCount;
-
-            m_AtkValueCount = newAtkValuesCount;
-            m_AtkValues = newAtkValues;
 
             // Set the custom title if appropriate
             if (selectedContextMenuItem is OpenSubContextMenuItem)
@@ -325,7 +388,7 @@ namespace PlayerTags.GameInterface.ContextMenus
             // Set the context menu item count
             const int contextMenuItemCountAtkValueIndex = 0;
             var contextMenuItemCountAtkValue = &m_AtkValues[contextMenuItemCountAtkValueIndex];
-            contextMenuItemCountAtkValue->UInt = (uint)contextMenuOpenedArgs.ContextMenuItems.Count();
+            contextMenuItemCountAtkValue->UInt = (uint)contextMenuOpenedArgs.Items.Count();
 
             // Clear the previous arrow flags
             var hasPreviousIndicatorAtkValue = &m_AtkValues[HasPreviousIndicatorFlagsIndex];
@@ -335,9 +398,9 @@ namespace PlayerTags.GameInterface.ContextMenus
             var hasNextIndiactorFlagsAtkValue = &m_AtkValues[HasNextIndicatorFlagsIndex];
             hasNextIndiactorFlagsAtkValue->UInt = 0;
 
-            for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuOpenedArgs.ContextMenuItems.Count(); ++contextMenuItemIndex)
+            for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuOpenedArgs.Items.Count(); ++contextMenuItemIndex)
             {
-                var contextMenuItem = contextMenuOpenedArgs.ContextMenuItems.ElementAt(contextMenuItemIndex);
+                var contextMenuItem = contextMenuOpenedArgs.Items.ElementAt(contextMenuItemIndex);
 
                 var contextMenuItemAtkValueBaseIndex = FirstContextMenuItemIndex + (contextMenuItemIndex * SequentialAtkValuesPerContextMenuItem);
 
@@ -362,41 +425,36 @@ namespace PlayerTags.GameInterface.ContextMenus
                 }
                 else if (contextMenuItem is CustomContextMenuItem customContextMenuItem)
                 {
-                    if (IsInventoryContext)
-                    {
-                        action = 0xff;
-                    }
-                    else
-                    {
-                        action = 0x67;
-                    }
+                    action = NoopAction;
                 }
                 else if (contextMenuItem is OpenSubContextMenuItem openSubContextMenuItem)
                 {
-                    if (IsInventoryContext)
-                    {
-                        // TODO: Fix inventory sub context menus
-                        action = /*0x30*/ 0xff;
-                    }
-                    else
-                    {
-                        action = 0x66;
-                    }
+                    action = OpenSubContextMenuAction;
                 }
 
                 if (IsInventoryContext)
                 {
-                    var actions = &((AgentInventoryContext*)m_Agent)->Actions;
+                    var actions = &((AgentInventoryContext*)m_AgentContextInterface)->Actions;
                     *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = action;
                 }
-                else if (StructLayout != null && StructLayout.Value == SubContextMenuStructLayout.Alternate)
+                else if (StructLayout != null && StructLayout.Value == SubContextMenuStructLayout.Alternate && FirstUnhandledAction != null)
                 {
-                    var actions = &((AgentContext*)m_Agent)->ItemData->RedButtonActions;
-                    *(actions + contextMenuItemIndex) = action;
+                    // Some weird placeholder goes here
+                    var actions = &((AgentContext*)m_AgentContextInterface)->Items->Actions;
+                    *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = (byte)(FirstUnhandledAction.Value + contextMenuItemIndex);
+
+                    // Make sure there's one of these function pointers for every item.
+                    // The function needs to be the same, so we just copy the first one into every index.
+                    var unkFunctionPointers = &((AgentContext*)m_AgentContextInterface)->Items->UnkFunctionPointers;
+                    *(unkFunctionPointers + FirstContextMenuItemIndex + contextMenuItemIndex) = *(unkFunctionPointers + FirstContextMenuItemIndex);
+
+                    // The real action goes here
+                    var redButtonActions = &((AgentContext*)m_AgentContextInterface)->Items->RedButtonActions;
+                    *(redButtonActions + contextMenuItemIndex) = action;
                 }
                 else
                 {
-                    var actions = &((AgentContext*)m_Agent)->ItemData->Actions;
+                    var actions = &((AgentContext*)m_AgentContextInterface)->Items->Actions;
                     *(actions + FirstContextMenuItemIndex + contextMenuItemIndex) = action;
                 }
 
@@ -433,7 +491,7 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         public static void Log(int atkValueCount, AtkValue* atkValues)
         {
-            PluginLog.Debug($"ContextMenuReader.Print");
+            PluginLog.Debug($"ContextMenuReader.Log");
 
             for (int atkValueIndex = 0; atkValueIndex < atkValueCount; ++atkValueIndex)
             {

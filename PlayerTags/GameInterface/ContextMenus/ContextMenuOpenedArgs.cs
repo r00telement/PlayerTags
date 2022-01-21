@@ -32,7 +32,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <summary>
         /// The items in the context menu.
         /// </summary>
-        public List<ContextMenuItem> ContextMenuItems { get; }
+        public List<ContextMenuItem> Items { get; }
 
         /// <summary>
         /// The game object context associated with the context menu.
@@ -42,7 +42,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <summary>
         /// The item context associated with the context menu.
         /// </summary>
-        public ItemContext? ItemContext { get; init; }
+        public InventoryItemContext? InventoryItemContext { get; init; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextMenuOpenedArgs"/> class.
@@ -50,13 +50,13 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <param name="addon">The addon associated with the context menu.</param>
         /// <param name="agent">The agent associated with the context menu.</param>
         /// <param name="parentAddonName">The the name of the parent addon associated with the context menu.</param>
-        /// <param name="contextMenuItems">The items in the context menu.</param>
-        public ContextMenuOpenedArgs(IntPtr addon, IntPtr agent, string? parentAddonName, IEnumerable<ContextMenuItem> contextMenuItems)
+        /// <param name="items">The items in the context menu.</param>
+        public ContextMenuOpenedArgs(IntPtr addon, IntPtr agent, string? parentAddonName, IEnumerable<ContextMenuItem> items)
         {
             Addon = addon;
             Agent = agent;
             ParentAddonName = parentAddonName;
-            ContextMenuItems = new List<ContextMenuItem>(contextMenuItems);
+            Items = new List<ContextMenuItem>(items);
         }
     }
 }

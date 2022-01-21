@@ -3,8 +3,9 @@
 namespace FFXIVClientStructs.FFXIV.Client.UI
 {
     [StructLayout(LayoutKind.Explicit)]
-    public struct Addon
+    public unsafe struct AddonInterface
     {
+        [FieldOffset(0x8)] public byte Name;
         [FieldOffset(0x1D2)] public ushort ParentAddonId;
     }
 }

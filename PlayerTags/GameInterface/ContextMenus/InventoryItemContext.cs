@@ -1,9 +1,9 @@
 ﻿namespace PlayerTags.GameInterface.ContextMenus
 {
     /// <summary>
-    /// Provides item context to a context menu.
+    /// Provides inventory item context to a context menu.
     /// </summary>
-    public class ItemContext
+    public class InventoryItemContext
     {
         /// <summary>
         /// The id of the item.
@@ -21,12 +21,12 @@
         public bool IsHighQuality { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ItemContext"/> class.
+        /// Initializes a new instance of the <see cref="InventoryItemContext"/> class.
         /// </summary>
         /// <param name="id">The id of the item.</param>
         /// <param name="count">The count of the item in the stack.</param>
         /// <param name="isHighQuality">Whether the item is high quality.</param>
-        public ItemContext(uint id, uint count, bool isHighQuality)
+        public InventoryItemContext(uint id, uint count, bool isHighQuality)
         {
             Id = id;
             Count = count;

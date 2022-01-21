@@ -77,7 +77,7 @@ namespace PlayerTags.Features
                 var notAddedTags = m_PluginData.CustomTags.Where(customTag => !identity.CustomTagIds.Contains(customTag.CustomId.Value));
                 if (notAddedTags.Any())
                 {
-                    contextMenuOpenedArgs.ContextMenuItems.Add(new OpenSubContextMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (subContextMenuOpenedArgs =>
+                    contextMenuOpenedArgs.Items.Add(new OpenSubContextMenuItem(Strings.Loc_Static_ContextMenu_AddTag, (subContextMenuOpenedArgs =>
                     {
                         List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
                         foreach (var notAddedTag in notAddedTags)
@@ -89,14 +89,23 @@ namespace PlayerTags.Features
                             })));
                         }
 
-                        subContextMenuOpenedArgs.ContextMenuItems.InsertRange(0, newContextMenuItems);
+                        newContextMenuItems.Add(new OpenSubContextMenuItem("1", (args) =>
+                        {
+                            PluginLog.Debug("WOW1");
+                            args.Items.Add(new CustomContextMenuItem("2", (args2) =>
+                            {
+                                PluginLog.Debug("WOW2");
+                            }));
+                        }));
+
+                        subContextMenuOpenedArgs.Items.InsertRange(0, newContextMenuItems);
                     })));
                 }
 
                 var addedTags = m_PluginData.CustomTags.Where(customTag => identity.CustomTagIds.Contains(customTag.CustomId.Value));
                 if (addedTags.Any())
                 {
-                    contextMenuOpenedArgs.ContextMenuItems.Add(new OpenSubContextMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (subContextMenuOpenedArgs =>
+                    contextMenuOpenedArgs.Items.Add(new OpenSubContextMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, (subContextMenuOpenedArgs =>
                     {
                         List<ContextMenuItem> newContextMenuItems = new List<ContextMenuItem>();
                         foreach (var addedTag in addedTags)
@@ -108,7 +117,16 @@ namespace PlayerTags.Features
                             })));
                         }
 
-                        subContextMenuOpenedArgs.ContextMenuItems.InsertRange(0, newContextMenuItems);
+                        newContextMenuItems.Add(new OpenSubContextMenuItem("1", (args) =>
+                        {
+                            PluginLog.Debug("WOW1");
+                            args.Items.Add(new CustomContextMenuItem("2", (args2) =>
+                            {
+                                PluginLog.Debug("WOW2");
+                            }));
+                        }));
+
+                        subContextMenuOpenedArgs.Items.InsertRange(0, newContextMenuItems);
                     })));
                 }
             }

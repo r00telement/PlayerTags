@@ -10,6 +10,11 @@ namespace PlayerTags.GameInterface
     {
         public static SeString ReadSeString(IntPtr ptr)
         {
+            if (ptr == IntPtr.Zero)
+            {
+                return new SeString();
+            }
+
             if (TryReadStringBytes(ptr, out var bytes) && bytes != null)
             {
                 return SeString.Parse(bytes);
@@ -21,6 +26,10 @@ namespace PlayerTags.GameInterface
         public static bool TryReadSeString(IntPtr ptr, out SeString? seString)
         {
             seString = null;
+            if (ptr == IntPtr.Zero)
+            {
+                return false;
+            }
 
             if (TryReadStringBytes(ptr, out var bytes) && bytes != null)
             {
@@ -33,6 +42,11 @@ namespace PlayerTags.GameInterface
 
         public static string? ReadString(IntPtr ptr)
         {
+            if (ptr == IntPtr.Zero)
+            {
+                return null;
+            }
+
             if (TryReadStringBytes(ptr, out var bytes) && bytes != null)
             {
                 return Encoding.UTF8.GetString(bytes);
@@ -44,6 +58,10 @@ namespace PlayerTags.GameInterface
         public static bool TryReadString(IntPtr ptr, out string? str)
         {
             str = null;
+            if (ptr == IntPtr.Zero)
+            {
+                return false;
+            }
 
             if (TryReadStringBytes(ptr, out var bytes) && bytes != null)
             {
