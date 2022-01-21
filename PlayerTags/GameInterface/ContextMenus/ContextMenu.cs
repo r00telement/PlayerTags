@@ -50,9 +50,6 @@ namespace PlayerTags.GameInterface.ContextMenus
             private const string c_SubContextMenuOpened = "48 8B C4 57 41 55 41 56 48 81 EC";
             public IntPtr? SubContextMenuOpenedPtr { get; private set; }
 
-            private const string c_OpenInventoryContextMenu = "44 88 44 24 ?? 88 54 24 10 53";
-            public IntPtr? OpenInventoryContextMenuPtr { get; private set; }
-
             protected override void Setup64Bit(SigScanner scanner)
             {
                 if (scanner.TryScanText(c_AtkValueChangeType, out var atkValueChangeTypePtr))
@@ -98,11 +95,6 @@ namespace PlayerTags.GameInterface.ContextMenus
                 if (scanner.TryScanText(c_SubContextMenuOpened, out var titleScreenContextMenuOpenedPtr))
                 {
                     SubContextMenuOpenedPtr = titleScreenContextMenuOpenedPtr;
-                }
-
-                if (scanner.TryScanText(c_OpenInventoryContextMenu, out var setUpInventoryContextSubMenuPtr))
-                {
-                    OpenInventoryContextMenuPtr = setUpInventoryContextSubMenuPtr;
                 }
             }
         }
@@ -160,7 +152,6 @@ namespace PlayerTags.GameInterface.ContextMenus
                     || !m_PluginAddressResolver.ContextMenuItemSelectedPtr.HasValue
                     || !m_PluginAddressResolver.SubContextMenuOpeningPtr.HasValue
                     || !m_PluginAddressResolver.SubContextMenuOpenedPtr.HasValue
-                    || !m_PluginAddressResolver.OpenInventoryContextMenuPtr.HasValue
                     )
                 {
                     return false;
