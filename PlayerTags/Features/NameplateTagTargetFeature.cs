@@ -171,7 +171,7 @@ namespace PlayerTags.Features
             if (gameObject is PlayerCharacter playerCharacter)
             {
                 // Add the job tags
-                if (m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
+                if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
                     if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
                     {
@@ -280,7 +280,7 @@ namespace PlayerTags.Features
                     }
                 }
 
-                if (m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
                 {
                     if (IsTagVisible(jobTag, gameObject))
                     {

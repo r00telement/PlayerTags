@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Dalamud.Logging;
 using PlayerTags.Configuration;
 using PlayerTags.GameInterface.ContextMenus;
 using PlayerTags.PluginStrings;
@@ -281,23 +282,22 @@ namespace PlayerTags.Data
         {
             if (contextMenuOpenedArgs.GameObjectContext == null
                 || contextMenuOpenedArgs.GameObjectContext.Name == null
-                || contextMenuOpenedArgs.GameObjectContext.WorldId == 0
-                || contextMenuOpenedArgs.GameObjectContext.WorldId == 65535)
+                || contextMenuOpenedArgs.GameObjectContext.WorldId == null)
             {
                 return null;
             }
 
-            return GetIdentity(contextMenuOpenedArgs.GameObjectContext.Name.TextValue, contextMenuOpenedArgs.GameObjectContext.WorldId);
+            return GetIdentity(contextMenuOpenedArgs.GameObjectContext.Name, contextMenuOpenedArgs.GameObjectContext.WorldId);
         }
 
         public Identity GetIdentity(PlayerCharacter playerCharacter)
         {
-            return GetIdentity(playerCharacter.Name.TextValue, playerCharacter.HomeWorld.GameData.RowId);
+            return GetIdentity(playerCharacter.Name.TextValue, playerCharacter.HomeWorld.Id);
         }
 
         public Identity GetIdentity(PartyMember partyMember)
         {
-            return GetIdentity(partyMember.Name.TextValue, partyMember.World.GameData.RowId);
+            return GetIdentity(partyMember.Name.TextValue, partyMember.World.Id);
         }
 
         public Identity GetIdentity(PlayerPayload playerPayload)

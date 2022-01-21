@@ -88,16 +88,6 @@ namespace PlayerTags.Features
                                 m_PluginConfiguration.Save(m_PluginData);
                             })));
                         }
-
-                        newContextMenuItems.Add(new OpenSubContextMenuItem("1", (args) =>
-                        {
-                            PluginLog.Debug("WOW1");
-                            args.Items.Add(new CustomContextMenuItem("2", (args2) =>
-                            {
-                                PluginLog.Debug("WOW2");
-                            }));
-                        }));
-
                         subContextMenuOpenedArgs.Items.InsertRange(0, newContextMenuItems);
                     })));
                 }
@@ -116,16 +106,6 @@ namespace PlayerTags.Features
                                 m_PluginConfiguration.Save(m_PluginData);
                             })));
                         }
-
-                        newContextMenuItems.Add(new OpenSubContextMenuItem("1", (args) =>
-                        {
-                            PluginLog.Debug("WOW1");
-                            args.Items.Add(new CustomContextMenuItem("2", (args2) =>
-                            {
-                                PluginLog.Debug("WOW2");
-                            }));
-                        }));
-
                         subContextMenuOpenedArgs.Items.InsertRange(0, newContextMenuItems);
                     })));
                 }

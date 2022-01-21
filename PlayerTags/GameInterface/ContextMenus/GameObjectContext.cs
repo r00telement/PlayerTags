@@ -10,22 +10,22 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <summary>
         /// The id of the game object.
         /// </summary>
-        public uint Id { get; }
+        public uint? Id { get; }
 
         /// <summary>
         /// The content id of the game object.
         /// </summary>
-        public ulong ContentId { get; }
+        public ulong? ContentId { get; }
 
         /// <summary>
         /// The name of the game object.
         /// </summary>
-        public SeString Name { get; }
+        public string? Name { get; }
 
         /// <summary>
         /// The world id of the game object.
         /// </summary>
-        public ushort WorldId { get; }
+        public ushort? WorldId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GameObjectContext"/> class.
@@ -34,7 +34,7 @@ namespace PlayerTags.GameInterface.ContextMenus
         /// <param name="contentId">The lower content id of the game object.</param>
         /// <param name="name">The name of the game object.</param>
         /// <param name="worldId">The world id of the game object.</param>
-        public GameObjectContext(uint id, ulong contentId, SeString name, ushort worldId)
+        public GameObjectContext(uint? id, ulong? contentId, string? name, ushort? worldId)
         {
             Id = id;
             ContentId = contentId;

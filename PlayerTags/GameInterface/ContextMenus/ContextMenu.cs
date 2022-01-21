@@ -426,15 +426,41 @@ namespace PlayerTags.GameInterface.ContextMenus
             else
             {
                 var agentContext = (AgentContext*)agentContextInterface;
-                if (agentContext->GameObjectContentId != 0 || agentContext->GameObjectWorldId != 0)
-                {
-                    SeString objectName;
-                    unsafe
-                    {
-                        objectName = GameInterfaceHelper.ReadSeString((IntPtr)agentContext->GameObjectName.StringPtr);
-                    }
 
-                    gameObjectContext = new GameObjectContext(agentContext->GameObjectId, agentContext->GameObjectContentId, objectName, agentContext->GameObjectWorldId);
+                uint? id = agentContext->GameObjectId;
+                if (id == 0)
+                {
+                    id = null;
+                }
+
+                ulong? contentId = agentContext->GameObjectContentId;
+                if (contentId == 0)
+                {
+                    contentId = null;
+                }
+
+                string? name;
+                unsafe
+                {
+                    name = GameInterfaceHelper.ReadSeString((IntPtr)agentContext->GameObjectName.StringPtr).TextValue;
+                    if (string.IsNullOrEmpty(name))
+                    {
+                        name = null;
+                    }
+                }
+
+                ushort? worldId = agentContext->GameObjectWorldId;
+                if (worldId == 0)
+                {
+                    worldId = null;
+                }
+
+                if (id != null
+                    || contentId != null
+                    || name != null
+                    || worldId != null)
+                {
+                    gameObjectContext = new GameObjectContext(id, contentId, name, worldId);
                 }
             }
 
