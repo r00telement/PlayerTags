@@ -22,5 +22,15 @@ namespace PlayerTags.GameInterface.ContextMenus
         {
             ItemSelected = itemSelected;
         }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = base.GetHashCode();
+                hash = hash * 23 + ItemSelected.GetHashCode();
+                return hash;
+            }
+        }
     }
 }

@@ -23,5 +23,15 @@ namespace PlayerTags.GameInterface.ContextMenus
             Opened = opened;
             Indicator = ContextMenuItemIndicator.Next;
         }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = base.GetHashCode();
+                hash = hash * 23 + Opened.GetHashCode();
+                return hash;
+            }
+        }
     }
 }

@@ -287,6 +287,13 @@ namespace PlayerTags.GameInterface.ContextMenus
             if (m_SelectedOpenSubContextMenuItem != null)
             {
                 title = m_SelectedOpenSubContextMenuItem.Name.TextValue;
+
+                // Write the custom title
+                var titleAtkValue = &atkValues[1];
+                fixed (byte* TtlePtr = m_SelectedOpenSubContextMenuItem.Name.Encode().NullTerminate())
+                {
+                    m_AtkValueSetString(titleAtkValue, TtlePtr);
+                }
             }
             else if (contextMenuReaderWriter.Title != null)
             {
@@ -301,13 +308,15 @@ namespace PlayerTags.GameInterface.ContextMenus
             }
 
             // Get the existing items from the game.
-            // For inventory sub context menus, we take only the last item -- the return item.
+            // TODO: For inventory sub context menus, we take only the last item -- the return item.
             // This is because we're doing a hack to spawn a Second Tier sub context menu and then appropriating it.
             var contextMenuItems = contextMenuReaderWriter.Read();
             if (IsInventoryContext(m_CurrentAgentContextInterface) && m_SelectedOpenSubContextMenuItem != null)
             {
                 contextMenuItems = contextMenuItems.TakeLast(1).ToArray();
             }
+
+            int beforeHashCode = GetContextMenuItemsHashCode(contextMenuItems);
 
             // Raise the event and get the context menu changes.
             m_CurrentContextMenuOpenedArgs = NotifyContextMenuOpened(addonContextMenu, m_CurrentAgentContextInterface, title, contextMenuOpenedDelegate, contextMenuItems);
@@ -316,12 +325,20 @@ namespace PlayerTags.GameInterface.ContextMenus
                 return;
             }
 
-            // Write the new changes.
-            contextMenuReaderWriter.Write(m_CurrentContextMenuOpenedArgs, m_SelectedOpenSubContextMenuItem, m_AtkValueChangeType, m_AtkValueSetString);
+            int afterHashCode = GetContextMenuItemsHashCode(m_CurrentContextMenuOpenedArgs.Items);
 
-            // Update the addon.
-            atkValueCount = *(&addonContextMenu->AtkValuesCount) = (ushort)contextMenuReaderWriter.AtkValueCount;
-            atkValues = *(&addonContextMenu->AtkValues) = contextMenuReaderWriter.AtkValues;
+            PluginLog.Warning($"{beforeHashCode}={afterHashCode}");
+
+            // Only write to memory if the items were actually changed.
+            if (beforeHashCode != afterHashCode)
+            {
+                // Write the new changes.
+                contextMenuReaderWriter.Write(m_CurrentContextMenuOpenedArgs.Items, m_AtkValueChangeType, m_AtkValueSetString);
+
+                // Update the addon.
+                atkValueCount = *(&addonContextMenu->AtkValuesCount) = (ushort)contextMenuReaderWriter.AtkValueCount;
+                atkValues = *(&addonContextMenu->AtkValues) = contextMenuReaderWriter.AtkValues;
+            }
         }
 
         private unsafe bool SubContextMenuOpeningDetour(AgentContext* agentContext)
@@ -403,6 +420,19 @@ namespace PlayerTags.GameInterface.ContextMenus
             ContextMenuOpenedImplementation(addonContextMenu, ref atkValueCount, ref atkValues);
         }
 
+        private int GetContextMenuItemsHashCode(IEnumerable<ContextMenuItem> contextMenuItems)
+        {
+            unchecked
+            {
+                int hash = 17;
+                foreach (var item in contextMenuItems)
+                {
+                    hash = hash * 23 + item.GetHashCode();
+                }
+                return hash;
+            }
+        }
+
         private unsafe ContextMenuOpenedArgs? NotifyContextMenuOpened(AddonContextMenu* addonContextMenu, AgentContextInterface* agentContextInterface, string? title, ContextMenuOpenedDelegate contextMenuOpenedDelegate, IEnumerable<ContextMenuItem> initialContextMenuItems)
         {
             var parentAddonName = GetParentAddonName(&addonContextMenu->AddonInterface);
@@ -455,6 +485,13 @@ namespace PlayerTags.GameInterface.ContextMenus
                 }
             }
 
+            // Temporarily remove the < Return item, for UX we should enforce that it is always last in the list.
+            var lastContextMenuItem = initialContextMenuItems.LastOrDefault();
+            if (lastContextMenuItem is GameContextMenuItem gameContextMenuItem && gameContextMenuItem.SelectedAction == 102)
+            {
+                initialContextMenuItems = initialContextMenuItems.SkipLast(1);
+            }
+
             var contextMenuOpenedArgs = new ContextMenuOpenedArgs((IntPtr)addonContextMenu, (IntPtr)agentContextInterface, parentAddonName, initialContextMenuItems)
             {
                 Title = title,
@@ -472,10 +509,14 @@ namespace PlayerTags.GameInterface.ContextMenus
                 return null;
             }
 
+            // Readd the < Return item
+            if (lastContextMenuItem is GameContextMenuItem gameContextMenuItem1 && gameContextMenuItem1.SelectedAction == 102)
+            {
+                contextMenuOpenedArgs.Items.Add(lastContextMenuItem);
+            }
+
             foreach (var contextMenuItem in contextMenuOpenedArgs.Items.ToArray())
             {
-                contextMenuItem.Agent = (IntPtr)agentContextInterface;
-
                 // TODO: Game doesn't support nested sub context menus, but we might be able to.
                 if (contextMenuItem is OpenSubContextMenuItem && contextMenuOpenedArgs.Title != null)
                 {

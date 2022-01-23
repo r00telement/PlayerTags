@@ -263,6 +263,8 @@ namespace PlayerTags.GameInterface.ContextMenus
 
         public ContextMenuReaderWriter(AgentContextInterface* agentContextInterface, int atkValueCount, AtkValue* atkValues)
         {
+            PluginLog.Warning($"{(IntPtr)atkValues:X}");
+
             m_AgentContextInterface = agentContextInterface;
             m_AtkValueCount = atkValueCount;
             m_AtkValues = atkValues;
@@ -330,7 +332,6 @@ namespace PlayerTags.GameInterface.ContextMenus
 
                 var gameContextMenuItem = new GameContextMenuItem(name, action)
                 {
-                    Agent = (IntPtr)m_AgentContextInterface,
                     IsEnabled = isEnabled,
                     Indicator = indicator
                 };
@@ -341,11 +342,11 @@ namespace PlayerTags.GameInterface.ContextMenus
             return gameContextMenuItems.ToArray();
         }
 
-        public unsafe void Write(ContextMenuOpenedArgs contextMenuOpenedArgs, ContextMenuItem? selectedContextMenuItem, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString, bool allowReallocate = true)
+        public unsafe void Write(IEnumerable<ContextMenuItem> contextMenuItems, AtkValueChangeTypeDelegate_Unmanaged atkValueChangeType, AtkValueSetStringDelegate_Unmanaged atkValueSetString, bool allowReallocate = true)
         {
             if (allowReallocate)
             {
-                var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuOpenedArgs.Items.Count() * TotalDesiredAtkValuesPerContextMenuItem);
+                var newAtkValuesCount = FirstContextMenuItemIndex + (contextMenuItems.Count() * TotalDesiredAtkValuesPerContextMenuItem);
 
                 // Allocate the new array. We have to do a little dance with the first 8 bytes which represents the array count
                 const int arrayCountSize = 8;
@@ -375,20 +376,10 @@ namespace PlayerTags.GameInterface.ContextMenus
                 m_AtkValues = newAtkValues;
             }
 
-            // Set the custom title if appropriate
-            if (selectedContextMenuItem is OpenSubContextMenuItem)
-            {
-                var titleAtkValue = &m_AtkValues[1];
-                fixed (byte* TtlePtr = selectedContextMenuItem.Name.Encode().NullTerminate())
-                {
-                    atkValueSetString(titleAtkValue, TtlePtr);
-                }
-            }
-
             // Set the context menu item count
             const int contextMenuItemCountAtkValueIndex = 0;
             var contextMenuItemCountAtkValue = &m_AtkValues[contextMenuItemCountAtkValueIndex];
-            contextMenuItemCountAtkValue->UInt = (uint)contextMenuOpenedArgs.Items.Count();
+            contextMenuItemCountAtkValue->UInt = (uint)contextMenuItems.Count();
 
             // Clear the previous arrow flags
             var hasPreviousIndicatorAtkValue = &m_AtkValues[HasPreviousIndicatorFlagsIndex];
@@ -398,9 +389,9 @@ namespace PlayerTags.GameInterface.ContextMenus
             var hasNextIndiactorFlagsAtkValue = &m_AtkValues[HasNextIndicatorFlagsIndex];
             hasNextIndiactorFlagsAtkValue->UInt = 0;
 
-            for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuOpenedArgs.Items.Count(); ++contextMenuItemIndex)
+            for (int contextMenuItemIndex = 0; contextMenuItemIndex < contextMenuItems.Count(); ++contextMenuItemIndex)
             {
-                var contextMenuItem = contextMenuOpenedArgs.Items.ElementAt(contextMenuItemIndex);
+                var contextMenuItem = contextMenuItems.ElementAt(contextMenuItemIndex);
 
                 var contextMenuItemAtkValueBaseIndex = FirstContextMenuItemIndex + (contextMenuItemIndex * SequentialAtkValuesPerContextMenuItem);
 
@@ -500,7 +491,7 @@ namespace PlayerTags.GameInterface.ContextMenus
                 object? value = null;
                 if (atkValue->Type == FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Int)
                 {
-                    value = $"{atkValue->Int:X}";
+                    value = atkValue->Int;
                 }
                 else if (atkValue->Type == FFXIVClientStructs.FFXIV.Component.GUI.ValueType.Bool)
                 {
