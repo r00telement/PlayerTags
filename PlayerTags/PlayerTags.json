@@ -5,11 +5,11 @@
   "Punchline": "Lightweight job visibility in nameplates and chat.",
   "Tags": [ "Jobs", "UI" ],
   "CategoryTags": [ "jobs", "UI" ],
-  "RepoUrl": "https://github.com/pilzinsel64/PlayerTags",
-  "IconUrl": "https://github.com/pilzinsel64/PlayerTags/raw/main/PlayerTags/Resources/Promo/Icon.png",
+  "RepoUrl": "https://github.com/r00telement/PlayerTags",
+  "IconUrl": "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Icon.png",
   "ImageUrls": [
-    "https://github.com/pilzinsel64/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png",
-    "https://github.com/pilzinsel64/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png"
+    "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png",
+    "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png"
   ],
   "Changelog": ""
 }
