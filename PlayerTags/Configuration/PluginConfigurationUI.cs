@@ -53,9 +53,9 @@ namespace PlayerTags.Configuration
                 {
                     if (ImGui.BeginTabItem(Strings.Loc_Static_General))
                     {
-                        ImGui.Spacing();
-                        ImGui.Spacing();
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        //ImGui.Spacing();
+                        //ImGui.Spacing();
+                        //DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
 
 
                         ImGui.Spacing();
