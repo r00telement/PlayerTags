@@ -1,9 +1,9 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Party;
+using Dalamud.Game.Gui.ContextMenus;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Logging;
 using PlayerTags.Configuration;
-using PlayerTags.GameInterface.ContextMenus;
 using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;

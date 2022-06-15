@@ -41,6 +41,8 @@ namespace PlayerTags.Configuration
                 return;
             }
 
+            ImGui.SetNextWindowSize(new Vector2(400, 500), ImGuiCond.FirstUseEver);
+
             if (ImGui.Begin(Strings.Loc_Static_PluginName, ref m_PluginConfiguration.IsVisible))
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 0.8f, 0.5f, 1));
@@ -53,9 +55,9 @@ namespace PlayerTags.Configuration
                 {
                     if (ImGui.BeginTabItem(Strings.Loc_Static_General))
                     {
-                        //ImGui.Spacing();
-                        //ImGui.Spacing();
-                        //DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        ImGui.Spacing();
+                        ImGui.Spacing();
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
 
 
                         ImGui.Spacing();
