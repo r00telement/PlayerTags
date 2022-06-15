@@ -39,7 +39,7 @@ namespace PlayerTags.Features
         {
             m_PluginConfiguration = pluginConfiguration;
             m_PluginData = pluginData;
-
+            
             //m_ContextMenu = new ContextMenu();
             //if (!m_ContextMenu.IsValid)
             //{
