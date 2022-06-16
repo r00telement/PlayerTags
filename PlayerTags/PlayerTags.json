@@ -5,9 +5,5 @@
   "Punchline": "Lightweight job visibility in nameplates and chat.",
   "Tags": [ "Jobs", "UI" ],
   "CategoryTags": [ "jobs", "UI" ],
-  "RepoUrl": "https://github.com/Pilzinsel64/PlayerTags",
-  "ImageUrls": [
-    "https://github.com/Pilzinsel64/PlayerTags/raw/main/PlayerTags/Resources/images/image1.png",
-    "https://github.com/Pilzinsel64/PlayerTags/raw/main/PlayerTags/Resources/images/image2.png"
-  ]
+  "RepoUrl": "https://github.com/Pilzinsel64/PlayerTags"
 }
