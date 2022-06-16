@@ -27,6 +27,7 @@ namespace PlayerTags.Configuration
         private PluginData m_PluginData;
 
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
+        public static int asdfasdfasdf = 0;
 
         public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
         {
@@ -43,7 +44,7 @@ namespace PlayerTags.Configuration
 
             ImGui.SetNextWindowSize(new Vector2(400, 500), ImGuiCond.FirstUseEver);
 
-            if (ImGui.Begin(Strings.Loc_Static_PluginName, ref m_PluginConfiguration.IsVisible))
+            if (ImGui.Begin(Strings.Loc_Static_PluginName + asdfasdfasdf.ToString(), ref m_PluginConfiguration.IsVisible))
             {
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 0.8f, 0.5f, 1));
                 ImGui.TextWrapped(Strings.Loc_Static_WarningMessage);
