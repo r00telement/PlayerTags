@@ -281,13 +281,12 @@ namespace PlayerTags.Data
 
         public Identity? GetIdentity(GameObjectContextMenuOpenArgs contextMenuOpenedArgs)
         {
-            if (!string.IsNullOrEmpty(contextMenuOpenedArgs.Text?.TextValue)
-                || contextMenuOpenedArgs.ObjectWorld != 0
-                || contextMenuOpenedArgs.ObjectWorld != 65535)
+            if (string.IsNullOrEmpty(contextMenuOpenedArgs.Text?.TextValue)
+                || contextMenuOpenedArgs.ObjectWorld == 0
+                || contextMenuOpenedArgs.ObjectWorld == 65535)
             {
                 return null;
             }
-
             return GetIdentity(contextMenuOpenedArgs.Text?.TextValue ?? string.Empty, contextMenuOpenedArgs.ObjectWorld);
         }
 

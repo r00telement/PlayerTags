@@ -42,7 +42,6 @@ namespace PlayerTags.Features
 
             m_ContextMenu = new DalamudContextMenuBase();
             m_ContextMenu.Functions.ContextMenu.OnOpenGameObjectContextMenu += ContextMenuHooks_ContextMenuOpened;
-            PluginConfigurationUI.asdfasdfasdf = 1;
         }
 
         public void Dispose()
@@ -57,57 +56,44 @@ namespace PlayerTags.Features
 
         private void ContextMenuHooks_ContextMenuOpened(GameObjectContextMenuOpenArgs contextMenuOpenedArgs)
         {
-            PluginConfigurationUI.asdfasdfasdf = 2;
             if (!m_PluginConfiguration.IsCustomTagsContextMenuEnabled
                 || !SupportedAddonNames.Contains(contextMenuOpenedArgs.ParentAddonName))
             {
                 return;
             }
-            PluginConfigurationUI.asdfasdfasdf = 3;
 
             Identity? identity = m_PluginData.GetIdentity(contextMenuOpenedArgs);
-            PluginConfigurationUI.asdfasdfasdf = 4;
             if (identity != null)
             {
-                PluginConfigurationUI.asdfasdfasdf = 5;
-                var notAddedTags = m_PluginData.CustomTags.Where(customTag => !identity.CustomTagIds.Contains(customTag.CustomId.Value));
-                if (notAddedTags.Any())
+                var allTags = new Dictionary<Tag, bool>();
+                foreach (var customTag in m_PluginData.CustomTags)
                 {
-                    contextMenuOpenedArgs.AddCustomItem(
-                        new GameObjectContextMenuItem(Strings.Loc_Static_ContextMenu_AddTag, subContextMenuOpenedArgs =>
-                    {
-                        //foreach (var notAddedTag in notAddedTags)
-                        //{
-                        //    subContextMenuOpenedArgs.AddCustomItem(notAddedTag.Text.Value, args =>
-                        //    {
-                        //        m_PluginData.AddCustomTagToIdentity(notAddedTag, identity);
-                        //        m_PluginConfiguration.Save(m_PluginData);
-                        //    });
-                        //}
-                    })
-                    {
-                        IsSubMenu = true
-                    });
+                    var isAdded = identity.CustomTagIds.Contains(customTag.CustomId.Value);
+                    allTags.Add(customTag, isAdded);
                 }
-
-                var addedTags = m_PluginData.CustomTags.Where(customTag => identity.CustomTagIds.Contains(customTag.CustomId.Value));
-                if (addedTags.Any())
+                
+                var sortedTags = allTags.OrderBy(n => n.Value);
+                foreach (var tag in sortedTags)
                 {
+                    string menuItemText;
+                    if (tag.Value)
+                        menuItemText = Strings.Loc_Static_ContextMenu_RemoveTag;
+                    else
+                        menuItemText = Strings.Loc_Static_ContextMenu_AddTag;
+                    menuItemText = string.Format(menuItemText, tag.Key.Text.Value);
+
                     contextMenuOpenedArgs.AddCustomItem(
-                        new GameObjectContextMenuItem(Strings.Loc_Static_ContextMenu_RemoveTag, subContextMenuOpenedArgs =>
-                    {
-                        //foreach (var addedTag in addedTags)
-                        //{
-                        //    subContextMenuOpenedArgs.AddCustomItem(addedTag.Text.Value, args =>
-                        //    {
-                        //        m_PluginData.RemoveCustomTagFromIdentity(addedTag, identity);
-                        //        m_PluginConfiguration.Save(m_PluginData);
-                        //    });
-                        //}
-                    })
-                    {
-                        IsSubMenu = true
-                    });
+                        new GameObjectContextMenuItem(menuItemText, openedEventArgs =>
+                        {
+                            if (tag.Value)
+                                m_PluginData.RemoveCustomTagFromIdentity(tag.Key, identity);
+                            else
+                                m_PluginData.AddCustomTagToIdentity(tag.Key, identity);
+                            m_PluginConfiguration.Save(m_PluginData);
+                        })
+                        {
+                            IsSubMenu = false
+                        });
                 }
             }
         }
