@@ -136,10 +136,10 @@
     <value>Player</value>
   </data>
   <data name="Loc_Static_ContextMenu_AddTag" xml:space="preserve">
-    <value>Add tag</value>
+    <value>Add tag: {0}</value>
   </data>
   <data name="Loc_Static_ContextMenu_RemoveTag" xml:space="preserve">
-    <value>Remove tag</value>
+    <value>Remove tag: {0}</value>
   </data>
   <data name="Loc_Static_Nameplates" xml:space="preserve">
     <value>Nameplates</value>
@@ -363,7 +363,6 @@
   <data name="Loc_IsIconVisibleInNameplates_Description" xml:space="preserve">
     <value>Whether the icon will be shown in nameplates.</value>
   </data>
-
   <data name="Loc_Text" xml:space="preserve">
     <value>Text</value>
   </data>
@@ -384,7 +383,7 @@
   </data>
   <data name="Loc_IsTextItalic" xml:space="preserve">
     <value>Italic</value>
-  </data> 
+  </data>
   <data name="Loc_IsTextItalic_Description" xml:space="preserve">
     <value>Whether the text will be italic.</value>
   </data>
@@ -400,7 +399,6 @@
   <data name="Loc_IsTextVisibleInNameplates_Description" xml:space="preserve">
     <value>Whether the text will be shown in nameplates.</value>
   </data>
-
   <data name="Loc_TagPositionInChat" xml:space="preserve">
     <value>Position in chat</value>
   </data>
@@ -419,14 +417,12 @@
   <data name="Loc_TagTargetInNameplates_Description" xml:space="preserve">
     <value>The element that the tag should target in nameplates.</value>
   </data>
-
   <data name="Loc_GameObjectNamesToApplyTo" xml:space="preserve">
     <value>Add to players</value>
   </data>
   <data name="Loc_GameObjectNamesToApplyTo_Description" xml:space="preserve">
     <value>A list of players to add tags to, separated by commas or semi-colons. E.g. "Cloud Strife, Tifa Lockhart".</value>
   </data>
-
   <data name="Loc_TagPosition_After" xml:space="preserve">
     <value>After</value>
   </data>
@@ -445,15 +441,12 @@
   <data name="Loc_TagPosition_Replace_Description" xml:space="preserve">
     <value>Replace the target element with the tag.</value>
   </data>
-
   <data name="Loc_IsEnabled" xml:space="preserve">
     <value>Enabled</value>
   </data>
-
   <data name="Loc_CustomId" xml:space="preserve">
     <value>Custom id</value>
   </data>
-
   <data name="Loc_GeneralCategory" xml:space="preserve">
     <value>General properties</value>
   </data>
@@ -472,7 +465,6 @@
   <data name="Loc_PlayerCategory" xml:space="preserve">
     <value>Player properties</value>
   </data>
-
   <data name="Loc_IsVisibleInPveDuties" xml:space="preserve">
     <value>Show in pve duties</value>
   </data>
@@ -491,7 +483,6 @@
   <data name="Loc_IsVisibleInOverworld_Description" xml:space="preserve">
     <value>Whether the tag should be visible in other circumstances for which there is no specific option.</value>
   </data>
-
   <data name="Loc_IsVisibleForSelf" xml:space="preserve">
     <value>Show for self</value>
   </data>
@@ -528,77 +519,66 @@
   <data name="Loc_IsVisibleForOtherPlayers_Description" xml:space="preserve">
     <value>Whether the tag should be visible for players in other circumstances for which there is no specific option.</value>
   </data>
-
   <data name="Loc_IsPlayersTabOrderedByProximity" xml:space="preserve">
     <value>Order by proximity</value>
   </data>
   <data name="Loc_IsPlayersTabOrderedByProximity_Description" xml:space="preserve">
     <value>Players that are closer to you will be ordered towards the top.</value>
   </data>
-
   <data name="Loc_IsPlayersTabSelfVisible" xml:space="preserve">
     <value>Show self</value>
   </data>
   <data name="Loc_IsPlayersTabSelfVisible_Description" xml:space="preserve">
     <value>Show yourself in the players list.</value>
   </data>
-
   <data name="Loc_IsPlayersTabFriendsVisible" xml:space="preserve">
     <value>Show friends</value>
   </data>
   <data name="Loc_IsPlayersTabFriendsVisible_Description" xml:space="preserve">
     <value>Show friends in the players list.</value>
   </data>
-
   <data name="Loc_IsPlayersTabPartyVisible" xml:space="preserve">
     <value>Show party members</value>
   </data>
   <data name="Loc_IsPlayersTabPartyVisible_Description" xml:space="preserve">
     <value>Show party members in the players list.</value>
   </data>
-
   <data name="Loc_IsPlayersTabAllianceVisible" xml:space="preserve">
     <value>Show alliance members</value>
   </data>
   <data name="Loc_IsPlayersTabAllianceVisible_Description" xml:space="preserve">
     <value>Show alliance members in the players list.</value>
   </data>
-
   <data name="Loc_IsPlayersTabEnemiesVisible" xml:space="preserve">
     <value>Show enemies</value>
   </data>
   <data name="Loc_IsPlayersTabEnemiesVisible_Description" xml:space="preserve">
     <value>Show enemies in the players list.</value>
   </data>
-
   <data name="Loc_IsPlayersTabOthersVisible" xml:space="preserve">
     <value>Show others</value>
   </data>
   <data name="Loc_IsPlayersTabOthersVisible_Description" xml:space="preserve">
     <value>Show others in the players list.</value>
   </data>
-
   <data name="Loc_IsTextColorAppliedToChatName" xml:space="preserve">
     <value>Apply color to chat name</value>
   </data>
   <data name="Loc_IsTextColorAppliedToChatName_Description" xml:space="preserve">
     <value>Whether the color will be applied to the name in chat.</value>
   </data>
-
   <data name="Loc_IsTextColorAppliedToNameplateName" xml:space="preserve">
     <value>Apply color to nameplate name</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateName_Description" xml:space="preserve">
     <value>Whether the color will be applied to the name in nameplates.</value>
   </data>
-
   <data name="Loc_IsTextColorAppliedToNameplateTitle" xml:space="preserve">
     <value>Apply color to nameplate title</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateTitle_Description" xml:space="preserve">
     <value>Whether the color will be applied to title in nameplates.</value>
   </data>
-
   <data name="Loc_IsTextColorAppliedToNameplateFreeCompany" xml:space="preserve">
     <value>Apply color to nameplate free company</value>
   </data>

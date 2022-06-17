@@ -1,9 +1,10 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.ContextMenu;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Party;
+using Dalamud.Game.Gui.ContextMenus;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Logging;
 using PlayerTags.Configuration;
-using PlayerTags.GameInterface.ContextMenus;
 using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
@@ -278,16 +279,15 @@ namespace PlayerTags.Data
             };
         }
 
-        public Identity? GetIdentity(ContextMenuOpenedArgs contextMenuOpenedArgs)
+        public Identity? GetIdentity(GameObjectContextMenuOpenArgs contextMenuOpenedArgs)
         {
-            if (contextMenuOpenedArgs.GameObjectContext == null
-                || contextMenuOpenedArgs.GameObjectContext.Name == null
-                || contextMenuOpenedArgs.GameObjectContext.WorldId == null)
+            if (string.IsNullOrEmpty(contextMenuOpenedArgs.Text?.TextValue)
+                || contextMenuOpenedArgs.ObjectWorld == 0
+                || contextMenuOpenedArgs.ObjectWorld == 65535)
             {
                 return null;
             }
-
-            return GetIdentity(contextMenuOpenedArgs.GameObjectContext.Name, contextMenuOpenedArgs.GameObjectContext.WorldId);
+            return GetIdentity(contextMenuOpenedArgs.Text?.TextValue ?? string.Empty, contextMenuOpenedArgs.ObjectWorld);
         }
 
         public Identity GetIdentity(PlayerCharacter playerCharacter)
