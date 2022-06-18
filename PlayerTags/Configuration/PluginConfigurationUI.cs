@@ -41,7 +41,7 @@ namespace PlayerTags.Configuration
                 return;
             }
 
-            ImGui.SetNextWindowSize(new Vector2(400, 500), ImGuiCond.FirstUseEver);
+            ImGui.SetNextWindowSize(new Vector2(600, 500), ImGuiCond.FirstUseEver);
 
             if (ImGui.Begin(Strings.Loc_Static_PluginName, ref m_PluginConfiguration.IsVisible))
             {
