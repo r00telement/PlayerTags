@@ -1,0 +1,588 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Loc_Static_PluginName" xml:space="preserve">
+    <value>Player Tags</value>
+  </data>
+  <data name="Loc_Static_WarningMessage" xml:space="preserve">
+    <value>Dieses Plugin kann Namensanzeige und Chat verändern. Kombiniert mit anderen Plugins, die diese ebenfalls verändern, kann es zu unerwartetem Verhalten kommen. Die Lade-Reihenfolge deiner Plugins kann einen Unterschied machen.</value>
+  </data>
+  <data name="Loc_Static_General" xml:space="preserve">
+    <value>Generell</value>
+  </data>
+  <data name="Loc_Static_QuickTag" xml:space="preserve">
+    <value>Quick Tag</value>
+  </data>
+  <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
+    <value>Getaggte Spieler</value>
+  </data>
+  <data name="Loc_Static_PlayerName" xml:space="preserve">
+    <value>Spieler</value>
+  </data>
+  <data name="Loc_Static_ContextMenu_AddTag" xml:space="preserve">
+    <value>Tag hinzufügen: {0}</value>
+  </data>
+  <data name="Loc_Static_ContextMenu_RemoveTag" xml:space="preserve">
+    <value>Tag entfernen: {0}</value>
+  </data>
+  <data name="Loc_Static_Nameplates" xml:space="preserve">
+    <value>Namensanzeigen</value>
+  </data>
+  <data name="Loc_Static_Format_AddTagToPlayer" xml:space="preserve">
+    <value>Füge '{0}' zu {1} hinzu.</value>
+  </data>
+  <data name="Loc_Static_Inherited" xml:space="preserve">
+    <value>&lt;Vererbt&gt;</value>
+  </data>
+  <data name="Loc_IsSelected" xml:space="preserve">
+    <value>Ausgewählt</value>
+  </data>
+  <data name="Loc_IsExpanded" xml:space="preserve">
+    <value>Erweitert</value>
+  </data>
+  <data name="Loc_IsCustomTagsContextMenuEnabled" xml:space="preserve">
+    <value>Kontext-Menü Integration</value>
+  </data>
+  <data name="Loc_IsCustomTagsContextMenuEnabled_Description" xml:space="preserve">
+    <value>Optionen zum Hinzufügen und Entfernen benutzerdefinierter Tags von Spielern sind im Kontextmenü verfügbar.</value>
+  </data>
+  <data name="Loc_IsShowInheritedPropertiesEnabled" xml:space="preserve">
+    <value>Zeige vererbte Eigenschaften</value>
+  </data>
+  <data name="Loc_IsShowInheritedPropertiesEnabled_Description" xml:space="preserve">
+    <value>Eigenschaften, die von übergeordneten Elementen vererbt wurden, werden im Editor angezeigt</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility" xml:space="preserve">
+    <value>Sichtbarkeit der Freien Gesellschaft</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Default" xml:space="preserve">
+    <value>Standart</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Default_Description" xml:space="preserve">
+    <value>Die Freie Gesellschaft ist nur dann auf der Namensanzeige sichtbar, wenn der Charakter Mitglied einer Freien Gesellschaft ist.</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Never" xml:space="preserve">
+    <value>Nie sichtbar</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Never_Description" xml:space="preserve">
+    <value>Die Freie Gesellschaft ist nie auf der Namensanzeige zu sehen.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility" xml:space="preserve">
+    <value>Sichtbarkeit des Titels</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Always" xml:space="preserve">
+    <value>Immer sichtbar</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Always_Description" xml:space="preserve">
+    <value>Der Titel ist auch dann auf der Namensanzeige sichtbar, wenn der Charakter keinen Titel hat.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Default" xml:space="preserve">
+    <value>Standart</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Default_Description" xml:space="preserve">
+    <value>Der Titel ist nur dann auf der Namensanzeige sichtbar, wenn der Charakter einen Titel hat.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Never" xml:space="preserve">
+    <value>Nie sichtbar</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Never_Description" xml:space="preserve">
+    <value>Der Titel ist auf der Namensanzeige nie sichtbar.</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_WhenHasTags" xml:space="preserve">
+    <value>Nur sichtbar, wenn getaggt</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_WhenHasTags_Description" xml:space="preserve">
+    <value>Der Titel ist nur auf der Namensanzeige sichtbar, wenn er getaggt ist.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition" xml:space="preserve">
+    <value>Position des Titels</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysAboveName" xml:space="preserve">
+    <value>Immer über dem Namen</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysAboveName_Description" xml:space="preserve">
+    <value>Der Titel wird immer oberhalb der Namensanzeige positioniert.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysBelowName" xml:space="preserve">
+    <value>Immer unter dem Namen</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysBelowName_Description" xml:space="preserve">
+    <value>Der Titel wird immer unterhalb der Namensanzeige positioniert</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Default" xml:space="preserve">
+    <value>Standart</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Default_Description" xml:space="preserve">
+    <value>Die Position des Titels auf der Namensanzeige wird abhängig vom Titel bestimmt.</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany" xml:space="preserve">
+    <value>Freie Gesellschaft</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany_Description" xml:space="preserve">
+    <value>Das Element "Freie Gesellschaft" auf der Namensanzeige</value>
+  </data>
+  <data name="Loc_NameplateElement_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Loc_NameplateElement_Name_Description" xml:space="preserve">
+    <value>Das Element "Name" auf der Namensanzeige</value>
+  </data>
+  <data name="Loc_NameplateElement_Title" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="Loc_NameplateElement_Title_Description" xml:space="preserve">
+    <value>Das Element "Titel" auf der Namensanzeige</value>
+  </data>
+  <data name="Loc_Static_Development" xml:space="preserve">
+    <value>Entwicklung</value>
+  </data>
+  <data name="Loc_Static_Experimental" xml:space="preserve">
+    <value>Experimentell</value>
+  </data>
+  <data name="Loc_IsPlayerNameRandomlyGenerated" xml:space="preserve">
+    <value>Zufällig generierte Spielernamen</value>
+  </data>
+  <data name="Loc_IsPlayerNameRandomlyGenerated_Description" xml:space="preserve">
+    <value>Ersetzt jeden Spielernamen durch einen zufällig generierten.</value>
+  </data>
+  <data name="Loc_IsLinkSelfInChatEnabled" xml:space="preserve">
+    <value>Tags für den eigenen Charakter im Chat anwenden</value>
+  </data>
+  <data name="Loc_IsLinkSelfInChatEnabled_Description" xml:space="preserve">
+    <value>Versucht, deinen Chat-Namen mit deinem Charakter zu verknüpfen, was es erlaubt, Tags auf den eigenen Charakter im Chat anzuwenden.</value>
+  </data>
+  <data name="Loc_IsApplyTagsToAllChatMessagesEnabled" xml:space="preserve">
+    <value>Fügt Tags zu allen Chat-Nachrichten hinzu.</value>
+  </data>
+  <data name="Loc_IsApplyTagsToAllChatMessagesEnabled_Description" xml:space="preserve">
+    <value>Fügt Tags zu allen Chat-Nachrichten hinzu, einschließlich Nicht-Sozialer Nachrichten.</value>
+  </data>
+  <data name="Loc_Static_ResetDefault_Description" xml:space="preserve">
+    <value>Setze dieses Element auf seine Ursprungs-Werte zurück.</value>
+  </data>
+  <data name="Loc_Static_ResetAllDefault_Description" xml:space="preserve">
+    <value>Setze alle Elemente auf ihre Ursprungs-Werte zurück. Benutzerdefinierte Tags bleiben unberührt.</value>
+  </data>
+  <data name="Loc_Static_Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="Loc_Static_NoText" xml:space="preserve">
+    <value>&lt;Kein Text&gt;</value>
+  </data>
+  <data name="Loc_AllTags" xml:space="preserve">
+    <value>Alle</value>
+  </data>
+  <data name="Loc_AllRoleTags" xml:space="preserve">
+    <value>Rollen</value>
+  </data>
+  <data name="Loc_Role_LandHand" xml:space="preserve">
+    <value>Handwerker/Sammler</value>
+  </data>
+  <data name="Loc_Role_Tank" xml:space="preserve">
+    <value>Verteidiger</value>
+  </data>
+  <data name="Loc_Role_Healer" xml:space="preserve">
+    <value>Heiler</value>
+  </data>
+  <data name="Loc_Role_Dps" xml:space="preserve">
+    <value>Angreifer</value>
+  </data>
+  <data name="Loc_DpsRole_Melee" xml:space="preserve">
+    <value>Nahkämpfer</value>
+  </data>
+  <data name="Loc_DpsRole_Ranged" xml:space="preserve">
+    <value>Fernkämpfer</value>
+  </data>
+  <data name="Loc_RangedDpsRole_Magical" xml:space="preserve">
+    <value>Magisch</value>
+  </data>
+  <data name="Loc_RangedDpsRole_Physical" xml:space="preserve">
+    <value>Physisch</value>
+  </data>
+  <data name="Loc_LandHandRole_Hand" xml:space="preserve">
+    <value>Handwerker</value>
+  </data>
+  <data name="Loc_LandHandRole_Land" xml:space="preserve">
+    <value>Sammler</value>
+  </data>
+  <data name="Loc_AllCustomTags" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="Loc_CustomTags" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="Loc_IsEnabled_Description" xml:space="preserve">
+    <value>Aktiviert den Wert dieses Eingriffs.</value>
+  </data>
+  <data name="Loc_Static_AddPropertyOverride_Description" xml:space="preserve">
+    <value>Füge eine Eigenschafts-Überschreibung hinzu</value>
+  </data>
+  <data name="Loc_Static_RemovePropertyOverride_Description" xml:space="preserve">
+    <value>Entferne diese Eigenschafts-Überschreibung. Der Wert wird vom übergeordneten Wert vererbt.</value>
+  </data>
+  <data name="Loc_Static_NewTag" xml:space="preserve">
+    <value>Neuer Tag</value>
+  </data>
+  <data name="Loc_Static_AddCustomTag_Description" xml:space="preserve">
+    <value>Füge einen benutzerdefinierten Tag hinzu.</value>
+  </data>
+  <data name="Loc_Static_RemoveCustomTag_Description" xml:space="preserve">
+    <value>Entferne diesen benutzerdefinierten Tag.</value>
+  </data>
+  <data name="Loc_Icon" xml:space="preserve">
+    <value>Symbol</value>
+  </data>
+  <data name="Loc_Icon_Description" xml:space="preserve">
+    <value>Das Symbol, das dargestellt wird</value>
+  </data>
+  <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
+    <value>Zeige im Chat</value>
+  </data>
+  <data name="Loc_IsIconVisibleInChat_Description" xml:space="preserve">
+    <value>Bestimmt, ob das Symbol im Chat dargestellt wird.</value>
+  </data>
+  <data name="Loc_IsIconVisibleInNameplates" xml:space="preserve">
+    <value>Zeige in der Namensanzeige</value>
+  </data>
+  <data name="Loc_IsIconVisibleInNameplates_Description" xml:space="preserve">
+    <value>Bestimmt, ob das Symbol in der Namensanzeige dargestellt wird.</value>
+  </data>
+  <data name="Loc_Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Loc_Text_Description" xml:space="preserve">
+    <value>Der Text der angezeigt wird</value>
+  </data>
+  <data name="Loc_TextColor" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="Loc_TextColor_Description" xml:space="preserve">
+    <value>Die Farbe des Texts</value>
+  </data>
+  <data name="Loc_TextGlowColor" xml:space="preserve">
+    <value>Leuchtfarbe</value>
+  </data>
+  <data name="Loc_TextGlowColor_Description" xml:space="preserve">
+    <value>Die Leuchtfarbe des Texts</value>
+  </data>
+  <data name="Loc_IsTextItalic" xml:space="preserve">
+    <value>Kursiv</value>
+  </data>
+  <data name="Loc_IsTextItalic_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Text kursiv dargestellt wird</value>
+  </data>
+  <data name="Loc_IsTextVisibleInChat" xml:space="preserve">
+    <value>Zeige in Chat</value>
+  </data>
+  <data name="Loc_IsTextVisibleInChat_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Text im Chat angezeigt wird</value>
+  </data>
+  <data name="Loc_IsTextVisibleInNameplates" xml:space="preserve">
+    <value>Zeige in der Namensanzeige</value>
+  </data>
+  <data name="Loc_IsTextVisibleInNameplates_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Text in der Namensanzeige dargestellt wird</value>
+  </data>
+  <data name="Loc_TagPositionInChat" xml:space="preserve">
+    <value>Position im Chat</value>
+  </data>
+  <data name="Loc_TagPositionInChat_Description" xml:space="preserve">
+    <value>Bestimmt, wo der Tag im Chat positioniert wird</value>
+  </data>
+  <data name="Loc_TagPositionInNameplates" xml:space="preserve">
+    <value>Position in der Namensanzeige</value>
+  </data>
+  <data name="Loc_TagPositionInNameplates_Description" xml:space="preserve">
+    <value>Bestimmt, wo der Tag in der Namensanzeige positioniert wird</value>
+  </data>
+  <data name="Loc_TagTargetInNameplates" xml:space="preserve">
+    <value>Ziel in der Namensanzeige</value>
+  </data>
+  <data name="Loc_TagTargetInNameplates_Description" xml:space="preserve">
+    <value>Das Element in der Namensanzeige, auf das der Tag zugreifen soll.</value>
+  </data>
+  <data name="Loc_GameObjectNamesToApplyTo" xml:space="preserve">
+    <value>Zu Spielern hinzufügen</value>
+  </data>
+  <data name="Loc_GameObjectNamesToApplyTo_Description" xml:space="preserve">
+    <value>Eine Liste von Spielern, denen Tags hinzugefügt werden sollen, getrennt durch Kommas oder Semikolons, z.B. "Cloud Strife, Tifa Lockhart".</value>
+  </data>
+  <data name="Loc_TagPosition_After" xml:space="preserve">
+    <value>Danach</value>
+  </data>
+  <data name="Loc_TagPosition_After_Description" xml:space="preserve">
+    <value>Zeigt den Tag nach dem Zielelement an.</value>
+  </data>
+  <data name="Loc_TagPosition_Before" xml:space="preserve">
+    <value>Davor</value>
+  </data>
+  <data name="Loc_TagPosition_Before_Description" xml:space="preserve">
+    <value>Zeigt den Tag vor dem Zielelement an.</value>
+  </data>
+  <data name="Loc_TagPosition_Replace" xml:space="preserve">
+    <value>Ersetze</value>
+  </data>
+  <data name="Loc_TagPosition_Replace_Description" xml:space="preserve">
+    <value>Ersetze das Zielelement mit dem Tag</value>
+  </data>
+  <data name="Loc_IsEnabled" xml:space="preserve">
+    <value>Aktiviert</value>
+  </data>
+  <data name="Loc_CustomId" xml:space="preserve">
+    <value>Benutzerdefinierte ID</value>
+  </data>
+  <data name="Loc_GeneralCategory" xml:space="preserve">
+    <value>Generelle Eigenschaften</value>
+  </data>
+  <data name="Loc_IconCategory" xml:space="preserve">
+    <value>Symbol-Eigenschaften</value>
+  </data>
+  <data name="Loc_TextCategory" xml:space="preserve">
+    <value>Text-Eigenschaften</value>
+  </data>
+  <data name="Loc_PositionCategory" xml:space="preserve">
+    <value>Positions-Eigenschaften</value>
+  </data>
+  <data name="Loc_ActivityCategory" xml:space="preserve">
+    <value>Aktivitäts-Eigenschaften</value>
+  </data>
+  <data name="Loc_PlayerCategory" xml:space="preserve">
+    <value>Spieler Eigenschaften</value>
+  </data>
+  <data name="Loc_IsVisibleInPveDuties" xml:space="preserve">
+    <value>Zeige in PvE-Inhalten</value>
+  </data>
+  <data name="Loc_IsVisibleInPveDuties_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag in PvE-Inhalten sichtbar sein soll.</value>
+  </data>
+  <data name="Loc_IsVisibleInPvpDuties" xml:space="preserve">
+    <value>Zeige in PvP-Inhalten</value>
+  </data>
+  <data name="Loc_IsVisibleInPvpDuties_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag in PvP-Inhalten sichtbar sein soll</value>
+  </data>
+  <data name="Loc_IsVisibleInOverworld" xml:space="preserve">
+    <value>Zeige überall sonst</value>
+  </data>
+  <data name="Loc_IsVisibleInOverworld_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag in Umständen sichtbar sein soll, für die keine spezifische Option verfügbar sind</value>
+  </data>
+  <data name="Loc_IsVisibleForSelf" xml:space="preserve">
+    <value>Zeige für den eigenen Charakter</value>
+  </data>
+  <data name="Loc_IsVisibleForSelf_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag für den eigenen Charakter sichtbar sein soll</value>
+  </data>
+  <data name="Loc_IsVisibleForPartyPlayers" xml:space="preserve">
+    <value>Zeige für Gruppenmitglieder</value>
+  </data>
+  <data name="Loc_IsVisibleForPartyPlayers_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag für Gruppenmitglieder sichtbar sein soll</value>
+  </data>
+  <data name="Loc_IsVisibleForAlliancePlayers" xml:space="preserve">
+    <value>Zeige für Allianz-Mitglieder</value>
+  </data>
+  <data name="Loc_IsVisibleForAlliancePlayers_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag für Allianz-Mitglieder sichtbar sein soll, die nicht in der aktuellen Gruppe sind</value>
+  </data>
+  <data name="Loc_IsVisibleForFriendPlayers" xml:space="preserve">
+    <value>Zeige für Freunde</value>
+  </data>
+  <data name="Loc_IsVisibleForFriendPlayers_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag für Freunde sichtbar sein soll</value>
+  </data>
+  <data name="Loc_IsVisibleForEnemyPlayers" xml:space="preserve">
+    <value>Zeige für Feinde</value>
+  </data>
+  <data name="Loc_IsVisibleForEnemyPlayers_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag für Feinde im PvP sichtbar sein soll.</value>
+  </data>
+  <data name="Loc_IsVisibleForOtherPlayers" xml:space="preserve">
+    <value>Zeige für Andere</value>
+  </data>
+  <data name="Loc_IsVisibleForOtherPlayers_Description" xml:space="preserve">
+    <value>Bestimmt, ob der Tag für andere Spieler in Inhalten sichtbar sein soll, für die keine spezifische Option verfügbar sind</value>
+  </data>
+  <data name="Loc_IsPlayersTabOrderedByProximity" xml:space="preserve">
+    <value>Sortiere nach Bekanntheitsgrad</value>
+  </data>
+  <data name="Loc_IsPlayersTabOrderedByProximity_Description" xml:space="preserve">
+    <value> Spieler, die dir bekannter sind, werden in der Liste weiter oben angezeigt.</value>
+  </data>
+  <data name="Loc_IsPlayersTabSelfVisible" xml:space="preserve">
+    <value>Zeige eigenen Charakter</value>
+  </data>
+  <data name="Loc_IsPlayersTabSelfVisible_Description" xml:space="preserve">
+    <value>Zeige den eigenen Charakter in der Spielerliste</value>
+  </data>
+  <data name="Loc_IsPlayersTabFriendsVisible" xml:space="preserve">
+    <value>Zeige Freunde</value>
+  </data>
+  <data name="Loc_IsPlayersTabFriendsVisible_Description" xml:space="preserve">
+    <value>Zeige Freunde in der Spielerliste</value>
+  </data>
+  <data name="Loc_IsPlayersTabPartyVisible" xml:space="preserve">
+    <value>Zeige Gruppenmitglieder</value>
+  </data>
+  <data name="Loc_IsPlayersTabPartyVisible_Description" xml:space="preserve">
+    <value>Zeige Gruppenmitglieder in der Spielerliste</value>
+  </data>
+  <data name="Loc_IsPlayersTabAllianceVisible" xml:space="preserve">
+    <value>Zeige Allianz-Mitglieder</value>
+  </data>
+  <data name="Loc_IsPlayersTabAllianceVisible_Description" xml:space="preserve">
+    <value>Zeige Allianz-Mitglieder in der Spieler-Liste</value>
+  </data>
+  <data name="Loc_IsPlayersTabEnemiesVisible" xml:space="preserve">
+    <value>Zeige Feinde</value>
+  </data>
+  <data name="Loc_IsPlayersTabEnemiesVisible_Description" xml:space="preserve">
+    <value>Zeige Feinde in der Spieler-Liste</value>
+  </data>
+  <data name="Loc_IsPlayersTabOthersVisible" xml:space="preserve">
+    <value>Zeige Andere</value>
+  </data>
+  <data name="Loc_IsPlayersTabOthersVisible_Description" xml:space="preserve">
+    <value>Zeige Andere in der Spielerliste</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToChatName" xml:space="preserve">
+    <value>Wende Farbe auf den Chat-Namen an</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToChatName_Description" xml:space="preserve">
+    <value>Bestimmt, ob im Chat die Farbe auf den Namen angewendet wird.</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateName" xml:space="preserve">
+    <value>Wende Farbe auf den Namen der Namensanzeige an</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateName_Description" xml:space="preserve">
+    <value>Bestimmt, ob die Farbe in der Namensanzeige auf den Namen angewendet wird</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateTitle" xml:space="preserve">
+    <value>Wende die Farbe auf den Titel der Namensanzeige an</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateTitle_Description" xml:space="preserve">
+    <value>Bestimmt, ob die Farbe in der Namensanzeige auf den Titel angewendet wird</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateFreeCompany" xml:space="preserve">
+    <value>Wende Farbe auf die Freie Gesellschaft an</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateFreeCompany_Description" xml:space="preserve">
+    <value>Bestimmt, ob die Farbe in der Namensanzeige auf die Freie Gesellschaft angewendet wird</value>
+  </data>
+</root>
