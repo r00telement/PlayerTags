@@ -67,7 +67,7 @@ namespace PlayerTags.GameInterface.Nameplates
 
             if (m_PluginAddressResolver.SetPlayerNameplatePtr.HasValue)
             {
-                m_SetPlayerNameplateHook = new Hook<SetPlayerNameplateDelegate_Unmanaged>(m_PluginAddressResolver.SetPlayerNameplatePtr.Value, new SetPlayerNameplateDelegate_Unmanaged(SetPlayerNameplateDetour));
+                m_SetPlayerNameplateHook = Hook<SetPlayerNameplateDelegate_Unmanaged>.FromAddress(m_PluginAddressResolver.SetPlayerNameplatePtr.Value, new SetPlayerNameplateDelegate_Unmanaged(SetPlayerNameplateDetour));
                 m_SetPlayerNameplateHook?.Enable();
             }
         }
