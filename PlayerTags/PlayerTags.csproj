@@ -53,6 +53,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Update="Resources\Paths.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Paths.resx</DependentUpon>
+        </Compile>
         <Compile Update="Resources\Strings.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -61,6 +66,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <EmbeddedResource Update="Resources\Paths.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Paths.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
         <EmbeddedResource Update="Resources\Strings.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Strings.Designer.cs</LastGenOutput>

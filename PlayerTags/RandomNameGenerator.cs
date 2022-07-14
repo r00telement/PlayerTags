@@ -11,12 +11,6 @@ namespace PlayerTags
     /// </summary>
     public static class RandomNameGenerator
     {
-        private static string? PluginDirectory
-        {
-            get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); }
-        }
-
-        private const string c_AdjectivesPath = "Resources/Words/Adjectives.txt";
         private static string[]? s_Adjectives;
         private static string[] Adjectives
         {
@@ -26,7 +20,7 @@ namespace PlayerTags
                 {
                     try
                     {
-                        s_Adjectives = File.ReadAllLines($"{PluginDirectory}/{c_AdjectivesPath}");
+                        s_Adjectives = File.ReadAllLines(Path.Combine(MyPaths.ResourcePath, Resources.Paths.AdjectivesTxt));
                     }
                     catch (Exception ex)
                     {
@@ -43,7 +37,6 @@ namespace PlayerTags
             }
         }
 
-        private const string c_NounsPath = "Resources/Words/Nouns.txt";
         private static string[]? s_Nouns;
         private static string[] Nouns
         {
@@ -53,7 +46,7 @@ namespace PlayerTags
                 {
                     try
                     {
-                        s_Nouns = File.ReadAllLines($"{PluginDirectory}/{c_NounsPath}");
+                        s_Nouns = File.ReadAllLines(Path.Combine(MyPaths.ResourcePath, Resources.Paths.NounsTxt));
                     }
                     catch (Exception ex)
                     {
