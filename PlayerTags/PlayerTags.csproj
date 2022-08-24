@@ -12,11 +12,11 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <OutputPath>$(AppData)\XIVLauncher\devPlugins\PlayerTags\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup>
       <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
  
     <PropertyGroup>
