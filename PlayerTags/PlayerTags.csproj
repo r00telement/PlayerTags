@@ -14,6 +14,10 @@
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <OutputPath>$(AppData)\XIVLauncher\devPlugins\PlayerTags\</OutputPath>
     </PropertyGroup>
+
+    <PropertyGroup>
+      <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    </PropertyGroup>
  
     <PropertyGroup>
         <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
