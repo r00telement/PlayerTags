@@ -33,22 +33,22 @@ namespace PlayerTags.Features
 
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
-        private DalamudContextMenuBase? m_ContextMenu;
+        private DalamudContextMenu? m_ContextMenu;
 
         public CustomTagsContextMenuFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
         {
             m_PluginConfiguration = pluginConfiguration;
             m_PluginData = pluginData;
 
-            m_ContextMenu = new DalamudContextMenuBase();
-            m_ContextMenu.Functions.ContextMenu.OnOpenGameObjectContextMenu += ContextMenuHooks_ContextMenuOpened;
+            m_ContextMenu = new DalamudContextMenu();
+            m_ContextMenu.OnOpenGameObjectContextMenu += ContextMenuHooks_ContextMenuOpened;
         }
 
         public void Dispose()
         {
             if (m_ContextMenu != null)
             {
-                m_ContextMenu.Functions.ContextMenu.OnOpenGameObjectContextMenu -= ContextMenuHooks_ContextMenuOpened;
+                m_ContextMenu.OnOpenGameObjectContextMenu -= ContextMenuHooks_ContextMenuOpened;
                 ((IDisposable)m_ContextMenu).Dispose();
                 m_ContextMenu = null;
             }
