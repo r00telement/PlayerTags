@@ -67,25 +67,17 @@ namespace PlayerTags.Features
                             var textPayloadIndex = seString.Payloads.IndexOf(payload);
 
                             // Chop text to the left and insert it as a new payload
-                            if (textMatchIndex > 0) // textMatchIndex > 1 TODO: Find out, why this does the correct thing but doesn't let process the name correctly.
+                            if (textMatchIndex > 0)
                             {
-                                var indexToUser = textMatchIndex;
-
-                                // TODO: Find out, why this does the correct thing but doesn't let process the name correctly.
-                                //if (indexToUser == 1 && activityContextManager.CurrentActivityContext != ActivityContext.None)
-                                //    indexToUser--;
-
-                                seString.Payloads.Insert(textPayloadIndex, new TextPayload(textPayload.Text.Substring(0, indexToUser)));
+                                // Add the content before the player
+                                seString.Payloads.Insert(textPayloadIndex, new TextPayload(textPayload.Text.Substring(0, textMatchIndex)));
 
                                 // Remove from the chopped text from the original payload
-                                textPayload.Text = textPayload.Text.Substring(indexToUser, textPayload.Text.Length - textMatchIndex);
+                                textPayload.Text = textPayload.Text.Substring(textMatchIndex, textPayload.Text.Length - textMatchIndex);
                             }
 
-                            // TODO: Find out, why this does the correct thing but doesn't let process the name correctly.
-                            var textPayloadTextLenghOffset = /*textMatchIndex == 1 ? 1 :*/ 0;
-
                             // This is the last reference to the local player in this payload
-                            if (textPayload.Text.Length == playerName.Length + textPayloadTextLenghOffset)
+                            if (textPayload.Text.Length == playerName.Length)
                             {
                                 playerTextPayloads.Add(textPayload);
                                 break;
@@ -97,7 +89,7 @@ namespace PlayerTags.Features
                             seString.Payloads.Insert(textPayloadIndex, playerTextPayload);
 
                             // Remove from the chopped text from the original payload
-                            textPayload.Text = textPayload.Text.Substring(0, playerName.Length + textPayloadTextLenghOffset);
+                            textPayload.Text = textPayload.Text.Substring(0, playerName.Length);
 
                             textMatchIndex = textPayload.Text.IndexOf(playerName);
                         }
@@ -109,9 +101,6 @@ namespace PlayerTags.Features
                         // Typically when you receive a player payload followed by a text payload, it displays the text
                         // and links it with the player payload. When trying to make one of these manually, it displays the player payload separately,
                         // effectively doubling up the player name.
-                        //var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
-                        //seString.Payloads.Insert(seString.Payloads.IndexOf(playerTextPayload), playerPayload);
-
                         // For now, don't follow up with a text payload. Only use a player payload.
                         var playerPayload = new PlayerPayload(playerTextPayload.Text, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
                         seString.Payloads.Insert(seString.Payloads.IndexOf(playerTextPayload), playerPayload);
