@@ -102,7 +102,7 @@ namespace PlayerTags.Features
                         // and links it with the player payload. When trying to make one of these manually, it displays the player payload separately,
                         // effectively doubling up the player name.
                         // For now, don't follow up with a text payload. Only use a player payload.
-                        var playerPayload = new PlayerPayload(playerTextPayload.Text, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
+                        var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
                         seString.Payloads.Insert(seString.Payloads.IndexOf(playerTextPayload), playerPayload);
                         seString.Payloads.Remove(playerTextPayload);
                     }
