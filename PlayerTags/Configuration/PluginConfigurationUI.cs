@@ -1,4 +1,5 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.Configuration;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface;
 using Dalamud.Logging;
@@ -25,6 +26,7 @@ namespace PlayerTags.Configuration
 
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
+        private PropertyProxy propertyProxy;
 
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
 
@@ -32,6 +34,7 @@ namespace PlayerTags.Configuration
         {
             m_PluginConfiguration = config;
             m_PluginData = pluginData;
+            propertyProxy = new PropertyProxy(config);
         }
 
         public void Draw()
@@ -63,9 +66,9 @@ namespace PlayerTags.Configuration
                         ImGui.Spacing();
                         ImGui.Spacing();
                         DrawHeading(Strings.Loc_Static_Nameplates);
-                        DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateFreeCompanyVisibility, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateTitleVisibility, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawComboBox(true, true, false, ref m_PluginConfiguration.NameplateTitlePosition, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateFreeCompanyVisibility, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateTitleVisibility, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateTitlePosition, () => m_PluginConfiguration.Save(m_PluginData));
 
 
                         ImGui.Spacing();
@@ -1157,6 +1160,39 @@ namespace PlayerTags.Configuration
 
                 DrawColorButton(uiColor.RowId.ToString(), UIColorHelper.ToColor(uiColor), () => { colorSelected(uiColor); });
                 currentColumn++;
+            }
+        }
+
+        private class PropertyProxy
+        {
+            private PluginConfiguration pluginConfig;
+
+            public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility;
+            public NameplateTitleVisibility NameplateTitleVisibility;
+            public NameplateTitlePosition NameplateTitlePosition;
+
+            public PropertyProxy(PluginConfiguration config)
+            {
+                pluginConfig = config;
+            }
+
+            public void LoadData()
+            {
+                NameplateFreeCompanyVisibility = pluginConfig.NameplateFreeCompanyVisibility[ActivityContext.None];
+                NameplateTitleVisibility = pluginConfig.NameplateTitleVisibility[ActivityContext.None];
+                NameplateTitlePosition = pluginConfig.NameplateTitlePosition[ActivityContext.None];
+            }
+
+            public void SaveData()
+            {
+                foreach (var key in pluginConfig.NameplateFreeCompanyVisibility.Keys)
+                    pluginConfig.NameplateFreeCompanyVisibility[key] = NameplateFreeCompanyVisibility;
+
+                foreach (var key in pluginConfig.NameplateTitleVisibility.Keys)
+                    pluginConfig.NameplateTitleVisibility[key] = NameplateTitleVisibility;
+
+                foreach (var key in pluginConfig.NameplateTitlePosition.Keys)
+                    pluginConfig.NameplateTitlePosition[key] = NameplateTitlePosition;
             }
         }
     }
