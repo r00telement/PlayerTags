@@ -12,11 +12,69 @@ namespace PlayerTags.Configuration
     public class PluginConfiguration : IPluginConfiguration
     {
         public int Version { get; set; } = 0;
-
         public bool IsVisible = false;
-        public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Default;
-        public NameplateTitleVisibility NameplateTitleVisibility = NameplateTitleVisibility.WhenHasTags;
-        public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
+
+        private const NameplateFreeCompanyVisibility DefaultNameplateFreeCompanyVisibility = Data.NameplateFreeCompanyVisibility.Default;
+        private const NameplateTitleVisibility DefaultNameplateTitleVisibility = Data.NameplateTitleVisibility.WhenHasTags;
+        private const NameplateTitlePosition DefaultNameplateTitlePosition = Data.NameplateTitlePosition.AlwaysAboveName;
+
+        [JsonProperty("NameplateFreeCompanyVisibilityV2")]
+        public Dictionary<ActivityContext, NameplateFreeCompanyVisibility> NameplateFreeCompanyVisibility = new Dictionary<ActivityContext, NameplateFreeCompanyVisibility>()
+        {
+            { ActivityContext.None, DefaultNameplateFreeCompanyVisibility },
+            { ActivityContext.PveDuty, DefaultNameplateFreeCompanyVisibility },
+            { ActivityContext.PvpDuty, DefaultNameplateFreeCompanyVisibility }
+        };
+        [JsonProperty("NameplateTitleVisibilityV2")]
+        public Dictionary<ActivityContext, NameplateTitleVisibility> NameplateTitleVisibility = new Dictionary<ActivityContext, NameplateTitleVisibility>()
+        {
+            { ActivityContext.None, DefaultNameplateTitleVisibility },
+            { ActivityContext.PveDuty, DefaultNameplateTitleVisibility },
+            { ActivityContext.PvpDuty, DefaultNameplateTitleVisibility }
+        };
+        [JsonProperty("NameplateTitlePositionV2")]
+        public Dictionary<ActivityContext, NameplateTitlePosition> NameplateTitlePosition = new Dictionary<ActivityContext, NameplateTitlePosition>()
+        {
+            { ActivityContext.None, DefaultNameplateTitlePosition },
+            { ActivityContext.PveDuty, DefaultNameplateTitlePosition },
+            { ActivityContext.PvpDuty, DefaultNameplateTitlePosition }
+        };
+
+        #region Obsulate Properties
+
+        [JsonProperty("NameplateFreeCompanyVisibility"), Obsolete]
+        private NameplateFreeCompanyVisibility NameplateFreeCompanyVisibilityV1
+        {
+            set
+            {
+                NameplateFreeCompanyVisibility[ActivityContext.None] = value;
+                NameplateFreeCompanyVisibility[ActivityContext.PveDuty] = value;
+                NameplateFreeCompanyVisibility[ActivityContext.PvpDuty] = value;
+            }
+        }
+        [JsonProperty("NameplateTitleVisibility"), Obsolete]
+        public NameplateTitleVisibility NameplateTitleVisibilityV1
+        {
+            set
+            {
+                NameplateTitleVisibility[ActivityContext.None] = value;
+                NameplateTitleVisibility[ActivityContext.PveDuty] = value;
+                NameplateTitleVisibility[ActivityContext.PvpDuty] = value;
+            }
+        }
+        [JsonProperty("NameplateTitlePosition"), Obsolete]
+        public NameplateTitlePosition NameplateTitlePositionV1
+        {
+            set
+            {
+                NameplateTitlePosition[ActivityContext.None] = value;
+                NameplateTitlePosition[ActivityContext.PveDuty] = value;
+                NameplateTitlePosition[ActivityContext.PvpDuty] = value;
+            }
+        }
+
+        #endregion
+
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
