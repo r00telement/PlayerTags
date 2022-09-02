@@ -31,7 +31,7 @@ namespace PlayerTags.Features
 
         private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            if (m_PluginConfiguration.IsLinkSelfInChatEnabled)
+            if (m_PluginConfiguration.GeneralOptions[activityContextManager.CurrentActivityContext].IsLinkSelfInChatEnabled)
             {
                 ParsePayloads(sender);
                 ParsePayloads(message);

@@ -17,63 +17,14 @@ namespace PlayerTags.Configuration
         private const NameplateFreeCompanyVisibility DefaultNameplateFreeCompanyVisibility = Data.NameplateFreeCompanyVisibility.Default;
         private const NameplateTitleVisibility DefaultNameplateTitleVisibility = Data.NameplateTitleVisibility.WhenHasTags;
         private const NameplateTitlePosition DefaultNameplateTitlePosition = Data.NameplateTitlePosition.AlwaysAboveName;
+        private const bool DefaultIsApplyTagsToAllChatMessagesEnabled = true;
 
-        [JsonProperty("NameplateFreeCompanyVisibilityV2")]
-        public Dictionary<ActivityContext, NameplateFreeCompanyVisibility> NameplateFreeCompanyVisibility = new Dictionary<ActivityContext, NameplateFreeCompanyVisibility>()
+        public Dictionary<ActivityContext, GeneralOptionsClass> GeneralOptions = new Dictionary<ActivityContext, GeneralOptionsClass>()
         {
-            { ActivityContext.None, DefaultNameplateFreeCompanyVisibility },
-            { ActivityContext.PveDuty, DefaultNameplateFreeCompanyVisibility },
-            { ActivityContext.PvpDuty, DefaultNameplateFreeCompanyVisibility }
+            { ActivityContext.None, new GeneralOptionsClass() },
+            { ActivityContext.PveDuty, new GeneralOptionsClass() },
+            { ActivityContext.PvpDuty, new GeneralOptionsClass() }
         };
-        [JsonProperty("NameplateTitleVisibilityV2")]
-        public Dictionary<ActivityContext, NameplateTitleVisibility> NameplateTitleVisibility = new Dictionary<ActivityContext, NameplateTitleVisibility>()
-        {
-            { ActivityContext.None, DefaultNameplateTitleVisibility },
-            { ActivityContext.PveDuty, DefaultNameplateTitleVisibility },
-            { ActivityContext.PvpDuty, DefaultNameplateTitleVisibility }
-        };
-        [JsonProperty("NameplateTitlePositionV2")]
-        public Dictionary<ActivityContext, NameplateTitlePosition> NameplateTitlePosition = new Dictionary<ActivityContext, NameplateTitlePosition>()
-        {
-            { ActivityContext.None, DefaultNameplateTitlePosition },
-            { ActivityContext.PveDuty, DefaultNameplateTitlePosition },
-            { ActivityContext.PvpDuty, DefaultNameplateTitlePosition }
-        };
-
-        #region Obsulate Properties
-
-        [JsonProperty("NameplateFreeCompanyVisibility"), Obsolete]
-        private NameplateFreeCompanyVisibility NameplateFreeCompanyVisibilityV1
-        {
-            set
-            {
-                NameplateFreeCompanyVisibility[ActivityContext.None] = value;
-                NameplateFreeCompanyVisibility[ActivityContext.PveDuty] = value;
-                NameplateFreeCompanyVisibility[ActivityContext.PvpDuty] = value;
-            }
-        }
-        [JsonProperty("NameplateTitleVisibility"), Obsolete]
-        public NameplateTitleVisibility NameplateTitleVisibilityV1
-        {
-            set
-            {
-                NameplateTitleVisibility[ActivityContext.None] = value;
-                NameplateTitleVisibility[ActivityContext.PveDuty] = value;
-                NameplateTitleVisibility[ActivityContext.PvpDuty] = value;
-            }
-        }
-        [JsonProperty("NameplateTitlePosition"), Obsolete]
-        public NameplateTitlePosition NameplateTitlePositionV1
-        {
-            set
-            {
-                NameplateTitlePosition[ActivityContext.None] = value;
-                NameplateTitlePosition[ActivityContext.PveDuty] = value;
-                NameplateTitlePosition[ActivityContext.PvpDuty] = value;
-            }
-        }
-
-        #endregion
 
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
@@ -85,8 +36,6 @@ namespace PlayerTags.Configuration
         public bool IsPlayersTabAllianceVisible = true;
         public bool IsPlayersTabEnemiesVisible = true;
         public bool IsPlayersTabOthersVisible = false;
-        public bool IsLinkSelfInChatEnabled = false;
-        public bool IsApplyTagsToAllChatMessagesEnabled = true;
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();
@@ -117,6 +66,58 @@ namespace PlayerTags.Configuration
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public List<Identity> Identities = new List<Identity>();
+
+        #region Obsulate Properties
+
+        [JsonProperty("NameplateFreeCompanyVisibility"), Obsolete]
+        private NameplateFreeCompanyVisibility NameplateFreeCompanyVisibilityV1
+        {
+            set
+            {
+                foreach (var key in GeneralOptions.Keys)
+                    GeneralOptions[key].NameplateFreeCompanyVisibility = value;
+            }
+        }
+        [JsonProperty("NameplateTitleVisibility"), Obsolete]
+        public NameplateTitleVisibility NameplateTitleVisibilityV1
+        {
+            set
+            {
+                foreach (var key in GeneralOptions.Keys)
+                    GeneralOptions[key].NameplateTitleVisibility = value;
+            }
+        }
+        [JsonProperty("NameplateTitlePosition"), Obsolete]
+        public NameplateTitlePosition NameplateTitlePositionV1
+        {
+            set
+            {
+                foreach (var key in GeneralOptions.Keys)
+                    GeneralOptions[key].NameplateTitlePosition = value;
+            }
+        }
+
+        [JsonProperty("IsApplyTagsToAllChatMessagesEnabled"), Obsolete]
+        private bool IsApplyTagsToAllChatMessagesEnabledV1
+        {
+            set
+            {
+                foreach (var key in GeneralOptions.Keys)
+                    GeneralOptions[key].IsApplyTagsToAllChatMessagesEnabled = value;
+            }
+        }
+
+        [JsonProperty("IsLinkSelfInChatEnabled"), Obsolete]
+        private bool IsLinkSelfInChatEnabledV1
+        {
+            set
+            {
+                foreach (var key in GeneralOptions.Keys)
+                    GeneralOptions[key].IsLinkSelfInChatEnabled = value;
+            }
+        }
+
+        #endregion
 
         public event System.Action? Saved;
 
@@ -218,5 +219,15 @@ namespace PlayerTags.Configuration
             PluginServices.DalamudPluginInterface.SavePluginConfig(this);
             Saved?.Invoke();
         }
+    }
+
+    public class GeneralOptionsClass
+    {
+        public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Default;
+        public NameplateTitleVisibility NameplateTitleVisibility = NameplateTitleVisibility.WhenHasTags;
+        public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
+
+        public bool IsApplyTagsToAllChatMessagesEnabled = true;
+        public bool IsLinkSelfInChatEnabled = false;
     }
 }

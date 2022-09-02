@@ -48,6 +48,8 @@ namespace PlayerTags.Configuration
 
             if (ImGui.Begin(Strings.Loc_Static_PluginName, ref m_PluginConfiguration.IsVisible))
             {
+                propertyProxy.LoadData();
+
                 ImGui.PushStyleColor(ImGuiCol.Text, new Vector4(1, 0.8f, 0.5f, 1));
                 ImGui.TextWrapped(Strings.Loc_Static_WarningMessage);
                 ImGui.PopStyleColor();
@@ -60,23 +62,23 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsCustomTagsContextMenuEnabled), true, ref m_PluginConfiguration.IsCustomTagsContextMenuEnabled, () => SaveSettings());
 
 
                         ImGui.Spacing();
                         ImGui.Spacing();
                         DrawHeading(Strings.Loc_Static_Nameplates);
-                        DrawComboBox(true, true, false, ref propertyProxy.NameplateFreeCompanyVisibility, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawComboBox(true, true, false, ref propertyProxy.NameplateTitleVisibility, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawComboBox(true, true, false, ref propertyProxy.NameplateTitlePosition, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateFreeCompanyVisibility, () => SaveSettings(true));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateTitleVisibility, () => SaveSettings(true));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateTitlePosition, () => SaveSettings(true));
 
 
                         ImGui.Spacing();
                         ImGui.Spacing();
                         DrawHeading(Strings.Loc_Static_Experimental);
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsLinkSelfInChatEnabled), true, ref m_PluginConfiguration.IsLinkSelfInChatEnabled, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsApplyTagsToAllChatMessagesEnabled), true, ref m_PluginConfiguration.IsApplyTagsToAllChatMessagesEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => SaveSettings());
+                        DrawCheckbox(nameof(propertyProxy.IsLinkSelfInChatEnabled), true, ref propertyProxy.IsLinkSelfInChatEnabled, () => SaveSettings(true));
+                        DrawCheckbox(nameof(propertyProxy.IsApplyTagsToAllChatMessagesEnabled), true, ref propertyProxy.IsApplyTagsToAllChatMessagesEnabled, () => SaveSettings(true));
 
                         ImGui.EndTabItem();
                     }
@@ -85,7 +87,7 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsShowInheritedPropertiesEnabled), true, ref m_PluginConfiguration.IsShowInheritedPropertiesEnabled, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsShowInheritedPropertiesEnabled), true, ref m_PluginConfiguration.IsShowInheritedPropertiesEnabled, () => SaveSettings());
                         ImGui.BeginGroup();
                         ImGui.Columns(2);
 
@@ -112,13 +114,13 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOrderedByProximity), true, ref m_PluginConfiguration.IsPlayersTabOrderedByProximity, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabSelfVisible), true, ref m_PluginConfiguration.IsPlayersTabSelfVisible, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabFriendsVisible), true, ref m_PluginConfiguration.IsPlayersTabFriendsVisible, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabPartyVisible), true, ref m_PluginConfiguration.IsPlayersTabPartyVisible, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabAllianceVisible), true, ref m_PluginConfiguration.IsPlayersTabAllianceVisible, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabEnemiesVisible), true, ref m_PluginConfiguration.IsPlayersTabEnemiesVisible, () => m_PluginConfiguration.Save(m_PluginData));
-                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOthersVisible), true, ref m_PluginConfiguration.IsPlayersTabOthersVisible, () => m_PluginConfiguration.Save(m_PluginData));
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOrderedByProximity), true, ref m_PluginConfiguration.IsPlayersTabOrderedByProximity, () => SaveSettings());
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabSelfVisible), true, ref m_PluginConfiguration.IsPlayersTabSelfVisible, () => SaveSettings());
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabFriendsVisible), true, ref m_PluginConfiguration.IsPlayersTabFriendsVisible, () => SaveSettings());
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabPartyVisible), true, ref m_PluginConfiguration.IsPlayersTabPartyVisible, () => SaveSettings());
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabAllianceVisible), true, ref m_PluginConfiguration.IsPlayersTabAllianceVisible, () => SaveSettings());
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabEnemiesVisible), true, ref m_PluginConfiguration.IsPlayersTabEnemiesVisible, () => SaveSettings());
+                        DrawCheckbox(nameof(m_PluginConfiguration.IsPlayersTabOthersVisible), true, ref m_PluginConfiguration.IsPlayersTabOthersVisible, () => SaveSettings());
 
                         ImGui.Spacing();
                         ImGui.Spacing();
@@ -234,7 +236,7 @@ namespace PlayerTags.Configuration
 
             if (!m_PluginConfiguration.IsVisible)
             {
-                m_PluginConfiguration.Save(m_PluginData);
+                SaveSettings();
             }
         }
 
@@ -275,12 +277,12 @@ namespace PlayerTags.Configuration
                     if (isTagAssigned)
                     {
                         m_PluginData.AddCustomTagToIdentity(customTag, identity);
-                        m_PluginConfiguration.Save(m_PluginData);
+                        SaveSettings();
                     }
                     else
                     {
                         m_PluginData.RemoveCustomTagFromIdentity(customTag, identity);
-                        m_PluginConfiguration.Save(m_PluginData);
+                        SaveSettings();
                     }
                 });
 
@@ -316,7 +318,7 @@ namespace PlayerTags.Configuration
             }
 
             tag.IsSelected.Value = true;
-            m_PluginConfiguration.Save(m_PluginData);
+            SaveSettings();
         }
 
         public void DrawTree(Tag tag)
@@ -422,7 +424,7 @@ namespace PlayerTags.Configuration
                     m_PluginData.RemoveCustomTagFromIdentities(tag);
                     m_PluginData.AllCustomTags.Children.Remove(tag);
                     m_PluginData.CustomTags.Remove(tag);
-                    m_PluginConfiguration.Save(m_PluginData);
+                    SaveSettings();
 
                     Select(m_PluginData.AllCustomTags);
                 }
@@ -444,12 +446,12 @@ namespace PlayerTags.Configuration
             if (isOpened && tag.Children.Any() && !tag.IsExpanded.Value)
             {
                 tag.IsExpanded.Value = true;
-                m_PluginConfiguration.Save(m_PluginData);
+                SaveSettings();
             }
             else if (!isOpened && tag.IsExpanded.Value)
             {
                 tag.IsExpanded.Value = false;
-                m_PluginConfiguration.Save(m_PluginData);
+                SaveSettings();
             }
 
 
@@ -552,7 +554,7 @@ namespace PlayerTags.Configuration
                                     inheritableBool.Value = true;
                                 }
 
-                                m_PluginConfiguration.Save(m_PluginData);
+                                SaveSettings();
                                 ImGui.CloseCurrentPopup();
                             }
 
@@ -692,7 +694,7 @@ namespace PlayerTags.Configuration
             if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString(), new Vector2(23, 23)))
             {
                 inheritable.Behavior = InheritableBehavior.Inherit;
-                m_PluginConfiguration.Save(m_PluginData);
+                SaveSettings();
             }
             ImGui.PopFont();
             ImGui.PopStyleColor();
@@ -741,7 +743,7 @@ namespace PlayerTags.Configuration
             {
                 DrawCheckbox("IsEnabled", false, ref inheritable.Value, () =>
                 {
-                    m_PluginConfiguration.Save(m_PluginData);
+                    SaveSettings();
                 });
 
                 ImGui.SameLine();
@@ -811,7 +813,7 @@ namespace PlayerTags.Configuration
                     {
                         inheritable.Behavior = InheritableBehavior.Disabled;
                     }
-                    m_PluginConfiguration.Save(m_PluginData);
+                    SaveSettings();
                 });
 
                 if (isEnabled)
@@ -819,7 +821,7 @@ namespace PlayerTags.Configuration
                     ImGui.SameLine();
                     ImGui.SetNextItemWidth(200);
                     ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(200, 0));
-                    DrawComboBox(false, shouldLocalizeNames, shouldOrderNames, ref inheritable.Value, () => { m_PluginConfiguration.Save(m_PluginData); });
+                    DrawComboBox(false, shouldLocalizeNames, shouldOrderNames, ref inheritable.Value, () => { SaveSettings(); });
                     ImGui.EndChild();
                 }
 
@@ -886,7 +888,7 @@ namespace PlayerTags.Configuration
                     {
                         inheritable.Behavior = InheritableBehavior.Disabled;
                     }
-                    m_PluginConfiguration.Save(m_PluginData);
+                    SaveSettings();
                 });
 
                 if (isEnabled)
@@ -917,7 +919,7 @@ namespace PlayerTags.Configuration
                             {
                                 m_ColorPickerPopupDataContext.Value = (ushort)value.RowId;
                                 m_ColorPickerPopupDataContext = null;
-                                m_PluginConfiguration.Save(m_PluginData);
+                                SaveSettings();
                             }
 
                             ImGui.CloseCurrentPopup();
@@ -998,7 +1000,7 @@ namespace PlayerTags.Configuration
                     {
                         inheritable.Behavior = InheritableBehavior.Disabled;
                     }
-                    m_PluginConfiguration.Save(m_PluginData);
+                    SaveSettings();
                 });
 
                 if (isEnabled)
@@ -1006,7 +1008,7 @@ namespace PlayerTags.Configuration
                     ImGui.SameLine();
                     ImGui.SetNextItemWidth(200);
                     ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(200, 0));
-                    DrawTextBox(localizedStringName, ref inheritable.Value, () => { m_PluginConfiguration.Save(m_PluginData); });                
+                    DrawTextBox(localizedStringName, ref inheritable.Value, () => { SaveSettings(); });                
                     ImGui.EndChild();
                 }
 
@@ -1163,6 +1165,13 @@ namespace PlayerTags.Configuration
             }
         }
 
+        private void SaveSettings(bool saveProxy = false)
+        {
+            if (saveProxy)
+                propertyProxy.SaveData();
+            m_PluginConfiguration.Save(m_PluginData);
+        }
+
         private class PropertyProxy
         {
             private PluginConfiguration pluginConfig;
@@ -1170,6 +1179,8 @@ namespace PlayerTags.Configuration
             public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility;
             public NameplateTitleVisibility NameplateTitleVisibility;
             public NameplateTitlePosition NameplateTitlePosition;
+            public bool IsApplyTagsToAllChatMessagesEnabled;
+            public bool IsLinkSelfInChatEnabled;
 
             public PropertyProxy(PluginConfiguration config)
             {
@@ -1178,21 +1189,23 @@ namespace PlayerTags.Configuration
 
             public void LoadData()
             {
-                NameplateFreeCompanyVisibility = pluginConfig.NameplateFreeCompanyVisibility[ActivityContext.None];
-                NameplateTitleVisibility = pluginConfig.NameplateTitleVisibility[ActivityContext.None];
-                NameplateTitlePosition = pluginConfig.NameplateTitlePosition[ActivityContext.None];
+                NameplateFreeCompanyVisibility = pluginConfig.GeneralOptions[ActivityContext.None].NameplateFreeCompanyVisibility;
+                NameplateTitleVisibility = pluginConfig.GeneralOptions[ActivityContext.None].NameplateTitleVisibility;
+                NameplateTitlePosition = pluginConfig.GeneralOptions[ActivityContext.None].NameplateTitlePosition;
+                IsApplyTagsToAllChatMessagesEnabled = pluginConfig.GeneralOptions[ActivityContext.None].IsApplyTagsToAllChatMessagesEnabled;
+                IsLinkSelfInChatEnabled = pluginConfig.GeneralOptions[ActivityContext.None].IsLinkSelfInChatEnabled;
             }
 
             public void SaveData()
             {
-                foreach (var key in pluginConfig.NameplateFreeCompanyVisibility.Keys)
-                    pluginConfig.NameplateFreeCompanyVisibility[key] = NameplateFreeCompanyVisibility;
-
-                foreach (var key in pluginConfig.NameplateTitleVisibility.Keys)
-                    pluginConfig.NameplateTitleVisibility[key] = NameplateTitleVisibility;
-
-                foreach (var key in pluginConfig.NameplateTitlePosition.Keys)
-                    pluginConfig.NameplateTitlePosition[key] = NameplateTitlePosition;
+                foreach (var key in pluginConfig.GeneralOptions.Keys)
+                {
+                    pluginConfig.GeneralOptions[key].NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility;
+                    pluginConfig.GeneralOptions[key].NameplateTitleVisibility = NameplateTitleVisibility;
+                    pluginConfig.GeneralOptions[key].NameplateTitlePosition = NameplateTitlePosition;
+                    pluginConfig.GeneralOptions[key].IsApplyTagsToAllChatMessagesEnabled = IsApplyTagsToAllChatMessagesEnabled;
+                    pluginConfig.GeneralOptions[key].IsLinkSelfInChatEnabled = IsLinkSelfInChatEnabled;
+                }
             }
         }
     }
