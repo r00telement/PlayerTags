@@ -116,17 +116,17 @@ namespace PlayerTags.Features
                     newPayloads.Add(new UIGlowPayload(tag.TextGlowColor.InheritedValue.Value));
                 }
 
-                if (tag.TextColor.InheritedValue != null)
-                {
-                    newPayloads.Add(new UIForegroundPayload(tag.TextColor.InheritedValue.Value));
-                }
+                //if (tag.TextColor.InheritedValue != null)
+                //{
+                //    newPayloads.Add(new UIForegroundPayload(tag.TextColor.InheritedValue.Value));
+                //}
 
                 newPayloads.Add(new TextPayload(text));
 
-                if (tag.TextColor.InheritedValue != null)
-                {
-                    newPayloads.Add(new UIForegroundPayload(0));
-                }
+                //if (tag.TextColor.InheritedValue != null)
+                //{
+                //    newPayloads.Add(new UIForegroundPayload(0));
+                //}
 
                 if (tag.TextGlowColor.InheritedValue != null)
                 {
