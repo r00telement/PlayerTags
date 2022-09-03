@@ -3,11 +3,13 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Action = System.Action;
 
 namespace PlayerTags.Features
 {
@@ -240,44 +242,17 @@ namespace PlayerTags.Features
                     {
                         var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
                         if (customTag != null)
-                        {
-                            if (IsTagVisible(customTag, stringMatch.GameObject))
-                            {
-                                if (customTag.TextColor.InheritedValue != null)
-                                {
-                                    if (message.Payloads.Any(payload => payload is TextPayload || payload is PlayerPayload)
-                                        && customTag.IsTextColorAppliedToChatName.InheritedValue != null
-                                        && customTag.IsTextColorAppliedToChatName.InheritedValue.Value)
-                                    {
-                                        int payloadIndex = message.Payloads.IndexOf(stringMatch.PreferredPayload);
-                                        message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
-                                        message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                    }
-                                }
-                            }
-                        }
+                            applyTextFormatting(customTag);
                     }
 
                     if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
                     {
                         if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
-                        {
-                            if (IsTagVisible(jobTag, stringMatch.GameObject))
-                            {
-                                if (jobTag.TextColor.InheritedValue != null)
-                                {
-                                    if (message.Payloads.Any(payload => payload is TextPayload || payload is PlayerPayload)
-                                        && jobTag.IsTextColorAppliedToChatName.InheritedValue != null
-                                        && jobTag.IsTextColorAppliedToChatName.InheritedValue.Value)
-                                    {
-                                        int payloadIndex = message.Payloads.IndexOf(stringMatch.PreferredPayload);
-                                        message.Payloads.Insert(payloadIndex + 1, new UIForegroundPayload(0));
-                                        message.Payloads.Insert(payloadIndex, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                    }
-                                }
-                            }
-                        }
+                            applyTextFormatting(jobTag);
                     }
+
+                    void applyTextFormatting(Tag tag)
+                        => ApplyTextFormatting(stringMatch.GameObject, tag, new[] { message }, new[] { tag.IsTextColorAppliedToChatName }, stringMatch.PreferredPayload);
                 }
 
                 ApplyStringChanges(message, stringChanges, stringMatch.PreferredPayload);

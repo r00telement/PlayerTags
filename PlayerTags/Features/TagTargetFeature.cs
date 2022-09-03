@@ -2,11 +2,15 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Data;
+using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
+using GameObject = Dalamud.Game.ClientState.Objects.Types.GameObject;
 
 namespace PlayerTags.Features
 {
@@ -111,10 +115,10 @@ namespace PlayerTags.Features
                     newPayloads.Add(new EmphasisItalicPayload(true));
                 }
 
-                if (tag.TextGlowColor.InheritedValue != null)
-                {
-                    newPayloads.Add(new UIGlowPayload(tag.TextGlowColor.InheritedValue.Value));
-                }
+                //if (tag.TextGlowColor.InheritedValue != null)
+                //{
+                //    newPayloads.Add(new UIGlowPayload(tag.TextGlowColor.InheritedValue.Value));
+                //}
 
                 //if (tag.TextColor.InheritedValue != null)
                 //{
@@ -128,10 +132,10 @@ namespace PlayerTags.Features
                 //    newPayloads.Add(new UIForegroundPayload(0));
                 //}
 
-                if (tag.TextGlowColor.InheritedValue != null)
-                {
-                    newPayloads.Add(new UIGlowPayload(0));
-                }
+                //if (tag.TextGlowColor.InheritedValue != null)
+                //{
+                //    newPayloads.Add(new UIGlowPayload(0));
+                //}
 
                 if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
                 {
@@ -303,6 +307,71 @@ namespace PlayerTags.Features
                         }
                     }
                 }
+            }
+        }
+
+        protected void ApplyTextFormatting(GameObject gameObject, Tag tag, SeString[] destStrings, InheritableValue<bool>[] textColorApplied, Payload preferedPayload)
+        {
+            if (IsTagVisible(tag, gameObject))
+            {
+                for (int i = 0; i < destStrings.Length; i++)
+                {
+                    var destString = destStrings[i];
+                    var isTextColorApplied = textColorApplied[i];
+                    applyTextColor(destString, isTextColorApplied, tag.TextColor);
+                    applyTextGlowColor(destString, isTextColorApplied, tag.TextGlowColor);
+                    //applyTextItalicColor(destString, tag.IsTextItalic); // Disabled, because that is needed only for a few parts somewhere else.
+                }
+            }
+
+            void applyTextColor(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)
+            {
+                if (shouldApplyFormattingPayloads(destPayload)
+                            && enableFlag.InheritedValue != null
+                            && enableFlag.InheritedValue.Value
+                            && colorValue.InheritedValue != null)
+                    applyTextFormattingPayloads(destPayload, new UIForegroundPayload(colorValue.InheritedValue.Value), new UIForegroundPayload(0));
+            }
+
+            void applyTextGlowColor(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)
+            {
+                if (shouldApplyFormattingPayloads(destPayload)
+                            && enableFlag.InheritedValue != null
+                            && enableFlag.InheritedValue.Value
+                            && colorValue.InheritedValue != null)
+                    applyTextFormattingPayloads(destPayload, new UIGlowPayload(colorValue.InheritedValue.Value), new UIGlowPayload(0));
+            }
+
+            //void applyTextItalicColor(SeString destPayload, InheritableValue<bool> italicValue)
+            //{
+            //    if (shouldApplyFormattingPayloads(destPayload)
+            //                && italicValue.InheritedValue != null
+            //                && italicValue.InheritedValue.Value)
+            //        applyTextFormattingPayloads(destPayload, new EmphasisItalicPayload(true), new EmphasisItalicPayload(false));
+            //}
+
+            bool shouldApplyFormattingPayloads(SeString destPayload)
+                => destPayload.Payloads.Any(payload => payload is TextPayload || payload is PlayerPayload);
+
+            void applyTextFormattingPayloads(SeString destPayload, Payload startPayload, Payload endPayload)
+            {
+                if (preferedPayload == null)
+                    applyTextFormattingPayloadToStartAndEnd(destPayload, startPayload, endPayload);
+                else
+                    applyTextFormattingPayloadsToSpecificPosition(destPayload, startPayload, endPayload, preferedPayload);
+            }
+            
+            void applyTextFormattingPayloadToStartAndEnd(SeString destPayload, Payload startPayload, Payload endPayload)
+            {
+                destPayload.Payloads.Insert(0, startPayload);
+                destPayload.Payloads.Add(endPayload);
+            }
+
+            void applyTextFormattingPayloadsToSpecificPosition(SeString destPayload, Payload startPayload, Payload endPayload, Payload preferedPayload)
+            {
+                int payloadIndex = destPayload.Payloads.IndexOf(preferedPayload);
+                destPayload.Payloads.Insert(payloadIndex + 1, endPayload);
+                destPayload.Payloads.Insert(payloadIndex, startPayload);
             }
         }
     }

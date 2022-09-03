@@ -219,34 +219,17 @@ namespace PlayerTags.Features
                 {
                     var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
                     if (customTag != null)
-                        applyTextColor(customTag);
+                        applyTextFormatting(customTag);
                 }
 
                 if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
-                    applyTextColor(jobTag);
+                    applyTextFormatting(jobTag);
 
-
-                void applyTextColor(Tag tag)
+                void applyTextFormatting(Tag tag)
                 {
-                    if (IsTagVisible(tag, gameObject))
-                    {
-                        if (tag.TextColor.InheritedValue != null)
-                        {
-                            applyTextColor2(name, tag.IsTextColorAppliedToNameplateName, tag.TextColor);
-                            applyTextColor2(title, tag.IsTextColorAppliedToNameplateTitle, tag.TextColor);
-                            applyTextColor2(freeCompany, tag.IsTextColorAppliedToNameplateFreeCompany, tag.TextColor);
-                        }
-                    }
-                }
-                void applyTextColor2(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)
-                {
-                    if (destPayload.Payloads.Any(payload => payload is TextPayload)
-                                && enableFlag.InheritedValue != null
-                                && enableFlag.InheritedValue.Value)
-                    {
-                        destPayload.Payloads.Insert(0, (new UIForegroundPayload(colorValue.InheritedValue.Value)));
-                        destPayload.Payloads.Add(new UIForegroundPayload(0));
-                    }
+                    var destStrings = new[] { name, title, freeCompany };
+                    var isTextColorApplied = new[] { tag.IsTextColorAppliedToNameplateName, tag.IsTextColorAppliedToNameplateTitle, tag.IsTextColorAppliedToNameplateFreeCompany };
+                    ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null);
                 }
             }
         }
