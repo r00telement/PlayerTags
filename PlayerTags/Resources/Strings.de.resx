@@ -585,4 +585,40 @@
   <data name="Loc_IsTextColorAppliedToNameplateFreeCompany_Description" xml:space="preserve">
     <value>Bestimmt, ob die Farbe in der Namensanzeige auf die Freie Gesellschaft angewendet wird</value>
   </data>
+  <data name="Loc_ActivityContextSelection_All" xml:space="preserve">
+    <value>Überall</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_None" xml:space="preserve">
+    <value>Außerhalb von Inhalten</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PveDuty" xml:space="preserve">
+    <value>PvE-Inhalte</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PvpDuty" xml:space="preserve">
+    <value>PvP-Inhalte</value>
+  </data>
+  <data name="Loc_Static_CurrentActivityProfile" xml:space="preserve">
+    <value>Aktuelles Aktivitätsprofil</value>
+  </data>
+  <data name="Loc_ActivityContextSelection" xml:space="preserve">
+    <value>Untenstehende Optionen anwenden für</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_All_Description" xml:space="preserve">
+    <value>Die meisten untenstehenden Optionen werden für überall gelten, wo auch immer Du dich befindest. Sie werden außerhalb von Inhalten, in PvE- und PvP-Inhalten gelten. Die untenstehenden Optionen werden für ein bestimmtes Aktivitätskontext definierte Optionen überschreiben.</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_None_Description" xml:space="preserve">
+    <value>Die meisten untestehenden Optionen werden nur außerhalb von Inhalten gelten.</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PveDuty_Description" xml:space="preserve">
+    <value>Die meisten untenstehenden Optionen werden nur in PvE-Inhalten gelten.</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PvpDuty_Description" xml:space="preserve">
+    <value>Die meisten untenstehenden Optionen werden nur in PvP-Inhalten gelten.</value>
+  </data>
+  <data name="Loc_Static_ChatExperimental" xml:space="preserve">
+    <value>Chat (Experimentell)</value>
+  </data>
+  <data name="Loc_Static_OtherExperimental" xml:space="preserve">
+    <value>Andere (Experimentell)</value>
+  </data>
 </root>
