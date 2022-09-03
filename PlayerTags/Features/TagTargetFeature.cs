@@ -115,27 +115,27 @@ namespace PlayerTags.Features
                     newPayloads.Add(new EmphasisItalicPayload(true));
                 }
 
-                //if (tag.TextGlowColor.InheritedValue != null)
-                //{
-                //    newPayloads.Add(new UIGlowPayload(tag.TextGlowColor.InheritedValue.Value));
-                //}
+                if (tag.TextGlowColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIGlowPayload(tag.TextGlowColor.InheritedValue.Value));
+                }
 
-                //if (tag.TextColor.InheritedValue != null)
-                //{
-                //    newPayloads.Add(new UIForegroundPayload(tag.TextColor.InheritedValue.Value));
-                //}
+                if (tag.TextColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIForegroundPayload(tag.TextColor.InheritedValue.Value));
+                }
 
                 newPayloads.Add(new TextPayload(text));
 
-                //if (tag.TextColor.InheritedValue != null)
-                //{
-                //    newPayloads.Add(new UIForegroundPayload(0));
-                //}
+                if (tag.TextColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIForegroundPayload(0));
+                }
 
-                //if (tag.TextGlowColor.InheritedValue != null)
-                //{
-                //    newPayloads.Add(new UIGlowPayload(0));
-                //}
+                if (tag.TextGlowColor.InheritedValue != null)
+                {
+                    newPayloads.Add(new UIGlowPayload(0));
+                }
 
                 if (tag.IsTextItalic.InheritedValue != null && tag.IsTextItalic.InheritedValue.Value)
                 {
