@@ -1195,7 +1195,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Chat (Erperimental) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chat (Experimental) ähnelt.
         /// </summary>
         public static string Loc_Static_ChatExperimental {
             get {

@@ -616,7 +616,7 @@
     <value>The most options below will apply only to PvP Duties.</value>
   </data>
   <data name="Loc_Static_ChatExperimental" xml:space="preserve">
-    <value>Chat (Erperimental)</value>
+    <value>Chat (Experimental)</value>
   </data>
   <data name="Loc_Static_OtherExperimental" xml:space="preserve">
     <value>Other (Experimental)</value>
