@@ -319,7 +319,7 @@ namespace PlayerTags.Features
                     var destString = destStrings[i];
                     var isTextColorApplied = textColorApplied[i];
                     applyTextColor(destString, isTextColorApplied, tag.TextColor);
-                    applyTextGlowColor(destString, isTextColorApplied, tag.TextGlowColor);
+                    //applyTextGlowColor(destString, isTextColorApplied, tag.TextGlowColor);
                     //applyTextItalicColor(destString, tag.IsTextItalic); // Disabled, because that is needed only for a few parts somewhere else.
                 }
             }
@@ -333,14 +333,14 @@ namespace PlayerTags.Features
                     applyTextFormattingPayloads(destPayload, new UIForegroundPayload(colorValue.InheritedValue.Value), new UIForegroundPayload(0));
             }
 
-            void applyTextGlowColor(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)
-            {
-                if (shouldApplyFormattingPayloads(destPayload)
-                            && enableFlag.InheritedValue != null
-                            && enableFlag.InheritedValue.Value
-                            && colorValue.InheritedValue != null)
-                    applyTextFormattingPayloads(destPayload, new UIGlowPayload(colorValue.InheritedValue.Value), new UIGlowPayload(0));
-            }
+            //void applyTextGlowColor(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)
+            //{
+            //    if (shouldApplyFormattingPayloads(destPayload)
+            //                && enableFlag.InheritedValue != null
+            //                && enableFlag.InheritedValue.Value
+            //                && colorValue.InheritedValue != null)
+            //        applyTextFormattingPayloads(destPayload, new UIGlowPayload(colorValue.InheritedValue.Value), new UIGlowPayload(0));
+            //}
 
             //void applyTextItalicColor(SeString destPayload, InheritableValue<bool> italicValue)
             //{
