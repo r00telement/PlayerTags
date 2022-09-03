@@ -67,18 +67,28 @@ namespace PlayerTags.Configuration
 
                         ImGui.Spacing();
                         ImGui.Spacing();
+                        DrawHeading(Strings.Loc_Static_CurrentActivityProfile);
+                        DrawComboBox(true, true, false, ref propertyProxy.CurrentActivityContext, () => SaveSettings(false));
+
+
+                        ImGui.Spacing();
+                        ImGui.Spacing();
                         DrawHeading(Strings.Loc_Static_Nameplates);
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateFreeCompanyVisibility, () => SaveSettings(true));
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateTitleVisibility, () => SaveSettings(true));
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateTitlePosition, () => SaveSettings(true));
 
+                        ImGui.Spacing();
+                        ImGui.Spacing();
+                        DrawHeading(Strings.Loc_Static_ChatExperimental);
+                        DrawCheckbox(nameof(propertyProxy.IsLinkSelfInChatEnabled), true, ref propertyProxy.IsLinkSelfInChatEnabled, () => SaveSettings(true));
+                        DrawCheckbox(nameof(propertyProxy.IsApplyTagsToAllChatMessagesEnabled), true, ref propertyProxy.IsApplyTagsToAllChatMessagesEnabled, () => SaveSettings(true));
+
 
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        DrawHeading(Strings.Loc_Static_Experimental);
+                        DrawHeading(Strings.Loc_Static_OtherExperimental);
                         DrawCheckbox(nameof(m_PluginConfiguration.IsPlayerNameRandomlyGenerated), true, ref m_PluginConfiguration.IsPlayerNameRandomlyGenerated, () => SaveSettings());
-                        DrawCheckbox(nameof(propertyProxy.IsLinkSelfInChatEnabled), true, ref propertyProxy.IsLinkSelfInChatEnabled, () => SaveSettings(true));
-                        DrawCheckbox(nameof(propertyProxy.IsApplyTagsToAllChatMessagesEnabled), true, ref propertyProxy.IsApplyTagsToAllChatMessagesEnabled, () => SaveSettings(true));
 
                         ImGui.EndTabItem();
                     }
@@ -1176,6 +1186,7 @@ namespace PlayerTags.Configuration
         {
             private PluginConfiguration pluginConfig;
 
+            public ActivityContextSelection CurrentActivityContext;
             public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility;
             public NameplateTitleVisibility NameplateTitleVisibility;
             public NameplateTitlePosition NameplateTitlePosition;
@@ -1185,20 +1196,34 @@ namespace PlayerTags.Configuration
             public PropertyProxy(PluginConfiguration config)
             {
                 pluginConfig = config;
+                CurrentActivityContext = config.IsGeneralOptionsAllTheSameEnabled ? ActivityContextSelection.All : ActivityContextSelection.None;
             }
 
             public void LoadData()
             {
-                NameplateFreeCompanyVisibility = pluginConfig.GeneralOptions[ActivityContext.None].NameplateFreeCompanyVisibility;
-                NameplateTitleVisibility = pluginConfig.GeneralOptions[ActivityContext.None].NameplateTitleVisibility;
-                NameplateTitlePosition = pluginConfig.GeneralOptions[ActivityContext.None].NameplateTitlePosition;
-                IsApplyTagsToAllChatMessagesEnabled = pluginConfig.GeneralOptions[ActivityContext.None].IsApplyTagsToAllChatMessagesEnabled;
-                IsLinkSelfInChatEnabled = pluginConfig.GeneralOptions[ActivityContext.None].IsLinkSelfInChatEnabled;
+                var currentActivityContext = GetActivityContext(CurrentActivityContext);
+                NameplateFreeCompanyVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateFreeCompanyVisibility;
+                NameplateTitleVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitleVisibility;
+                NameplateTitlePosition = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitlePosition;
+                IsApplyTagsToAllChatMessagesEnabled = pluginConfig.GeneralOptions[currentActivityContext].IsApplyTagsToAllChatMessagesEnabled;
+                IsLinkSelfInChatEnabled = pluginConfig.GeneralOptions[currentActivityContext].IsLinkSelfInChatEnabled;
             }
 
             public void SaveData()
             {
-                foreach (var key in pluginConfig.GeneralOptions.Keys)
+                if (CurrentActivityContext == ActivityContextSelection.All)
+                {
+                    pluginConfig.IsGeneralOptionsAllTheSameEnabled = true;
+                    foreach (var key in pluginConfig.GeneralOptions.Keys)
+                        applyChanges(key);
+                }
+                else
+                {
+                    pluginConfig.IsGeneralOptionsAllTheSameEnabled = false;
+                    applyChanges(GetActivityContext(CurrentActivityContext));
+                }
+
+                void applyChanges(ActivityContext key)
                 {
                     pluginConfig.GeneralOptions[key].NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitleVisibility = NameplateTitleVisibility;
@@ -1207,6 +1232,36 @@ namespace PlayerTags.Configuration
                     pluginConfig.GeneralOptions[key].IsLinkSelfInChatEnabled = IsLinkSelfInChatEnabled;
                 }
             }
+
+            private ActivityContext GetActivityContext(ActivityContextSelection selection)
+            {
+                ActivityContext result;
+
+                switch (selection)
+                {
+                    case ActivityContextSelection.PveDuty:
+                        result = ActivityContext.PveDuty;
+                        break;
+                    case ActivityContextSelection.PvpDuty:
+                        result = ActivityContext.PvpDuty;
+                        break;
+                    case ActivityContextSelection.All:
+                    case ActivityContextSelection.None:
+                    default:
+                        result = ActivityContext.None;
+                        break;
+                }
+
+                return result;
+            }
+        }
+
+        private enum ActivityContextSelection
+        {
+            All,
+            None,
+            PveDuty,
+            PvpDuty
         }
     }
 }

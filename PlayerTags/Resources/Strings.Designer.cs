@@ -70,6 +70,87 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Below options to be apply for ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Everywhere ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_All {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The most options below will apply everywhere you are. They will be the same in Overworld, in PvE Duties and PvP Duties. Your options defined specifically for another context will be overwritten. ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_All_Description {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_All_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No Duty ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_None {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The most options below will apply only if you are outside of any duty. ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_None_Description {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_None_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PvE Duties ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_PveDuty {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_PveDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The most options below will apply only to PvE Duties. ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_PveDuty_Description {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_PveDuty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die PvP Duties ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_PvpDuty {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_PvpDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The most options below will apply only to PvP Duties. ähnelt.
+        /// </summary>
+        public static string Loc_ActivityContextSelection_PvpDuty_Description {
+            get {
+                return ResourceManager.GetString("Loc_ActivityContextSelection_PvpDuty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Custom ähnelt.
         /// </summary>
         public static string Loc_AllCustomTags {
@@ -1114,6 +1195,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chat (Erperimental) ähnelt.
+        /// </summary>
+        public static string Loc_Static_ChatExperimental {
+            get {
+                return ResourceManager.GetString("Loc_Static_ChatExperimental", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Add tag: {0} ähnelt.
         /// </summary>
         public static string Loc_Static_ContextMenu_AddTag {
@@ -1128,6 +1218,15 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_ContextMenu_RemoveTag {
             get {
                 return ResourceManager.GetString("Loc_Static_ContextMenu_RemoveTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Current Activity Profile ähnelt.
+        /// </summary>
+        public static string Loc_Static_CurrentActivityProfile {
+            get {
+                return ResourceManager.GetString("Loc_Static_CurrentActivityProfile", resourceCulture);
             }
         }
         
@@ -1200,6 +1299,15 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_NoText {
             get {
                 return ResourceManager.GetString("Loc_Static_NoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Other (Experimental) ähnelt.
+        /// </summary>
+        public static string Loc_Static_OtherExperimental {
+            get {
+                return ResourceManager.GetString("Loc_Static_OtherExperimental", resourceCulture);
             }
         }
         
