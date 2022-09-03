@@ -50,7 +50,6 @@ namespace PlayerTags.Data
                 IsIconVisibleInNameplates = true,
                 IsTextVisibleInNameplates = true,
                 IsTextColorAppliedToChatName = true,
-                IsTextColorAppliedToNameplateName = true,
                 IsTextColorAppliedToNameplateTitle = true
             };
 
