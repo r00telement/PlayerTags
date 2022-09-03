@@ -47,8 +47,11 @@ namespace PlayerTags.Data
                 IsExpanded = true,
                 IsIconVisibleInChat = true,
                 IsTextVisibleInChat = true,
+                IsIconVisibleInNameplates = true,
                 IsTextVisibleInNameplates = true,
-                IsTextColorAppliedToChatName = true
+                IsTextColorAppliedToChatName = true,
+                IsTextColorAppliedToNameplateName = true,
+                IsTextColorAppliedToNameplateTitle = true
             };
 
             RoleTags = new Dictionary<Role, Tag>();
