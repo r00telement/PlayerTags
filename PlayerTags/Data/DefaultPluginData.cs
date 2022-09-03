@@ -50,7 +50,6 @@ namespace PlayerTags.Data
                 IsIconVisibleInNameplates = true,
                 IsTextVisibleInNameplates = true,
                 IsTextColorAppliedToChatName = true,
-                IsTextColorAppliedToNameplateTitle = true
             };
 
             RoleTags = new Dictionary<Role, Tag>();
