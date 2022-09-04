@@ -10,7 +10,7 @@ Feel free to open a pull request with your enhancements or bug fixes!
 # Translation
 
 You want to help and translate this plugin to your/other language(s)? \
-Start translation [here on Crowdin](https://crwd.in/playertags)!
+Start translation [here on Crowdin](https://crowdin.com/project/playertags)!
 
 If you want to contribute to a language that isn't listed, just tell me with an Issue or on goat's Discord Server (yes, feel free to ping me). ^^
 
