@@ -14,6 +14,12 @@ Start translation [here on Crowdin](https://crwd.in/playertags)!
 
 If you want to contribute to a language that isn't listed, just tell me with an Issue or on goat's Discord Server (yes, feel free to ping me). ^^
 
+| Language | Contributors |
+| :--- | :--- |
+| Spanish | Risu |
+| German | Pilzinsel64, xEbony |
+| ... | You? |
+
 # Credits
 
 This plugin was originally developed by r00telement but forked and continued by Pilzinsel64.
