@@ -586,39 +586,39 @@
     <value>Si el color se aplicará o no al nombre de la FC en las placas de nombre.</value>
   </data>
   <data name="Loc_ActivityContextSelection_All" xml:space="preserve">
-    <value>Everywhere</value>
+    <value>En todas partes</value>
   </data>
   <data name="Loc_ActivityContextSelection_None" xml:space="preserve">
-    <value>No Duty</value>
+    <value>Sin Duty</value>
   </data>
   <data name="Loc_ActivityContextSelection_PveDuty" xml:space="preserve">
-    <value>PvE Duties</value>
+    <value>Duties PvE</value>
   </data>
   <data name="Loc_ActivityContextSelection_PvpDuty" xml:space="preserve">
-    <value>PvP Duties</value>
+    <value>Duties PvP</value>
   </data>
   <data name="Loc_Static_CurrentActivityProfile" xml:space="preserve">
-    <value>Current Activity Profile</value>
+    <value>Perfil de Actividad Actual</value>
   </data>
   <data name="Loc_ActivityContextSelection" xml:space="preserve">
-    <value>Below options to be apply for</value>
+    <value>Opciones inferiores a aplicar</value>
   </data>
   <data name="Loc_ActivityContextSelection_All_Description" xml:space="preserve">
-    <value>The most options below will apply everywhere you are. They will be the same in Overworld, in PvE Duties and PvP Duties. Your options defined specifically for another context will be overwritten.</value>
+    <value>La mayoría de opciones abajo se aplicarán estés donde estés. Serán las mismas en el mundo abierto y en duties PvE y PvP. Las opciones que definas para otros contextos específicos serán sobreescritas.</value>
   </data>
   <data name="Loc_ActivityContextSelection_None_Description" xml:space="preserve">
-    <value>The most options below will apply only if you are outside of any duty.</value>
+    <value>La mayoría de opciones abajo se aplicarán solo si no estás en una Duty de cualquier tipo.</value>
   </data>
   <data name="Loc_ActivityContextSelection_PveDuty_Description" xml:space="preserve">
-    <value>The most options below will apply only to PvE Duties.</value>
+    <value>La mayoría de opciones abajo se aplicarán solo en Duties PvE.</value>
   </data>
   <data name="Loc_ActivityContextSelection_PvpDuty_Description" xml:space="preserve">
-    <value>The most options below will apply only to PvP Duties.</value>
+    <value>La mayoría de opciones abajo se aplicarán solo en Duties PvP.</value>
   </data>
   <data name="Loc_Static_ChatExperimental" xml:space="preserve">
-    <value>Chat (Erperimental)</value>
+    <value>Chat (Experimental)</value>
   </data>
   <data name="Loc_Static_OtherExperimental" xml:space="preserve">
-    <value>Other (Experimental)</value>
+    <value>Otros (Experimental)</value>
   </data>
 </root>
