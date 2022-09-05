@@ -89,7 +89,7 @@ namespace PlayerTags.Features
                             seString.Payloads.Insert(textPayloadIndex, playerTextPayload);
 
                             // Remove from the chopped text from the original payload
-                            textPayload.Text = textPayload.Text.Substring(0, playerName.Length);
+                            textPayload.Text = textPayload.Text.Substring(playerName.Length);
 
                             textMatchIndex = textPayload.Text.IndexOf(playerName);
                         }
