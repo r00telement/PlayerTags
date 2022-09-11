@@ -1,11 +1,25 @@
 ﻿using Dalamud.Logging;
+using Dalamud.Plugin;
 using PlayerTags.Resources;
 using System;
+using System.Globalization;
 
 namespace PlayerTags
 {
     public static class Localizer
     {
+        private static CultureInfo culture = null;
+
+        public static void SetLanguage(string langCode)
+        {
+            SetLanguage(new CultureInfo(langCode));
+        }
+
+        public static void SetLanguage(CultureInfo cultureInfo)
+        {
+            culture = cultureInfo;
+        }
+
         public static string GetName<TEnum>(TEnum value)
         {
             return $"{typeof(TEnum).Name}_{value}";
@@ -37,7 +51,7 @@ namespace PlayerTags
 
         public static string GetString(string localizedStringId)
         {
-            string? value = Strings.ResourceManager.GetString(localizedStringId, Strings.Culture);
+            string? value = Strings.ResourceManager.GetString(localizedStringId, culture ?? Strings.Culture);
             if (value != null)
             {
                 return value;

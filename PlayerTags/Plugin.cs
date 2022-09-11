@@ -28,6 +28,9 @@ namespace PlayerTags
             m_PluginData = new PluginData(m_PluginConfiguration);
             m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData);
 
+            Localizer.SetLanguage(PluginServices.DalamudPluginInterface.UiLanguage);
+            PluginServices.DalamudPluginInterface.LanguageChanged += DalamudPluginInterface_LanguageChanged;
+
             PluginServices.DalamudPluginInterface.UiBuilder.Draw += UiBuilder_Draw;
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
             PluginServices.CommandManager.AddHandler(c_CommandName, new CommandInfo((string command, string arguments) =>
@@ -46,9 +49,15 @@ namespace PlayerTags
             m_NameplatesTagTargetFeature.Dispose();
             m_CustomTagsContextMenuFeature.Dispose();
             m_LinkSelfInChatFeature.Dispose();
+            PluginServices.DalamudPluginInterface.LanguageChanged -= DalamudPluginInterface_LanguageChanged;
             PluginServices.CommandManager.RemoveHandler(c_CommandName);
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
+        }
+
+        private void DalamudPluginInterface_LanguageChanged(string langCode)
+        {
+            Localizer.SetLanguage(langCode);
         }
 
         private void UiBuilder_Draw()
