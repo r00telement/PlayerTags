@@ -1,13 +1,12 @@
-﻿using Dalamud.Game;
-using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Objects.Types;
-using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Hooking;
 using Dalamud.Logging;
+using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
-using System.Runtime.InteropServices;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace PlayerTags.GameInterface.Nameplates
 {
@@ -16,24 +15,11 @@ namespace PlayerTags.GameInterface.Nameplates
     /// </summary>
     public class Nameplate : IDisposable
     {
-        private class PluginAddressResolver : BaseAddressResolver
-        {
-            private const string c_SetPlayerNameplateSignature = "48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2";
-            public IntPtr? SetPlayerNameplatePtr { get; private set; }
-
-            protected override void Setup64Bit(SigScanner scanner)
-            {
-                if (scanner.TryScanText(c_SetPlayerNameplateSignature, out var setPlayerNameplatePtr))
-                {
-                    SetPlayerNameplatePtr = setPlayerNameplatePtr;
-                }
-            }
-        }
-
         private delegate IntPtr SetPlayerNameplateDelegate_Unmanaged(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
-        private Hook<SetPlayerNameplateDelegate_Unmanaged>? m_SetPlayerNameplateHook;
 
-        private PluginAddressResolver m_PluginAddressResolver;
+        [Signature("48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2", DetourName = nameof(SetPlayerNameplateDetour))]
+        private readonly Hook<AddonNamePlate_SetPlayerNameplateDetour>? hook_AddonNamePlate_SetPlayerNameplateDetour = null;
+        private unsafe delegate IntPtr AddonNamePlate_SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
 
         /// <summary>
         /// Occurs when a player nameplate is updated by the game.
@@ -47,39 +33,25 @@ namespace PlayerTags.GameInterface.Nameplates
         {
             get
             {
-                if (!m_PluginAddressResolver.SetPlayerNameplatePtr.HasValue)
-                {
-                    return false;
-                }
-
-                return true;
+                return hook_AddonNamePlate_SetPlayerNameplateDetour != null
+                    && hook_AddonNamePlate_SetPlayerNameplateDetour.IsEnabled;
             }
         }
 
         public Nameplate()
         {
-            m_PluginAddressResolver = new PluginAddressResolver();
-            m_PluginAddressResolver.Setup();
-            if (!IsValid)
-            {
-                return;
-            }
-
-            if (m_PluginAddressResolver.SetPlayerNameplatePtr.HasValue)
-            {
-                m_SetPlayerNameplateHook = Hook<SetPlayerNameplateDelegate_Unmanaged>.FromAddress(m_PluginAddressResolver.SetPlayerNameplatePtr.Value, new SetPlayerNameplateDelegate_Unmanaged(SetPlayerNameplateDetour));
-                m_SetPlayerNameplateHook?.Enable();
-            }
+            SignatureHelper.Initialise(this);
+            hook_AddonNamePlate_SetPlayerNameplateDetour?.Enable();
         }
 
         public void Dispose()
         {
-            m_SetPlayerNameplateHook?.Disable();
+            hook_AddonNamePlate_SetPlayerNameplateDetour?.Disable();
         }
 
         private IntPtr SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId)
         {
-            if (m_SetPlayerNameplateHook == null)
+            if (hook_AddonNamePlate_SetPlayerNameplateDetour == null)
             {
                 return IntPtr.Zero;
             }
@@ -129,7 +101,7 @@ namespace PlayerTags.GameInterface.Nameplates
                         newFreeCompanyPtr = GameInterfaceHelper.PluginAllocate(afterFreeCompanyBytes);
                     }
 
-                    var result = m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, playerNameplateUpdatedArgs.IsTitleAboveName, playerNameplateUpdatedArgs.IsTitleVisible, newTitlePtr, newNamePtr, newFreeCompanyPtr, playerNameplateUpdatedArgs.IconId);
+                    var result = hook_AddonNamePlate_SetPlayerNameplateDetour.Original(playerNameplateObjectPtr, playerNameplateUpdatedArgs.IsTitleAboveName, playerNameplateUpdatedArgs.IsTitleVisible, newTitlePtr, newNamePtr, newFreeCompanyPtr, playerNameplateUpdatedArgs.IconId);
 
                     if (hasNameChanged)
                     {
@@ -154,7 +126,7 @@ namespace PlayerTags.GameInterface.Nameplates
                 PluginLog.Error(ex, $"SetPlayerNameplateDetour");
             }
 
-            return m_SetPlayerNameplateHook.Original(playerNameplateObjectPtr, isTitleAboveName, isTitleVisible, titlePtr, namePtr, freeCompanyPtr, iconId);
+            return hook_AddonNamePlate_SetPlayerNameplateDetour.Original(playerNameplateObjectPtr, isTitleAboveName, isTitleVisible, titlePtr, namePtr, freeCompanyPtr, iconId);
         }
 
         private T? GetNameplateGameObject<T>(IntPtr nameplateObjectPtr)
