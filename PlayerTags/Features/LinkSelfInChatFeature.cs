@@ -14,6 +14,9 @@ namespace PlayerTags.Features
         private PluginData m_PluginData;
         private ActivityContextManager activityContextManager;
 
+        public delegate bool ShouldRemovePlayerNameTextPayloadEventHandler(object sender);
+        public event ShouldRemovePlayerNameTextPayloadEventHandler ShouldRemovePlayerNameTextPayload;
+
         public LinkSelfInChatFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
         {
             m_PluginConfiguration = pluginConfiguration;
@@ -102,12 +105,20 @@ namespace PlayerTags.Features
                         // and links it with the player payload. When trying to make one of these manually, it displays the player payload separately,
                         // effectively doubling up the player name.
                         // For now, don't follow up with a text payload. Only use a player payload.
+
                         var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
                         var playerPayloadIndex = seString.Payloads.IndexOf(playerTextPayload);
+
+                        // Add the Player Link Payload
                         seString.Payloads.Insert(playerPayloadIndex++, playerPayload);
+
+                        // Add the Link Terminator to end the Player Link. This should be done behind the Text Payload (display text).
                         // Normally used to end PlayerPayload linking. But for the own player it has no affect. Anyway, use it, just because. Maybe it's needed in the future somewhere else.
-                        seString.Payloads.Insert(playerPayloadIndex++, RawPayload.LinkTerminator);
-                        seString.Payloads.Remove(playerTextPayload);
+                        seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
+
+                        // Remove the text payload (display text)
+                        if (ShouldRemovePlayerNameTextPayload?.Invoke(this) ?? true)
+                            seString.Payloads.Remove(playerTextPayload);
                     }
                 }
             }

@@ -1,8 +1,13 @@
 ﻿using Dalamud.Game.Command;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Internal;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using PlayerTags.Features;
+using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 
 namespace PlayerTags
 {
@@ -10,6 +15,7 @@ namespace PlayerTags
     {
         public string Name => "PlayerTags";
         private const string c_CommandName = "/playertags";
+        private const string c_ChatTwo_InternalPluginName = "ChatTwo";
 
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
@@ -38,6 +44,7 @@ namespace PlayerTags
                 UiBuilder_OpenConfigUi();
             }) { HelpMessage = "Shows the config" });
             m_LinkSelfInChatFeature = new LinkSelfInChatFeature(m_PluginConfiguration, m_PluginData);
+            m_LinkSelfInChatFeature.ShouldRemovePlayerNameTextPayload += LinkSelfInChatFeature_ShouldRemovePlayerNameTextPayload;
             m_CustomTagsContextMenuFeature = new CustomTagsContextMenuFeature(m_PluginConfiguration, m_PluginData);
             m_NameplatesTagTargetFeature = new NameplateTagTargetFeature(m_PluginConfiguration, m_PluginData);
             m_ChatTagTargetFeature = new ChatTagTargetFeature(m_PluginConfiguration, m_PluginData);
@@ -53,6 +60,18 @@ namespace PlayerTags
             PluginServices.CommandManager.RemoveHandler(c_CommandName);
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
+        }
+
+        private bool LinkSelfInChatFeature_ShouldRemovePlayerNameTextPayload(object sender)
+        {
+            return !IsChatTwoActive();
+        }
+
+        private bool IsChatTwoActive()
+        {
+            var file = Path.Combine(Path.GetDirectoryName(PluginServices.DalamudPluginInterface.ConfigDirectory.FullName), @"ChatTwo\chat-log.db");
+            var exists = File.Exists(file);
+            return exists;
         }
 
         private void DalamudPluginInterface_LanguageChanged(string langCode)
