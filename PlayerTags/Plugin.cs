@@ -8,7 +8,7 @@ namespace PlayerTags
 {
     public sealed class Plugin : IDalamudPlugin
     {
-        public string Name => "Player Tags";
+        public string Name => "PlayerTags";
         private const string c_CommandName = "/playertags";
 
         private PluginConfiguration m_PluginConfiguration;
