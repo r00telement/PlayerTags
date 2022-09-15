@@ -44,7 +44,6 @@ namespace PlayerTags
                 UiBuilder_OpenConfigUi();
             }) { HelpMessage = "Shows the config" });
             m_LinkSelfInChatFeature = new LinkSelfInChatFeature(m_PluginConfiguration, m_PluginData);
-            m_LinkSelfInChatFeature.ShouldRemovePlayerNameTextPayload += LinkSelfInChatFeature_ShouldRemovePlayerNameTextPayload;
             m_CustomTagsContextMenuFeature = new CustomTagsContextMenuFeature(m_PluginConfiguration, m_PluginData);
             m_NameplatesTagTargetFeature = new NameplateTagTargetFeature(m_PluginConfiguration, m_PluginData);
             m_ChatTagTargetFeature = new ChatTagTargetFeature(m_PluginConfiguration, m_PluginData);
@@ -60,18 +59,6 @@ namespace PlayerTags
             PluginServices.CommandManager.RemoveHandler(c_CommandName);
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi -= UiBuilder_OpenConfigUi;
             PluginServices.DalamudPluginInterface.UiBuilder.Draw -= UiBuilder_Draw;
-        }
-
-        private bool LinkSelfInChatFeature_ShouldRemovePlayerNameTextPayload(object sender)
-        {
-            return !IsChatTwoActive();
-        }
-
-        private bool IsChatTwoActive()
-        {
-            var file = Path.Combine(Path.GetDirectoryName(PluginServices.DalamudPluginInterface.ConfigDirectory.FullName), @"ChatTwo\chat-log.db");
-            var exists = File.Exists(file);
-            return exists;
         }
 
         private void DalamudPluginInterface_LanguageChanged(string langCode)

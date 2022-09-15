@@ -257,6 +257,13 @@ namespace PlayerTags.Features
 
                 ApplyStringChanges(message, stringChanges, stringMatch.PreferredPayload);
             }
+
+            // Replace PlayerPayloads of your own character with TextPayloads
+            foreach (var payload in message.Payloads.ToArray())
+            {
+                if (payload is PlayerPayload playerPayload && playerPayload.PlayerName.Contains(PluginServices.ClientState.LocalPlayer.Name.TextValue))
+                    message.Payloads.Remove(payload);
+            }
         }
     }
 }

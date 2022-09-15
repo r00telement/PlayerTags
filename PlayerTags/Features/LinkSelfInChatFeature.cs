@@ -116,9 +116,8 @@ namespace PlayerTags.Features
                         // Normally used to end PlayerPayload linking. But for the own player it has no affect. Anyway, use it, just because. Maybe it's needed in the future somewhere else.
                         seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
 
-                        // Remove the text payload (display text)
-                        if (ShouldRemovePlayerNameTextPayload?.Invoke(this) ?? true)
-                            seString.Payloads.Remove(playerTextPayload);
+                        // The PlayerPayload is just temporary. We keep the TextPayload.
+                        // The PayerPayload gets removed at the ChatTagTargetFeature at the end.
                     }
                 }
             }
