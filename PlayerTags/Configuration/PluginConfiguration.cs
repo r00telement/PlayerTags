@@ -108,16 +108,6 @@ namespace PlayerTags.Configuration
             }
         }
 
-        [JsonProperty("IsLinkSelfInChatEnabled"), Obsolete]
-        private bool IsLinkSelfInChatEnabledV1
-        {
-            set
-            {
-                foreach (var key in GeneralOptions.Keys)
-                    GeneralOptions[key].IsLinkSelfInChatEnabled = value;
-            }
-        }
-
         #endregion
 
         public event System.Action? Saved;
@@ -229,6 +219,5 @@ namespace PlayerTags.Configuration
         public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
 
         public bool IsApplyTagsToAllChatMessagesEnabled = true;
-        public bool IsLinkSelfInChatEnabled = false;
     }
 }

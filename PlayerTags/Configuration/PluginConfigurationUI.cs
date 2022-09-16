@@ -80,8 +80,8 @@ namespace PlayerTags.Configuration
 
                         ImGui.Spacing();
                         ImGui.Spacing();
-                        DrawHeading(Strings.Loc_Static_ChatExperimental);
-                        DrawCheckbox(nameof(propertyProxy.IsLinkSelfInChatEnabled), true, ref propertyProxy.IsLinkSelfInChatEnabled, () => SaveSettings(true));
+                        DrawHeading(Strings.Loc_Static_Chat);
+                        //DrawCheckbox(nameof(propertyProxy.IsLinkSelfInChatEnabled), true, ref propertyProxy.IsLinkSelfInChatEnabled, () => SaveSettings(true));
                         DrawCheckbox(nameof(propertyProxy.IsApplyTagsToAllChatMessagesEnabled), true, ref propertyProxy.IsApplyTagsToAllChatMessagesEnabled, () => SaveSettings(true));
 
 
@@ -1203,7 +1203,6 @@ namespace PlayerTags.Configuration
             public NameplateTitleVisibility NameplateTitleVisibility;
             public NameplateTitlePosition NameplateTitlePosition;
             public bool IsApplyTagsToAllChatMessagesEnabled;
-            public bool IsLinkSelfInChatEnabled;
 
             public PropertyProxy(PluginConfiguration config)
             {
@@ -1218,7 +1217,6 @@ namespace PlayerTags.Configuration
                 NameplateTitleVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitleVisibility;
                 NameplateTitlePosition = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitlePosition;
                 IsApplyTagsToAllChatMessagesEnabled = pluginConfig.GeneralOptions[currentActivityContext].IsApplyTagsToAllChatMessagesEnabled;
-                IsLinkSelfInChatEnabled = pluginConfig.GeneralOptions[currentActivityContext].IsLinkSelfInChatEnabled;
             }
 
             public void SaveData()
@@ -1241,7 +1239,6 @@ namespace PlayerTags.Configuration
                     pluginConfig.GeneralOptions[key].NameplateTitleVisibility = NameplateTitleVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitlePosition = NameplateTitlePosition;
                     pluginConfig.GeneralOptions[key].IsApplyTagsToAllChatMessagesEnabled = IsApplyTagsToAllChatMessagesEnabled;
-                    pluginConfig.GeneralOptions[key].IsLinkSelfInChatEnabled = IsLinkSelfInChatEnabled;
                 }
             }
 
