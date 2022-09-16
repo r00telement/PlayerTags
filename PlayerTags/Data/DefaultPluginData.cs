@@ -25,6 +25,7 @@ namespace PlayerTags.Data
                 IsSelected = true,
                 IsExpanded = true,
                 TagPositionInChat = TagPosition.Before,
+                InsertBehindNumberPrefixInChat = true,
                 TagPositionInNameplates = TagPosition.Replace,
                 TagTargetInNameplates = NameplateElement.Title,
                 IsTextItalic = true,
@@ -32,6 +33,10 @@ namespace PlayerTags.Data
                 IsVisibleInOverworld = true,
                 IsVisibleInPveDuties = true,
                 IsVisibleInPvpDuties = true,
+
+                NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Never,
+                NameplateTitleVisibility = NameplateTitleVisibility.Always,
+                NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName,
 
                 IsVisibleForSelf = true,
                 IsVisibleForFriendPlayers = true,

@@ -124,8 +124,17 @@ namespace PlayerTags.Data
         [InheritableCategory("TextCategory")]
         public InheritableValue<bool> IsTextColorAppliedToNameplateFreeCompany = new InheritableValue<bool>(false);
 
+        [InheritableCategory("NameplateCategory")]
+        public InheritableValue<NameplateFreeCompanyVisibility> NameplateFreeCompanyVisibility = new InheritableValue<NameplateFreeCompanyVisibility>(Data.NameplateFreeCompanyVisibility.Default);
+        [InheritableCategory("NameplateCategory")]
+        public InheritableValue<NameplateTitleVisibility> NameplateTitleVisibility = new InheritableValue<NameplateTitleVisibility>(Data.NameplateTitleVisibility.Default);
+        [InheritableCategory("NameplateCategory")]
+        public InheritableValue<NameplateTitlePosition> NameplateTitlePosition = new InheritableValue<NameplateTitlePosition>(Data.NameplateTitlePosition.Default);
+
         [InheritableCategory("PositionCategory")]
         public InheritableValue<TagPosition> TagPositionInChat = new InheritableValue<TagPosition>(TagPosition.Before);
+        [InheritableCategory("PositionCategory")]
+        public InheritableValue<bool> InsertBehindNumberPrefixInChat = new InheritableValue<bool>(true);
         [InheritableCategory("PositionCategory")]
         public InheritableValue<TagPosition> TagPositionInNameplates = new InheritableValue<TagPosition>(TagPosition.Before);
         [InheritableCategory("PositionCategory")]

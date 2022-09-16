@@ -621,4 +621,22 @@
   <data name="Loc_Static_OtherExperimental" xml:space="preserve">
     <value>Other (Experimental)</value>
   </data>
+  <data name="Loc_InsertBehindNumberPrefixInChat" xml:space="preserve">
+    <value>Insert behind group number prefix in chat</value>
+  </data>
+  <data name="Loc_InsertBehindNumberPrefixInChat_Description" xml:space="preserve">
+    <value>If enabled, the Tag and Icon will get insert behind the Group/Alliance number prefix in Chat instead of before. </value>
+  </data>
+  <data name="Loc_NameplateCategory" xml:space="preserve">
+    <value>Nameplate properties</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Description" xml:space="preserve">
+    <value>Defines whenever the free company element of the nameplate should be visible or not.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Description" xml:space="preserve">
+    <value>Defines the position for the title element of the nameplate. Should it be above or below the name? You can decide!</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Description" xml:space="preserve">
+    <value>Defines whenever the title element of the nameplate should be visible or not.</value>
+  </data>
 </root>

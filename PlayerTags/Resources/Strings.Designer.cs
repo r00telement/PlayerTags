@@ -268,6 +268,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Insert behind group number prefix in chat ähnelt.
+        /// </summary>
+        public static string Loc_InsertBehindNumberPrefixInChat {
+            get {
+                return ResourceManager.GetString("Loc_InsertBehindNumberPrefixInChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If enabled, the Tag and Icon will get insert behind the Group/Alliance number prefix in Chat instead of before.  ähnelt.
+        /// </summary>
+        public static string Loc_InsertBehindNumberPrefixInChat_Description {
+            get {
+                return ResourceManager.GetString("Loc_InsertBehindNumberPrefixInChat_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Apply tags to all chat messages ähnelt.
         /// </summary>
         public static string Loc_IsApplyTagsToAllChatMessagesEnabled {
@@ -862,6 +880,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Nameplate properties ähnelt.
+        /// </summary>
+        public static string Loc_NameplateCategory {
+            get {
+                return ResourceManager.GetString("Loc_NameplateCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Free company ähnelt.
         /// </summary>
         public static string Loc_NameplateElement_FreeCompany {
@@ -939,6 +966,15 @@ namespace PlayerTags.Resources {
         public static string Loc_NameplateFreeCompanyVisibility_Default_Description {
             get {
                 return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility_Default_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines whenever the free company element of the nameplate should be visible or not. ähnelt.
+        /// </summary>
+        public static string Loc_NameplateFreeCompanyVisibility_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateFreeCompanyVisibility_Description", resourceCulture);
             }
         }
         
@@ -1024,6 +1060,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines the position for the title element of the nameplate. Should it be above or below the name? You can decide! ähnelt.
+        /// </summary>
+        public static string Loc_NameplateTitlePosition_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitlePosition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Title visibility ähnelt.
         /// </summary>
         public static string Loc_NameplateTitleVisibility {
@@ -1065,6 +1110,15 @@ namespace PlayerTags.Resources {
         public static string Loc_NameplateTitleVisibility_Default_Description {
             get {
                 return ResourceManager.GetString("Loc_NameplateTitleVisibility_Default_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines whenever the title element of the nameplate should be visible or not. ähnelt.
+        /// </summary>
+        public static string Loc_NameplateTitleVisibility_Description {
+            get {
+                return ResourceManager.GetString("Loc_NameplateTitleVisibility_Description", resourceCulture);
             }
         }
         

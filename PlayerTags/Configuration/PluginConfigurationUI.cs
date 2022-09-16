@@ -679,6 +679,18 @@ namespace PlayerTags.Configuration
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableNameplateElement);
                     }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<NameplateFreeCompanyVisibility> inheritableFreeCompanyVisibility)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableFreeCompanyVisibility);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<NameplateTitleVisibility> inheritableNameplateTitleVisibility)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableNameplateTitleVisibility);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<NameplateTitlePosition> inheritableNameplateTitlePosition)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableNameplateTitlePosition);
+                    }
                     else if (selectedInheritable.Inheritable.Value is InheritableReference<string> inheritableString)
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, inheritableString);
