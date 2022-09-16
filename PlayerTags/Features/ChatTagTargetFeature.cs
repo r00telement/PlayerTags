@@ -323,7 +323,8 @@ namespace PlayerTags.Features
                             var payloads = GetPayloads(jobTag, stringMatch.GameObject);
                             if (payloads.Any())
                             {
-                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges, true);
+                                var insertBehindNumberPrefix = jobTag.InsertBehindNumberPrefixInChat?.Value ?? true;
+                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges, insertBehindNumberPrefix);
                             }
                         }
                     }
