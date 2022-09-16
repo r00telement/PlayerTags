@@ -221,7 +221,7 @@ namespace PlayerTags.Features
             var stringMatches = GetStringMatches(message);
             foreach (var stringMatch in stringMatches)
             {
-                Dictionary<TagPosition, List<Payload>> stringChanges = new Dictionary<TagPosition, List<Payload>>();
+                Dictionary<TagPosition, StringChanges> stringChanges = new Dictionary<TagPosition, StringChanges>();
 
                 if (stringMatch.GameObject is PlayerCharacter playerCharacter)
                 {
@@ -233,7 +233,7 @@ namespace PlayerTags.Features
                             var payloads = GetPayloads(jobTag, stringMatch.GameObject);
                             if (payloads.Any())
                             {
-                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges);
+                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges, true);
                             }
                         }
                     }
@@ -247,7 +247,7 @@ namespace PlayerTags.Features
                             var generatedName = RandomNameGenerator.Generate(playerName);
                             if (generatedName != null)
                             {
-                                AddPayloadChanges(TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges);
+                                AddPayloadChanges(TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges, false);
                             }
                         }
                     }
@@ -267,7 +267,7 @@ namespace PlayerTags.Features
                                 var customTagPayloads = GetPayloads(customTag, stringMatch.GameObject);
                                 if (customTagPayloads.Any())
                                 {
-                                    AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges);
+                                    AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges, false);
                                 }
                             }
                         }

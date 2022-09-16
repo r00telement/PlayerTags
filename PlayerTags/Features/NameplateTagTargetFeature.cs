@@ -128,7 +128,7 @@ namespace PlayerTags.Features
         /// <param name="tagPosition">The position of the changes.</param>
         /// <param name="payloadChanges">The payload changes to add.</param>
         /// <param name="nameplateChanges">The dictionary to add changes to.</param>
-        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloadChanges, Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges)
+        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloadChanges, Dictionary<NameplateElement, Dictionary<TagPosition, StringChanges>> nameplateChanges, bool forceUsingSingleAnchorPayload)
         {
             if (!payloadChanges.Any())
             {
@@ -137,10 +137,10 @@ namespace PlayerTags.Features
 
             if (!nameplateChanges.Keys.Contains(nameplateElement))
             {
-                nameplateChanges[nameplateElement] = new Dictionary<TagPosition, List<Payload>>();
+                nameplateChanges[nameplateElement] = new();
             }
 
-            AddPayloadChanges(tagPosition, payloadChanges, nameplateChanges[nameplateElement]);
+            AddPayloadChanges(tagPosition, payloadChanges, nameplateChanges[nameplateElement], forceUsingSingleAnchorPayload);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace PlayerTags.Features
         /// <param name="freeCompany">The free company text to change.</param>
         private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany)
         {
-            Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges = new Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>>();
+            Dictionary<NameplateElement, Dictionary<TagPosition, StringChanges>> nameplateChanges = new();
 
             if (gameObject is PlayerCharacter playerCharacter)
             {
@@ -171,7 +171,7 @@ namespace PlayerTags.Features
                     {
                         var generatedName = RandomNameGenerator.Generate(characterName);
                         if (generatedName != null)
-                            AddPayloadChanges(NameplateElement.Name, TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), nameplateChanges);
+                            AddPayloadChanges(NameplateElement.Name, TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), nameplateChanges, false);
                     }
                 }
 
@@ -190,7 +190,7 @@ namespace PlayerTags.Features
                     {
                         var payloads = GetPayloads(tag, gameObject);
                         if (payloads.Any())
-                            AddPayloadChanges(tag.TagTargetInNameplates.InheritedValue.Value, tag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
+                            AddPayloadChanges(tag.TagTargetInNameplates.InheritedValue.Value, tag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges, false);
                     }
                 }
             }

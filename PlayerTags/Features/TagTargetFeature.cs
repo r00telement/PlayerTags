@@ -19,6 +19,12 @@ namespace PlayerTags.Features
     /// </summary>
     public abstract class TagTargetFeature : IDisposable
     {
+        protected class StringChanges
+        {
+            public List<Payload> Payloads { get; init; } = new();
+            public bool ForceUsingSingleAnchorPayload { get; set; } = false;
+        }
+
         public ActivityContextManager ActivityContextManager { get; init; }
 
         public TagTargetFeature()
@@ -214,24 +220,17 @@ namespace PlayerTags.Features
         /// <param name="tagPosition">The position to add changes to.</param>
         /// <param name="payloads">The payloads to add.</param>
         /// <param name="stringChanges">The dictionary to add the changes to.</param>
-        protected void AddPayloadChanges(TagPosition tagPosition, IEnumerable<Payload> payloads, Dictionary<TagPosition, List<Payload>> stringChanges)
+        protected void AddPayloadChanges(TagPosition tagPosition, IEnumerable<Payload> payloads, Dictionary<TagPosition, StringChanges> stringChanges, bool forceUsingSingleAnchorPayload)
         {
-            if (payloads == null || !payloads.Any())
+            if (payloads != null && payloads.Any() && stringChanges != null)
             {
-                return;
-            }
+                if (!stringChanges.Keys.Contains(tagPosition))
+                    stringChanges[tagPosition] = new();
 
-            if (stringChanges == null)
-            {
-                return;
+                var changes = stringChanges[tagPosition];
+                changes.Payloads.AddRange(payloads);
+                changes.ForceUsingSingleAnchorPayload = forceUsingSingleAnchorPayload;
             }
-
-            if (!stringChanges.Keys.Contains(tagPosition))
-            {
-                stringChanges[tagPosition] = new List<Payload>();
-            }
-
-            stringChanges[tagPosition].AddRange(payloads);
         }
 
         /// <summary>
@@ -240,7 +239,7 @@ namespace PlayerTags.Features
         /// <param name="seString">The string to apply changes to.</param>
         /// <param name="stringChanges">The changes to apply.</param>
         /// <param name="anchorPayload">The payload in the string that changes should be anchored to. If there is no anchor, the changes will be applied to the entire string.</param>
-        protected void ApplyStringChanges(SeString seString, Dictionary<TagPosition, List<Payload>> stringChanges, List<Payload> anchorPayloads = null, Payload anchorReplacePayload = null)
+        protected void ApplyStringChanges(SeString seString, Dictionary<TagPosition, StringChanges> stringChanges, List<Payload> anchorPayloads = null, Payload anchorReplacePayload = null)
         {
             if (stringChanges.Count == 0)
             {
@@ -265,47 +264,51 @@ namespace PlayerTags.Features
 
             foreach (var tagPosition in tagPositionsOrdered)
             {
-                if (stringChanges.TryGetValue(tagPosition, out var payloads) && payloads.Any())
+                if (stringChanges.TryGetValue(tagPosition, out var payloads) && payloads.Payloads.Any())
                 {
-                    AddSpacesBetweenTextPayloads(stringChanges[tagPosition], tagPosition);
+                    AddSpacesBetweenTextPayloads(stringChanges[tagPosition].Payloads, tagPosition);
                     if (tagPosition == TagPosition.Before)
                     {
-                        if (anchorPayloads != null && anchorPayloads.Any())
+                        Payload anchorFirst = payloads.ForceUsingSingleAnchorPayload ? anchorReplacePayload : anchorPayloads?.FirstOrDefault();
+
+                        if (anchorFirst != null)
                         {
-                            var anchorPayload = anchorPayloads.First();
-                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
-                            seString.Payloads.InsertRange(anchorPayloadIndex, payloads);
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorFirst);
+                            seString.Payloads.InsertRange(anchorPayloadIndex, payloads.Payloads);
                         }
                         else
                         {
-                            seString.Payloads.InsertRange(0, payloads);
+                            seString.Payloads.InsertRange(0, payloads.Payloads);
                         }
                     }
                     else if (tagPosition == TagPosition.After)
                     {
-                        if (anchorPayloads != null && anchorPayloads.Any())
+                        Payload anchorLast = payloads.ForceUsingSingleAnchorPayload? anchorReplacePayload : anchorPayloads?.LastOrDefault();
+
+                        if (anchorLast != null)
                         {
-                            var anchorPayload = anchorPayloads.Last();
-                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
-                            seString.Payloads.InsertRange(anchorPayloadIndex + 1, payloads);
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorLast);
+                            seString.Payloads.InsertRange(anchorPayloadIndex + 1, payloads.Payloads);
                         }
                         else
                         {
-                            seString.Payloads.AddRange(payloads);
+                            seString.Payloads.AddRange(payloads.Payloads);
                         }
                     }
                     else if (tagPosition == TagPosition.Replace)
                     {
-                        if (anchorReplacePayload != null)
+                        Payload anchorReplace = anchorReplacePayload;
+
+                        if (anchorReplace != null)
                         {
-                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorReplacePayload);
-                            seString.Payloads.InsertRange(anchorPayloadIndex, payloads);
-                            seString.Payloads.Remove(anchorReplacePayload);
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorReplace);
+                            seString.Payloads.InsertRange(anchorPayloadIndex, payloads.Payloads);
+                            seString.Payloads.Remove(anchorReplace);
                         }
                         else
                         {
                             seString.Payloads.Clear();
-                            seString.Payloads.AddRange(payloads);
+                            seString.Payloads.AddRange(payloads.Payloads);
                         }
                     }
                 }
