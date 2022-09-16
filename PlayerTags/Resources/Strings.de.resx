@@ -268,7 +268,7 @@
     <value>Versucht, deinen Chat-Namen mit deinem Charakter zu verknüpfen, was es erlaubt, Tags auf den eigenen Charakter im Chat anzuwenden.</value>
   </data>
   <data name="Loc_IsApplyTagsToAllChatMessagesEnabled" xml:space="preserve">
-    <value>Fügt Tags zu allen Chat-Nachrichten hinzu.</value>
+    <value>Fügt Tags zu allen Chat-Nachrichten hinzu</value>
   </data>
   <data name="Loc_IsApplyTagsToAllChatMessagesEnabled_Description" xml:space="preserve">
     <value>Fügt Tags zu allen Chat-Nachrichten hinzu, einschließlich Nicht-Sozialer Nachrichten.</value>

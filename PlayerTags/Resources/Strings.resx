@@ -639,4 +639,7 @@
   <data name="Loc_NameplateTitleVisibility_Description" xml:space="preserve">
     <value>Defines whenever the title element of the nameplate should be visible or not.</value>
   </data>
+  <data name="Loc_Static_Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
 </root>

@@ -1249,6 +1249,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Chat ähnelt.
+        /// </summary>
+        public static string Loc_Static_Chat {
+            get {
+                return ResourceManager.GetString("Loc_Static_Chat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Chat (Experimental) ähnelt.
         /// </summary>
         public static string Loc_Static_ChatExperimental {
