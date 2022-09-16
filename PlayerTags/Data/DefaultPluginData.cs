@@ -34,9 +34,9 @@ namespace PlayerTags.Data
                 IsVisibleInPveDuties = true,
                 IsVisibleInPvpDuties = true,
 
-                NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Never,
-                NameplateTitleVisibility = NameplateTitleVisibility.Always,
-                NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName,
+                //NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Never,
+                //NameplateTitleVisibility = NameplateTitleVisibility.Always,
+                //NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName,
 
                 IsVisibleForSelf = true,
                 IsVisibleForFriendPlayers = true,
