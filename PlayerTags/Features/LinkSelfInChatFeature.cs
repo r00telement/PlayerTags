@@ -33,12 +33,12 @@ namespace PlayerTags.Features
         {
             if (m_PluginConfiguration.GeneralOptions[activityContextManager.CurrentActivityContext].IsLinkSelfInChatEnabled)
             {
-                ParsePayloads(sender);
-                ParsePayloads(message);
+                ParsePayloads(sender, type, true);
+                ParsePayloads(message, type, false);
             }
         }
 
-        private void ParsePayloads(SeString seString)
+        private void ParsePayloads(SeString seString, XivChatType chatType, bool isSender)
         {
             if (PluginServices.ClientState.LocalPlayer != null)
             {
@@ -101,7 +101,10 @@ namespace PlayerTags.Features
                             // For now, don't follow up with a text payload. Only use a player payload.
 
                             var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
-                            var playerPayloadIndex = seString.Payloads.IndexOf(playerTextPayload);
+                            int playerPayloadIndex = seString.Payloads.IndexOf(playerTextPayload);
+
+                            if (isSender && (chatType == XivChatType.Party || chatType == XivChatType.Alliance))
+                                playerPayloadIndex--;
 
                             // Add the Player Link Payload
                             seString.Payloads.Insert(playerPayloadIndex++, playerPayload);

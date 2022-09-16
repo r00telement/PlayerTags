@@ -28,10 +28,7 @@ namespace PlayerTags.Features
             /// </summary>
             public SeString SeString { get; init; }
 
-            /// <summary>
-            /// The matching text payload.
-            /// </summary>
-            public TextPayload? TextPayload { get; init; }
+            public List<Payload> DisplayTextPayloads { get; init; } = new();
 
             /// <summary>
             /// The matching game object if one exists
@@ -43,16 +40,18 @@ namespace PlayerTags.Features
             /// </summary>
             public PlayerPayload? PlayerPayload { get; init; }
 
-            public Payload? PreferredPayload
+            public Payload? PlayerNamePayload
             {
                 get
                 {
-                    if (TextPayload != null)
-                    {
-                        return TextPayload;
-                    }
+                    Payload textPayload = null;
+                    string textMatch = GetMatchText();
 
-                    return PlayerPayload;
+                    textPayload = DisplayTextPayloads.FirstOrDefault(n => n is TextPayload textPayload && textPayload.Text.Contains(textMatch));
+                    textPayload ??= PlayerPayload;
+                    textPayload ??= DisplayTextPayloads.FirstOrDefault();
+
+                    return textPayload;
                 }
             }
 
@@ -70,11 +69,6 @@ namespace PlayerTags.Features
                 if (GameObject != null)
                 {
                     return GameObject.Name.TextValue;
-                }
-
-                if (TextPayload != null)
-                {
-                    return TextPayload.Text;
                 }
 
                 if (PlayerPayload != null)
@@ -107,8 +101,8 @@ namespace PlayerTags.Features
         {
             if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].IsApplyTagsToAllChatMessagesEnabled || Enum.IsDefined(type))
             {
-                AddTagsToChat(sender);
-                AddTagsToChat(message);
+                AddTagsToChat(sender, type, true);
+                AddTagsToChat(message, type, false);
             }
         }
 
@@ -139,31 +133,44 @@ namespace PlayerTags.Features
         /// <returns>A list of matched game objects.</returns>
         private List<StringMatch> GetStringMatches(SeString seString)
         {
-            List<StringMatch> stringMatches = new List<StringMatch>();
+            List<StringMatch> stringMatches = new();
+            Stack<PlayerPayload> curPlayerPayload = new();
+            Stack<List<Payload>> curRefPayloads = new();
+            var defaultRawPayload = RawPayload.LinkTerminator.Data;
 
-            for (int payloadIndex = 0; payloadIndex < seString.Payloads.Count; ++payloadIndex)
+            foreach (var payload in seString.Payloads)
             {
-                var payload = seString.Payloads[payloadIndex];
+
                 if (payload is PlayerPayload playerPayload)
                 {
+                    curPlayerPayload.Push(playerPayload);
+                    curRefPayloads.Push(new List<Payload>());
+                }
+                else if (payload is RawPayload rawPayload)
+                {
+                    if (defaultRawPayload.SequenceEqual(rawPayload.Data))
+                        finishCurrentMatch();
+                }
+                else
+                {
+                    if (curRefPayloads.TryPeek(out List<Payload> result))
+                        result.Add(payload);
+                }
+            }
+
+            // Finally finish, if not closed by RawPayload
+            finishCurrentMatch();
+
+            void finishCurrentMatch()
+            {
+                if (curPlayerPayload.TryPop(out PlayerPayload playerPayload))
+                {
                     var gameObject = PluginServices.ObjectTable.FirstOrDefault(gameObject => gameObject.Name.TextValue == playerPayload.PlayerName);
-
-                    TextPayload? textPayload = null;
-
-                    // The next payload MUST be a text payload
-                    if (payloadIndex + 1 < seString.Payloads.Count)
-                    {
-                        textPayload = seString.Payloads[payloadIndex + 1] as TextPayload;
-
-                        // Don't handle the text payload twice
-                        payloadIndex++;
-                    }
-
                     var stringMatch = new StringMatch(seString)
                     {
                         GameObject = gameObject,
                         PlayerPayload = playerPayload,
-                        TextPayload = textPayload
+                        DisplayTextPayloads = curRefPayloads.Pop()
                     };
                     stringMatches.Add(stringMatch);
                 }
@@ -172,12 +179,45 @@ namespace PlayerTags.Features
             return stringMatches;
         }
 
+        private void SplitOffPartyNumberPrefix(SeString sender, XivChatType type)
+        {
+            if (type == XivChatType.Party || type == XivChatType.Alliance)
+            {
+                PlayerPayload lastPlayerPayload = null;
+                foreach (var payload in sender.Payloads.ToArray())
+                {
+                    if (payload is PlayerPayload playerPayload)
+                        lastPlayerPayload = playerPayload;
+                    else if (payload is TextPayload playerNamePayload && lastPlayerPayload != null)
+                    {
+                        // Get position of player name in payload
+                        var indexOfPlayerName = playerNamePayload.Text.IndexOf(lastPlayerPayload.PlayerName);
+
+                        if (indexOfPlayerName > 0)
+                        {
+                            // Split off the name from the prefix number
+                            var prefixPayload = new TextPayload(playerNamePayload.Text[..indexOfPlayerName]);
+                            playerNamePayload.Text = playerNamePayload.Text[indexOfPlayerName..];
+
+                            // Add prefix number before the player name payload
+                            var playerNamePayloadIndex = sender.Payloads.IndexOf(playerNamePayload);
+                            sender.Payloads.Insert(playerNamePayloadIndex, prefixPayload);
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Adds all configured tags to a chat message.
         /// </summary>
         /// <param name="message">The message to change.</param>
-        private void AddTagsToChat(SeString message)
+        private void AddTagsToChat(SeString message, XivChatType chatType, bool isSender)
         {
+            // Split out the party/alliance number from the PlayerPayload
+            if (isSender)
+                SplitOffPartyNumberPrefix(message, chatType);
+
             var stringMatches = GetStringMatches(message);
             foreach (var stringMatch in stringMatches)
             {
@@ -235,7 +275,7 @@ namespace PlayerTags.Features
                 }
 
                 // An additional step to apply text color to additional locations
-                if (stringMatch.PlayerPayload != null && stringMatch.PreferredPayload != null)
+                if (stringMatch.PlayerPayload != null && stringMatch.DisplayTextPayloads.Any())
                 {
                     Identity identity = m_PluginData.GetIdentity(stringMatch.PlayerPayload);
                     foreach (var customTagId in identity.CustomTagIds)
@@ -252,10 +292,10 @@ namespace PlayerTags.Features
                     }
 
                     void applyTextFormatting(Tag tag)
-                        => ApplyTextFormatting(stringMatch.GameObject, tag, new[] { message }, new[] { tag.IsTextColorAppliedToChatName }, stringMatch.PreferredPayload);
+                        => ApplyTextFormatting(stringMatch.GameObject, tag, new[] { message }, new[] { tag.IsTextColorAppliedToChatName }, stringMatch.DisplayTextPayloads);
                 }
 
-                ApplyStringChanges(message, stringChanges, stringMatch.PreferredPayload);
+                ApplyStringChanges(message, stringChanges, stringMatch.DisplayTextPayloads, stringMatch.PlayerNamePayload);
             }
 
             // Replace PlayerPayloads of your own character with TextPayloads

@@ -240,7 +240,7 @@ namespace PlayerTags.Features
         /// <param name="seString">The string to apply changes to.</param>
         /// <param name="stringChanges">The changes to apply.</param>
         /// <param name="anchorPayload">The payload in the string that changes should be anchored to. If there is no anchor, the changes will be applied to the entire string.</param>
-        protected void ApplyStringChanges(SeString seString, Dictionary<TagPosition, List<Payload>> stringChanges, Payload? anchorPayload = null)
+        protected void ApplyStringChanges(SeString seString, Dictionary<TagPosition, List<Payload>> stringChanges, List<Payload> anchorPayloads = null, Payload anchorReplacePayload = null)
         {
             if (stringChanges.Count == 0)
             {
@@ -249,7 +249,7 @@ namespace PlayerTags.Features
 
             List<TagPosition> tagPositionsOrdered = new List<TagPosition>();
             // If there's no anchor payload, do replaces first so that befores and afters are based on the replaced data
-            if (anchorPayload == null)
+            if (anchorPayloads == null || !anchorPayloads.Any())
             {
                 tagPositionsOrdered.Add(TagPosition.Replace);
             }
@@ -258,7 +258,7 @@ namespace PlayerTags.Features
             tagPositionsOrdered.Add(TagPosition.After);
 
             // If there is an anchor payload, do replaces last so that we still know which payload needs to be removed
-            if (anchorPayload != null)
+            if (anchorPayloads != null && anchorPayloads.Any())
             {
                 tagPositionsOrdered.Add(TagPosition.Replace);
             }
@@ -270,8 +270,9 @@ namespace PlayerTags.Features
                     AddSpacesBetweenTextPayloads(stringChanges[tagPosition], tagPosition);
                     if (tagPosition == TagPosition.Before)
                     {
-                        if (anchorPayload != null)
+                        if (anchorPayloads != null && anchorPayloads.Any())
                         {
+                            var anchorPayload = anchorPayloads.First();
                             var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
                             seString.Payloads.InsertRange(anchorPayloadIndex, payloads);
                         }
@@ -282,8 +283,9 @@ namespace PlayerTags.Features
                     }
                     else if (tagPosition == TagPosition.After)
                     {
-                        if (anchorPayload != null)
+                        if (anchorPayloads != null && anchorPayloads.Any())
                         {
+                            var anchorPayload = anchorPayloads.Last();
                             var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
                             seString.Payloads.InsertRange(anchorPayloadIndex + 1, payloads);
                         }
@@ -294,11 +296,11 @@ namespace PlayerTags.Features
                     }
                     else if (tagPosition == TagPosition.Replace)
                     {
-                        if (anchorPayload != null)
+                        if (anchorReplacePayload != null)
                         {
-                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorPayload);
+                            var anchorPayloadIndex = seString.Payloads.IndexOf(anchorReplacePayload);
                             seString.Payloads.InsertRange(anchorPayloadIndex, payloads);
-                            seString.Payloads.Remove(anchorPayload);
+                            seString.Payloads.Remove(anchorReplacePayload);
                         }
                         else
                         {
@@ -310,7 +312,7 @@ namespace PlayerTags.Features
             }
         }
 
-        protected void ApplyTextFormatting(GameObject gameObject, Tag tag, SeString[] destStrings, InheritableValue<bool>[] textColorApplied, Payload preferedPayload)
+        protected void ApplyTextFormatting(GameObject gameObject, Tag tag, SeString[] destStrings, InheritableValue<bool>[] textColorApplied, List<Payload> preferedPayloads)
         {
             if (IsTagVisible(tag, gameObject))
             {
@@ -355,10 +357,10 @@ namespace PlayerTags.Features
 
             void applyTextFormattingPayloads(SeString destPayload, Payload startPayload, Payload endPayload)
             {
-                if (preferedPayload == null)
+                if (preferedPayloads == null || !preferedPayloads.Any())
                     applyTextFormattingPayloadToStartAndEnd(destPayload, startPayload, endPayload);
                 else
-                    applyTextFormattingPayloadsToSpecificPosition(destPayload, startPayload, endPayload, preferedPayload);
+                    applyTextFormattingPayloadsToSpecificPosition(destPayload, startPayload, endPayload, preferedPayloads);
             }
             
             void applyTextFormattingPayloadToStartAndEnd(SeString destPayload, Payload startPayload, Payload endPayload)
@@ -367,11 +369,13 @@ namespace PlayerTags.Features
                 destPayload.Payloads.Add(endPayload);
             }
 
-            void applyTextFormattingPayloadsToSpecificPosition(SeString destPayload, Payload startPayload, Payload endPayload, Payload preferedPayload)
+            void applyTextFormattingPayloadsToSpecificPosition(SeString destPayload, Payload startPayload, Payload endPayload, List<Payload> preferedPayload)
             {
-                int payloadIndex = destPayload.Payloads.IndexOf(preferedPayload);
-                destPayload.Payloads.Insert(payloadIndex + 1, endPayload);
-                destPayload.Payloads.Insert(payloadIndex, startPayload);
+                int payloadStartIndex = destPayload.Payloads.IndexOf(preferedPayloads.First());
+                destPayload.Payloads.Insert(payloadStartIndex, startPayload);
+
+                int payloadEndIndex = destPayload.Payloads.IndexOf(preferedPayloads.Last());
+                destPayload.Payloads.Insert(payloadEndIndex + 1, endPayload);
             }
         }
     }
