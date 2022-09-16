@@ -114,10 +114,14 @@ namespace PlayerTags.Features
 
                         // Add the Link Terminator to end the Player Link. This should be done behind the Text Payload (display text).
                         // Normally used to end PlayerPayload linking. But for the own player it has no affect. Anyway, use it, just because. Maybe it's needed in the future somewhere else.
-                        seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
+                        //seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
 
-                        // The PlayerPayload is just temporary. We keep the TextPayload.
-                        // The PayerPayload gets removed at the ChatTagTargetFeature at the end.
+                        // Remove TextPayload
+                        //seString.Payloads.Remove(playerTextPayload);
+
+                        // I M P O R T A N T   N O T I C E:
+                        // The PlayerPayload is now just temporary. We keep the TextPayload don't add the LinkTerminator.
+                        // The PayerPayload gets removed at the ChatTagTargetFeature at the end and the TextPayload will be keeped there.
                     }
                 }
             }
