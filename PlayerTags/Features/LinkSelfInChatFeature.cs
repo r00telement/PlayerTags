@@ -14,9 +14,6 @@ namespace PlayerTags.Features
         private PluginData m_PluginData;
         private ActivityContextManager activityContextManager;
 
-        public delegate bool ShouldRemovePlayerNameTextPayloadEventHandler(object sender);
-        public event ShouldRemovePlayerNameTextPayloadEventHandler ShouldRemovePlayerNameTextPayload;
-
         public LinkSelfInChatFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
         {
             m_PluginConfiguration = pluginConfiguration;
