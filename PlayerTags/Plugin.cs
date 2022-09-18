@@ -1,6 +1,7 @@
 ﻿using Dalamud.Game.Command;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Internal;
+using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using PlayerTags.Features;

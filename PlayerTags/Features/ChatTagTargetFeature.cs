@@ -3,11 +3,14 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Configuration;
+using PlayerTags.Configuration.GameConfig;
 using PlayerTags.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Action = System.Action;
 
@@ -179,6 +182,44 @@ namespace PlayerTags.Features
             return stringMatches;
         }
 
+        private string BuildPlayername(string name)
+        {
+            var logNameType = GameConfigHelper.Instance.GetLogNameType();
+            var result = string.Empty;
+            
+            if (logNameType != null)
+            {
+                var nameSplitted = name.Split(' ');
+
+                if (nameSplitted.Length > 1)
+                {
+                    var firstName = nameSplitted[0];
+                    var lastName = nameSplitted[1];
+
+                    switch (logNameType)
+                    {
+                        case LogNameType.FullName:
+                            result = $"{firstName} {lastName}";
+                            break;
+                        case LogNameType.LastNameShorted:
+                            result = $"{firstName} {lastName[..1]}.";
+                            break;
+                        case LogNameType.FirstNameShorted:
+                            result = $"{firstName[..1]}. {lastName}";
+                            break;
+                        case LogNameType.Initials:
+                            result = $"{firstName[..1]}. {lastName[..1]}.";
+                            break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(result))
+                result = name;
+
+            return result;
+        }
+
         private void SplitOffPartyNumberPrefix(SeString sender, XivChatType type)
         {
             if (type == XivChatType.Party || type == XivChatType.Alliance)
@@ -223,7 +264,8 @@ namespace PlayerTags.Features
                         if (textPayload.Text == playerName)
                         {
                             playerTextPayloads.Add(textPayload);
-                            textPayload.Text = textPayload.Text;
+                            //textPayload.Text = textPayload.Text;
+                            textPayload.Text = playerName;
                         }
                         else
                         {
@@ -264,6 +306,9 @@ namespace PlayerTags.Features
 
                         foreach (var playerTextPayload in playerTextPayloads)
                         {
+                            // Fix displaying of abbreviated  own player name as the game does this after the chat message handler
+                            playerTextPayload.Text = BuildPlayername(playerTextPayload.Text);
+
                             // This does some dodgy shit for an unknown reason.
                             // Typically when you receive a player payload followed by a text payload, it displays the text
                             // and links it with the player payload. When trying to make one of these manually, it displays the player payload separately,
