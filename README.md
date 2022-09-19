@@ -19,6 +19,7 @@ If you want to contribute to a language that isn't listed, just tell me with an 
 | English | Pilzinsel64 | Source Language
 | German | Pilzinsel64, xEbony
 | Spanish | Risu
+| French | Khayle
 | ... | You?
 
 # Credits
