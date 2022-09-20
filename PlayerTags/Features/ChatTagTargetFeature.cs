@@ -48,9 +48,10 @@ namespace PlayerTags.Features
                 get
                 {
                     Payload textPayload = null;
-                    string textMatch = GetMatchText();
+                    string textMatch = GetMatchTextInternal();
+                    string textMatchShort = BuildPlayername(textMatch);
 
-                    textPayload = DisplayTextPayloads.FirstOrDefault(n => n is TextPayload textPayload && textPayload.Text.Contains(textMatch));
+                    textPayload = DisplayTextPayloads.FirstOrDefault(n => n is TextPayload textPayload && (textPayload.Text.Contains(textMatch) || ((!string.IsNullOrEmpty(textMatchShort)) && textPayload.Text.Contains(textMatchShort))));
                     textPayload ??= PlayerPayload;
                     textPayload ??= DisplayTextPayloads.FirstOrDefault();
 
@@ -63,23 +64,29 @@ namespace PlayerTags.Features
                 SeString = seString;
             }
 
+            private string GetMatchTextInternal()
+            {
+                if (GameObject != null)
+                    return GameObject.Name.TextValue;
+                else if (PlayerPayload != null)
+                    return PlayerPayload.PlayerName;
+                else
+                    return SeString.TextValue;
+            }
+
             /// <summary>
             /// Gets the matches text.
             /// </summary>
             /// <returns>The match text.</returns>
             public string GetMatchText()
             {
-                if (GameObject != null)
-                {
-                    return GameObject.Name.TextValue;
-                }
-
-                if (PlayerPayload != null)
-                {
-                    return PlayerPayload.PlayerName;
-                }
-
-                return SeString.TextValue;
+                var playerNamePayload = PlayerNamePayload;
+                if (playerNamePayload is PlayerPayload pp)
+                    return pp.PlayerName;
+                else if (playerNamePayload is TextPayload tp)
+                    return tp.Text;
+                else
+                    return SeString.TextValue;
             }
         }
 
@@ -182,44 +189,6 @@ namespace PlayerTags.Features
             return stringMatches;
         }
 
-        private string BuildPlayername(string name)
-        {
-            var logNameType = GameConfigHelper.Instance.GetLogNameType();
-            var result = string.Empty;
-            
-            if (logNameType != null)
-            {
-                var nameSplitted = name.Split(' ');
-
-                if (nameSplitted.Length > 1)
-                {
-                    var firstName = nameSplitted[0];
-                    var lastName = nameSplitted[1];
-
-                    switch (logNameType)
-                    {
-                        case LogNameType.FullName:
-                            result = $"{firstName} {lastName}";
-                            break;
-                        case LogNameType.LastNameShorted:
-                            result = $"{firstName} {lastName[..1]}.";
-                            break;
-                        case LogNameType.FirstNameShorted:
-                            result = $"{firstName[..1]}. {lastName}";
-                            break;
-                        case LogNameType.Initials:
-                            result = $"{firstName[..1]}. {lastName[..1]}.";
-                            break;
-                    }
-                }
-            }
-
-            if (string.IsNullOrEmpty(result))
-                result = name;
-
-            return result;
-        }
-
         private void SplitOffPartyNumberPrefix(SeString sender, XivChatType type)
         {
             if (type == XivChatType.Party || type == XivChatType.Alliance)
@@ -232,7 +201,10 @@ namespace PlayerTags.Features
                     else if (payload is TextPayload playerNamePayload && lastPlayerPayload != null)
                     {
                         // Get position of player name in payload
-                        var indexOfPlayerName = playerNamePayload.Text.IndexOf(lastPlayerPayload.PlayerName);
+                        var indexOfPlayerName = playerNamePayload.Text.IndexOf(BuildPlayername(lastPlayerPayload.PlayerName));
+
+                        if (indexOfPlayerName == -1)
+                            indexOfPlayerName = playerNamePayload.Text.IndexOf(lastPlayerPayload.PlayerName);
 
                         if (indexOfPlayerName > 0)
                         {
@@ -260,16 +232,16 @@ namespace PlayerTags.Features
                         List<TextPayload> playerTextPayloads = new List<TextPayload>();
 
                         var playerName = PluginServices.ClientState.LocalPlayer.Name.TextValue;
+                        var playerNameShorted = BuildPlayername(playerName);
 
-                        if (textPayload.Text == playerName)
+                        if (textPayload.Text == playerName || textPayload.Text == playerNameShorted)
                         {
                             playerTextPayloads.Add(textPayload);
-                            //textPayload.Text = textPayload.Text;
-                            textPayload.Text = playerName;
                         }
                         else
                         {
-                            var textMatchIndex = textPayload.Text.IndexOf(playerName);
+                            var usedPlayerName = chatType == XivChatType.Party || chatType == XivChatType.Alliance ? playerNameShorted : playerName;
+                            var textMatchIndex = textPayload.Text.IndexOf(usedPlayerName);
 
                             while (textMatchIndex >= 0)
                             {
@@ -286,21 +258,21 @@ namespace PlayerTags.Features
                                 }
 
                                 // This is the last reference to the local player in this payload
-                                if (textPayload.Text.Length == playerName.Length)
+                                if (textPayload.Text.Length == usedPlayerName.Length)
                                 {
                                     playerTextPayloads.Add(textPayload);
                                     break;
                                 }
 
                                 // Create the new name payload and add it
-                                var playerTextPayload = new TextPayload(playerName);
+                                var playerTextPayload = new TextPayload(usedPlayerName);
                                 playerTextPayloads.Add(playerTextPayload);
                                 seString.Payloads.Insert(textPayloadIndex, playerTextPayload);
 
                                 // Remove from the chopped text from the original payload
-                                textPayload.Text = textPayload.Text.Substring(playerName.Length);
+                                textPayload.Text = textPayload.Text.Substring(usedPlayerName.Length);
 
-                                textMatchIndex = textPayload.Text.IndexOf(playerName);
+                                textMatchIndex = textPayload.Text.IndexOf(usedPlayerName);
                             }
                         }
 
@@ -380,7 +352,7 @@ namespace PlayerTags.Features
                         var playerName = stringMatch.GetMatchText();
                         if (playerName != null)
                         {
-                            var generatedName = RandomNameGenerator.Generate(playerName);
+                            var generatedName = BuildPlayername(RandomNameGenerator.Generate(playerName));
                             if (generatedName != null)
                             {
                                 AddPayloadChanges(TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges, false);

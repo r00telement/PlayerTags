@@ -4,6 +4,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
+using PlayerTags.Configuration.GameConfig;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using System;
@@ -212,6 +213,44 @@ namespace PlayerTags.Features
                     payloads.Insert(0, new TextPayload($" "));
                 }
             }
+        }
+
+        protected static string BuildPlayername(string name)
+        {
+            var logNameType = GameConfigHelper.Instance.GetLogNameType();
+            var result = string.Empty;
+
+            if (logNameType != null && !string.IsNullOrEmpty(name))
+            {
+                var nameSplitted = name.Split(' ');
+
+                if (nameSplitted.Length > 1)
+                {
+                    var firstName = nameSplitted[0];
+                    var lastName = nameSplitted[1];
+
+                    switch (logNameType)
+                    {
+                        case LogNameType.FullName:
+                            result = $"{firstName} {lastName}";
+                            break;
+                        case LogNameType.LastNameShorted:
+                            result = $"{firstName} {lastName[..1]}.";
+                            break;
+                        case LogNameType.FirstNameShorted:
+                            result = $"{firstName[..1]}. {lastName}";
+                            break;
+                        case LogNameType.Initials:
+                            result = $"{firstName[..1]}. {lastName[..1]}.";
+                            break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(result))
+                result = name;
+
+            return result;
         }
 
         /// <summary>
