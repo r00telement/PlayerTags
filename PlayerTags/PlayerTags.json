@@ -1,6 +1,6 @@
 {
-  "Author": "r00telement, Pilzinsel64",
-  "Name": "Player Tags",
+  "Author": "Pilzinsel64",
+  "Name": "PlayerTags",
   "Description": "Lightweight job visibility in nameplates and chat. Create custom tags and add them to players with the context menu.\n\nYou want to contribute and help developing new features or want to extend existing? Feel free to open Fork and open a Pull Request!\n\nThis plugin was originally developed by r00telement but forked and continued by Pilzinsel64.",
   "Punchline": "Lightweight job visibility in nameplates and chat.",
   "Tags": [ "Jobs", "UI" ],
