@@ -294,13 +294,18 @@ namespace PlayerTags.Features
 
                             var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
                             int playerPayloadIndex = seString.Payloads.IndexOf(playerTextPayload);
+                            var hasNumberPrefix = isSender && (chatType == XivChatType.Party || chatType == XivChatType.Alliance);
 
                             // Ensure to include the group number prefix within the player link
-                            if (isSender && (chatType == XivChatType.Party || chatType == XivChatType.Alliance))
+                            if (hasNumberPrefix)
                                 playerPayloadIndex--;
 
                             // Add the Player Link Payload
                             seString.Payloads.Insert(playerPayloadIndex++, playerPayload);
+
+                            // Same as above, but reverse
+                            if (hasNumberPrefix)
+                                playerPayloadIndex++;
 
                             // Add the Link Terminator to end the Player Link. This should be done behind the Text Payload (display text).
                             // Normally used to end PlayerPayload linking. But for the own player it has no affect. Anyway, use it, just because. Maybe it's needed in the future somewhere else.
