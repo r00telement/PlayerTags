@@ -251,7 +251,7 @@ namespace PlayerTags.Features
                                 if (textMatchIndex > 0)
                                 {
                                     // Add the content before the player
-                                    seString.Payloads.Insert(textPayloadIndex, new TextPayload(textPayload.Text.Substring(0, textMatchIndex)));
+                                    seString.Payloads.Insert(textPayloadIndex++, new TextPayload(textPayload.Text.Substring(0, textMatchIndex)));
 
                                     // Remove from the chopped text from the original payload
                                     textPayload.Text = textPayload.Text.Substring(textMatchIndex, textPayload.Text.Length - textMatchIndex);
