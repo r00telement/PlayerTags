@@ -43,6 +43,8 @@ namespace PlayerTags.Features
             /// </summary>
             public PlayerPayload? PlayerPayload { get; init; }
 
+            public RawPayload LinkTerminatorPayload { get; init; }
+
             public Payload? PlayerNamePayload
             {
                 get
@@ -56,6 +58,14 @@ namespace PlayerTags.Features
                     textPayload ??= DisplayTextPayloads.FirstOrDefault();
 
                     return textPayload;
+                }
+            }
+
+            public bool IsLocalPlayer
+            {
+                get
+                {
+                    return GetMatchTextInternal() == PluginServices.ClientState.LocalPlayer.Name.TextValue;
                 }
             }
 
@@ -159,7 +169,7 @@ namespace PlayerTags.Features
                 else if (payload is RawPayload rawPayload)
                 {
                     if (defaultRawPayload.SequenceEqual(rawPayload.Data))
-                        finishCurrentMatch();
+                        finishCurrentMatch(rawPayload);
                 }
                 else
                 {
@@ -169,9 +179,9 @@ namespace PlayerTags.Features
             }
 
             // Finally finish, if not closed by RawPayload
-            finishCurrentMatch();
+            finishCurrentMatch(null);
 
-            void finishCurrentMatch()
+            void finishCurrentMatch(RawPayload linkTerminatorPayload)
             {
                 if (curPlayerPayload.TryPop(out PlayerPayload playerPayload))
                 {
@@ -180,6 +190,7 @@ namespace PlayerTags.Features
                     {
                         GameObject = gameObject,
                         PlayerPayload = playerPayload,
+                        LinkTerminatorPayload = linkTerminatorPayload,
                         DisplayTextPayloads = curRefPayloads.Pop()
                     };
                     stringMatches.Add(stringMatch);
@@ -299,13 +310,13 @@ namespace PlayerTags.Features
 
                             // Add the Link Terminator to end the Player Link. This should be done behind the Text Payload (display text).
                             // Normally used to end PlayerPayload linking. But for the own player it has no affect. Anyway, use it, just because. Maybe it's needed in the future somewhere else.
-                            //seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
+                            seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
 
                             // Remove TextPayload
-                            //seString.Payloads.Remove(playerTextPayload);
+                            //seString.Remove(playerTextPayload);
 
                             // I M P O R T A N T   N O T I C E:
-                            // The PlayerPayload is now just temporary. We keep the TextPayload don't add the LinkTerminator.
+                            // The PlayerPayload is now just temporary. We keep the TextPayload.
                             // The PayerPayload gets removed at the ChatTagTargetFeature at the end and the TextPayload will be keeped there.
                         }
                     }
@@ -405,13 +416,15 @@ namespace PlayerTags.Features
                 }
 
                 ApplyStringChanges(message, stringChanges, stringMatch.DisplayTextPayloads, stringMatch.PlayerNamePayload);
-            }
 
-            // Replace PlayerPayloads of your own character with TextPayloads
-            foreach (var payload in message.Payloads.ToArray())
-            {
-                if (payload is PlayerPayload playerPayload && playerPayload.PlayerName.Contains(PluginServices.ClientState.LocalPlayer.Name.TextValue))
-                    message.Payloads.Remove(payload);
+                // Remove PlayerPayload and LinkTerminator if it's your own character (they just got added temporary)
+                if (stringMatch.IsLocalPlayer)
+                {
+                    if (stringMatch.PlayerPayload != null)
+                        message.Remove(stringMatch.PlayerPayload);
+                    if (stringMatch.LinkTerminatorPayload != null)
+                        message.Remove(stringMatch.LinkTerminatorPayload);
+                }
             }
         }
     }

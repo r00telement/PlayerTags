@@ -342,7 +342,7 @@ namespace PlayerTags.Features
                         {
                             var anchorPayloadIndex = seString.Payloads.IndexOf(anchorReplace);
                             seString.Payloads.InsertRange(anchorPayloadIndex, payloads.Payloads);
-                            seString.Payloads.Remove(anchorReplace);
+                            seString.Remove(anchorReplace);
                         }
                         else
                         {
