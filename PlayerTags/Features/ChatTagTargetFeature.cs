@@ -290,6 +290,7 @@ namespace PlayerTags.Features
                             var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
                             int playerPayloadIndex = seString.Payloads.IndexOf(playerTextPayload);
 
+                            // Ensure to include the group number prefix within the player link
                             if (isSender && (chatType == XivChatType.Party || chatType == XivChatType.Alliance))
                                 playerPayloadIndex--;
 
