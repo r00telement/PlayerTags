@@ -292,12 +292,6 @@ namespace PlayerTags.Features
                             // Fix displaying of abbreviated  own player name as the game does this after the chat message handler
                             playerTextPayload.Text = BuildPlayername(playerTextPayload.Text);
 
-                            // This does some dodgy shit for an unknown reason.
-                            // Typically when you receive a player payload followed by a text payload, it displays the text
-                            // and links it with the player payload. When trying to make one of these manually, it displays the player payload separately,
-                            // effectively doubling up the player name.
-                            // For now, don't follow up with a text payload. Only use a player payload.
-
                             var playerPayload = new PlayerPayload(playerName, PluginServices.ClientState.LocalPlayer.HomeWorld.Id);
                             int playerPayloadIndex = seString.Payloads.IndexOf(playerTextPayload);
 
@@ -311,9 +305,6 @@ namespace PlayerTags.Features
                             // Add the Link Terminator to end the Player Link. This should be done behind the Text Payload (display text).
                             // Normally used to end PlayerPayload linking. But for the own player it has no affect. Anyway, use it, just because. Maybe it's needed in the future somewhere else.
                             seString.Payloads.Insert(++playerPayloadIndex, RawPayload.LinkTerminator);
-
-                            // Remove TextPayload
-                            //seString.Remove(playerTextPayload);
 
                             // I M P O R T A N T   N O T I C E:
                             // The PlayerPayload is now just temporary. We keep the TextPayload.
