@@ -406,6 +406,7 @@ namespace PlayerTags.Features
                         => ApplyTextFormatting(stringMatch.GameObject, tag, new[] { message }, new[] { tag.IsTextColorAppliedToChatName }, stringMatch.DisplayTextPayloads);
                 }
 
+                // Finally apply the all the changes to the message
                 ApplyStringChanges(message, stringChanges, stringMatch.DisplayTextPayloads, stringMatch.PlayerNamePayload);
 
                 // Remove PlayerPayload and LinkTerminator if it's your own character (they just got added temporary)
