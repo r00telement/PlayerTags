@@ -394,17 +394,18 @@ namespace PlayerTags.Features
                 if (stringMatch.PlayerPayload != null && stringMatch.DisplayTextPayloads.Any())
                 {
                     Identity identity = m_PluginData.GetIdentity(stringMatch.PlayerPayload);
-                    foreach (var customTagId in identity.CustomTagIds)
-                    {
-                        var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
-                        if (customTag != null)
-                            applyTextFormatting(customTag);
-                    }
 
                     if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
                     {
                         if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
                             applyTextFormatting(jobTag);
+                    }
+
+                    foreach (var customTagId in identity.CustomTagIds)
+                    {
+                        var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
+                        if (customTag != null)
+                            applyTextFormatting(customTag);
                     }
 
                     void applyTextFormatting(Tag tag)
