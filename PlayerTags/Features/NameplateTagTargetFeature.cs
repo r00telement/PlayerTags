@@ -101,23 +101,24 @@ namespace PlayerTags.Features
         {
             var beforeTitleBytes = args.Title.Encode();
             AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany);
-            
-            if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
+            var generalOptions = m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext];
+
+            if (generalOptions.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
                 args.IsTitleAboveName = true;
-            else if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].NameplateTitlePosition == NameplateTitlePosition.AlwaysBelowName)
+            else if (generalOptions.NameplateTitlePosition == NameplateTitlePosition.AlwaysBelowName)
                 args.IsTitleAboveName = false;
 
-            if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].NameplateTitleVisibility == NameplateTitleVisibility.Always)
+            if (generalOptions.NameplateTitleVisibility == NameplateTitleVisibility.Always)
                 args.IsTitleVisible = true;
-            else if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].NameplateTitleVisibility == NameplateTitleVisibility.Never)
+            else if (generalOptions.NameplateTitleVisibility == NameplateTitleVisibility.Never)
                 args.IsTitleVisible = false;
-            else if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].NameplateTitleVisibility == NameplateTitleVisibility.WhenHasTags)
+            else if (generalOptions.NameplateTitleVisibility == NameplateTitleVisibility.WhenHasTags)
             {
                 bool hasTitleChanged = !beforeTitleBytes.SequenceEqual(args.Title.Encode());
                 args.IsTitleVisible = hasTitleChanged;
             }
 
-            if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Never)
+            if (generalOptions.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Never)
                 args.FreeCompany.Payloads.Clear();
         }
 
