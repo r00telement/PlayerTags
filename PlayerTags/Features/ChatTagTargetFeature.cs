@@ -8,6 +8,7 @@ using Lumina.Excel.GeneratedSheets;
 using PlayerTags.Configuration;
 using PlayerTags.Configuration.GameConfig;
 using PlayerTags.Data;
+using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -349,7 +350,7 @@ namespace PlayerTags.Features
                             if (payloads.Any())
                             {
                                 var insertBehindNumberPrefix = jobTag.InsertBehindNumberPrefixInChat?.Value ?? true;
-                                AddPayloadChanges(jobTag.TagPositionInChat.InheritedValue.Value, payloads, stringChanges, insertBehindNumberPrefix);
+                                addPayloadChanges(jobTag, payloads);
                             }
                         }
                     }
@@ -383,11 +384,19 @@ namespace PlayerTags.Features
                                 var customTagPayloads = GetPayloads(customTag, stringMatch.GameObject);
                                 if (customTagPayloads.Any())
                                 {
-                                    AddPayloadChanges(customTag.TagPositionInChat.InheritedValue.Value, customTagPayloads, stringChanges, false);
+                                    var insertBehindNumberPrefix = customTag.InsertBehindNumberPrefixInChat?.Value ?? true;
+                                    addPayloadChanges(customTag, customTagPayloads);
                                 }
                             }
                         }
                     }
+                }
+
+                void addPayloadChanges(Tag tag, IEnumerable<Payload> payloads)
+                {
+                    var insertBehindNumberPrefix = tag.InsertBehindNumberPrefixInChat?.Value ?? true;
+                    var insertPositionInChat = tag.TagPositionInChat.InheritedValue.Value;
+                    AddPayloadChanges(insertPositionInChat, payloads, stringChanges, insertBehindNumberPrefix);
                 }
 
                 // An additional step to apply text color to additional locations
