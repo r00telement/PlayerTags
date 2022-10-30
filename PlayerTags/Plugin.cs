@@ -16,7 +16,6 @@ namespace PlayerTags
     {
         public string Name => "PlayerTags";
         private const string c_CommandName = "/playertags";
-        private const string c_ChatTwo_InternalPluginName = "ChatTwo";
 
         private PluginConfiguration m_PluginConfiguration;
         private PluginData m_PluginData;
