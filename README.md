@@ -1,4 +1,4 @@
-# PlayerTags
+# Player Tags
 
 Lightweight job visibility in nameplates and chat. Create custom tags and add them to players with the context menu.
 
