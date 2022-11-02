@@ -15,8 +15,6 @@ namespace PlayerTags.GameInterface.Nameplates
     /// </summary>
     public class Nameplate : IDisposable
     {
-        private delegate IntPtr SetPlayerNameplateDelegate_Unmanaged(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
-
         [Signature("48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2", DetourName = nameof(SetPlayerNameplateDetour))]
         private readonly Hook<AddonNamePlate_SetPlayerNameplateDetour>? hook_AddonNamePlate_SetPlayerNameplateDetour = null;
         private unsafe delegate IntPtr AddonNamePlate_SetPlayerNameplateDetour(IntPtr playerNameplateObjectPtr, bool isTitleAboveName, bool isTitleVisible, IntPtr titlePtr, IntPtr namePtr, IntPtr freeCompanyPtr, int iconId);
