@@ -5,6 +5,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.Tools.Strings;
 using PlayerTags.Configuration;
 using PlayerTags.Configuration.GameConfig;
 using PlayerTags.Data;
@@ -337,7 +338,7 @@ namespace PlayerTags.Features
             var stringMatches = GetStringMatches(message);
             foreach (var stringMatch in stringMatches)
             {
-                Dictionary<TagPosition, StringChanges> stringChanges = new Dictionary<TagPosition, StringChanges>();
+                StringChanges stringChanges = new();
 
                 if (stringMatch.GameObject is PlayerCharacter playerCharacter)
                 {
@@ -364,7 +365,7 @@ namespace PlayerTags.Features
                             var generatedName = BuildPlayername(RandomNameGenerator.Generate(playerName));
                             if (generatedName != null)
                             {
-                                AddPayloadChanges(TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges, false);
+                                AddPayloadChanges(StringPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges, false);
                             }
                         }
                     }
@@ -396,7 +397,7 @@ namespace PlayerTags.Features
                 {
                     var insertBehindNumberPrefix = tag.InsertBehindNumberPrefixInChat?.Value ?? true;
                     var insertPositionInChat = tag.TagPositionInChat.InheritedValue.Value;
-                    AddPayloadChanges(insertPositionInChat, payloads, stringChanges, insertBehindNumberPrefix);
+                    AddPayloadChanges((StringPosition)insertPositionInChat, payloads, stringChanges, insertBehindNumberPrefix);
                 }
 
                 // An additional step to apply text color to additional locations

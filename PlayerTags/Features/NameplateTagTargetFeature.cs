@@ -3,6 +3,8 @@ using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.Nameplates.Tools;
+using Pilz.Dalamud.Tools.Strings;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using PlayerTags.GameInterface.Nameplates;
@@ -129,19 +131,13 @@ namespace PlayerTags.Features
         /// <param name="tagPosition">The position of the changes.</param>
         /// <param name="payloadChanges">The payload changes to add.</param>
         /// <param name="nameplateChanges">The dictionary to add changes to.</param>
-        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloadChanges, Dictionary<NameplateElement, Dictionary<TagPosition, StringChanges>> nameplateChanges, bool forceUsingSingleAnchorPayload)
+        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloadChanges, NameplateChanges nameplateChanges, bool forceUsingSingleAnchorPayload)
         {
-            if (!payloadChanges.Any())
+            if (payloadChanges.Any())
             {
-                return;
+                var changes = nameplateChanges.GetChanges((NameplateElements)nameplateElement);
+                AddPayloadChanges((StringPosition)tagPosition, payloadChanges, changes, forceUsingSingleAnchorPayload);
             }
-
-            if (!nameplateChanges.Keys.Contains(nameplateElement))
-            {
-                nameplateChanges[nameplateElement] = new();
-            }
-
-            AddPayloadChanges(tagPosition, payloadChanges, nameplateChanges[nameplateElement], forceUsingSingleAnchorPayload);
         }
 
         /// <summary>
@@ -153,7 +149,10 @@ namespace PlayerTags.Features
         /// <param name="freeCompany">The free company text to change.</param>
         private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany)
         {
-            Dictionary<NameplateElement, Dictionary<TagPosition, StringChanges>> nameplateChanges = new();
+            NameplateChanges nameplateChanges = new();
+            nameplateChanges.GetProps(NameplateElements.Name).Destination = name;
+            nameplateChanges.GetProps(NameplateElements.Title).Destination = title;
+            nameplateChanges.GetProps(NameplateElements.FreeCompany).Destination = freeCompany;
 
             if (gameObject is PlayerCharacter playerCharacter)
             {
@@ -197,20 +196,7 @@ namespace PlayerTags.Features
             }
 
             // Build the final strings out of the payloads
-            foreach ((var nameplateElement, var stringChanges) in nameplateChanges)
-            {
-                SeString? seString = null;
-
-                if (nameplateElement == NameplateElement.Name)
-                    seString = name;
-                else if (nameplateElement == NameplateElement.Title)
-                    seString = title;
-                else if (nameplateElement == NameplateElement.FreeCompany)
-                    seString = freeCompany;
-
-                if (seString != null)
-                    ApplyStringChanges(seString, stringChanges);
-            }
+            ApplyNameplateChanges(nameplateChanges);
 
             if (gameObject is PlayerCharacter playerCharacter1)
             {
@@ -233,6 +219,15 @@ namespace PlayerTags.Features
                     ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null);
                 }
             }
+        }
+
+        protected void ApplyNameplateChanges(NameplateChanges nameplateChanges)
+        {
+            var props = new NameplateChangesProps
+            {
+                Changes = nameplateChanges
+            };
+            NameplateUpdateFactory.ApplyNameplateChanges(props);
         }
     }
 }
