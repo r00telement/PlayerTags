@@ -33,7 +33,7 @@ namespace PlayerTags.Configuration
         }
 
         [JsonProperty("GeneralOptionsV2")]
-        public Dictionary<ActivityType, GeneralOptionsClass> GeneralOptions = new()
+        public Dictionary<ActivityContext, GeneralOptionsClass> GeneralOptions = new Dictionary<ActivityContext, GeneralOptionsClass>()
         {
             { ActivityType.None, new GeneralOptionsClass() },
             { ActivityType.PveDuty, new GeneralOptionsClass() },
