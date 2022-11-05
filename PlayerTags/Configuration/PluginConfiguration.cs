@@ -14,11 +14,6 @@ namespace PlayerTags.Configuration
         public int Version { get; set; } = 0;
         public bool IsVisible = false;
 
-        private const NameplateFreeCompanyVisibility DefaultNameplateFreeCompanyVisibility = Data.NameplateFreeCompanyVisibility.Default;
-        private const NameplateTitleVisibility DefaultNameplateTitleVisibility = Data.NameplateTitleVisibility.WhenHasTags;
-        private const NameplateTitlePosition DefaultNameplateTitlePosition = Data.NameplateTitlePosition.AlwaysAboveName;
-        private const bool DefaultIsApplyTagsToAllChatMessagesEnabled = true;
-
         public Dictionary<ActivityContext, GeneralOptionsClass> GeneralOptions = new Dictionary<ActivityContext, GeneralOptionsClass>()
         {
             { ActivityContext.None, new GeneralOptionsClass() },
