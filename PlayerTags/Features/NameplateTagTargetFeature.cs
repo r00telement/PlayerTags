@@ -101,7 +101,7 @@ namespace PlayerTags.Features
         {
             var beforeTitleBytes = args.Title.Encode();
             AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany);
-            var generalOptions = m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext];
+            var generalOptions = m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext.ActivityType];
 
             if (generalOptions.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
                 args.IsTitleAboveName = true;

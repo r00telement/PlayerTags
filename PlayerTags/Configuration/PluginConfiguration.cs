@@ -1,5 +1,6 @@
 ﻿using Dalamud.Configuration;
 using Newtonsoft.Json;
+using Pilz.Dalamud.ActivityContexts;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using System;
@@ -19,11 +20,24 @@ namespace PlayerTags.Configuration
         private const NameplateTitlePosition DefaultNameplateTitlePosition = Data.NameplateTitlePosition.AlwaysAboveName;
         private const bool DefaultIsApplyTagsToAllChatMessagesEnabled = true;
 
-        public Dictionary<ActivityContext, GeneralOptionsClass> GeneralOptions = new Dictionary<ActivityContext, GeneralOptionsClass>()
+        [Obsolete]
+        [JsonProperty("GeneralOptions")]
+        private Dictionary<Data.ActivityContext, GeneralOptionsClass> GeneralOptionsV1
         {
-            { ActivityContext.None, new GeneralOptionsClass() },
-            { ActivityContext.PveDuty, new GeneralOptionsClass() },
-            { ActivityContext.PvpDuty, new GeneralOptionsClass() }
+            set
+            {
+                GeneralOptions.Clear();
+                foreach (var kvp in value)
+                    GeneralOptions.Add((ActivityType)kvp.Key, kvp.Value);
+            }
+        }
+
+        [JsonProperty("GeneralOptionsV2")]
+        public Dictionary<ActivityType, GeneralOptionsClass> GeneralOptions = new()
+        {
+            { ActivityType.None, new GeneralOptionsClass() },
+            { ActivityType.PveDuty, new GeneralOptionsClass() },
+            { ActivityType.PvpDuty, new GeneralOptionsClass() }
         };
 
         public bool IsPlayerNameRandomlyGenerated = false;

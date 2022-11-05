@@ -4,6 +4,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.Game.Object;
 using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.ActivityContexts;
 using PlayerTags.Configuration.GameConfig;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
@@ -44,7 +45,7 @@ namespace PlayerTags.Features
 
         protected bool IsTagVisible(Tag tag, GameObject? gameObject)
         {
-            bool isVisibleForActivity = ActivityContextHelper.GetIsVisible(ActivityContextManager.CurrentActivityContext,
+            bool isVisibleForActivity = ActivityContextHelper.GetIsVisible(ActivityContextManager.CurrentActivityContext.ActivityType,
                 tag.IsVisibleInPveDuties.InheritedValue ?? false,
                 tag.IsVisibleInPvpDuties.InheritedValue ?? false,
                 tag.IsVisibleInOverworld.InheritedValue ?? false);

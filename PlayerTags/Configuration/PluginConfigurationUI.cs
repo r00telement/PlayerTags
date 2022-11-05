@@ -5,6 +5,7 @@ using Dalamud.Interface;
 using Dalamud.Logging;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.ActivityContexts;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -1233,7 +1234,7 @@ namespace PlayerTags.Configuration
                     applyChanges(GetActivityContext(CurrentActivityContext));
                 }
 
-                void applyChanges(ActivityContext key)
+                void applyChanges(ActivityType key)
                 {
                     pluginConfig.GeneralOptions[key].NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitleVisibility = NameplateTitleVisibility;
@@ -1242,22 +1243,22 @@ namespace PlayerTags.Configuration
                 }
             }
 
-            private ActivityContext GetActivityContext(ActivityContextSelection selection)
+            private ActivityType GetActivityContext(ActivityContextSelection selection)
             {
-                ActivityContext result;
+                ActivityType result;
 
                 switch (selection)
                 {
                     case ActivityContextSelection.PveDuty:
-                        result = ActivityContext.PveDuty;
+                        result = ActivityType.PveDuty;
                         break;
                     case ActivityContextSelection.PvpDuty:
-                        result = ActivityContext.PvpDuty;
+                        result = ActivityType.PvpDuty;
                         break;
                     case ActivityContextSelection.All:
                     case ActivityContextSelection.None:
                     default:
-                        result = ActivityContext.None;
+                        result = ActivityType.None;
                         break;
                 }
 
