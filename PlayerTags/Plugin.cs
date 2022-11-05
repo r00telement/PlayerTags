@@ -28,6 +28,7 @@ namespace PlayerTags
         public Plugin(DalamudPluginInterface pluginInterface)
         {
             PluginServices.Initialize(pluginInterface);
+            Pilz.Dalamud.PluginServices.Initialize(pluginInterface);
 
             m_PluginConfiguration = PluginServices.DalamudPluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
             m_PluginData = new PluginData(m_PluginConfiguration);
