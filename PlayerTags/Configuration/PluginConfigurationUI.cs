@@ -6,6 +6,7 @@ using Dalamud.Logging;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using Pilz.Dalamud.ActivityContexts;
+using Pilz.Dalamud.Icons;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -691,6 +692,10 @@ namespace PlayerTags.Configuration
                     else if (selectedInheritable.Inheritable.Value is InheritableValue<NameplateTitlePosition> inheritableNameplateTitlePosition)
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableNameplateTitlePosition);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<JobIconSetName> inheritableJobIconSetName)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, false, false, inheritableJobIconSetName);
                     }
                     else if (selectedInheritable.Inheritable.Value is InheritableReference<string> inheritableString)
                     {

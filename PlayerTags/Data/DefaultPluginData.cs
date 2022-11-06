@@ -50,9 +50,9 @@ namespace PlayerTags.Data
             {
                 IsSelected = false,
                 IsExpanded = true,
-                IsIconVisibleInChat = true,
+                IsRoleIconVisibleInChat = true,
                 IsTextVisibleInChat = true,
-                IsIconVisibleInNameplates = true,
+                IsRoleIconVisibleInNameplates = true,
                 IsTextVisibleInNameplates = true,
                 IsTextColorAppliedToChatName = true,
             };

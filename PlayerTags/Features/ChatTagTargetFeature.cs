@@ -130,9 +130,9 @@ namespace PlayerTags.Features
 
         protected override bool IsIconVisible(Tag tag)
         {
-            if (tag.IsIconVisibleInChat.InheritedValue != null)
+            if (tag.IsRoleIconVisibleInChat.InheritedValue != null)
             {
-                return tag.IsIconVisibleInChat.InheritedValue.Value;
+                return tag.IsRoleIconVisibleInChat.InheritedValue.Value;
             }
 
             return false;

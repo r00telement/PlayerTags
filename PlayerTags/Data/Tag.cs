@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
+using Pilz.Dalamud.Icons;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
 using System;
@@ -99,9 +100,13 @@ namespace PlayerTags.Data
         [InheritableCategory("IconCategory")]
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
         [InheritableCategory("IconCategory")]
-        public InheritableValue<bool> IsIconVisibleInChat = new InheritableValue<bool>(false);
+        public InheritableValue<bool> IsRoleIconVisibleInChat = new InheritableValue<bool>(false);
         [InheritableCategory("IconCategory")]
-        public InheritableValue<bool> IsIconVisibleInNameplates = new InheritableValue<bool>(false);
+        public InheritableValue<bool> IsRoleIconVisibleInNameplates = new InheritableValue<bool>(false);
+        [InheritableCategory("IconCategory")]
+        public InheritableValue<bool> IsJobIconVisibleInNameplates = new InheritableValue<bool>(false);
+        [InheritableCategory("IconCategory")]
+        public InheritableValue<JobIconSetName> JobIconSet = new InheritableValue<JobIconSetName>(JobIconSetName.Framed);
 
         [InheritableCategory("TextCategory")]
         public InheritableReference<string> Text = new InheritableReference<string>("");

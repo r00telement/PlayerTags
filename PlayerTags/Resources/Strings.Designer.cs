@@ -358,29 +358,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the icon will be shown in chat. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show job icon in nameplates ähnelt.
         /// </summary>
-        public static string Loc_IsIconVisibleInChat_Description {
+        public static string Loc_IsJobIconVisibleInNameplates {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInChat_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsJobIconVisibleInNameplates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show in nameplates ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the job icon will be shown in nameplates. ähnelt.
         /// </summary>
-        public static string Loc_IsIconVisibleInNameplates {
+        public static string Loc_IsJobIconVisibleInNameplates_Description {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInNameplates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the icon will be shown in nameplates. ähnelt.
-        /// </summary>
-        public static string Loc_IsIconVisibleInNameplates_Description {
-            get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInNameplates_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsJobIconVisibleInNameplates_Description", resourceCulture);
             }
         }
         
@@ -543,6 +534,42 @@ namespace PlayerTags.Resources {
         public static string Loc_IsPlayersTabSelfVisible_Description {
             get {
                 return ResourceManager.GetString("Loc_IsPlayersTabSelfVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the role icon will be shown in chat. ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInChat_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInChat_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show role icon in nameplates ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInNameplates {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInNameplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the role icon will be shown in nameplates. ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInNameplates_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInNameplates_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show role icon in nameplate ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleJobIconVisibleInNameplates {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleJobIconVisibleInNameplates", resourceCulture);
             }
         }
         
@@ -858,6 +885,24 @@ namespace PlayerTags.Resources {
         public static string Loc_IsVisibleInPvpDuties_Description {
             get {
                 return ResourceManager.GetString("Loc_IsVisibleInPvpDuties_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job icon set ähnelt.
+        /// </summary>
+        public static string Loc_JobIconSet {
+            get {
+                return ResourceManager.GetString("Loc_JobIconSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The icon set to use for displaying the job icon. You can also choose the role icon set to display the role icon instead. ähnelt.
+        /// </summary>
+        public static string Loc_JobIconSet_Description {
+            get {
+                return ResourceManager.GetString("Loc_JobIconSet_Description", resourceCulture);
             }
         }
         

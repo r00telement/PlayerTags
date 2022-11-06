@@ -1,6 +1,7 @@
 ﻿using Dalamud.Configuration;
 using Newtonsoft.Json;
 using Pilz.Dalamud.ActivityContexts;
+using Pilz.Dalamud.Nameplates.Tools;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using System;
@@ -35,12 +36,13 @@ namespace PlayerTags.Configuration
             { ActivityType.PvpDuty, new GeneralOptionsClass() }
         };
 
+        public StatusIconPriorizerSettings StatusIconPriorizerSettings = new();
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
         public bool IsPlayersTabOrderedByProximity = false;
         public bool IsPlayersTabSelfVisible = true;
-        public bool IsPlayersTabFriendsVisible = true;
+        public bool IsPlayersTabFriendsVisible  = true;
         public bool IsPlayersTabPartyVisible = true;
         public bool IsPlayersTabAllianceVisible = true;
         public bool IsPlayersTabEnemiesVisible = true;
