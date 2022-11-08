@@ -37,8 +37,6 @@ namespace PlayerTags.Configuration
         public bool IsPlayersTabOthersVisible = false;
         public bool IsGeneralOptionsAllTheSameEnabled = true;
 
-        public Tag AllTags = null;
-
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();
 
