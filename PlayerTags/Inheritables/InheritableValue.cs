@@ -1,4 +1,5 @@
 ﻿using Dalamud.Logging;
+using Newtonsoft.Json;
 using System;
 
 namespace PlayerTags.Inheritables
@@ -10,8 +11,10 @@ namespace PlayerTags.Inheritables
 
         public InheritableBehavior Behavior { get; set; }
 
+        [JsonProperty]
         public T Value;
 
+        [JsonIgnore]
         public T? InheritedValue
         {
             get

@@ -13,20 +13,8 @@ namespace PlayerTags.Configuration
     [Serializable]
     public class PluginConfiguration : IPluginConfiguration
     {
-        public int Version { get; set; } = 0;
+        public int Version { get; set; } = 1;
         public bool IsVisible = false;
-
-        [Obsolete]
-        [JsonProperty("GeneralOptions")]
-        private Dictionary<Data.ActivityContext, GeneralOptionsClass> GeneralOptionsV1
-        {
-            set
-            {
-                GeneralOptions.Clear();
-                foreach (var kvp in value)
-                    GeneralOptions.Add((ActivityType)kvp.Key, kvp.Value);
-            }
-        }
 
         [JsonProperty("GeneralOptionsV2")]
         public Dictionary<ActivityType, GeneralOptionsClass> GeneralOptions = new()
@@ -48,6 +36,8 @@ namespace PlayerTags.Configuration
         public bool IsPlayersTabEnemiesVisible = true;
         public bool IsPlayersTabOthersVisible = false;
         public bool IsGeneralOptionsAllTheSameEnabled = true;
+
+        public Tag AllTags = null;
 
         [JsonProperty(TypeNameHandling = TypeNameHandling.None, ItemTypeNameHandling = TypeNameHandling.None)]
         public Dictionary<string, InheritableData> AllTagsChanges = new Dictionary<string, InheritableData>();
@@ -80,6 +70,18 @@ namespace PlayerTags.Configuration
         public List<Identity> Identities = new List<Identity>();
 
         #region Obsulate Properties
+
+        [Obsolete]
+        [JsonProperty("GeneralOptions")]
+        private Dictionary<Data.ActivityContext, GeneralOptionsClass> GeneralOptionsV1
+        {
+            set
+            {
+                GeneralOptions.Clear();
+                foreach (var kvp in value)
+                    GeneralOptions.Add((ActivityType)kvp.Key, kvp.Value);
+            }
+        }
 
         [JsonProperty("NameplateFreeCompanyVisibility"), Obsolete]
         private NameplateFreeCompanyVisibility NameplateFreeCompanyVisibilityV1

@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.Text.SeStringHandling;
+using Newtonsoft.Json;
 using Pilz.Dalamud.Icons;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -12,7 +13,10 @@ namespace PlayerTags.Data
     {
         public IPluginString Name { get; init; }
 
+        [JsonProperty("Parent")]
         private Tag? m_Parent = null;
+
+        [JsonIgnore]
         public Tag? Parent
         {
             get => m_Parent;
@@ -43,6 +47,7 @@ namespace PlayerTags.Data
 
         public List<Tag> Children { get; } = new List<Tag>();
 
+        [JsonIgnore]
         public IEnumerable<Tag> Descendents
         {
             get
@@ -58,7 +63,9 @@ namespace PlayerTags.Data
             }
         }
 
+        [JsonIgnore]
         private Dictionary<string, IInheritable>? m_Inheritables = null;
+        [JsonIgnore]
         public Dictionary<string, IInheritable> Inheritables
         {
             get
@@ -165,6 +172,7 @@ namespace PlayerTags.Data
         [InheritableCategory("PlayerCategory")]
         public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
 
+        [JsonIgnore]
         public string[] IdentitiesToAddTo
         {
             get
@@ -179,6 +187,7 @@ namespace PlayerTags.Data
         }
 
         private Tag? m_Defaults;
+        [JsonIgnore]
         public bool HasDefaults
         {
             get { return m_Defaults != null; }
