@@ -345,7 +345,7 @@ namespace PlayerTags.Features
                     // Add the job tag
                     if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
-                        if (jobTag.TagPositionInChat.InheritedValue != null)
+                        if (jobTag.TagPositionInChat.InheritedValue != null && jobTag.TargetChatTypes.InheritedValue != null && jobTag.TargetChatTypes.Value.Contains(chatType))
                         {
                             var payloads = GetPayloads(jobTag, stringMatch.GameObject);
                             if (payloads.Any())

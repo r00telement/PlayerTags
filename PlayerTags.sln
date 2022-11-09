@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlayerTags", "PlayerTags\PlayerTags.csproj", "{13C812E9-0D42-4B95-8646-40EEBF30636F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pilz.Dalamud", "..\Pilz.Dalamud\Pilz.Dalamud\Pilz.Dalamud.csproj", "{A92D2FFC-FDB8-4F28-B5DD-4A1B3EB0B1BB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -17,10 +15,6 @@ Global
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Debug|x64.Build.0 = Debug|x64
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|x64.ActiveCfg = Release|x64
 		{13C812E9-0D42-4B95-8646-40EEBF30636F}.Release|x64.Build.0 = Release|x64
-		{A92D2FFC-FDB8-4F28-B5DD-4A1B3EB0B1BB}.Debug|x64.ActiveCfg = Debug|x64
-		{A92D2FFC-FDB8-4F28-B5DD-4A1B3EB0B1BB}.Debug|x64.Build.0 = Debug|x64
-		{A92D2FFC-FDB8-4F28-B5DD-4A1B3EB0B1BB}.Release|x64.ActiveCfg = Release|x64
-		{A92D2FFC-FDB8-4F28-B5DD-4A1B3EB0B1BB}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

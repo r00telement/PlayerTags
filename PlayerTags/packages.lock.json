@@ -14,8 +14,11 @@
         "resolved": "2.1.8",
         "contentHash": "YqagNXs9InxmqkXzq7kLveImxnodkBEicAhydMXVp7dFjC7xb76U6zGgAax4/BWIWfZeWzr5DJyQSev31kj81A=="
       },
-      "pilz.dalamud": {
-        "type": "Project"
+      "Pilz.Dalamud": {
+        "type": "Direct",
+        "requested": "[0.1.0, )",
+        "resolved": "0.1.0",
+        "contentHash": "n22WXrCzA+EAQHi4ve4PgTZYDzr0f0qsQ/1ApBBQjoCKJcwFox2rO692/2davRWiUQiNv9B56ikcnHocLp75tQ=="
       }
     }
   }

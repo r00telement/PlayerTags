@@ -657,4 +657,13 @@
   <data name="Loc_JobIconSet_Description" xml:space="preserve">
     <value>The icon set to use for displaying the job icon. You can also choose the role icon set to display the role icon instead.</value>
   </data>
+  <data name="Loc_ChatFeatureCategory" xml:space="preserve">
+    <value>Advanced Chat Options</value>
+  </data>
+  <data name="Loc_TargetChatTypes" xml:space="preserve">
+    <value>Target Chat Types</value>
+  </data>
+  <data name="Loc_TargetChatTypes_Description" xml:space="preserve">
+    <value>Defines for which chat type the chat features of this tag should be enabled for.</value>
+  </data>
 </root>

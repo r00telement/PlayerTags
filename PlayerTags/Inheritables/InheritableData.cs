@@ -12,7 +12,6 @@ namespace PlayerTags.Inheritables
         public InheritableBehavior Behavior;
 
         [JsonProperty("Value")]
-        [JsonConverter(typeof(GeneralConverter))]
         public object Value;
     }
 }

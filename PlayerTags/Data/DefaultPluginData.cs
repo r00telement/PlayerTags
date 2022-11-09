@@ -1,5 +1,7 @@
-﻿using Dalamud.Game.Text.SeStringHandling;
+﻿using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
 using Lumina.Excel.GeneratedSheets;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,6 +46,8 @@ namespace PlayerTags.Data
                 IsVisibleForAlliancePlayers = true,
                 IsVisibleForEnemyPlayers = true,
                 IsVisibleForOtherPlayers = true,
+
+                TargetChatTypes = new EnumList<XivChatType>(Enum.GetValues<XivChatType>()),
             };
 
             AllRoleTags = new Tag()

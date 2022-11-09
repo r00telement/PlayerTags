@@ -1,8 +1,11 @@
 ﻿using Dalamud.Configuration;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface;
 using Dalamud.Logging;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using FFXIVClientStructs.Havok;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using Pilz.Dalamud.ActivityContexts;
@@ -15,6 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace PlayerTags.Configuration
 {
@@ -31,6 +36,7 @@ namespace PlayerTags.Configuration
         private PropertyProxy propertyProxy;
 
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
+        private Dictionary<object, object> inheritableTEnumProxies = new();
 
         public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
         {
@@ -697,6 +703,10 @@ namespace PlayerTags.Configuration
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, false, false, inheritableJobIconSetName);
                     }
+                    else if (selectedInheritable.Inheritable.Value is InheritableReference<EnumList<XivChatType>> inheritableXivChatType)
+                    {
+                        DrawMultiselect(selectedInheritable.Inheritable.Key, inheritableXivChatType);
+                    }
                     else if (selectedInheritable.Inheritable.Value is InheritableReference<string> inheritableString)
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, inheritableString);
@@ -1058,6 +1068,66 @@ namespace PlayerTags.Configuration
             ImGui.TextColored(new Vector4(0.7f, 0.6f, 1f, 1f), label);
         }
 
+        private void DrawMultiselect<TEnum>(string localizedStringName, InheritableReference<EnumList<TEnum>> inheritable) where TEnum : Enum
+        {
+            bool isDisabled = inheritable.Behavior == InheritableBehavior.Inherit;
+            EnumList<TEnum> proxyKey = isDisabled ? inheritable.InheritedValue : inheritable.Value;
+
+            if (isDisabled)
+                proxyKey = inheritable.InheritedValue;
+            if (proxyKey == null)
+                proxyKey = inheritable.Value;
+            
+            if (isDisabled)
+                ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 0.25f);
+
+            var isExpanded = ImGui.CollapsingHeader(Localizer.GetString(localizedStringName, false));
+            
+            if (ImGui.IsItemHovered())
+                ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            
+            if (isDisabled)
+            {
+                ImGui.SameLine();
+                ImGui.Text(Strings.Loc_Static_Inherited);
+            }
+            else
+                DrawRemovePropertyOverrideButton(inheritable);
+
+            if (isExpanded)
+            {
+                bool isClicked = false;
+                var typeofEnum = typeof(TEnum);
+                EnumMultiselectProxy<TEnum> proxy;
+
+                if (inheritableTEnumProxies.ContainsKey(proxyKey))
+                    proxy = inheritableTEnumProxies[proxyKey] as EnumMultiselectProxy<TEnum>;
+                else
+                {
+                    proxy = new EnumMultiselectProxy<TEnum>(proxyKey);
+                    inheritableTEnumProxies.Add(proxyKey, proxy);
+                }
+
+                foreach (var entry in proxy.Entries)
+                {
+                    var entryName = Enum.GetName(typeofEnum, entry.Value);
+                    var tempval = entry.Enabled;
+                    isClicked = ImGui.Checkbox(Localizer.GetString(entryName), ref isDisabled ? ref tempval : ref entry.Enabled);
+                    if (ImGui.IsItemHovered())
+                        ImGui.SetTooltip(Localizer.GetString(entryName, true));
+                }
+
+                if (!isDisabled && isClicked)
+                {
+                    proxy.ApplyTo(proxyKey);
+                    SaveSettings();
+                }
+            }
+
+            if (isDisabled)
+                ImGui.PopStyleVar();
+        }
+
         private void DrawComboBox<TEnum>(bool isLabelVisible, bool shouldLocalizeNames, bool shouldOrderNames, ref TEnum currentValue, System.Action changed)
             where TEnum : Enum
         {
@@ -1277,6 +1347,43 @@ namespace PlayerTags.Configuration
             None,
             PveDuty,
             PvpDuty
+        }
+
+        private class EnumMultiselectProxy<TEnum> where TEnum : Enum
+        {
+            public List<Entry> Entries { get; } = new();
+
+            public EnumMultiselectProxy(EnumList<TEnum> target)
+            {
+                foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
+                    Entries.Add(new(value, target.Contains(value)));
+            }
+
+            public void ApplyTo(EnumList<TEnum> target)
+            {
+                foreach (var entry in Entries)
+                {
+                    if (entry.Enabled)
+                    {
+                        if (!target.Contains(entry.Value))
+                            target.Add(entry.Value);
+                    }
+                    else if (target.Contains(entry.Value))
+                        target.Remove(entry.Value);
+                }
+            }
+
+            public class Entry
+            {
+                public TEnum Value { get; set; }
+                public bool Enabled;
+
+                public Entry(TEnum value, bool enabled)
+                {
+                    Value = value;
+                    Enabled = enabled;
+                }
+            }
         }
     }
 }

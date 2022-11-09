@@ -1,4 +1,5 @@
 ﻿using Dalamud.Game.Command;
+using Dalamud.Logging;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Internal;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
@@ -30,7 +31,7 @@ namespace PlayerTags
             PluginServices.Initialize(pluginInterface);
             Pilz.Dalamud.PluginServices.Initialize(pluginInterface);
 
-            m_PluginConfiguration = PluginServices.DalamudPluginInterface.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
+            m_PluginConfiguration = PluginConfiguration.LoadPluginConfig() ?? new PluginConfiguration();
             m_PluginData = new PluginData(m_PluginConfiguration);
             m_PluginConfigurationUI = new PluginConfigurationUI(m_PluginConfiguration, m_PluginData);
 

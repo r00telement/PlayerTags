@@ -178,6 +178,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Advanced Chat Options ähnelt.
+        /// </summary>
+        public static string Loc_ChatFeatureCategory {
+            get {
+                return ResourceManager.GetString("Loc_ChatFeatureCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Custom id ähnelt.
         /// </summary>
         public static string Loc_CustomId {
@@ -1614,6 +1623,24 @@ namespace PlayerTags.Resources {
         public static string Loc_TagTargetInNameplates_Description {
             get {
                 return ResourceManager.GetString("Loc_TagTargetInNameplates_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Target Chat Types ähnelt.
+        /// </summary>
+        public static string Loc_TargetChatTypes {
+            get {
+                return ResourceManager.GetString("Loc_TargetChatTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines for which chat type the chat features of this tag should be enabled for. ähnelt.
+        /// </summary>
+        public static string Loc_TargetChatTypes_Description {
+            get {
+                return ResourceManager.GetString("Loc_TargetChatTypes_Description", resourceCulture);
             }
         }
         

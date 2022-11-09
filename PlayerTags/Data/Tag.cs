@@ -1,5 +1,7 @@
-﻿using Dalamud.Game.Text.SeStringHandling;
+﻿using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Pilz.Dalamud.Icons;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -171,6 +173,9 @@ namespace PlayerTags.Data
         public InheritableValue<bool> IsVisibleForEnemyPlayers = new InheritableValue<bool>(false);
         [InheritableCategory("PlayerCategory")]
         public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
+
+        [InheritableCategory("ChatFeatureCategory")]
+        public InheritableReference<EnumList<XivChatType>> TargetChatTypes = new(new EnumList<XivChatType>(Enum.GetValues<XivChatType>()));
 
         [JsonIgnore]
         public string[] IdentitiesToAddTo
