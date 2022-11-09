@@ -703,7 +703,7 @@ namespace PlayerTags.Configuration
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, false, false, inheritableJobIconSetName);
                     }
-                    else if (selectedInheritable.Inheritable.Value is InheritableReference<EnumList<XivChatType>> inheritableXivChatType)
+                    else if (selectedInheritable.Inheritable.Value is InheritableReference<List<XivChatType>> inheritableXivChatType)
                     {
                         DrawMultiselect(selectedInheritable.Inheritable.Key, inheritableXivChatType);
                     }
@@ -1068,10 +1068,10 @@ namespace PlayerTags.Configuration
             ImGui.TextColored(new Vector4(0.7f, 0.6f, 1f, 1f), label);
         }
 
-        private void DrawMultiselect<TEnum>(string localizedStringName, InheritableReference<EnumList<TEnum>> inheritable) where TEnum : Enum
+        private void DrawMultiselect<TEnum>(string localizedStringName, InheritableReference<List<TEnum>> inheritable) where TEnum : Enum
         {
             bool isDisabled = inheritable.Behavior == InheritableBehavior.Inherit;
-            EnumList<TEnum> proxyKey = isDisabled ? inheritable.InheritedValue : inheritable.Value;
+            List<TEnum> proxyKey = isDisabled ? inheritable.InheritedValue : inheritable.Value;
 
             if (isDisabled)
                 proxyKey = inheritable.InheritedValue;
@@ -1112,15 +1112,19 @@ namespace PlayerTags.Configuration
                 {
                     var entryName = Enum.GetName(typeofEnum, entry.Value);
                     var tempval = entry.Enabled;
+
                     isClicked = ImGui.Checkbox(Localizer.GetString(entryName), ref isDisabled ? ref tempval : ref entry.Enabled);
+
                     if (ImGui.IsItemHovered())
                         ImGui.SetTooltip(Localizer.GetString(entryName, true));
-                }
 
-                if (!isDisabled && isClicked)
-                {
-                    proxy.ApplyTo(proxyKey);
-                    SaveSettings();
+                    if (isClicked && !isDisabled)
+                    {
+                        var newList = proxyKey.ToList();
+                        proxy.ApplyTo(newList);
+                        inheritable.Value = newList;
+                        SaveSettings();
+                    }
                 }
             }
 
@@ -1353,13 +1357,13 @@ namespace PlayerTags.Configuration
         {
             public List<Entry> Entries { get; } = new();
 
-            public EnumMultiselectProxy(EnumList<TEnum> target)
+            public EnumMultiselectProxy(List<TEnum> target)
             {
                 foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
                     Entries.Add(new(value, target.Contains(value)));
             }
 
-            public void ApplyTo(EnumList<TEnum> target)
+            public void ApplyTo(List<TEnum> target)
             {
                 foreach (var entry in Entries)
                 {

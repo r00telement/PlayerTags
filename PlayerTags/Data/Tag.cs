@@ -8,6 +8,7 @@ using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlayerTags.Data
 {
@@ -175,7 +176,7 @@ namespace PlayerTags.Data
         public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
 
         [InheritableCategory("ChatFeatureCategory")]
-        public InheritableReference<EnumList<XivChatType>> TargetChatTypes = new(new EnumList<XivChatType>(Enum.GetValues<XivChatType>()));
+        public InheritableReference<List<XivChatType>> TargetChatTypes = new(new List<XivChatType>(Enum.GetValues<XivChatType>()));
 
         [JsonIgnore]
         public string[] IdentitiesToAddTo
@@ -228,7 +229,7 @@ namespace PlayerTags.Data
                 {
                     var inheritableData = inheritable.GetData();
                     if (inheritableData.Behavior != defaultInheritableData.Behavior ||
-                        !inheritableData.Value.Equals(defaultInheritableData.Value))
+                        !EqualsInheritableData(inheritableData, defaultInheritableData))
                     {
                         changes[name] = inheritable.GetData();
                     }
@@ -241,6 +242,31 @@ namespace PlayerTags.Data
             }
 
             return changes;
+        }
+
+        private static bool EqualsInheritableData(InheritableData data1, InheritableData data2)
+        {
+            if (data1.Value is List<XivChatType>)
+                return EqualsInheritableDataListXivChatType<XivChatType>(data1, data2);
+            else
+                return data1.Value.Equals(data2.Value);
+        }
+
+        private static bool EqualsInheritableDataListXivChatType<TEnum>(InheritableData data1, InheritableData data2)
+        {
+            var list1 = data1.Value as List<TEnum>;
+            var list2 = data2.Value as List<TEnum>;
+
+            if (list1 is null || list2 is null || list1.Count != list2.Count)
+                return false;
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (!list1[i].Equals(list2[i]))
+                    return false;
+            }
+
+            return true;
         }
 
         public void SetChanges(IEnumerable<KeyValuePair<string, InheritableData>> changes)

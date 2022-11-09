@@ -47,7 +47,7 @@ namespace PlayerTags.Data
                 IsVisibleForEnemyPlayers = true,
                 IsVisibleForOtherPlayers = true,
 
-                TargetChatTypes = new EnumList<XivChatType>(Enum.GetValues<XivChatType>()),
+                TargetChatTypes = new List<XivChatType>(Enum.GetValues<XivChatType>()),
             };
 
             AllRoleTags = new Tag()
