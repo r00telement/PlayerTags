@@ -10,6 +10,8 @@ using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
 using Pilz.Dalamud.ActivityContexts;
 using Pilz.Dalamud.Icons;
+using Pilz.Dalamud.Nameplates.Model;
+using Pilz.Dalamud.Nameplates.Tools;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -241,6 +243,79 @@ namespace PlayerTags.Configuration
                             }
 
                             ImGui.EndTable();
+                        }
+
+                        ImGui.EndTabItem();
+                    }
+
+                    if (ImGui.BeginTabItem(Strings.Loc_Static_StatusIconPrioList))
+                    {
+                        ImGui.Spacing();
+                        ImGui.Spacing();
+
+                        var isPriorizerEnabled = m_PluginConfiguration.StatusIconPriorizerSettings.UsePriorizedIcons;
+                        DrawCheckbox(nameof(StatusIconPriorizerSettings.UsePriorizedIcons), true, ref isPriorizerEnabled, () =>
+                        {
+                            m_PluginConfiguration.StatusIconPriorizerSettings.UsePriorizedIcons = isPriorizerEnabled;
+                            SaveSettings();
+                        });
+
+                        if (isPriorizerEnabled)
+                        {
+                            var statusIcons = Enum.GetValues<StatusIcons>();
+
+                            ImGui.Spacing();
+                            ImGui.Spacing();
+
+                            if (ImGui.Button(Strings.Loc_StatusIconPriorizer_ResetToDefault))
+                            {
+                                m_PluginConfiguration.StatusIconPriorizerSettings.ResetToDefault();
+                                SaveSettings();
+                            }
+                            else if (ImGui.IsItemHovered())
+                                ImGui.SetTooltip(Strings.Loc_StatusIconPriorizer_ResetToDefault_Description);
+                            
+                            ImGui.SameLine();
+
+                            if (ImGui.Button(Strings.Loc_StatusIconPriorizer_ResetToEmpty))
+                            {
+                                m_PluginConfiguration.StatusIconPriorizerSettings.ResetToEmpty();
+                                SaveSettings();
+                            }
+                            else if (ImGui.IsItemHovered())
+                                ImGui.SetTooltip(Strings.Loc_StatusIconPriorizer_ResetToEmpty_Description);
+
+                            ImGui.Spacing();
+                            ImGui.Spacing();
+
+                            foreach (var conditionSetName in Enum.GetValues<StatusIconPriorizerConditionSets>())
+                            {
+                                if (ImGui.CollapsingHeader(Localizer.GetString(conditionSetName, false)))
+                                {
+                                    var conditionSet = m_PluginConfiguration.StatusIconPriorizerSettings.GetConditionSet(conditionSetName);
+
+                                    if (ImGui.IsItemHovered())
+                                        ImGui.SetTooltip(Localizer.GetString(conditionSetName, true));
+
+                                    foreach (var statusIcon in statusIcons)
+                                    {
+                                        var isChecked = conditionSet.Contains(statusIcon);
+                                        DrawCheckbox(Localizer.GetName(statusIcon), true, ref isChecked, () =>
+                                        {
+                                            if (isChecked)
+                                            {
+                                                if (!conditionSet.Contains(statusIcon))
+                                                    conditionSet.Add(statusIcon);
+                                            }
+                                            else if (conditionSet.Contains(statusIcon))
+                                                conditionSet.Remove(statusIcon);
+                                            SaveSettings();
+                                        });
+                                    }
+                                }
+
+                                ImGui.Spacing();
+                            }
                         }
 
                         ImGui.EndTabItem();

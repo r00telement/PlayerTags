@@ -666,4 +666,92 @@
   <data name="Loc_TargetChatTypes_Description" xml:space="preserve">
     <value>Defines for which chat type the chat features of this tag should be enabled for.</value>
   </data>
+  <data name="Loc_Static_StatusIconPrioList" xml:space="preserve">
+    <value>Status Icon Priorizer</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InDuty" xml:space="preserve">
+    <value>In Duty</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InDuty_Description" xml:space="preserve">
+    <value>Status icons that should get priorized within duties.</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InForay" xml:space="preserve">
+    <value>In Foray</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InForay_Description" xml:space="preserve">
+    <value>Status icons that should get priorized within foraies.</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_Overworld" xml:space="preserve">
+    <value>Overworld</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_Overworld_Description" xml:space="preserve">
+    <value>Status icons that should get priorized at overworld.</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToDefault" xml:space="preserve">
+    <value>Reset to default</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToDefault_Description" xml:space="preserve">
+    <value>Resets all condition sets to the default settings</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToEmpty" xml:space="preserve">
+    <value>Reset to empty</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToEmpty_Description" xml:space="preserve">
+    <value>Clears all condition sets to an empty collection. None status icons will be priorized.</value>
+  </data>
+  <data name="Loc_UsePriorizedIcons" xml:space="preserve">
+    <value>Use priorized icons</value>
+  </data>
+  <data name="Loc_UsePriorizedIcons_Description" xml:space="preserve">
+    <value>This option checked will force a set of status icons to be priorized over job icons, if you enabled job icons.
+When disabled, only the disconnected status icon is priorized.</value>
+  </data>
+  <data name="Loc_StatusIcons_Busy" xml:space="preserve">
+    <value>Busy</value>
+  </data>
+  <data name="Loc_StatusIcons_Disconnecting" xml:space="preserve">
+    <value>Disconnecting</value>
+  </data>
+  <data name="Loc_StatusIcons_DutyFinder" xml:space="preserve">
+    <value>Duty Finder</value>
+  </data>
+  <data name="Loc_StatusIcons_GroupPose" xml:space="preserve">
+    <value>Group Pose</value>
+  </data>
+  <data name="Loc_StatusIcons_Idle" xml:space="preserve">
+    <value>Idle</value>
+  </data>
+  <data name="Loc_StatusIcons_InDuty" xml:space="preserve">
+    <value>In Duty</value>
+  </data>
+  <data name="Loc_StatusIcons_Mentor" xml:space="preserve">
+    <value>Mentor</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorCrafting" xml:space="preserve">
+    <value>Mentor Crafting</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorPvE" xml:space="preserve">
+    <value>Mentor PvE</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorPvP" xml:space="preserve">
+    <value>Mentor PvP</value>
+  </data>
+  <data name="Loc_StatusIcons_NewAdventurer" xml:space="preserve">
+    <value>New Adventurer</value>
+  </data>
+  <data name="Loc_StatusIcons_PartyLeader" xml:space="preserve">
+    <value>Party Leader</value>
+  </data>
+  <data name="Loc_StatusIcons_PartyMember" xml:space="preserve">
+    <value>Party Member</value>
+  </data>
+  <data name="Loc_StatusIcons_Returner" xml:space="preserve">
+    <value>Returner</value>
+  </data>
+  <data name="Loc_StatusIcons_RolePlaying" xml:space="preserve">
+    <value>Role Playing</value>
+  </data>
+  <data name="Loc_StatusIcons_ViewingCutscene" xml:space="preserve">
+    <value>Viewing Cutscene</value>
+  </data>
 </root>

@@ -1492,6 +1492,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status Icon Priorizer ähnelt.
+        /// </summary>
+        public static string Loc_Static_StatusIconPrioList {
+            get {
+                return ResourceManager.GetString("Loc_Static_StatusIconPrioList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Tagged Players ähnelt.
         /// </summary>
         public static string Loc_Static_TaggedPlayers {
@@ -1515,6 +1524,240 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_WarningMessage {
             get {
                 return ResourceManager.GetString("Loc_Static_WarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset to default ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToDefault {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resets all condition sets to the default settings ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToDefault_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToDefault_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset to empty ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToEmpty {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Clears all condition sets to an empty collection. None status icons will be priorized. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToEmpty_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToEmpty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Duty ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InDuty {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status icons that should get priorized within duties. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InDuty_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InDuty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Foray ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InForay {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InForay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status icons that should get priorized within foraies. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InForay_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InForay_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Overworld ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_Overworld {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_Overworld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status icons that should get priorized at overworld. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_Overworld_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_Overworld_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Busy ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Busy {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Busy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Disconnecting ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Disconnecting {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Disconnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Duty Finder ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_DutyFinder {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_DutyFinder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group Pose ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_GroupPose {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_GroupPose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Idle ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Idle {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Idle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Duty ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_InDuty {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_InDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Mentor {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Mentor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor Crafting ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_MentorCrafting {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_MentorCrafting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor PvE ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_MentorPvE {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_MentorPvE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor PvP ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_MentorPvP {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_MentorPvP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Adventurer ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_NewAdventurer {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_NewAdventurer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Party Leader ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_PartyLeader {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_PartyLeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Party Member ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_PartyMember {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_PartyMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Returner ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Returner {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Returner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Role Playing ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_RolePlaying {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_RolePlaying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Viewing Cutscene ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_ViewingCutscene {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_ViewingCutscene", resourceCulture);
             }
         }
         
@@ -1704,6 +1947,25 @@ namespace PlayerTags.Resources {
         public static string Loc_TextGlowColor_Description {
             get {
                 return ResourceManager.GetString("Loc_TextGlowColor_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use priorized icons ähnelt.
+        /// </summary>
+        public static string Loc_UsePriorizedIcons {
+            get {
+                return ResourceManager.GetString("Loc_UsePriorizedIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This option checked will force a set of status icons to be priorized over job icons, if you enabled job icons.
+        ///When disabled, only the disconnected status icon is priorized. ähnelt.
+        /// </summary>
+        public static string Loc_UsePriorizedIcons_Description {
+            get {
+                return ResourceManager.GetString("Loc_UsePriorizedIcons_Description", resourceCulture);
             }
         }
     }
