@@ -25,12 +25,16 @@ namespace PlayerTags.Data
         public List<Tag> CustomTags;
         public List<Identity> Identities;
 
-        private PluginConfiguration m_PluginConfiguration;
+        private PluginConfiguration pluginConfiguration;
 
         public PluginData(PluginConfiguration pluginConfiguration)
         {
-            m_PluginConfiguration = pluginConfiguration;
+            this.pluginConfiguration = pluginConfiguration;
+            ReloadDefault();
+        }
 
+        public void ReloadDefault()
+        {
             Default = new DefaultPluginData(pluginConfiguration.DefaultPluginDataTemplate);
 
             // Set the default changes and saved changes
@@ -261,7 +265,7 @@ namespace PlayerTags.Data
                     if (identity.WorldId == null && worldId != null)
                     {
                         identity.WorldId = worldId;
-                        m_PluginConfiguration.Save(this);
+                        pluginConfiguration.Save(this);
 
                         return identity;
                     }

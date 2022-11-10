@@ -205,6 +205,104 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Template ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Basic ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Basic {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Basic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Same as Empty, but includes a very basic pre-confiuration for formatting and coloring.
+        ///Can also be used if you want to make your own cofiguration but want basic formatting. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Basic_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Basic_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Here you can choose the template for all the settings below.
+        ///The template is used as basic set of properties. Every change you are making is what get saved. But all options from this template will not be saved.
+        ///This helpes you by not needing to overwrite so much properties - or by doing your completely own configuration without a template.
+        ///
+        ///Warning:
+        ///Changing this can cause properties to be resetted. You may loose a part of your configuration.
+        ///After you changed this, ensure everything is setted up how  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Full ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Full {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Full", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show the job tag with color and also color the player name element. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Full_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Full_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Empty ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_None {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No single configuration made. This is an completley empty template.
+        ///Use this if you want to to have every option under your control or just want to make only a few configurations. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_None_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_None_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Simple ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Simple {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Simple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Shows the job tag with color and the role icon by replacing the title. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Simple_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Simple_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Melee ähnelt.
         /// </summary>
         public static string Loc_DpsRole_Melee {

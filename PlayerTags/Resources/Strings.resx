@@ -754,4 +754,42 @@ When disabled, only the disconnected status icon is priorized.</value>
   <data name="Loc_StatusIcons_ViewingCutscene" xml:space="preserve">
     <value>Viewing Cutscene</value>
   </data>
+  <data name="Loc_DefaultPluginDataTemplate" xml:space="preserve">
+    <value>Template</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Basic" xml:space="preserve">
+    <value>Basic</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Basic_Description" xml:space="preserve">
+    <value>Same as Empty, but includes a very basic pre-confiuration for formatting and coloring.
+Can also be used if you want to make your own cofiguration but want basic formatting.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Description" xml:space="preserve">
+    <value>Here you can choose the template for all the settings below.
+The template is used as basic set of properties. Every change you are making is what get saved. But all options from this template will not be saved.
+This helpes you by not needing to overwrite so much properties - or by doing your completely own configuration without a template.
+
+Warning:
+Changing this can cause properties to be resetted. You may loose a part of your configuration.
+After you changed this, ensure everything is setted up how you like it.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Full" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Full_Description" xml:space="preserve">
+    <value>Show the job tag with color and also color the player name element.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_None" xml:space="preserve">
+    <value>Empty</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_None_Description" xml:space="preserve">
+    <value>No single configuration made. This is an completley empty template.
+Use this if you want to to have every option under your control or just want to make only a few configurations.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Simple" xml:space="preserve">
+    <value>Simple</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Simple_Description" xml:space="preserve">
+    <value>Shows the job tag with color and the role icon by replacing the title.</value>
+  </data>
 </root>

@@ -107,6 +107,11 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
+                        DrawComboBox(true, true, false, ref m_PluginConfiguration.DefaultPluginDataTemplate, () =>
+                        {
+                            m_PluginData.ReloadDefault();
+                            SaveSettings();
+                        }, true, true);
                         DrawCheckbox(nameof(m_PluginConfiguration.IsShowInheritedPropertiesEnabled), true, ref m_PluginConfiguration.IsShowInheritedPropertiesEnabled, () => SaveSettings());
                         ImGui.BeginGroup();
                         ImGui.Columns(2);
@@ -272,7 +277,7 @@ namespace PlayerTags.Configuration
                                 m_PluginConfiguration.StatusIconPriorizerSettings.ResetToDefault();
                                 SaveSettings();
                             }
-                            else if (ImGui.IsItemHovered())
+                            if (ImGui.IsItemHovered())
                                 ImGui.SetTooltip(Strings.Loc_StatusIconPriorizer_ResetToDefault_Description);
                             
                             ImGui.SameLine();
@@ -282,7 +287,7 @@ namespace PlayerTags.Configuration
                                 m_PluginConfiguration.StatusIconPriorizerSettings.ResetToEmpty();
                                 SaveSettings();
                             }
-                            else if (ImGui.IsItemHovered())
+                            if (ImGui.IsItemHovered())
                                 ImGui.SetTooltip(Strings.Loc_StatusIconPriorizer_ResetToEmpty_Description);
 
                             ImGui.Spacing();
@@ -293,9 +298,6 @@ namespace PlayerTags.Configuration
                                 if (ImGui.CollapsingHeader(Localizer.GetString(conditionSetName, false)))
                                 {
                                     var conditionSet = m_PluginConfiguration.StatusIconPriorizerSettings.GetConditionSet(conditionSetName);
-
-                                    if (ImGui.IsItemHovered())
-                                        ImGui.SetTooltip(Localizer.GetString(conditionSetName, true));
 
                                     foreach (var statusIcon in statusIcons)
                                     {
@@ -313,6 +315,9 @@ namespace PlayerTags.Configuration
                                         });
                                     }
                                 }
+
+                                if (ImGui.IsItemHovered())
+                                    ImGui.SetTooltip(Localizer.GetString(conditionSetName, true));
 
                                 ImGui.Spacing();
                             }
@@ -1207,12 +1212,14 @@ namespace PlayerTags.Configuration
                 ImGui.PopStyleVar();
         }
 
-        private void DrawComboBox<TEnum>(bool isLabelVisible, bool shouldLocalizeNames, bool shouldOrderNames, ref TEnum currentValue, System.Action changed)
+        private void DrawComboBox<TEnum>(bool isLabelVisible, bool shouldLocalizeNames, bool shouldOrderNames, ref TEnum currentValue, System.Action changed, bool showToolTipToLabel = false, bool showLabelInSameLine = false)
             where TEnum : Enum
         {
             if (isLabelVisible)
             {
                 ImGui.Text(Localizer.GetString<TEnum>(false));
+                if (showLabelInSameLine)
+                    ImGui.SameLine();
             }
 
             var currentDisplayName = shouldLocalizeNames ? Localizer.GetString(currentValue, false) : currentValue.ToString();
@@ -1253,7 +1260,10 @@ namespace PlayerTags.Configuration
 
             if (ImGui.IsItemHovered() && shouldLocalizeNames)
             {
-                ImGui.SetTooltip(Localizer.GetString(currentValue, true));
+                if (showToolTipToLabel)
+                    ImGui.SetTooltip(Localizer.GetString(typeof(TEnum).Name, true));
+                else
+                    ImGui.SetTooltip(Localizer.GetString(currentValue, true));
             }
         }
 
