@@ -32,6 +32,7 @@ namespace PlayerTags.Configuration
             { ActivityType.PvpDuty, new GeneralOptionsClass() }
         };
 
+        public DefaultPluginDataTemplate DefaultPluginDataTemplate = DefaultPluginDataTemplate.Simple;
         public StatusIconPriorizerSettings StatusIconPriorizerSettings = new(true);
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;

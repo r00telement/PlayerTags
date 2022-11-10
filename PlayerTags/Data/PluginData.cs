@@ -31,7 +31,7 @@ namespace PlayerTags.Data
         {
             m_PluginConfiguration = pluginConfiguration;
 
-            Default = new DefaultPluginData();
+            Default = new DefaultPluginData(pluginConfiguration.DefaultPluginDataTemplate);
 
             // Set the default changes and saved changes
             AllTags = new Tag(new LocalizedPluginString(nameof(AllTags)), Default.AllTags);
