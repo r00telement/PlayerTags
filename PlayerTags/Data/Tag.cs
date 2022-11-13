@@ -107,6 +107,18 @@ namespace PlayerTags.Data
 
         public InheritableValue<Guid> CustomId = new InheritableValue<Guid>(Guid.Empty);
 
+        [JsonProperty, Obsolete]
+        private InheritableValue<bool> IsIconVisibleInChat
+        {
+            set => IsRoleIconVisibleInChat = value;
+        }
+
+        [JsonProperty, Obsolete]
+        private InheritableValue<bool> IsIconVisibleInNameplate
+        {
+            set => IsRoleIconVisibleInNameplates = value;
+        }
+
         [InheritableCategory("IconCategory")]
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
         [InheritableCategory("IconCategory")]
