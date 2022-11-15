@@ -242,7 +242,7 @@ namespace PlayerTags.Features
                             AddPayloadChanges(tag.TagTargetInNameplates.InheritedValue.Value, tag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges, false);
                     }
                     if (newStatusIcon == null && classJob != null && (tag.IsJobIconVisibleInNameplates?.InheritedValue ?? false))
-                        newStatusIcon = jobIconSets.GetJobIcon(JobIconSetName.Framed, classJob.Id);
+                        newStatusIcon = jobIconSets.GetJobIcon(tag.JobIconSet?.InheritedValue ?? JobIconSetName.Framed, classJob.Id);
                 }
             }
 
