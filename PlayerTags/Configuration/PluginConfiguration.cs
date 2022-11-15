@@ -284,7 +284,7 @@ namespace PlayerTags.Configuration
         public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Default;
         public NameplateTitleVisibility NameplateTitleVisibility = NameplateTitleVisibility.WhenHasTags;
         public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
-
+        public DeadPlayerHandling NameplateDeadPlayerHandling = DeadPlayerHandling.Include;
         public bool IsApplyTagsToAllChatMessagesEnabled = true;
     }
 }

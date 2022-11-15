@@ -2,6 +2,9 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
+using FFXIVClientStructs.FFXIV.Client.System.Memory;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 using Lumina.Excel.GeneratedSheets;
 using Pilz.Dalamud.Icons;
 using Pilz.Dalamud.Nameplates.Tools;
@@ -106,13 +109,37 @@ namespace PlayerTags.Features
             return false;
         }
 
-        private void Nameplate_PlayerNameplateUpdated(PlayerNameplateUpdatedArgs args)
+        private unsafe void Nameplate_PlayerNameplateUpdated(PlayerNameplateUpdatedArgs args)
         {
             var beforeTitleBytes = args.Title.Encode();
             var iconID = args.IconId;
             var generalOptions = m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext.ActivityType];
+            var applyTags = false;
+            var grayOut = false;
 
-            AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID);
+            if (args.PlayerCharacter != null)
+            {
+                if (args.PlayerCharacter.IsDead)
+                {
+                    switch (generalOptions.NameplateDeadPlayerHandling)
+                    {
+                        case DeadPlayerHandling.Include:
+                            applyTags = true;
+                            break;
+                        case DeadPlayerHandling.GrayOut:
+                            grayOut = true;
+                            break;
+                    }
+                }
+                else
+                    applyTags = true;
+            }
+
+            if (applyTags)
+                AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID);
+            else if(grayOut)
+                GrayOutNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID);
+
             args.IconId = iconID;
 
             if (generalOptions.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
@@ -150,6 +177,17 @@ namespace PlayerTags.Features
             }
         }
 
+        private NameplateChanges GenerateEmptyNameplateChanges(SeString name, SeString title, SeString freeCompany)
+        {
+            NameplateChanges nameplateChanges = new();
+            
+            nameplateChanges.GetProps(NameplateElements.Name).Destination = name;
+            nameplateChanges.GetProps(NameplateElements.Title).Destination = title;
+            nameplateChanges.GetProps(NameplateElements.FreeCompany).Destination = freeCompany;
+
+            return nameplateChanges;
+        }
+
         /// <summary>
         /// Adds tags to the nameplate of a game object.
         /// </summary>
@@ -160,10 +198,7 @@ namespace PlayerTags.Features
         private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon)
         {
             int? newStatusIcon = null;
-            NameplateChanges nameplateChanges = new();
-            nameplateChanges.GetProps(NameplateElements.Name).Destination = name;
-            nameplateChanges.GetProps(NameplateElements.Title).Destination = title;
-            nameplateChanges.GetProps(NameplateElements.FreeCompany).Destination = freeCompany;
+            NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
 
             if (gameObject is PlayerCharacter playerCharacter)
             {
@@ -241,6 +276,22 @@ namespace PlayerTags.Features
                     var isTextColorApplied = new[] { tag.IsTextColorAppliedToNameplateName, tag.IsTextColorAppliedToNameplateTitle, tag.IsTextColorAppliedToNameplateFreeCompany };
                     ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null);
                 }
+            }
+        }
+
+        protected void GrayOutNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon)
+        {
+            if (gameObject is PlayerCharacter playerCharacter)
+            {
+                NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
+
+                foreach (NameplateElements element in Enum.GetValues<NameplateElements>())
+                {
+                    nameplateChanges.GetChange(element, StringPosition.Before).Payloads.Add(new UIForegroundPayload(3));
+                    nameplateChanges.GetChange(element, StringPosition.After).Payloads.Add(new UIForegroundPayload(0));
+                }
+
+                ApplyNameplateChanges(nameplateChanges);
             }
         }
 
