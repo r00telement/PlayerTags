@@ -250,7 +250,8 @@ namespace PlayerTags.Features
             if (newStatusIcon != null)
             {
                 var change = nameplateChanges.GetChange(NameplateElements.Name, StringPosition.Before);
-                NameplateUpdateFactory.ApplyStatusIconWithPrio(ref statusIcon, (int)newStatusIcon, change, ActivityContextManager.CurrentActivityContext, statusiconPriorizer);
+                if (NameplateUpdateFactory.ApplyStatusIconWithPrio(ref statusIcon, (int)newStatusIcon, change, ActivityContextManager.CurrentActivityContext, statusiconPriorizer))
+                    statusIcon = (int)newStatusIcon;
             }
 
             // Build the final strings out of the payloads
