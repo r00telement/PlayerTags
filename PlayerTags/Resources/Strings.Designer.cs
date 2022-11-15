@@ -1095,6 +1095,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move Status Icon to Nameplate if possible ähnelt.
+        /// </summary>
+        public static string Loc_MoveStatusIconToNameplateTextIfPossible {
+            get {
+                return ResourceManager.GetString("Loc_MoveStatusIconToNameplateTextIfPossible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If the current status icon is available as Font Icon then move it to the Player Name text in the Nameplate, so there is place for another icon to use, e.g. the job icon. ähnelt.
+        /// </summary>
+        public static string Loc_MoveStatusIconToNameplateTextIfPossible_Description {
+            get {
+                return ResourceManager.GetString("Loc_MoveStatusIconToNameplateTextIfPossible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Nameplate properties ähnelt.
         /// </summary>
         public static string Loc_NameplateCategory {

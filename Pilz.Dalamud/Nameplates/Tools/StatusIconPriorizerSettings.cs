@@ -65,6 +65,12 @@ namespace Pilz.Dalamud.Nameplates.Tools
                 StatusIcons.PartyMember, // Party Member
                 StatusIcons.RolePlaying, // Role Playing
                 StatusIcons.GroupPose, // Group Pose
+                StatusIcons.Mentor,
+                StatusIcons.MentorCrafting,
+                StatusIcons.MentorPvE,
+                StatusIcons.MentorPvP,
+                StatusIcons.Returner,
+                StatusIcons.NewAdventurer,
             });
 
             var setInDuty = GetConditionSet(StatusIconPriorizerConditionSets.InDuty);
@@ -74,6 +80,12 @@ namespace Pilz.Dalamud.Nameplates.Tools
                 StatusIcons.ViewingCutscene, // Viewing Cutscene
                 StatusIcons.Idle, // Idle
                 StatusIcons.GroupPose, // Group Pose
+                StatusIcons.Mentor,
+                StatusIcons.MentorCrafting,
+                StatusIcons.MentorPvE,
+                StatusIcons.MentorPvP,
+                StatusIcons.Returner,
+                StatusIcons.NewAdventurer,
             });
 
             var setInForay = GetConditionSet(StatusIconPriorizerConditionSets.InForay);
@@ -86,6 +98,12 @@ namespace Pilz.Dalamud.Nameplates.Tools
                 StatusIcons.ViewingCutscene, // Viewing Cutscene
                 StatusIcons.Idle, // Idle
                 StatusIcons.GroupPose, // Group Pose
+                StatusIcons.Mentor,
+                StatusIcons.MentorCrafting,
+                StatusIcons.MentorPvE,
+                StatusIcons.MentorPvP,
+                StatusIcons.Returner,
+                StatusIcons.NewAdventurer,
             });
         }
     }

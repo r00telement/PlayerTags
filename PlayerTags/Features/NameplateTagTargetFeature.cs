@@ -136,7 +136,7 @@ namespace PlayerTags.Features
             }
 
             if (applyTags)
-                AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID);
+                AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID, generalOptions);
             else if(grayOut)
                 GrayOutNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID);
 
@@ -195,7 +195,7 @@ namespace PlayerTags.Features
         /// <param name="name">The name text to change.</param>
         /// <param name="title">The title text to change.</param>
         /// <param name="freeCompany">The free company text to change.</param>
-        private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon)
+        private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon, GeneralOptionsClass generalOptions)
         {
             int? newStatusIcon = null;
             NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
@@ -250,8 +250,7 @@ namespace PlayerTags.Features
             if (newStatusIcon != null)
             {
                 var change = nameplateChanges.GetChange(NameplateElements.Name, StringPosition.Before);
-                if (NameplateUpdateFactory.ApplyStatusIconWithPrio(ref statusIcon, (int)newStatusIcon, change, ActivityContextManager.CurrentActivityContext, statusiconPriorizer))
-                    statusIcon = (int)newStatusIcon;
+                NameplateUpdateFactory.ApplyStatusIconWithPrio(ref statusIcon, (int)newStatusIcon, change, ActivityContextManager.CurrentActivityContext, statusiconPriorizer, m_PluginConfiguration.MoveStatusIconToNameplateTextIfPossible);
             }
 
             // Build the final strings out of the payloads

@@ -266,6 +266,8 @@ namespace PlayerTags.Configuration
                             SaveSettings();
                         });
 
+                        DrawCheckbox(nameof(PluginConfiguration.MoveStatusIconToNameplateTextIfPossible), true, ref m_PluginConfiguration.MoveStatusIconToNameplateTextIfPossible, () => SaveSettings());
+
                         if (isPriorizerEnabled)
                         {
                             var statusIcons = Enum.GetValues<StatusIcons>();

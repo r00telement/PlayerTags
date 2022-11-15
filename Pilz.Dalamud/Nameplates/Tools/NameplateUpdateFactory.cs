@@ -23,26 +23,30 @@ namespace Pilz.Dalamud.Nameplates.Tools
             }
         }
 
-        public static bool ApplyStatusIconWithPrio(ref int statusIcon, int newStatusIcon, StringChange stringChange, ActivityContext activityContext, StatusIconPriorizer priorizer)
+        public static bool ApplyStatusIconWithPrio(ref int statusIcon, int newStatusIcon, StringChange stringChange, ActivityContext activityContext, StatusIconPriorizer priorizer, bool moveIconToNameplateIfPossible)
         {
-            var isPrio = priorizer.IsPriorityIcon(statusIcon, activityContext);
-
-            if (!isPrio)
+            bool? isPrio = null;
+            var fontIcon = StatusIconFontConverter.GetBitmapFontIconFromStatusIcon((StatusIcons)statusIcon);
+            
+            if (moveIconToNameplateIfPossible)
             {
-                var fontIcon = StatusIconFontConverter.GetBitmapFontIconFromStatusIcon((StatusIcons)statusIcon);
-
                 if (fontIcon != null)
                 {
                     // Set new font icon as string change
                     var iconPayload = new IconPayload(fontIcon.Value);
                     stringChange.Payloads.Insert(0, iconPayload);
 
-                    // Use new status icon as status icon
-                    statusIcon = newStatusIcon;
+                    // If we moved it, we don't need it as icon anymore, yay :D
+                    isPrio = false;
                 }
             }
 
-            return isPrio;
+            isPrio ??= priorizer.IsPriorityIcon(statusIcon, activityContext);
+
+            if (!isPrio.Value)
+                statusIcon = newStatusIcon;
+
+            return isPrio.Value;
         }
     }
 }

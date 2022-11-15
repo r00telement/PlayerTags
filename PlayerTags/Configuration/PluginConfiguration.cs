@@ -34,6 +34,7 @@ namespace PlayerTags.Configuration
 
         public DefaultPluginDataTemplate DefaultPluginDataTemplate = DefaultPluginDataTemplate.Simple;
         public StatusIconPriorizerSettings StatusIconPriorizerSettings = new(true);
+        public bool MoveStatusIconToNameplateTextIfPossible = true;
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
