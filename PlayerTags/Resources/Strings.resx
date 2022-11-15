@@ -792,4 +792,25 @@ Use this if you want to to have every option under your control or just want to 
   <data name="Loc_DefaultPluginDataTemplate_Simple_Description" xml:space="preserve">
     <value>Shows the job tag with color and the role icon by replacing the title.</value>
   </data>
+  <data name="Loc_DeadPlayerHandling_GrayOut" xml:space="preserve">
+    <value>Gray out</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Ignore" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Include" xml:space="preserve">
+    <value>Include</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling" xml:space="preserve">
+    <value>Handling for dead players</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_GrayOut_Description" xml:space="preserve">
+    <value>Gray out the nameplate of dead players and don't apply any tag for.</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Ignore_Description" xml:space="preserve">
+    <value>Don't process dead players and don't apply any tag for.</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Include_Description" xml:space="preserve">
+    <value>Handle dead players as they are alive. No difference between dead and alive players.</value>
+  </data>
 </root>

@@ -87,6 +87,7 @@ namespace PlayerTags.Configuration
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateFreeCompanyVisibility, () => SaveSettings(true));
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateTitleVisibility, () => SaveSettings(true));
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateTitlePosition, () => SaveSettings(true));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateDeadPlayerHandling, () => SaveSettings(true));
 
                         ImGui.Spacing();
                         ImGui.Spacing();
@@ -1367,6 +1368,7 @@ namespace PlayerTags.Configuration
             public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility;
             public NameplateTitleVisibility NameplateTitleVisibility;
             public NameplateTitlePosition NameplateTitlePosition;
+            public DeadPlayerHandling NameplateDeadPlayerHandling;
             public bool IsApplyTagsToAllChatMessagesEnabled;
 
             public PropertyProxy(PluginConfiguration config)
@@ -1381,6 +1383,7 @@ namespace PlayerTags.Configuration
                 NameplateFreeCompanyVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateFreeCompanyVisibility;
                 NameplateTitleVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitleVisibility;
                 NameplateTitlePosition = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitlePosition;
+                NameplateDeadPlayerHandling = pluginConfig.GeneralOptions[currentActivityContext].NameplateDeadPlayerHandling;
                 IsApplyTagsToAllChatMessagesEnabled = pluginConfig.GeneralOptions[currentActivityContext].IsApplyTagsToAllChatMessagesEnabled;
             }
 
@@ -1403,6 +1406,7 @@ namespace PlayerTags.Configuration
                     pluginConfig.GeneralOptions[key].NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitleVisibility = NameplateTitleVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitlePosition = NameplateTitlePosition;
+                    pluginConfig.GeneralOptions[key].NameplateDeadPlayerHandling = NameplateDeadPlayerHandling;
                     pluginConfig.GeneralOptions[key].IsApplyTagsToAllChatMessagesEnabled = IsApplyTagsToAllChatMessagesEnabled;
                 }
             }

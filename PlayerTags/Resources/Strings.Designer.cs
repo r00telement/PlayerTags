@@ -205,6 +205,69 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handling for dead players ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gray out ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_GrayOut {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_GrayOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gray out the nameplate of dead players and don&apos;t apply any tag for. ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_GrayOut_Description {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_GrayOut_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ignore ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Ignore {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Don&apos;t process dead players and don&apos;t apply any tag for. ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Ignore_Description {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Ignore_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Include ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Include {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Include", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handle dead players as they are alive. No difference between dead and alive players. ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Include_Description {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Include_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Template ähnelt.
         /// </summary>
         public static string Loc_DefaultPluginDataTemplate {
