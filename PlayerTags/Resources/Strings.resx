@@ -814,7 +814,7 @@ Use this if you want to to have every option under your control or just want to 
     <value>Handle dead players as they are alive. No difference between dead and alive players.</value>
   </data>
   <data name="Loc_MoveStatusIconToNameplateTextIfPossible" xml:space="preserve">
-    <value>Move Status Icon to Nameplate if possible</value>
+    <value>Move Status Icon to Nameplate text if possible</value>
   </data>
   <data name="Loc_MoveStatusIconToNameplateTextIfPossible_Description" xml:space="preserve">
     <value>If the current status icon is available as Font Icon then move it to the Player Name text in the Nameplate, so there is place for another icon to use, e.g. the job icon.</value>

@@ -1095,7 +1095,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Move Status Icon to Nameplate if possible ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move Status Icon to Nameplate text if possible ähnelt.
         /// </summary>
         public static string Loc_MoveStatusIconToNameplateTextIfPossible {
             get {
