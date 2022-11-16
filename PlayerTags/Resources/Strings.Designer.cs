@@ -223,7 +223,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Gray out the nameplate of dead players and don&apos;t apply any tag for. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Apply any tag but gray out the nameplate. ähnelt.
         /// </summary>
         public static string Loc_DeadPlayerHandling_GrayOut_Description {
             get {

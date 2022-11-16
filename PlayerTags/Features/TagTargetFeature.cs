@@ -223,7 +223,7 @@ namespace PlayerTags.Features
             StringUpdateFactory.ApplyStringChanges(props);
         }
 
-        protected void ApplyTextFormatting(GameObject gameObject, Tag tag, SeString[] destStrings, InheritableValue<bool>[] textColorApplied, List<Payload> preferedPayloads)
+        protected void ApplyTextFormatting(GameObject gameObject, Tag tag, SeString[] destStrings, InheritableValue<bool>[] textColorApplied, List<Payload> preferedPayloads, ushort? overwriteTextColor = null)
         {
             if (IsTagVisible(tag, gameObject))
             {
@@ -239,11 +239,12 @@ namespace PlayerTags.Features
 
             void applyTextColor(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)
             {
+                var colorToUse = overwriteTextColor ?? colorValue?.InheritedValue;
                 if (shouldApplyFormattingPayloads(destPayload)
                             && enableFlag.InheritedValue != null
                             && enableFlag.InheritedValue.Value
-                            && colorValue.InheritedValue != null)
-                    applyTextFormattingPayloads(destPayload, new UIForegroundPayload(colorValue.InheritedValue.Value), new UIForegroundPayload(0));
+                            && colorToUse != null)
+                    applyTextFormattingPayloads(destPayload, new UIForegroundPayload(colorToUse.Value), new UIForegroundPayload(0));
             }
 
             //void applyTextGlowColor(SeString destPayload, InheritableValue<bool> enableFlag, InheritableValue<ushort> colorValue)

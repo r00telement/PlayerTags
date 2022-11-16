@@ -805,7 +805,7 @@ Use this if you want to to have every option under your control or just want to 
     <value>Handling for dead players</value>
   </data>
   <data name="Loc_DeadPlayerHandling_GrayOut_Description" xml:space="preserve">
-    <value>Gray out the nameplate of dead players and don't apply any tag for.</value>
+    <value>Apply any tag but gray out the nameplate.</value>
   </data>
   <data name="Loc_DeadPlayerHandling_Ignore_Description" xml:space="preserve">
     <value>Don't process dead players and don't apply any tag for.</value>

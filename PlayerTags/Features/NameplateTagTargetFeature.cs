@@ -114,31 +114,8 @@ namespace PlayerTags.Features
             var beforeTitleBytes = args.Title.Encode();
             var iconID = args.IconId;
             var generalOptions = m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext.ActivityType];
-            var applyTags = false;
-            var grayOut = false;
 
-            if (args.PlayerCharacter != null)
-            {
-                if (args.PlayerCharacter.IsDead)
-                {
-                    switch (generalOptions.NameplateDeadPlayerHandling)
-                    {
-                        case DeadPlayerHandling.Include:
-                            applyTags = true;
-                            break;
-                        case DeadPlayerHandling.GrayOut:
-                            grayOut = true;
-                            break;
-                    }
-                }
-                else
-                    applyTags = true;
-            }
-
-            if (applyTags)
-                AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID, generalOptions);
-            else if(grayOut)
-                GrayOutNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID);
+            AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID, generalOptions);
 
             args.IconId = iconID;
 
@@ -200,7 +177,7 @@ namespace PlayerTags.Features
             int? newStatusIcon = null;
             NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
 
-            if (gameObject is PlayerCharacter playerCharacter)
+            if (gameObject is PlayerCharacter playerCharacter && (!playerCharacter.IsDead || generalOptions.NameplateDeadPlayerHandling != DeadPlayerHandling.Ignore))
             {
                 var classJob = playerCharacter.ClassJob;
                 var classJobGameData = classJob?.GameData;
@@ -258,6 +235,12 @@ namespace PlayerTags.Features
 
             if (gameObject is PlayerCharacter playerCharacter1)
             {
+                ushort? colorOverwrite = null;
+
+                // Use gray color if player is dead
+                if (playerCharacter1.IsDead && generalOptions.NameplateDeadPlayerHandling == DeadPlayerHandling.GrayOut)
+                    colorOverwrite = 3;
+
                 // An additional step to apply text color to additional locations
                 Identity identity = m_PluginData.GetIdentity(playerCharacter1);
                 foreach (var customTagId in identity.CustomTagIds)
@@ -274,24 +257,9 @@ namespace PlayerTags.Features
                 {
                     var destStrings = new[] { name, title, freeCompany };
                     var isTextColorApplied = new[] { tag.IsTextColorAppliedToNameplateName, tag.IsTextColorAppliedToNameplateTitle, tag.IsTextColorAppliedToNameplateFreeCompany };
-                    ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null);
+                    ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null,
+                        overwriteTextColor: colorOverwrite);
                 }
-            }
-        }
-
-        protected void GrayOutNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon)
-        {
-            if (gameObject is PlayerCharacter playerCharacter)
-            {
-                NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
-
-                foreach (NameplateElements element in Enum.GetValues<NameplateElements>())
-                {
-                    nameplateChanges.GetChange(element, StringPosition.Before).Payloads.Add(new UIForegroundPayload(3));
-                    nameplateChanges.GetChange(element, StringPosition.After).Payloads.Add(new UIForegroundPayload(0));
-                }
-
-                ApplyNameplateChanges(nameplateChanges);
             }
         }
 
