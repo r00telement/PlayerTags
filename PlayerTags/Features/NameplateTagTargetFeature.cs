@@ -174,10 +174,11 @@ namespace PlayerTags.Features
         /// <param name="freeCompany">The free company text to change.</param>
         private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon, GeneralOptionsClass generalOptions)
         {
+            var playerCharacter = gameObject as PlayerCharacter;
             int? newStatusIcon = null;
             NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
 
-            if (gameObject is PlayerCharacter playerCharacter && (!playerCharacter.IsDead || generalOptions.NameplateDeadPlayerHandling != DeadPlayerHandling.Ignore))
+            if (playerCharacter != null && (!playerCharacter.IsDead || generalOptions.NameplateDeadPlayerHandling != DeadPlayerHandling.Ignore))
             {
                 var classJob = playerCharacter.ClassJob;
                 var classJobGameData = classJob?.GameData;
@@ -230,19 +231,17 @@ namespace PlayerTags.Features
                 NameplateUpdateFactory.ApplyStatusIconWithPrio(ref statusIcon, (int)newStatusIcon, change, ActivityContextManager.CurrentActivityContext, statusiconPriorizer, m_PluginConfiguration.MoveStatusIconToNameplateTextIfPossible);
             }
 
+            // Gray out the nameplate
+            if (playerCharacter != null && playerCharacter.IsDead && generalOptions.NameplateDeadPlayerHandling == DeadPlayerHandling.GrayOut)
+                GrayOutNameplate(gameObject, nameplateChanges);
+
             // Build the final strings out of the payloads
             ApplyNameplateChanges(nameplateChanges);
 
-            if (gameObject is PlayerCharacter playerCharacter1 && (!playerCharacter1.IsDead || generalOptions.NameplateDeadPlayerHandling != DeadPlayerHandling.Ignore))
+            if (playerCharacter != null && (!playerCharacter.IsDead || generalOptions.NameplateDeadPlayerHandling == DeadPlayerHandling.Include))
             {
-                ushort? colorOverwrite = null;
-
-                // Use gray color if player is dead
-                if (playerCharacter1.IsDead && generalOptions.NameplateDeadPlayerHandling == DeadPlayerHandling.GrayOut)
-                    colorOverwrite = 3;
-
                 // An additional step to apply text color to additional locations
-                Identity identity = m_PluginData.GetIdentity(playerCharacter1);
+                Identity identity = m_PluginData.GetIdentity(playerCharacter);
                 foreach (var customTagId in identity.CustomTagIds)
                 {
                     var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
@@ -250,15 +249,26 @@ namespace PlayerTags.Features
                         applyTextFormatting(customTag);
                 }
 
-                if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                     applyTextFormatting(jobTag);
 
                 void applyTextFormatting(Tag tag)
                 {
                     var destStrings = new[] { name, title, freeCompany };
                     var isTextColorApplied = new[] { tag.IsTextColorAppliedToNameplateName, tag.IsTextColorAppliedToNameplateTitle, tag.IsTextColorAppliedToNameplateFreeCompany };
-                    ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null,
-                        overwriteTextColor: colorOverwrite);
+                    ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null);
+                }
+            }
+        }
+
+        private void GrayOutNameplate(GameObject gameObject, NameplateChanges nameplateChanges)
+        {
+            if (gameObject is PlayerCharacter playerCharacter)
+            {
+                foreach (NameplateElements element in Enum.GetValues<NameplateElements>())
+                {
+                    nameplateChanges.GetChange(element, StringPosition.Before).Payloads.Add(new UIForegroundPayload(3));
+                    nameplateChanges.GetChange(element, StringPosition.After).Payloads.Add(new UIForegroundPayload(0));
                 }
             }
         }
