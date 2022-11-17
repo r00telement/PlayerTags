@@ -354,15 +354,6 @@
   <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
     <value>Zeige im Chat</value>
   </data>
-  <data name="Loc_IsIconVisibleInChat_Description" xml:space="preserve">
-    <value>Bestimmt, ob das Symbol im Chat dargestellt wird.</value>
-  </data>
-  <data name="Loc_IsIconVisibleInNameplates" xml:space="preserve">
-    <value>Zeige in der Namensanzeige</value>
-  </data>
-  <data name="Loc_IsIconVisibleInNameplates_Description" xml:space="preserve">
-    <value>Bestimmt, ob das Symbol in der Namensanzeige dargestellt wird.</value>
-  </data>
   <data name="Loc_Text" xml:space="preserve">
     <value>Text</value>
   </data>
