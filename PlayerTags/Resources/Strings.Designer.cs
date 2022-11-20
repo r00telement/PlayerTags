@@ -178,6 +178,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Advanced Chat Options ähnelt.
+        /// </summary>
+        public static string Loc_ChatFeatureCategory {
+            get {
+                return ResourceManager.GetString("Loc_ChatFeatureCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Custom id ähnelt.
         /// </summary>
         public static string Loc_CustomId {
@@ -192,6 +201,167 @@ namespace PlayerTags.Resources {
         public static string Loc_CustomTags {
             get {
                 return ResourceManager.GetString("Loc_CustomTags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handling for dead players ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gray out ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_GrayOut {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_GrayOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Apply any tag but gray out the nameplate. ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_GrayOut_Description {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_GrayOut_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ignore ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Ignore {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Don&apos;t process dead players and don&apos;t apply any tag for. ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Ignore_Description {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Ignore_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Include ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Include {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Include", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Handle dead players as they are alive. No difference between dead and alive players. ähnelt.
+        /// </summary>
+        public static string Loc_DeadPlayerHandling_Include_Description {
+            get {
+                return ResourceManager.GetString("Loc_DeadPlayerHandling_Include_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Template ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Basic ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Basic {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Basic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Same as Empty, but includes a very basic pre-confiuration for formatting and coloring.
+        ///Can also be used if you want to make your own cofiguration but want basic formatting. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Basic_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Basic_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Here you can choose the template for all the settings below.
+        ///The template is used as basic set of properties. Every change you are making is what get saved. But all options from this template will not be saved.
+        ///This helpes you by not needing to overwrite so much properties - or by doing your completely own configuration without a template.
+        ///
+        ///Warning:
+        ///Changing this can cause properties to be resetted. You may loose a part of your configuration.
+        ///After you changed this, ensure everything is setted up how  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Full ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Full {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Full", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show the job tag with color and also color the player name element. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Full_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Full_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Empty ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_None {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die No single configuration made. This is an completley empty template.
+        ///Use this if you want to to have every option under your control or just want to make only a few configurations. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_None_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_None_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Simple ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Simple {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Simple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Shows the job tag with color and the role icon by replacing the title. ähnelt.
+        /// </summary>
+        public static string Loc_DefaultPluginDataTemplate_Simple_Description {
+            get {
+                return ResourceManager.GetString("Loc_DefaultPluginDataTemplate_Simple_Description", resourceCulture);
             }
         }
         
@@ -358,29 +528,20 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the icon will be shown in chat. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show job icon in nameplates ähnelt.
         /// </summary>
-        public static string Loc_IsIconVisibleInChat_Description {
+        public static string Loc_IsJobIconVisibleInNameplates {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInChat_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsJobIconVisibleInNameplates", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Show in nameplates ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the job icon will be shown in nameplates. ähnelt.
         /// </summary>
-        public static string Loc_IsIconVisibleInNameplates {
+        public static string Loc_IsJobIconVisibleInNameplates_Description {
             get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInNameplates", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the icon will be shown in nameplates. ähnelt.
-        /// </summary>
-        public static string Loc_IsIconVisibleInNameplates_Description {
-            get {
-                return ResourceManager.GetString("Loc_IsIconVisibleInNameplates_Description", resourceCulture);
+                return ResourceManager.GetString("Loc_IsJobIconVisibleInNameplates_Description", resourceCulture);
             }
         }
         
@@ -543,6 +704,42 @@ namespace PlayerTags.Resources {
         public static string Loc_IsPlayersTabSelfVisible_Description {
             get {
                 return ResourceManager.GetString("Loc_IsPlayersTabSelfVisible_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the role icon will be shown in chat. ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInChat_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInChat_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show role icon in nameplates ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInNameplates {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInNameplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Whether the role icon will be shown in nameplates. ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInNameplates_Description {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInNameplates_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show role icon in nameplate ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleJobIconVisibleInNameplates {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleJobIconVisibleInNameplates", resourceCulture);
             }
         }
         
@@ -862,6 +1059,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Job icon set ähnelt.
+        /// </summary>
+        public static string Loc_JobIconSet {
+            get {
+                return ResourceManager.GetString("Loc_JobIconSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die The icon set to use for displaying the job icon. You can also choose the role icon set to display the role icon instead. ähnelt.
+        /// </summary>
+        public static string Loc_JobIconSet_Description {
+            get {
+                return ResourceManager.GetString("Loc_JobIconSet_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hand ähnelt.
         /// </summary>
         public static string Loc_LandHandRole_Hand {
@@ -876,6 +1091,24 @@ namespace PlayerTags.Resources {
         public static string Loc_LandHandRole_Land {
             get {
                 return ResourceManager.GetString("Loc_LandHandRole_Land", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Move Status Icon to Nameplate text if possible ähnelt.
+        /// </summary>
+        public static string Loc_MoveStatusIconToNameplateTextIfPossible {
+            get {
+                return ResourceManager.GetString("Loc_MoveStatusIconToNameplateTextIfPossible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If the current status icon is available as Font Icon then move it to the Player Name text in the Nameplate, so there is place for another icon to use, e.g. the job icon. ähnelt.
+        /// </summary>
+        public static string Loc_MoveStatusIconToNameplateTextIfPossible_Description {
+            get {
+                return ResourceManager.GetString("Loc_MoveStatusIconToNameplateTextIfPossible_Description", resourceCulture);
             }
         }
         
@@ -1438,6 +1671,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status Icon Priorizer ähnelt.
+        /// </summary>
+        public static string Loc_Static_StatusIconPrioList {
+            get {
+                return ResourceManager.GetString("Loc_Static_StatusIconPrioList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Tagged Players ähnelt.
         /// </summary>
         public static string Loc_Static_TaggedPlayers {
@@ -1461,6 +1703,240 @@ namespace PlayerTags.Resources {
         public static string Loc_Static_WarningMessage {
             get {
                 return ResourceManager.GetString("Loc_Static_WarningMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset to default ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToDefault {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Resets all condition sets to the default settings ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToDefault_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToDefault_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset to empty ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToEmpty {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Clears all condition sets to an empty collection. None status icons will be priorized. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizer_ResetToEmpty_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizer_ResetToEmpty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Duty ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InDuty {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status icons that should get priorized within duties. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InDuty_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InDuty_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Foray ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InForay {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InForay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status icons that should get priorized within foraies. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_InForay_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_InForay_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Overworld ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_Overworld {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_Overworld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Status icons that should get priorized at overworld. ähnelt.
+        /// </summary>
+        public static string Loc_StatusIconPriorizerConditionSets_Overworld_Description {
+            get {
+                return ResourceManager.GetString("Loc_StatusIconPriorizerConditionSets_Overworld_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Busy ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Busy {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Busy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Disconnecting ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Disconnecting {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Disconnecting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Duty Finder ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_DutyFinder {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_DutyFinder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group Pose ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_GroupPose {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_GroupPose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Idle ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Idle {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Idle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die In Duty ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_InDuty {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_InDuty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Mentor {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Mentor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor Crafting ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_MentorCrafting {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_MentorCrafting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor PvE ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_MentorPvE {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_MentorPvE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Mentor PvP ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_MentorPvP {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_MentorPvP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die New Adventurer ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_NewAdventurer {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_NewAdventurer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Party Leader ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_PartyLeader {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_PartyLeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Party Member ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_PartyMember {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_PartyMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Returner ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_Returner {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_Returner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Role Playing ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_RolePlaying {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_RolePlaying", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Viewing Cutscene ähnelt.
+        /// </summary>
+        public static string Loc_StatusIcons_ViewingCutscene {
+            get {
+                return ResourceManager.GetString("Loc_StatusIcons_ViewingCutscene", resourceCulture);
             }
         }
         
@@ -1573,6 +2049,24 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Target Chat Types ähnelt.
+        /// </summary>
+        public static string Loc_TargetChatTypes {
+            get {
+                return ResourceManager.GetString("Loc_TargetChatTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Defines for which chat type the chat features of this tag should be enabled for. ähnelt.
+        /// </summary>
+        public static string Loc_TargetChatTypes_Description {
+            get {
+                return ResourceManager.GetString("Loc_TargetChatTypes_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Text ähnelt.
         /// </summary>
         public static string Loc_Text {
@@ -1632,6 +2126,25 @@ namespace PlayerTags.Resources {
         public static string Loc_TextGlowColor_Description {
             get {
                 return ResourceManager.GetString("Loc_TextGlowColor_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Use priorized icons ähnelt.
+        /// </summary>
+        public static string Loc_UsePriorizedIcons {
+            get {
+                return ResourceManager.GetString("Loc_UsePriorizedIcons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die This option checked will force a set of status icons to be priorized over job icons, if you enabled job icons.
+        ///When disabled, only the disconnected status icon is priorized. ähnelt.
+        /// </summary>
+        public static string Loc_UsePriorizedIcons_Description {
+            get {
+                return ResourceManager.GetString("Loc_UsePriorizedIcons_Description", resourceCulture);
             }
         }
     }

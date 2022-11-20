@@ -5,6 +5,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.UI.Misc;
 using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.Tools.Strings;
 using PlayerTags.Configuration;
 using PlayerTags.Configuration.GameConfig;
 using PlayerTags.Data;
@@ -120,7 +121,7 @@ namespace PlayerTags.Features
 
         private void Chat_ChatMessage(XivChatType type, uint senderId, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext].IsApplyTagsToAllChatMessagesEnabled || Enum.IsDefined(type))
+            if (m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext.ActivityType].IsApplyTagsToAllChatMessagesEnabled && Enum.IsDefined(type))
             {
                 AddTagsToChat(sender, type, true);
                 AddTagsToChat(message, type, false);
@@ -129,9 +130,9 @@ namespace PlayerTags.Features
 
         protected override bool IsIconVisible(Tag tag)
         {
-            if (tag.IsIconVisibleInChat.InheritedValue != null)
+            if (tag.IsRoleIconVisibleInChat.InheritedValue != null)
             {
-                return tag.IsIconVisibleInChat.InheritedValue.Value;
+                return tag.IsRoleIconVisibleInChat.InheritedValue.Value;
             }
 
             return false;
@@ -337,14 +338,14 @@ namespace PlayerTags.Features
             var stringMatches = GetStringMatches(message);
             foreach (var stringMatch in stringMatches)
             {
-                Dictionary<TagPosition, StringChanges> stringChanges = new Dictionary<TagPosition, StringChanges>();
+                StringChanges stringChanges = new();
 
                 if (stringMatch.GameObject is PlayerCharacter playerCharacter)
                 {
                     // Add the job tag
                     if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
-                        if (jobTag.TagPositionInChat.InheritedValue != null)
+                        if (jobTag.TagPositionInChat.InheritedValue != null && jobTag.TargetChatTypes.InheritedValue != null && jobTag.TargetChatTypes.Value.Contains(chatType))
                         {
                             var payloads = GetPayloads(jobTag, stringMatch.GameObject);
                             if (payloads.Any())
@@ -364,7 +365,7 @@ namespace PlayerTags.Features
                             var generatedName = BuildPlayername(RandomNameGenerator.Generate(playerName));
                             if (generatedName != null)
                             {
-                                AddPayloadChanges(TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges, false);
+                                AddPayloadChanges(StringPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), stringChanges, false);
                             }
                         }
                     }
@@ -396,7 +397,7 @@ namespace PlayerTags.Features
                 {
                     var insertBehindNumberPrefix = tag.InsertBehindNumberPrefixInChat?.Value ?? true;
                     var insertPositionInChat = tag.TagPositionInChat.InheritedValue.Value;
-                    AddPayloadChanges(insertPositionInChat, payloads, stringChanges, insertBehindNumberPrefix);
+                    AddPayloadChanges((StringPosition)insertPositionInChat, payloads, stringChanges, insertBehindNumberPrefix);
                 }
 
                 // An additional step to apply text color to additional locations

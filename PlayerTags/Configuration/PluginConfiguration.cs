@@ -1,32 +1,46 @@
 ﻿using Dalamud.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Pilz.Dalamud.ActivityContexts;
+using Pilz.Dalamud.Nameplates.Tools;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.CompilerServices;
 
 namespace PlayerTags.Configuration
 {
     [Serializable]
     public class PluginConfiguration : IPluginConfiguration
     {
-        public int Version { get; set; } = 0;
+        private const int DEFAULT_CONFIG_VERSION = 1;
+
+        [JsonProperty]
+        public int RootVersion { get; private set; } = DEFAULT_CONFIG_VERSION;
+        public int Version { get; set; } = DEFAULT_CONFIG_VERSION;
         public bool IsVisible = false;
 
-        public Dictionary<ActivityContext, GeneralOptionsClass> GeneralOptions = new Dictionary<ActivityContext, GeneralOptionsClass>()
+        [JsonProperty("GeneralOptionsV2")]
+        public Dictionary<ActivityType, GeneralOptionsClass> GeneralOptions = new()
         {
-            { ActivityContext.None, new GeneralOptionsClass() },
-            { ActivityContext.PveDuty, new GeneralOptionsClass() },
-            { ActivityContext.PvpDuty, new GeneralOptionsClass() }
+            { ActivityType.None, new GeneralOptionsClass() },
+            { ActivityType.PveDuty, new GeneralOptionsClass() },
+            { ActivityType.PvpDuty, new GeneralOptionsClass() }
         };
 
+        public DefaultPluginDataTemplate DefaultPluginDataTemplate = DefaultPluginDataTemplate.Simple;
+        public StatusIconPriorizerSettings StatusIconPriorizerSettings = new(true);
+        public bool MoveStatusIconToNameplateTextIfPossible = true;
         public bool IsPlayerNameRandomlyGenerated = false;
         public bool IsCustomTagsContextMenuEnabled = true;
         public bool IsShowInheritedPropertiesEnabled = true;
         public bool IsPlayersTabOrderedByProximity = false;
         public bool IsPlayersTabSelfVisible = true;
-        public bool IsPlayersTabFriendsVisible = true;
+        public bool IsPlayersTabFriendsVisible  = true;
         public bool IsPlayersTabPartyVisible = true;
         public bool IsPlayersTabAllianceVisible = true;
         public bool IsPlayersTabEnemiesVisible = true;
@@ -64,6 +78,18 @@ namespace PlayerTags.Configuration
         public List<Identity> Identities = new List<Identity>();
 
         #region Obsulate Properties
+
+        [Obsolete]
+        [JsonProperty("GeneralOptions")]
+        private Dictionary<Data.ActivityContext, GeneralOptionsClass> GeneralOptionsV1
+        {
+            set
+            {
+                GeneralOptions.Clear();
+                foreach (var kvp in value)
+                    GeneralOptions.Add((ActivityType)kvp.Key, kvp.Value);
+            }
+        }
 
         [JsonProperty("NameplateFreeCompanyVisibility"), Obsolete]
         private NameplateFreeCompanyVisibility NameplateFreeCompanyVisibilityV1
@@ -202,8 +228,55 @@ namespace PlayerTags.Configuration
 
             Identities = pluginData.Identities;
 
-            PluginServices.DalamudPluginInterface.SavePluginConfig(this);
+            SavePluginConfig();
+
             Saved?.Invoke();
+        }
+
+        private void SavePluginConfig()
+        {
+            Version = DEFAULT_CONFIG_VERSION;
+            var configFilePath = GetConfigFilePath();
+            var configFileContent = JsonConvert.SerializeObject(this, Formatting.Indented, GetJsonSettings());
+            File.WriteAllText(configFilePath, configFileContent);
+        }
+
+        public static PluginConfiguration LoadPluginConfig()
+        {
+            var configFilePath = GetConfigFilePath();
+            object config = null;
+
+            if (File.Exists(configFilePath))
+            {
+                var configFileContent = File.ReadAllText(configFilePath);
+                config = JsonConvert.DeserializeObject<PluginConfiguration>(configFileContent, GetJsonSettings());
+            }
+            else
+            {
+                // Try loading the old settings, if possible
+                configFilePath = PluginServices.DalamudPluginInterface.ConfigFile.FullName;
+                config = PluginServices.DalamudPluginInterface.GetPluginConfig();
+            }
+
+            return config as PluginConfiguration;
+        }
+
+        private static string GetConfigFilePath()
+        {
+            return Path.Combine(PluginServices.DalamudPluginInterface.ConfigDirectory.FullName, "Config.json");
+        }
+
+        private static JsonSerializerSettings GetJsonSettings()
+        {
+            var jsonSettings = new JsonSerializerSettings
+            {
+                TypeNameAssemblyFormatHandling = TypeNameAssemblyFormatHandling.Simple,
+                TypeNameHandling = TypeNameHandling.Auto,
+            };
+
+            jsonSettings.Converters.Add(new StringEnumConverter());
+
+            return jsonSettings;
         }
     }
 
@@ -212,7 +285,7 @@ namespace PlayerTags.Configuration
         public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility.Default;
         public NameplateTitleVisibility NameplateTitleVisibility = NameplateTitleVisibility.WhenHasTags;
         public NameplateTitlePosition NameplateTitlePosition = NameplateTitlePosition.AlwaysAboveName;
-
+        public DeadPlayerHandling NameplateDeadPlayerHandling = DeadPlayerHandling.Include;
         public bool IsApplyTagsToAllChatMessagesEnabled = true;
     }
 }

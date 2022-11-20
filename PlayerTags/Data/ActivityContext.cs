@@ -3,6 +3,7 @@ using System;
 
 namespace PlayerTags.Data
 {
+    [Obsolete]
     [Flags]
     [JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ActivityContext

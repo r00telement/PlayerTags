@@ -1,10 +1,17 @@
 ﻿using Dalamud.Configuration;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface;
 using Dalamud.Logging;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using FFXIVClientStructs.Havok;
 using ImGuiNET;
 using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.ActivityContexts;
+using Pilz.Dalamud.Icons;
+using Pilz.Dalamud.Nameplates.Model;
+using Pilz.Dalamud.Nameplates.Tools;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -13,6 +20,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
+using System.Transactions;
 
 namespace PlayerTags.Configuration
 {
@@ -29,6 +38,7 @@ namespace PlayerTags.Configuration
         private PropertyProxy propertyProxy;
 
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
+        private Dictionary<object, object> inheritableTEnumProxies = new();
 
         public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
         {
@@ -77,6 +87,7 @@ namespace PlayerTags.Configuration
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateFreeCompanyVisibility, () => SaveSettings(true));
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateTitleVisibility, () => SaveSettings(true));
                         DrawComboBox(true, true, false, ref propertyProxy.NameplateTitlePosition, () => SaveSettings(true));
+                        DrawComboBox(true, true, false, ref propertyProxy.NameplateDeadPlayerHandling, () => SaveSettings(true));
 
                         ImGui.Spacing();
                         ImGui.Spacing();
@@ -97,6 +108,11 @@ namespace PlayerTags.Configuration
                     {
                         ImGui.Spacing();
                         ImGui.Spacing();
+                        DrawComboBox(true, true, false, ref m_PluginConfiguration.DefaultPluginDataTemplate, () =>
+                        {
+                            m_PluginData.ReloadDefault();
+                            SaveSettings();
+                        }, true, true);
                         DrawCheckbox(nameof(m_PluginConfiguration.IsShowInheritedPropertiesEnabled), true, ref m_PluginConfiguration.IsShowInheritedPropertiesEnabled, () => SaveSettings());
                         ImGui.BeginGroup();
                         ImGui.Columns(2);
@@ -233,6 +249,81 @@ namespace PlayerTags.Configuration
                             }
 
                             ImGui.EndTable();
+                        }
+
+                        ImGui.EndTabItem();
+                    }
+
+                    if (ImGui.BeginTabItem(Strings.Loc_Static_StatusIconPrioList))
+                    {
+                        ImGui.Spacing();
+                        ImGui.Spacing();
+
+                        var isPriorizerEnabled = m_PluginConfiguration.StatusIconPriorizerSettings.UsePriorizedIcons;
+                        DrawCheckbox(nameof(StatusIconPriorizerSettings.UsePriorizedIcons), true, ref isPriorizerEnabled, () =>
+                        {
+                            m_PluginConfiguration.StatusIconPriorizerSettings.UsePriorizedIcons = isPriorizerEnabled;
+                            SaveSettings();
+                        });
+
+                        DrawCheckbox(nameof(PluginConfiguration.MoveStatusIconToNameplateTextIfPossible), true, ref m_PluginConfiguration.MoveStatusIconToNameplateTextIfPossible, () => SaveSettings());
+
+                        if (isPriorizerEnabled)
+                        {
+                            var statusIcons = Enum.GetValues<StatusIcons>();
+
+                            ImGui.Spacing();
+                            ImGui.Spacing();
+
+                            if (ImGui.Button(Strings.Loc_StatusIconPriorizer_ResetToDefault))
+                            {
+                                m_PluginConfiguration.StatusIconPriorizerSettings.ResetToDefault();
+                                SaveSettings();
+                            }
+                            if (ImGui.IsItemHovered())
+                                ImGui.SetTooltip(Strings.Loc_StatusIconPriorizer_ResetToDefault_Description);
+                            
+                            ImGui.SameLine();
+
+                            if (ImGui.Button(Strings.Loc_StatusIconPriorizer_ResetToEmpty))
+                            {
+                                m_PluginConfiguration.StatusIconPriorizerSettings.ResetToEmpty();
+                                SaveSettings();
+                            }
+                            if (ImGui.IsItemHovered())
+                                ImGui.SetTooltip(Strings.Loc_StatusIconPriorizer_ResetToEmpty_Description);
+
+                            ImGui.Spacing();
+                            ImGui.Spacing();
+
+                            foreach (var conditionSetName in Enum.GetValues<StatusIconPriorizerConditionSets>())
+                            {
+                                if (ImGui.CollapsingHeader(Localizer.GetString(conditionSetName, false)))
+                                {
+                                    var conditionSet = m_PluginConfiguration.StatusIconPriorizerSettings.GetConditionSet(conditionSetName);
+
+                                    foreach (var statusIcon in statusIcons)
+                                    {
+                                        var isChecked = conditionSet.Contains(statusIcon);
+                                        DrawCheckbox(Localizer.GetName(statusIcon), true, ref isChecked, () =>
+                                        {
+                                            if (isChecked)
+                                            {
+                                                if (!conditionSet.Contains(statusIcon))
+                                                    conditionSet.Add(statusIcon);
+                                            }
+                                            else if (conditionSet.Contains(statusIcon))
+                                                conditionSet.Remove(statusIcon);
+                                            SaveSettings();
+                                        });
+                                    }
+                                }
+
+                                if (ImGui.IsItemHovered())
+                                    ImGui.SetTooltip(Localizer.GetString(conditionSetName, true));
+
+                                ImGui.Spacing();
+                            }
                         }
 
                         ImGui.EndTabItem();
@@ -691,6 +782,14 @@ namespace PlayerTags.Configuration
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, true, false, inheritableNameplateTitlePosition);
                     }
+                    else if (selectedInheritable.Inheritable.Value is InheritableValue<JobIconSetName> inheritableJobIconSetName)
+                    {
+                        DrawInheritable(selectedInheritable.Inheritable.Key, false, false, inheritableJobIconSetName);
+                    }
+                    else if (selectedInheritable.Inheritable.Value is InheritableReference<List<XivChatType>> inheritableXivChatType)
+                    {
+                        DrawMultiselect(selectedInheritable.Inheritable.Key, inheritableXivChatType);
+                    }
                     else if (selectedInheritable.Inheritable.Value is InheritableReference<string> inheritableString)
                     {
                         DrawInheritable(selectedInheritable.Inheritable.Key, inheritableString);
@@ -1052,12 +1151,78 @@ namespace PlayerTags.Configuration
             ImGui.TextColored(new Vector4(0.7f, 0.6f, 1f, 1f), label);
         }
 
-        private void DrawComboBox<TEnum>(bool isLabelVisible, bool shouldLocalizeNames, bool shouldOrderNames, ref TEnum currentValue, System.Action changed)
+        private void DrawMultiselect<TEnum>(string localizedStringName, InheritableReference<List<TEnum>> inheritable) where TEnum : Enum
+        {
+            bool isDisabled = inheritable.Behavior == InheritableBehavior.Inherit;
+            List<TEnum> proxyKey = isDisabled ? inheritable.InheritedValue : inheritable.Value;
+
+            if (isDisabled)
+                proxyKey = inheritable.InheritedValue;
+            if (proxyKey == null)
+                proxyKey = inheritable.Value;
+            
+            if (isDisabled)
+                ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 0.25f);
+
+            var isExpanded = ImGui.CollapsingHeader(Localizer.GetString(localizedStringName, false));
+            
+            if (ImGui.IsItemHovered())
+                ImGui.SetTooltip(Localizer.GetString(localizedStringName, true));
+            
+            if (isDisabled)
+            {
+                ImGui.SameLine();
+                ImGui.Text(Strings.Loc_Static_Inherited);
+            }
+            else
+                DrawRemovePropertyOverrideButton(inheritable);
+
+            if (isExpanded)
+            {
+                bool isClicked = false;
+                var typeofEnum = typeof(TEnum);
+                EnumMultiselectProxy<TEnum> proxy;
+
+                if (inheritableTEnumProxies.ContainsKey(proxyKey))
+                    proxy = inheritableTEnumProxies[proxyKey] as EnumMultiselectProxy<TEnum>;
+                else
+                {
+                    proxy = new EnumMultiselectProxy<TEnum>(proxyKey);
+                    inheritableTEnumProxies.Add(proxyKey, proxy);
+                }
+
+                foreach (var entry in proxy.Entries)
+                {
+                    var entryName = Enum.GetName(typeofEnum, entry.Value);
+                    var tempval = entry.Enabled;
+
+                    isClicked = ImGui.Checkbox(Localizer.GetString(entryName), ref isDisabled ? ref tempval : ref entry.Enabled);
+
+                    if (ImGui.IsItemHovered())
+                        ImGui.SetTooltip(Localizer.GetString(entryName, true));
+
+                    if (isClicked && !isDisabled)
+                    {
+                        var newList = proxyKey.ToList();
+                        proxy.ApplyTo(newList);
+                        inheritable.Value = newList;
+                        SaveSettings();
+                    }
+                }
+            }
+
+            if (isDisabled)
+                ImGui.PopStyleVar();
+        }
+
+        private void DrawComboBox<TEnum>(bool isLabelVisible, bool shouldLocalizeNames, bool shouldOrderNames, ref TEnum currentValue, System.Action changed, bool showToolTipToLabel = false, bool showLabelInSameLine = false)
             where TEnum : Enum
         {
             if (isLabelVisible)
             {
                 ImGui.Text(Localizer.GetString<TEnum>(false));
+                if (showLabelInSameLine)
+                    ImGui.SameLine();
             }
 
             var currentDisplayName = shouldLocalizeNames ? Localizer.GetString(currentValue, false) : currentValue.ToString();
@@ -1098,7 +1263,10 @@ namespace PlayerTags.Configuration
 
             if (ImGui.IsItemHovered() && shouldLocalizeNames)
             {
-                ImGui.SetTooltip(Localizer.GetString(currentValue, true));
+                if (showToolTipToLabel)
+                    ImGui.SetTooltip(Localizer.GetString(typeof(TEnum).Name, true));
+                else
+                    ImGui.SetTooltip(Localizer.GetString(currentValue, true));
             }
         }
 
@@ -1202,6 +1370,7 @@ namespace PlayerTags.Configuration
             public NameplateFreeCompanyVisibility NameplateFreeCompanyVisibility;
             public NameplateTitleVisibility NameplateTitleVisibility;
             public NameplateTitlePosition NameplateTitlePosition;
+            public DeadPlayerHandling NameplateDeadPlayerHandling;
             public bool IsApplyTagsToAllChatMessagesEnabled;
 
             public PropertyProxy(PluginConfiguration config)
@@ -1216,6 +1385,7 @@ namespace PlayerTags.Configuration
                 NameplateFreeCompanyVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateFreeCompanyVisibility;
                 NameplateTitleVisibility = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitleVisibility;
                 NameplateTitlePosition = pluginConfig.GeneralOptions[currentActivityContext].NameplateTitlePosition;
+                NameplateDeadPlayerHandling = pluginConfig.GeneralOptions[currentActivityContext].NameplateDeadPlayerHandling;
                 IsApplyTagsToAllChatMessagesEnabled = pluginConfig.GeneralOptions[currentActivityContext].IsApplyTagsToAllChatMessagesEnabled;
             }
 
@@ -1233,31 +1403,32 @@ namespace PlayerTags.Configuration
                     applyChanges(GetActivityContext(CurrentActivityContext));
                 }
 
-                void applyChanges(ActivityContext key)
+                void applyChanges(ActivityType key)
                 {
                     pluginConfig.GeneralOptions[key].NameplateFreeCompanyVisibility = NameplateFreeCompanyVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitleVisibility = NameplateTitleVisibility;
                     pluginConfig.GeneralOptions[key].NameplateTitlePosition = NameplateTitlePosition;
+                    pluginConfig.GeneralOptions[key].NameplateDeadPlayerHandling = NameplateDeadPlayerHandling;
                     pluginConfig.GeneralOptions[key].IsApplyTagsToAllChatMessagesEnabled = IsApplyTagsToAllChatMessagesEnabled;
                 }
             }
 
-            private ActivityContext GetActivityContext(ActivityContextSelection selection)
+            private ActivityType GetActivityContext(ActivityContextSelection selection)
             {
-                ActivityContext result;
+                ActivityType result;
 
                 switch (selection)
                 {
                     case ActivityContextSelection.PveDuty:
-                        result = ActivityContext.PveDuty;
+                        result = ActivityType.PveDuty;
                         break;
                     case ActivityContextSelection.PvpDuty:
-                        result = ActivityContext.PvpDuty;
+                        result = ActivityType.PvpDuty;
                         break;
                     case ActivityContextSelection.All:
                     case ActivityContextSelection.None:
                     default:
-                        result = ActivityContext.None;
+                        result = ActivityType.None;
                         break;
                 }
 
@@ -1271,6 +1442,43 @@ namespace PlayerTags.Configuration
             None,
             PveDuty,
             PvpDuty
+        }
+
+        private class EnumMultiselectProxy<TEnum> where TEnum : Enum
+        {
+            public List<Entry> Entries { get; } = new();
+
+            public EnumMultiselectProxy(List<TEnum> target)
+            {
+                foreach (TEnum value in Enum.GetValues(typeof(TEnum)))
+                    Entries.Add(new(value, target.Contains(value)));
+            }
+
+            public void ApplyTo(List<TEnum> target)
+            {
+                foreach (var entry in Entries)
+                {
+                    if (entry.Enabled)
+                    {
+                        if (!target.Contains(entry.Value))
+                            target.Add(entry.Value);
+                    }
+                    else if (target.Contains(entry.Value))
+                        target.Remove(entry.Value);
+                }
+            }
+
+            public class Entry
+            {
+                public TEnum Value { get; set; }
+                public bool Enabled;
+
+                public Entry(TEnum value, bool enabled)
+                {
+                    Value = value;
+                    Enabled = enabled;
+                }
+            }
         }
     }
 }

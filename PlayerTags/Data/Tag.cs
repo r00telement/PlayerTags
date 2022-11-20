@@ -1,9 +1,14 @@
-﻿using Dalamud.Game.Text.SeStringHandling;
+﻿using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Pilz.Dalamud.Icons;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PlayerTags.Data
 {
@@ -11,7 +16,10 @@ namespace PlayerTags.Data
     {
         public IPluginString Name { get; init; }
 
+        [JsonProperty("Parent")]
         private Tag? m_Parent = null;
+
+        [JsonIgnore]
         public Tag? Parent
         {
             get => m_Parent;
@@ -42,6 +50,7 @@ namespace PlayerTags.Data
 
         public List<Tag> Children { get; } = new List<Tag>();
 
+        [JsonIgnore]
         public IEnumerable<Tag> Descendents
         {
             get
@@ -57,7 +66,9 @@ namespace PlayerTags.Data
             }
         }
 
+        [JsonIgnore]
         private Dictionary<string, IInheritable>? m_Inheritables = null;
+        [JsonIgnore]
         public Dictionary<string, IInheritable> Inheritables
         {
             get
@@ -96,12 +107,28 @@ namespace PlayerTags.Data
 
         public InheritableValue<Guid> CustomId = new InheritableValue<Guid>(Guid.Empty);
 
+        [JsonProperty, Obsolete]
+        private InheritableValue<bool> IsIconVisibleInChat
+        {
+            set => IsRoleIconVisibleInChat = value;
+        }
+
+        [JsonProperty, Obsolete]
+        private InheritableValue<bool> IsIconVisibleInNameplate
+        {
+            set => IsRoleIconVisibleInNameplates = value;
+        }
+
         [InheritableCategory("IconCategory")]
         public InheritableValue<BitmapFontIcon> Icon = new InheritableValue<BitmapFontIcon>(BitmapFontIcon.Aethernet);
         [InheritableCategory("IconCategory")]
-        public InheritableValue<bool> IsIconVisibleInChat = new InheritableValue<bool>(false);
+        public InheritableValue<bool> IsRoleIconVisibleInChat = new InheritableValue<bool>(false);
         [InheritableCategory("IconCategory")]
-        public InheritableValue<bool> IsIconVisibleInNameplates = new InheritableValue<bool>(false);
+        public InheritableValue<bool> IsRoleIconVisibleInNameplates = new InheritableValue<bool>(false);
+        [InheritableCategory("IconCategory")]
+        public InheritableValue<bool> IsJobIconVisibleInNameplates = new InheritableValue<bool>(false);
+        [InheritableCategory("IconCategory")]
+        public InheritableValue<JobIconSetName> JobIconSet = new InheritableValue<JobIconSetName>(JobIconSetName.Framed);
 
         [InheritableCategory("TextCategory")]
         public InheritableReference<string> Text = new InheritableReference<string>("");
@@ -160,6 +187,10 @@ namespace PlayerTags.Data
         [InheritableCategory("PlayerCategory")]
         public InheritableValue<bool> IsVisibleForOtherPlayers = new InheritableValue<bool>(false);
 
+        [InheritableCategory("ChatFeatureCategory")]
+        public InheritableReference<List<XivChatType>> TargetChatTypes = new(new List<XivChatType>(Enum.GetValues<XivChatType>()));
+
+        [JsonIgnore]
         public string[] IdentitiesToAddTo
         {
             get
@@ -174,6 +205,7 @@ namespace PlayerTags.Data
         }
 
         private Tag? m_Defaults;
+        [JsonIgnore]
         public bool HasDefaults
         {
             get { return m_Defaults != null; }
@@ -209,7 +241,7 @@ namespace PlayerTags.Data
                 {
                     var inheritableData = inheritable.GetData();
                     if (inheritableData.Behavior != defaultInheritableData.Behavior ||
-                        !inheritableData.Value.Equals(defaultInheritableData.Value))
+                        !EqualsInheritableData(inheritableData, defaultInheritableData))
                     {
                         changes[name] = inheritable.GetData();
                     }
@@ -222,6 +254,31 @@ namespace PlayerTags.Data
             }
 
             return changes;
+        }
+
+        private static bool EqualsInheritableData(InheritableData data1, InheritableData data2)
+        {
+            if (data1.Value is List<XivChatType>)
+                return EqualsInheritableDataListXivChatType<XivChatType>(data1, data2);
+            else
+                return data1.Value.Equals(data2.Value);
+        }
+
+        private static bool EqualsInheritableDataListXivChatType<TEnum>(InheritableData data1, InheritableData data2)
+        {
+            var list1 = data1.Value as List<TEnum>;
+            var list2 = data2.Value as List<TEnum>;
+
+            if (list1 is null || list2 is null || list1.Count != list2.Count)
+                return false;
+
+            for (int i = 0; i < list1.Count; i++)
+            {
+                if (!list1[i].Equals(list2[i]))
+                    return false;
+            }
+
+            return true;
         }
 
         public void SetChanges(IEnumerable<KeyValuePair<string, InheritableData>> changes)
