@@ -284,7 +284,8 @@ namespace PlayerTags.Data
         private static readonly Dictionary<string, string> ObsulteInheritableStringMap = new()
         {
             { "IsIconVisibleInChat", nameof(IsRoleIconVisibleInChat) },
-            { "IsIconVisibleInNameplate", nameof(IsRoleIconVisibleInNameplates) }
+            { "IsIconVisibleInNameplate", nameof(IsRoleIconVisibleInNameplates) },
+            { "IsIconVisibleInNameplates", nameof(IsRoleIconVisibleInNameplates) }
         };
         private static string FixObsuleteInheritableStringName(string name)
         {
