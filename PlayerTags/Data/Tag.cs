@@ -77,7 +77,7 @@ namespace PlayerTags.Data
                 {
                     m_Inheritables = new Dictionary<string, IInheritable>();
 
-                    var inheritableFields = GetType().GetFields().Where(field => typeof(IInheritable).IsAssignableFrom(field.FieldType));
+                    var inheritableFields = GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic).Where(field => typeof(IInheritable).IsAssignableFrom(field.FieldType));
                     foreach (var inheritableField in inheritableFields)
                     {
                         IInheritable? inheritable = inheritableField.GetValue(this) as IInheritable;
