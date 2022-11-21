@@ -77,7 +77,7 @@ namespace PlayerTags.Data
                 {
                     m_Inheritables = new Dictionary<string, IInheritable>();
 
-                    var inheritableFields = GetType().GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic).Where(field => typeof(IInheritable).IsAssignableFrom(field.FieldType));
+                    var inheritableFields = GetType().GetFields().Where(field => typeof(IInheritable).IsAssignableFrom(field.FieldType));
                     foreach (var inheritableField in inheritableFields)
                     {
                         IInheritable? inheritable = inheritableField.GetValue(this) as IInheritable;
@@ -281,11 +281,25 @@ namespace PlayerTags.Data
             return true;
         }
 
+        private static readonly Dictionary<string, string> ObsulteInheritableStringMap = new()
+        {
+            { "IsIconVisibleInChat", nameof(IsRoleIconVisibleInChat) },
+            { "IsIconVisibleInNameplate", nameof(IsRoleIconVisibleInNameplates) }
+        };
+        private static string FixObsuleteInheritableStringName(string name)
+        {
+            if (ObsulteInheritableStringMap.ContainsKey(name))
+                return ObsulteInheritableStringMap[name];
+            else
+                return name;
+        }
+
         public void SetChanges(IEnumerable<KeyValuePair<string, InheritableData>> changes)
         {
             foreach ((var name, var inheritableData) in changes)
             {
-                Inheritables[name].SetData(inheritableData);
+                var namefixed = FixObsuleteInheritableStringName(name);
+                Inheritables[namefixed].SetData(inheritableData);
             }
         }
 
