@@ -340,12 +340,15 @@ namespace PlayerTags.Features
             {
                 StringChanges stringChanges = new();
 
+                bool isTagEnabled(Tag tag)
+                    => tag.TagPositionInChat.InheritedValue != null && tag.TargetChatTypes.InheritedValue != null && tag.TargetChatTypes.InheritedValue.Contains(chatType);
+
                 if (stringMatch.GameObject is PlayerCharacter playerCharacter)
                 {
                     // Add the job tag
                     if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
                     {
-                        if (jobTag.TagPositionInChat.InheritedValue != null && jobTag.TargetChatTypes.InheritedValue != null && jobTag.TargetChatTypes.Value.Contains(chatType))
+                        if (isTagEnabled(jobTag))
                         {
                             var payloads = GetPayloads(jobTag, stringMatch.GameObject);
                             if (payloads.Any())
@@ -380,7 +383,7 @@ namespace PlayerTags.Features
                         var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
                         if (customTag != null)
                         {
-                            if (customTag.TagPositionInChat.InheritedValue != null)
+                            if (isTagEnabled(customTag))
                             {
                                 var customTagPayloads = GetPayloads(customTag, stringMatch.GameObject);
                                 if (customTagPayloads.Any())
@@ -407,14 +410,14 @@ namespace PlayerTags.Features
 
                     if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
                     {
-                        if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                        if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag) & isTagEnabled(jobTag))
                             applyTextFormatting(jobTag);
                     }
 
                     foreach (var customTagId in identity.CustomTagIds)
                     {
                         var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
-                        if (customTag != null)
+                        if (customTag != null && isTagEnabled(customTag))
                             applyTextFormatting(customTag);
                     }
 
