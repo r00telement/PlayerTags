@@ -286,8 +286,8 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Same as Empty, but includes a very basic pre-confiuration for formatting and coloring.
-        ///Can also be used if you want to make your own cofiguration but want basic formatting. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Same as Empty, but includes a very basic pre-configuration for formatting and coloring.
+        ///Can also be used if you want to make your own configuration but want basic formatting. ähnelt.
         /// </summary>
         public static string Loc_DefaultPluginDataTemplate_Basic_Description {
             get {
