@@ -625,7 +625,7 @@
     <value>Insert behind group number prefix in chat</value>
   </data>
   <data name="Loc_InsertBehindNumberPrefixInChat_Description" xml:space="preserve">
-    <value>If enabled, the Tag and Icon will get insert behind the Group/Alliance number prefix in Chat instead of before. </value>
+    <value>If enabled, the Tag and Icon will get inserted behind the Group/Alliance number prefix in Chat instead of before. </value>
   </data>
   <data name="Loc_NameplateCategory" xml:space="preserve">
     <value>Nameplate properties</value>
