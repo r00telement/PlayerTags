@@ -354,6 +354,15 @@
   <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
     <value>Afficher dans le chat</value>
   </data>
+  <data name="Loc_IsRoleIconVisibleInChat_Description" xml:space="preserve">
+    <value>Si l'icône de rôle doit être affichée dans le chat.</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInNameplates" xml:space="preserve">
+    <value>Afficher l'icône de rôle dans les Plaques de nom</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInNameplates_Description" xml:space="preserve">
+    <value>Si l'icône de rôle doit être affichée dans les plaques de nom.</value>
+  </data>
   <data name="Loc_Text" xml:space="preserve">
     <value>Texte</value>
   </data>
@@ -611,6 +620,177 @@
   </data>
   <data name="Loc_Static_OtherExperimental" xml:space="preserve">
     <value>Autre (expérimental)</value>
+  </data>
+  <data name="Loc_InsertBehindNumberPrefixInChat" xml:space="preserve">
+    <value>Insérer après le préfixe de numéro d'équipe dans le chat</value>
+  </data>
+  <data name="Loc_InsertBehindNumberPrefixInChat_Description" xml:space="preserve">
+    <value>Si activée, cette option insérera le tag &amp; l'icône après le préfixe de numéro d'équipe/d'alliance dans le chat plutôt qu'avant. </value>
+  </data>
+  <data name="Loc_NameplateCategory" xml:space="preserve">
+    <value>Propriétés de la plaque de nom</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Description" xml:space="preserve">
+    <value>Définit quand est-ce que l'élément compagnie libre de la plaque de nom devrait être visible ou non.</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Description" xml:space="preserve">
+    <value>Définit la position pour l'élément titre de la plaque de nom. Devrait-il être au-dessus, ou en-dessous du nom ? À vous de décider !</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Description" xml:space="preserve">
+    <value>Définit quand est-ce que l'élément titre de la plaque de nom devrait être visible ou non.</value>
+  </data>
+  <data name="Loc_Static_Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Loc_IsRoleJobIconVisibleInNameplates" xml:space="preserve">
+    <value>Afficher l'icône de rôle dans la plaque de nom</value>
+  </data>
+  <data name="Loc_IsJobIconVisibleInNameplates" xml:space="preserve">
+    <value>Afficher l'icône de job dans la Plaque de nom</value>
+  </data>
+  <data name="Loc_IsJobIconVisibleInNameplates_Description" xml:space="preserve">
+    <value>Si l'icône de job doit être affichée dans les plaques de nom.</value>
+  </data>
+  <data name="Loc_JobIconSet" xml:space="preserve">
+    <value>Set d'icônes de job</value>
+  </data>
+  <data name="Loc_JobIconSet_Description" xml:space="preserve">
+    <value>Le set d'icônes à utiliser pour afficher l'icône de job. Vous pouvez également choisir le set d'icône de rôle pour afficher un icône de rôle à la place.</value>
+  </data>
+  <data name="Loc_ChatFeatureCategory" xml:space="preserve">
+    <value>Options de Chat Avancées</value>
+  </data>
+  <data name="Loc_TargetChatTypes" xml:space="preserve">
+    <value>Types de Chat affectés</value>
+  </data>
+  <data name="Loc_TargetChatTypes_Description" xml:space="preserve">
+    <value>Définit quels types de chat devraient être affectés par les fonctionnalités de ce tag.</value>
+  </data>
+  <data name="Loc_Static_StatusIconPrioList" xml:space="preserve">
+    <value>Priorité des icônes de statut</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InDuty" xml:space="preserve">
+    <value>En mission</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InDuty_Description" xml:space="preserve">
+    <value>Les icônes de statuts qui ont la priorité durant les missions.</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InForay" xml:space="preserve">
+    <value>En mission d'exploration</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InForay_Description" xml:space="preserve">
+    <value>Les icônes de statuts qui ont la priorité durant les missions d'exploration.</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_Overworld" xml:space="preserve">
+    <value>Hors-mission</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_Overworld_Description" xml:space="preserve">
+    <value>Les icônes de statuts qui ont la priorité en dehors des missions.</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToDefault" xml:space="preserve">
+    <value>Réinitialiser aux valeurs par défaut</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToDefault_Description" xml:space="preserve">
+    <value>Réinitialise toutes les conditions définies aux paramètres par défaut</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToEmpty" xml:space="preserve">
+    <value>Réinitialiser à zéro</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToEmpty_Description" xml:space="preserve">
+    <value>Supprime toutes les conditions définies. Plus aucune icône de statut ne sera affichée en priorité.</value>
+  </data>
+  <data name="Loc_UsePriorizedIcons" xml:space="preserve">
+    <value>Activer les priorités d'icônes</value>
+  </data>
+  <data name="Loc_UsePriorizedIcons_Description" xml:space="preserve">
+    <value>L'activation de cette option obligera la priorisation de l'affichage des icônes de statuts plutôt que celles de jobs, si vous avez activé les icônes de jobs.
+Lorsque cette option est désactivée, seule l'icône de statut de déconnexion sera prioritaire.</value>
+  </data>
+  <data name="Loc_StatusIcons_Busy" xml:space="preserve">
+    <value>Occupé·e</value>
+  </data>
+  <data name="Loc_StatusIcons_Disconnecting" xml:space="preserve">
+    <value>En cours de déconnexion</value>
+  </data>
+  <data name="Loc_StatusIcons_DutyFinder" xml:space="preserve">
+    <value>En recherche de mission</value>
+  </data>
+  <data name="Loc_StatusIcons_GroupPose" xml:space="preserve">
+    <value>Pose de groupe</value>
+  </data>
+  <data name="Loc_StatusIcons_Idle" xml:space="preserve">
+    <value>Absent·e</value>
+  </data>
+  <data name="Loc_StatusIcons_InDuty" xml:space="preserve">
+    <value>En mission</value>
+  </data>
+  <data name="Loc_StatusIcons_Mentor" xml:space="preserve">
+    <value>Mentor</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorCrafting" xml:space="preserve">
+    <value>Mentor (artisanat/récolte)</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorPvE" xml:space="preserve">
+    <value>Mentor PvE</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorPvP" xml:space="preserve">
+    <value>Mentor JcJ</value>
+  </data>
+  <data name="Loc_StatusIcons_NewAdventurer" xml:space="preserve">
+    <value>Novice</value>
+  </data>
+  <data name="Loc_StatusIcons_PartyLeader" xml:space="preserve">
+    <value>Chef d'équipe</value>
+  </data>
+  <data name="Loc_StatusIcons_PartyMember" xml:space="preserve">
+    <value>Membre d'équipe</value>
+  </data>
+  <data name="Loc_StatusIcons_Returner" xml:space="preserve">
+    <value>Rappelé·e</value>
+  </data>
+  <data name="Loc_StatusIcons_RolePlaying" xml:space="preserve">
+    <value>Jeu de rôle</value>
+  </data>
+  <data name="Loc_StatusIcons_ViewingCutscene" xml:space="preserve">
+    <value>Cinématique</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate" xml:space="preserve">
+    <value>Modèle de base</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Basic" xml:space="preserve">
+    <value>Basique</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Basic_Description" xml:space="preserve">
+    <value>Quasiment identique à Vide, mais inclut une pré-configuration très basique pour le formatage et la couleur.
+Peut également être utilisé si vous souhaitez créer votre propre configuration, mais que vous souhaitez avoir un formatage basique tout de même.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Description" xml:space="preserve">
+    <value>Vous pouvez choisir ici le modèle de base pour tous les paramétrages ci-dessous.
+Le modèle utilisé est un ensemble basique de propriétés. Chaque modification que vous faites sera sauvegardée ; cependant, les options provenant du modèle ne sont pas sauvegardées.
+Cela vous permet de ne pas avoir à surcharger énormément de propriétés - ou de créer votre propre configuration complète sans modèle de base.
+
+Attention :
+Modifier ce champ peut provoquer la réinitialisation de propriétés. Vous pouvez perdre une partie de votre configuration.
+Après avoir modifié ce champ, vérifiez bien que tous vos paramètres correspondent à vos attentes.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Full" xml:space="preserve">
+    <value>Complet</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Full_Description" xml:space="preserve">
+    <value>Préconfiguré pour afficher le tag de job avec couleur et colore également le texte du nom du personnage.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_None" xml:space="preserve">
+    <value>Vide</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_None_Description" xml:space="preserve">
+    <value>Aucune configuration. C'est un modèle complètement vide.
+Utilisez ce modèle si vous souhaitez avoir toutes les options sous votre contrôle ou si vous souhaitez avoir votre propre configuration légère.</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Simple" xml:space="preserve">
+    <value>Simple</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Simple_Description" xml:space="preserve">
+    <value>Préconfiguré pour afficher le tag de job avec couleur et remplacer le titre par l'icône de rôle.</value>
   </data>
   <data name="Loc_DeadPlayerHandling_GrayOut" xml:space="preserve">
     <value>Les griser</value>

@@ -447,7 +447,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die If enabled, the Tag and Icon will get insert behind the Group/Alliance number prefix in Chat instead of before.  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If enabled, the Tag and Icon will get inserted behind the Group/Alliance number prefix in Chat instead of before.  ähnelt.
         /// </summary>
         public static string Loc_InsertBehindNumberPrefixInChat_Description {
             get {
