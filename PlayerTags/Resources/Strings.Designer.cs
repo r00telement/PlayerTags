@@ -298,11 +298,11 @@ namespace PlayerTags.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Here you can choose the template for all the settings below.
         ///The template is used as basic set of properties. Every change you are making is what get saved. But all options from this template will not be saved.
-        ///This helpes you by not needing to overwrite so much properties - or by doing your completely own configuration without a template.
+        ///This helps you by not needing to overwrite so much properties - or by doing your completely own configuration without a template.
         ///
         ///Warning:
         ///Changing this can cause properties to be resetted. You may loose a part of your configuration.
-        ///After you changed this, ensure everything is setted up how  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///After you changed this, ensure everything is setted up how y [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         public static string Loc_DefaultPluginDataTemplate_Description {
             get {
@@ -338,7 +338,7 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die No single configuration made. This is an completley empty template.
+        ///   Sucht eine lokalisierte Zeichenfolge, die No single configuration made. This is a completely empty template.
         ///Use this if you want to to have every option under your control or just want to make only a few configurations. ähnelt.
         /// </summary>
         public static string Loc_DefaultPluginDataTemplate_None_Description {
