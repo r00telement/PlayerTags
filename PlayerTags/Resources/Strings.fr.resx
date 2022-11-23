@@ -612,4 +612,34 @@
   <data name="Loc_Static_OtherExperimental" xml:space="preserve">
     <value>Autre (expérimental)</value>
   </data>
+  <data name="Loc_DeadPlayerHandling_GrayOut" xml:space="preserve">
+    <value>Les griser</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Ignore" xml:space="preserve">
+    <value>Les ignorer</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Include" xml:space="preserve">
+    <value>Les inclure</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling" xml:space="preserve">
+    <value>Traitement des personnages décédés</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_GrayOut_Description" xml:space="preserve">
+    <value>Appliquer tous les tags, mais griser leur plaque de nom.</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Ignore_Description" xml:space="preserve">
+    <value>Les personnages décédés ne seront pas traités et tous les tags les concernant seront ignorés.</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Include_Description" xml:space="preserve">
+    <value>Les personnages décédés seront gérés comme s'ils étaient vivants. Aucune différenciation ne sera appliquée entre les personnages vivants et décédés.</value>
+  </data>
+  <data name="Loc_MoveStatusIconToNameplateTextIfPossible" xml:space="preserve">
+    <value>Déplacer l'Icône de Statut dans le texte de la Plaque de nom si possible</value>
+  </data>
+  <data name="Loc_MoveStatusIconToNameplateTextIfPossible_Description" xml:space="preserve">
+    <value>Si l'icône de statut actuel existe en tant qu'icône textuelle, alors la déplacer dans le texte à côté du Nom du Personnage dans sa Plaque de nom, afin de laisser place à un autre icône, tel que l'icône de Job, par exemple.</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
+    <value>Afficher l'icône de rôle dans le Chat</value>
+  </data>
 </root>

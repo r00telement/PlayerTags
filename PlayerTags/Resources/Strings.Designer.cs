@@ -708,6 +708,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Show role icon in Chat ähnelt.
+        /// </summary>
+        public static string Loc_IsRoleIconVisibleInChat {
+            get {
+                return ResourceManager.GetString("Loc_IsRoleIconVisibleInChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Whether the role icon will be shown in chat. ähnelt.
         /// </summary>
         public static string Loc_IsRoleIconVisibleInChat_Description {

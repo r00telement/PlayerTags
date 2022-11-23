@@ -819,4 +819,7 @@ Use this if you want to to have every option under your control or just want to 
   <data name="Loc_MoveStatusIconToNameplateTextIfPossible_Description" xml:space="preserve">
     <value>If the current status icon is available as Font Icon then move it to the Player Name text in the Nameplate, so there is place for another icon to use, e.g. the job icon.</value>
   </data>
+  <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
+    <value>Show role icon in Chat</value>
+  </data>
 </root>
