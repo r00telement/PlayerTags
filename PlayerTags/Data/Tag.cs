@@ -189,6 +189,8 @@ namespace PlayerTags.Data
 
         [InheritableCategory("ChatFeatureCategory")]
         public InheritableReference<List<XivChatType>> TargetChatTypes = new(new List<XivChatType>(Enum.GetValues<XivChatType>()));
+        [InheritableCategory("ChatFeatureCategory")]
+        public InheritableValue<bool> TargetChatTypesIncludeUndefined = new(true);
 
         [JsonIgnore]
         public string[] IdentitiesToAddTo

@@ -822,4 +822,11 @@ Use this if you want to to have every option under your control or just want to 
   <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
     <value>Show role icon in Chat</value>
   </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined" xml:space="preserve">
+    <value>Include undefined Chat Types</value>
+  </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined_Description" xml:space="preserve">
+    <value>When enabled the Tag will apply to all Chat messages that has not a defined type.
+This case can happen either if the Game updates and the Enumeration of all Chat Types gets invalid due to shifted values, or plugins creates a custom chat type for whatever reason.</value>
+  </data>
 </root>

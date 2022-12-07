@@ -151,6 +151,7 @@ namespace PlayerTags.Data
                 TagTargetInNameplates = NameplateElement.Title,
                 
                 TargetChatTypes = new List<XivChatType>(Enum.GetValues<XivChatType>()),
+                TargetChatTypesIncludeUndefined = true,
             };
 
             AllRoleTags = new Tag()
@@ -258,6 +259,7 @@ namespace PlayerTags.Data
                 IsVisibleForOtherPlayers = true,
 
                 TargetChatTypes = new List<XivChatType>(Enum.GetValues<XivChatType>()),
+                TargetChatTypesIncludeUndefined = true,
             };
 
             AllRoleTags = new Tag()
@@ -372,6 +374,7 @@ namespace PlayerTags.Data
                 IsVisibleForOtherPlayers = true,
 
                 TargetChatTypes = new List<XivChatType>(Enum.GetValues<XivChatType>()),
+                TargetChatTypesIncludeUndefined = true,
             };
 
             AllRoleTags = new Tag()

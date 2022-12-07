@@ -341,7 +341,8 @@ namespace PlayerTags.Features
                 StringChanges stringChanges = new();
 
                 bool isTagEnabled(Tag tag)
-                    => tag.TagPositionInChat.InheritedValue != null && tag.TargetChatTypes.InheritedValue != null && tag.TargetChatTypes.InheritedValue.Contains(chatType);
+                    => tag.TagPositionInChat.InheritedValue != null && tag.TargetChatTypes.InheritedValue != null &&
+                    (tag.TargetChatTypes.InheritedValue.Contains(chatType) || (!Enum.IsDefined(chatType) && (tag.TargetChatTypesIncludeUndefined?.InheritedValue ?? false)));
 
                 if (stringMatch.GameObject is PlayerCharacter playerCharacter)
                 {

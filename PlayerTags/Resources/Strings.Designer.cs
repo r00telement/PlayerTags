@@ -2076,6 +2076,25 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Include undefined Chat Types ähnelt.
+        /// </summary>
+        public static string Loc_TargetChatTypesIncludeUndefined {
+            get {
+                return ResourceManager.GetString("Loc_TargetChatTypesIncludeUndefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die When enabled the Tag will apply to all Chat messages that has not a defined type.
+        ///This case can happen either if the Game updates and the Enumeration of all Chat Types gets invalid due to shifted values, or plugins creates a custom chat type for whatever reason. ähnelt.
+        /// </summary>
+        public static string Loc_TargetChatTypesIncludeUndefined_Description {
+            get {
+                return ResourceManager.GetString("Loc_TargetChatTypesIncludeUndefined_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Text ähnelt.
         /// </summary>
         public static string Loc_Text {

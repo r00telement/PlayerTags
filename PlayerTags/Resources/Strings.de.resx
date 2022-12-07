@@ -822,4 +822,11 @@ Benutze dies, wenn du jede Option unter deiner Kontrolle haben möchtest oder nu
   <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
     <value>Rollensymbol im Chat anzeigen</value>
   </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined" xml:space="preserve">
+    <value>Undefinierte Chattypen einbeziehen</value>
+  </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined_Description" xml:space="preserve">
+    <value>Wenn aktiviert, gilt das Tag für alle Chat-Nachrichten, die keinen definierten Typ haben.
+Dieser Fall kann entweder auftreten, wenn das Spiel ein Update bekommt und die Aufzählung aller Chat-Typen aufgrund von geänderten Werten ungültig sind oder Plugins erstellt einen benutzerdefinierten Chat-Typ, aus welchen Gründen auch immer.</value>
+  </data>
 </root>
