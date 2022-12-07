@@ -410,7 +410,7 @@ namespace PlayerTags.Features
 
                     if (stringMatch.GameObject is PlayerCharacter playerCharacter1)
                     {
-                        if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag) & isTagEnabled(jobTag))
+                        if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag) && isTagEnabled(jobTag))
                             applyTextFormatting(jobTag);
                     }
 
