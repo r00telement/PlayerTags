@@ -822,4 +822,11 @@ Usa esto si quieres tener todas las opciones bajo tu control o solo quieres hace
   <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
     <value>Mostrar icono de rol en placas de chat</value>
   </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined" xml:space="preserve">
+    <value>Incluir Tipos de Chat sin definir</value>
+  </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined_Description" xml:space="preserve">
+    <value>Cuando está habilitado, la Etiqueta se aplicará todos los mensajes de chat que no tengan un tipo definido.
+Esto puede ocurrir tanto si el juego se actualiza y la enumeración de todos los tipos de chat se vuelve inválida debido a valores modificados, o si algún otro plugin crea un tipo de chat personalizado por cualquier motivo.</value>
+  </data>
 </root>
