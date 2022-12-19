@@ -266,13 +266,9 @@ namespace PlayerTags.Data
                     {
                         identity.WorldId = worldId;
                         pluginConfiguration.Save(this);
+                    }
 
-                        return identity;
-                    }
-                    else
-                    {
-                        return identity;
-                    }
+                    return identity;
                 }
             }
 
