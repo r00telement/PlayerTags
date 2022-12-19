@@ -12,6 +12,7 @@ using Pilz.Dalamud.ActivityContexts;
 using Pilz.Dalamud.Icons;
 using Pilz.Dalamud.Nameplates.Model;
 using Pilz.Dalamud.Nameplates.Tools;
+using Pilz.Dalamud.Tools;
 using PlayerTags.Data;
 using PlayerTags.Inheritables;
 using PlayerTags.PluginStrings;
@@ -40,12 +41,16 @@ namespace PlayerTags.Configuration
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
         private Dictionary<object, object> inheritableTEnumProxies = new();
 
+        private static float dpiScaling = ImGui.GetWindowDpiScale();
+
         public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
         {
             m_PluginConfiguration = config;
             m_PluginData = pluginData;
             propertyProxy = new PropertyProxy(config);
         }
+
+        private static float ScaleDpi(float input) => input * dpiScaling;
 
         public void Draw()
         {
@@ -54,7 +59,7 @@ namespace PlayerTags.Configuration
                 return;
             }
 
-            ImGui.SetNextWindowSize(new Vector2(600, 500), ImGuiCond.FirstUseEver);
+            ImGui.SetNextWindowSize(new Vector2(ScaleDpi(600), ScaleDpi(500)), ImGuiCond.FirstUseEver);
 
             if (ImGui.Begin(Strings.Loc_Static_PluginName, ref m_PluginConfiguration.IsVisible))
             {
@@ -463,8 +468,10 @@ namespace PlayerTags.Configuration
 
             // Don't allow expanding the item to select the item
             // Don't allow clicking on add/remove buttons to select the item
-            var deadzoneTopLeft = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X - 23, beforeItemPos.Y - 2);
-            var deadzoneBottomRight = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X + 2, afterItemPos.Y + 2);
+            var hard23 = ScaleDpi(23);
+            var hard2 = ScaleDpi(2);
+            var deadzoneTopLeft = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X - hard23, beforeItemPos.Y - hard2);
+            var deadzoneBottomRight = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X + hard2, afterItemPos.Y + hard2);
             if (!ImGui.IsItemToggledOpen() && !ImGui.IsMouseHoveringRect(deadzoneTopLeft, deadzoneBottomRight) && ImGui.IsItemClicked())
             {
                 Select(tag);
@@ -480,7 +487,7 @@ namespace PlayerTags.Configuration
                 ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
                 ImGui.PushStyleVar(ImGuiStyleVar.ItemInnerSpacing, new Vector2(0, 0));
                 ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
+                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - hard23);
                 if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString()))
                 {
                     var newTag = new Tag(new LocalizedPluginString(nameof(PluginData.CustomTags)))
@@ -519,7 +526,7 @@ namespace PlayerTags.Configuration
                 ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
                 ImGui.PushStyleVar(ImGuiStyleVar.ItemInnerSpacing, new Vector2(0, 0));
                 ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
+                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - hard23);
                 if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString()))
                 {
                     m_PluginData.RemoveCustomTagFromIdentities(tag);
@@ -574,6 +581,7 @@ namespace PlayerTags.Configuration
 
         public void DrawControls(Tag tag)
         {
+            var hard23 = ScaleDpi(23);
             ImGui.PushID(tag.GetHashCode().ToString());
 
             // Render the add property override button and popup
@@ -589,7 +597,7 @@ namespace PlayerTags.Configuration
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.2f, 0.6f, 0.2f, 1));
 
             ImGui.PushFont(UiBuilder.IconFont);
-            if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString(), new Vector2(23, 23)))
+            if (ImGui.Button(FontAwesomeIcon.Plus.ToIconString(), new Vector2(hard23, hard23)))
             {
                 ImGui.OpenPopup("AddPopup");
             }
@@ -599,8 +607,8 @@ namespace PlayerTags.Configuration
             ImGui.PopStyleColor();
 
             bool wasPaddingConsumed = false;
-            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 5));
-            ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() - new Vector2(0, 4));
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, ScaleDpi(5)));
+            ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() - new Vector2(0, ScaleDpi(4)));
             if (ImGui.BeginPopup("AddPopup"))
             {
                 wasPaddingConsumed = true;
@@ -695,7 +703,7 @@ namespace PlayerTags.Configuration
             {
                 ImGui.SameLine();
                 ImGui.PushFont(UiBuilder.IconFont);
-                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - 23);
+                ImGui.SetCursorPosX(ImGui.GetCursorPos().X + ImGui.GetContentRegionAvail().X - hard23);
                 if (ImGui.Button(FontAwesomeIcon.Recycle.ToIconString()))
                 {
                     tag.SetDefaults();
@@ -807,12 +815,13 @@ namespace PlayerTags.Configuration
 
         private void DrawRemovePropertyOverrideButton(IInheritable inheritable)
         {
+            var hard23 = ScaleDpi(23);
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 0));
             ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
             ImGui.PushFont(UiBuilder.IconFont);
-            if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString(), new Vector2(23, 23)))
+            if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString(), new Vector2(hard23, hard23)))
             {
                 inheritable.Behavior = InheritableBehavior.Inherit;
                 SaveSettings();
@@ -837,7 +846,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0    , 50));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, ScaleDpi(50)));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -890,7 +899,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, 50));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, ScaleDpi(50)));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -914,8 +923,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(200);
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(200, 0));
+                    ImGui.SetNextItemWidth(ScaleDpi(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
                     TEnum value = inheritable.InheritedValue != null ? inheritable.InheritedValue.Value : default(TEnum);
                     DrawComboBox(false, shouldLocalizeNames, shouldOrderNames, ref value, () => { });
                     ImGui.EndChild();
@@ -940,8 +949,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(200);
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(200, 0));
+                    ImGui.SetNextItemWidth(ScaleDpi(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
                     DrawComboBox(false, shouldLocalizeNames, shouldOrderNames, ref inheritable.Value, () => { SaveSettings(); });
                     ImGui.EndChild();
                 }
@@ -968,7 +977,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(180, 50));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(180), ScaleDpi(50)));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -1026,7 +1035,7 @@ namespace PlayerTags.Configuration
                 }
 
                 bool wasStyleConsumed = false;
-                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + new Vector2(31, 0));
+                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + new Vector2(ScaleDpi(31), 0));
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
                 if (ImGui.BeginPopup("ColorPickerPopup"))
                 {
@@ -1075,7 +1084,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, 50));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, ScaleDpi(50)));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -1101,8 +1110,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(200);
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(200, 0));
+                    ImGui.SetNextItemWidth(ScaleDpi(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
                     string value = inheritable.Value;
                     DrawTextBox(localizedStringName, ref value, () => { });
                     ImGui.EndChild();
@@ -1127,8 +1136,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(200);
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(200, 0));
+                    ImGui.SetNextItemWidth(ScaleDpi(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
                     DrawTextBox(localizedStringName, ref inheritable.Value, () => { SaveSettings(); });                
                     ImGui.EndChild();
                 }
@@ -1304,7 +1313,7 @@ namespace PlayerTags.Configuration
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
             ImGui.PushStyleVar(ImGuiStyleVar.ItemInnerSpacing, new Vector2(0, 0));
             ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 0);
-            if (ImGui.Button($"###{colorId}", new Vector2(23, 23)))
+            if (ImGui.Button($"###{colorId}", new Vector2(ScaleDpi(23), ScaleDpi(23))))
             {
                 clicked();
             }
