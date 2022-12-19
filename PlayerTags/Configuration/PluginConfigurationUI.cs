@@ -41,8 +41,6 @@ namespace PlayerTags.Configuration
         private InheritableValue<ushort>? m_ColorPickerPopupDataContext;
         private Dictionary<object, object> inheritableTEnumProxies = new();
 
-        private static float dpiScaling = ImGui.GetWindowDpiScale();
-
         public PluginConfigurationUI(PluginConfiguration config, PluginData pluginData)
         {
             m_PluginConfiguration = config;
@@ -50,7 +48,7 @@ namespace PlayerTags.Configuration
             propertyProxy = new PropertyProxy(config);
         }
 
-        private static float ScaleDpi(float input) => input * dpiScaling;
+        private static float ScalePoints(float input) => input * ImGuiHelpers.GlobalScale;
 
         public void Draw()
         {
@@ -59,7 +57,7 @@ namespace PlayerTags.Configuration
                 return;
             }
 
-            ImGui.SetNextWindowSize(new Vector2(ScaleDpi(600), ScaleDpi(500)), ImGuiCond.FirstUseEver);
+            ImGui.SetNextWindowSize(ImGuiHelpers.ScaledVector2(600, 500), ImGuiCond.FirstUseEver);
 
             if (ImGui.Begin(Strings.Loc_Static_PluginName, ref m_PluginConfiguration.IsVisible))
             {
@@ -468,8 +466,8 @@ namespace PlayerTags.Configuration
 
             // Don't allow expanding the item to select the item
             // Don't allow clicking on add/remove buttons to select the item
-            var hard23 = ScaleDpi(23);
-            var hard2 = ScaleDpi(2);
+            var hard23 = ScalePoints(23);
+            var hard2 = ScalePoints(2);
             var deadzoneTopLeft = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X - hard23, beforeItemPos.Y - hard2);
             var deadzoneBottomRight = new Vector2(beforeItemPos.X + ImGui.GetContentRegionAvail().X + hard2, afterItemPos.Y + hard2);
             if (!ImGui.IsItemToggledOpen() && !ImGui.IsMouseHoveringRect(deadzoneTopLeft, deadzoneBottomRight) && ImGui.IsItemClicked())
@@ -581,7 +579,7 @@ namespace PlayerTags.Configuration
 
         public void DrawControls(Tag tag)
         {
-            var hard23 = ScaleDpi(23);
+            var hard23 = ScalePoints(23);
             ImGui.PushID(tag.GetHashCode().ToString());
 
             // Render the add property override button and popup
@@ -607,8 +605,8 @@ namespace PlayerTags.Configuration
             ImGui.PopStyleColor();
 
             bool wasPaddingConsumed = false;
-            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, ScaleDpi(5)));
-            ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() - new Vector2(0, ScaleDpi(4)));
+            ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, ImGuiHelpers.ScaledVector2(0, 5));
+            ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() - ImGuiHelpers.ScaledVector2(0, 4));
             if (ImGui.BeginPopup("AddPopup"))
             {
                 wasPaddingConsumed = true;
@@ -815,13 +813,12 @@ namespace PlayerTags.Configuration
 
         private void DrawRemovePropertyOverrideButton(IInheritable inheritable)
         {
-            var hard23 = ScaleDpi(23);
             ImGui.PushStyleVar(ImGuiStyleVar.FramePadding, new Vector2(0, 0));
             ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.3f, 0.1f, 0.1f, 1));
             ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.6f, 0.2f, 0.2f, 1));
             ImGui.PushStyleColor(ImGuiCol.ButtonActive, new Vector4(0.6f, 0.2f, 0.2f, 1));
             ImGui.PushFont(UiBuilder.IconFont);
-            if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString(), new Vector2(hard23, hard23)))
+            if (ImGui.Button(FontAwesomeIcon.TrashAlt.ToIconString(), ImGuiHelpers.ScaledVector2(23)))
             {
                 inheritable.Behavior = InheritableBehavior.Inherit;
                 SaveSettings();
@@ -846,7 +843,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, ScaleDpi(50)));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(0, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -899,7 +896,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, ScaleDpi(50)));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(0, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -923,8 +920,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(ScaleDpi(200));
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
+                    ImGui.SetNextItemWidth(ScalePoints(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(200, 0));
                     TEnum value = inheritable.InheritedValue != null ? inheritable.InheritedValue.Value : default(TEnum);
                     DrawComboBox(false, shouldLocalizeNames, shouldOrderNames, ref value, () => { });
                     ImGui.EndChild();
@@ -949,8 +946,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(ScaleDpi(200));
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
+                    ImGui.SetNextItemWidth(ScalePoints(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(200, 0));
                     DrawComboBox(false, shouldLocalizeNames, shouldOrderNames, ref inheritable.Value, () => { SaveSettings(); });
                     ImGui.EndChild();
                 }
@@ -977,7 +974,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(180), ScaleDpi(50)));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(180, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -1035,7 +1032,7 @@ namespace PlayerTags.Configuration
                 }
 
                 bool wasStyleConsumed = false;
-                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + new Vector2(ScaleDpi(31), 0));
+                ImGui.SetNextWindowPos(ImGui.GetCursorScreenPos() + ImGuiHelpers.ScaledVector2(31, 0));
                 ImGui.PushStyleVar(ImGuiStyleVar.WindowPadding, new Vector2(0, 0));
                 if (ImGui.BeginPopup("ColorPickerPopup"))
                 {
@@ -1084,7 +1081,7 @@ namespace PlayerTags.Configuration
             }
 
             ImGui.BeginGroup();
-            ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(0, ScaleDpi(50)));
+            ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(0, 50));
 
             ImGui.Text(Localizer.GetString(localizedStringName, false));
             if (ImGui.IsItemHovered())
@@ -1110,8 +1107,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(ScaleDpi(200));
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
+                    ImGui.SetNextItemWidth(ScalePoints(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(200, 0));
                     string value = inheritable.Value;
                     DrawTextBox(localizedStringName, ref value, () => { });
                     ImGui.EndChild();
@@ -1136,8 +1133,8 @@ namespace PlayerTags.Configuration
                 if (isEnabled)
                 {
                     ImGui.SameLine();
-                    ImGui.SetNextItemWidth(ScaleDpi(200));
-                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), new Vector2(ScaleDpi(200), 0));
+                    ImGui.SetNextItemWidth(ScalePoints(200));
+                    ImGui.BeginChild(inheritable.GetHashCode().ToString(), ImGuiHelpers.ScaledVector2(200, 0));
                     DrawTextBox(localizedStringName, ref inheritable.Value, () => { SaveSettings(); });                
                     ImGui.EndChild();
                 }
@@ -1313,7 +1310,7 @@ namespace PlayerTags.Configuration
             ImGui.PushStyleVar(ImGuiStyleVar.ItemSpacing, new Vector2(0, 0));
             ImGui.PushStyleVar(ImGuiStyleVar.ItemInnerSpacing, new Vector2(0, 0));
             ImGui.PushStyleVar(ImGuiStyleVar.FrameRounding, 0);
-            if (ImGui.Button($"###{colorId}", new Vector2(ScaleDpi(23), ScaleDpi(23))))
+            if (ImGui.Button($"###{colorId}", ImGuiHelpers.ScaledVector2(23)))
             {
                 clicked();
             }
