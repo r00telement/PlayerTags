@@ -24,4 +24,4 @@ If you want to contribute to a language that isn't listed, just tell me with an 
 
 # Credits
 
-This plugin was originally developed by r00telement but forked and continued by Pilzinsel64.
+This plugin was originally developed by [r00telement](https://github.com/r00telement) but forked and continued by Pilzinsel64.
