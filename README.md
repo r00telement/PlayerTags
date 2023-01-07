@@ -20,6 +20,7 @@ If you want to contribute to a language that isn't listed, just tell me with an 
 | German | Pilzinsel64, xEbony
 | Spanish | Risu
 | French | Khayle
+| Japanese | Refer
 | ... | You?
 
 # Credits
