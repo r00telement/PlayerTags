@@ -121,712 +121,712 @@
     <value>Player Tags</value>
   </data>
   <data name="Loc_Static_WarningMessage" xml:space="preserve">
-    <value>Ce plugin vous permet de modifier les plaques de noms et le chat de votre fenêtre de log. Lorsqu'il est combiné à d'autres plugins qui les altèrent également, il est probable que cela provoque des interactions inattendues. L'ordre de chargement de vos plugins peut également affecter ces dites interactions.</value>
+    <value>このプラグインは、ネームプレートやチャットを修正することができます。これらを変更する他のプラグインと組み合わせた場合、不具合が起きる可能性があります。プラグインのロード順で違いが出るかもしれません。</value>
   </data>
   <data name="Loc_Static_General" xml:space="preserve">
-    <value>Général</value>
+    <value>全般</value>
   </data>
   <data name="Loc_Static_QuickTag" xml:space="preserve">
-    <value>Tag Rapide</value>
+    <value>簡易タグ</value>
   </data>
   <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
-    <value>Personnages tagués</value>
+    <value>タグ付きプレイヤー</value>
   </data>
   <data name="Loc_Static_PlayerName" xml:space="preserve">
-    <value>Personnage</value>
+    <value>プレイヤー</value>
   </data>
   <data name="Loc_Static_ContextMenu_AddTag" xml:space="preserve">
-    <value>Ajouter un tag : {0}</value>
+    <value>タグを追加: {0}</value>
   </data>
   <data name="Loc_Static_ContextMenu_RemoveTag" xml:space="preserve">
-    <value>Retirer un tag : {0}</value>
+    <value>タグを削除: {0}</value>
   </data>
   <data name="Loc_Static_Nameplates" xml:space="preserve">
-    <value>Plaques de nom</value>
+    <value>ネームプレート</value>
   </data>
   <data name="Loc_Static_Format_AddTagToPlayer" xml:space="preserve">
-    <value>Ajouter '{0}' à {1}.</value>
+    <value>{1} に {0} を追加する</value>
   </data>
   <data name="Loc_Static_Inherited" xml:space="preserve">
-    <value>&lt;Hérité&gt;</value>
+    <value>&lt;Inherited&gt;</value>
   </data>
   <data name="Loc_IsSelected" xml:space="preserve">
-    <value>Sélectionné</value>
+    <value>選択中</value>
   </data>
   <data name="Loc_IsExpanded" xml:space="preserve">
-    <value>Étendu</value>
+    <value>展開中</value>
   </data>
   <data name="Loc_IsCustomTagsContextMenuEnabled" xml:space="preserve">
-    <value>Intégration dans les menus contextuels</value>
+    <value>コンテキストメニューの統合</value>
   </data>
   <data name="Loc_IsCustomTagsContextMenuEnabled_Description" xml:space="preserve">
-    <value>Si cette option est activée, des menus supplémentaires sont ajoutées dans les menus contextuels pour ajouter ou retirer des tags personnalisés aux personnages.</value>
+    <value>コンテキストメニューに、プレイヤーにタグを追加・削除するためのオプションが追加されます。</value>
   </data>
   <data name="Loc_IsShowInheritedPropertiesEnabled" xml:space="preserve">
-    <value>Afficher les propriétés héritées</value>
+    <value>継承されたプロパティの表示</value>
   </data>
   <data name="Loc_IsShowInheritedPropertiesEnabled_Description" xml:space="preserve">
-    <value>Les propriétés héritées des nœuds parents seront affichées dans l'éditeur.</value>
+    <value>親ノードから継承したプロパティがエディタに表示されます。</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility" xml:space="preserve">
-    <value>Visibilité des tags de Compagnie Libre</value>
+    <value>フリーカンパニーを表示</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility_Default" xml:space="preserve">
-    <value>Par défaut</value>
+    <value>Default</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility_Default_Description" xml:space="preserve">
-    <value>Le tag de Compagnie Libre dans les plaques de noms sera affiché si le personnage appartient à une Compagnie Libre.</value>
+    <value>ネームプレートのFCタグは、キャラクターがフリーカンパニーに入っているときのみ表示されます。</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility_Never" xml:space="preserve">
-    <value>Jamais visible</value>
+    <value>表示しない</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility_Never_Description" xml:space="preserve">
-    <value>Le tag de Compagnie Libre ne sera jamais affiché.</value>
+    <value>ネームプレートのFCタグは、一切表示されません。</value>
   </data>
   <data name="Loc_NameplateTitleVisibility" xml:space="preserve">
-    <value>Visibilité des titres</value>
+    <value>称号の表示</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Always" xml:space="preserve">
-    <value>Toujours visible</value>
+    <value>常に表示</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Always_Description" xml:space="preserve">
-    <value>Le titre dans les plaques de noms sera toujours visible, même si le personnage n'a pas de titre.</value>
+    <value>ネームプレートの称号は、キャラクターが称号を付けていない場合でも常に表示されます。</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Default" xml:space="preserve">
-    <value>Par défaut</value>
+    <value>Default</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Default_Description" xml:space="preserve">
-    <value>Le titre dans les plaques de noms ne sera visible que si le personnage a un titre.</value>
+    <value>ネームプレートの称号は、キャラクターが称号を付けている場合のみ表示されます。</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Never" xml:space="preserve">
-    <value>Jamais visible</value>
+    <value>表示しない</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Never_Description" xml:space="preserve">
-    <value>Le titre des personnages ne sera jamais affiché dans les plaques de noms.</value>
+    <value>ネームプレートの称号は、一切表示されません。</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_WhenHasTags" xml:space="preserve">
-    <value>Visible uniquement si le personnage est tagué</value>
+    <value>タグがある場合のみ表示</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_WhenHasTags_Description" xml:space="preserve">
-    <value>Le titre dans les plaques de noms ne sera visible que si le personnage a un ou plusieurs tags associé(s).</value>
+    <value>ネームプレートの称号は、タグがある場合のみ表示されます。</value>
   </data>
   <data name="Loc_NameplateTitlePosition" xml:space="preserve">
-    <value>Position du titre</value>
+    <value>称号の位置</value>
   </data>
   <data name="Loc_NameplateTitlePosition_AlwaysAboveName" xml:space="preserve">
-    <value>Toujours au-dessus du nom</value>
+    <value>常に名前の上に表示</value>
   </data>
   <data name="Loc_NameplateTitlePosition_AlwaysAboveName_Description" xml:space="preserve">
-    <value>Le titre sera toujours positionné au-dessus du nom du personnage dans les plaques de noms.</value>
+    <value>ネームプレートの称号は、常に名前の上に配置されます。</value>
   </data>
   <data name="Loc_NameplateTitlePosition_AlwaysBelowName" xml:space="preserve">
-    <value>Toujours en dessous du nom</value>
+    <value>常に名前の下に表示</value>
   </data>
   <data name="Loc_NameplateTitlePosition_AlwaysBelowName_Description" xml:space="preserve">
-    <value>Le titre sera toujours positionné en dessous du nom du personnage dans les plaques de noms.</value>
+    <value>ネームプレートの称号は、常に名前の下に配置されます。</value>
   </data>
   <data name="Loc_NameplateTitlePosition_Default" xml:space="preserve">
-    <value>Par défaut</value>
+    <value>Default</value>
   </data>
   <data name="Loc_NameplateTitlePosition_Default_Description" xml:space="preserve">
-    <value>La position du titre dans les plaques de nom dépendra de sa position par défaut en jeu.</value>
+    <value>称号の表示位置は、称号によって位置が変わります。</value>
   </data>
   <data name="Loc_NameplateElement_FreeCompany" xml:space="preserve">
-    <value>Compagnie Libre</value>
+    <value>フリーカンパニー</value>
   </data>
   <data name="Loc_NameplateElement_FreeCompany_Description" xml:space="preserve">
-    <value>La partie contenant le tag de Compagnie Libre sur les plaques de noms.</value>
+    <value>ネームプレート上の 名前 要素。</value>
   </data>
   <data name="Loc_NameplateElement_Name" xml:space="preserve">
-    <value>Nom</value>
+    <value>名前</value>
   </data>
   <data name="Loc_NameplateElement_Name_Description" xml:space="preserve">
-    <value>La partie contenant le nom du personnage sur les plaques de noms.</value>
+    <value>ネームプレート上の 名前 要素。</value>
   </data>
   <data name="Loc_NameplateElement_Title" xml:space="preserve">
-    <value>Titre</value>
+    <value>称号</value>
   </data>
   <data name="Loc_NameplateElement_Title_Description" xml:space="preserve">
-    <value>La partie contenant le titre du joueur sur les plaques de noms.</value>
+    <value>ネームプレート上の 称号 要素。</value>
   </data>
   <data name="Loc_Static_Development" xml:space="preserve">
-    <value>Développement</value>
+    <value>開発版</value>
   </data>
   <data name="Loc_Static_Experimental" xml:space="preserve">
-    <value>Expérimental</value>
+    <value>試験運用版</value>
   </data>
   <data name="Loc_IsPlayerNameRandomlyGenerated" xml:space="preserve">
-    <value>Générer aléatoirement les noms des personnages</value>
+    <value>ランダムにプレイヤー名を生成する</value>
   </data>
   <data name="Loc_IsPlayerNameRandomlyGenerated_Description" xml:space="preserve">
-    <value>Remplace le nom de chaque personnage par un nom généré aléatoirement.</value>
+    <value>すべてのプレイヤーの名前を、ランダムに生成したものに置き換える。</value>
   </data>
   <data name="Loc_IsLinkSelfInChatEnabled" xml:space="preserve">
-    <value>Appliquer les tags à soi-même dans le chat</value>
+    <value>チャットで自分にタグを適用する</value>
   </data>
   <data name="Loc_IsLinkSelfInChatEnabled_Description" xml:space="preserve">
-    <value>Tente d'associer votre nom de chat à votre personnage, permettant d'appliquer des tags à soi-même au sein du chat.</value>
+    <value>チャットネームとキャラクターを紐付けし、チャットで自身にタグを適用できるようにしようとするものです。</value>
   </data>
   <data name="Loc_IsApplyTagsToAllChatMessagesEnabled" xml:space="preserve">
-    <value>Appliquer les tags à tous les messages du chat</value>
+    <value>すべてのチャットメッセージにタグを適用する</value>
   </data>
   <data name="Loc_IsApplyTagsToAllChatMessagesEnabled_Description" xml:space="preserve">
-    <value>Applique les tags à tous les messages de chat, y compris les messages non sociaux.</value>
+    <value>全体チャットを含む、すべてのチャットメッセージにタグを適用します。</value>
   </data>
   <data name="Loc_Static_ResetDefault_Description" xml:space="preserve">
-    <value>Réinitialiser cet élément à ses valeurs par défaut.</value>
+    <value>この項目を既定にリセットします。</value>
   </data>
   <data name="Loc_Static_ResetAllDefault_Description" xml:space="preserve">
-    <value>Réinitialiser tous les éléments à leurs valeurs par défaut. Les tags personnalisés ne seront pas affectés.</value>
+    <value>すべての項目を既定にリセットします。カスタムタグは変更されません。</value>
   </data>
   <data name="Loc_Static_Tags" xml:space="preserve">
-    <value>Tags</value>
+    <value>タグ</value>
   </data>
   <data name="Loc_Static_NoText" xml:space="preserve">
-    <value>&lt;Pas de texte&gt;</value>
+    <value>&lt;No text&gt;</value>
   </data>
   <data name="Loc_AllTags" xml:space="preserve">
-    <value>Tous</value>
+    <value>全て</value>
   </data>
   <data name="Loc_AllRoleTags" xml:space="preserve">
-    <value>Rôles</value>
+    <value>ロール</value>
   </data>
   <data name="Loc_Role_LandHand" xml:space="preserve">
-    <value>Terre/Main</value>
+    <value>ギャザラー/クラフター</value>
   </data>
   <data name="Loc_Role_Tank" xml:space="preserve">
-    <value>Tank</value>
+    <value>タンク</value>
   </data>
   <data name="Loc_Role_Healer" xml:space="preserve">
-    <value>Healer</value>
+    <value>ヒーラー</value>
   </data>
   <data name="Loc_Role_Dps" xml:space="preserve">
     <value>DPS</value>
   </data>
   <data name="Loc_DpsRole_Melee" xml:space="preserve">
-    <value>Mêlée</value>
+    <value>近接</value>
   </data>
   <data name="Loc_DpsRole_Ranged" xml:space="preserve">
-    <value>Distance</value>
+    <value>レンジ</value>
   </data>
   <data name="Loc_RangedDpsRole_Magical" xml:space="preserve">
-    <value>Magique</value>
+    <value>魔法</value>
   </data>
   <data name="Loc_RangedDpsRole_Physical" xml:space="preserve">
-    <value>Physique</value>
+    <value>物理</value>
   </data>
   <data name="Loc_LandHandRole_Hand" xml:space="preserve">
-    <value>Main</value>
+    <value>クラフター</value>
   </data>
   <data name="Loc_LandHandRole_Land" xml:space="preserve">
-    <value>Terre</value>
+    <value>ギャザラー</value>
   </data>
   <data name="Loc_AllCustomTags" xml:space="preserve">
-    <value>Personnalisé</value>
+    <value>カスタム</value>
   </data>
   <data name="Loc_CustomTags" xml:space="preserve">
-    <value>Personnalisé</value>
+    <value>カスタム</value>
   </data>
   <data name="Loc_IsEnabled_Description" xml:space="preserve">
-    <value>Activer la valeur de cette surcharge.</value>
+    <value>この上書きの値を有効にします。</value>
   </data>
   <data name="Loc_Static_AddPropertyOverride_Description" xml:space="preserve">
-    <value>Ajouter une surcharge de propriété.</value>
+    <value>プロパティの上書きを追加します。</value>
   </data>
   <data name="Loc_Static_RemovePropertyOverride_Description" xml:space="preserve">
-    <value>Supprimer cette propriété de surcharge. La valeur sera héritée de l'élément parent.</value>
+    <value>このプロパティの上書きを削除します。値は親アイテムから継承されます。</value>
   </data>
   <data name="Loc_Static_NewTag" xml:space="preserve">
-    <value>Nouveau tag</value>
+    <value>新しいタグ</value>
   </data>
   <data name="Loc_Static_AddCustomTag_Description" xml:space="preserve">
-    <value>Ajouter un tag personnalisé.</value>
+    <value>カスタムタグを追加する。</value>
   </data>
   <data name="Loc_Static_RemoveCustomTag_Description" xml:space="preserve">
-    <value>Supprimer ce tag personnalisé.</value>
+    <value>このカスタムタグを削除します。</value>
   </data>
   <data name="Loc_Icon" xml:space="preserve">
-    <value>Icône</value>
+    <value>アイコン</value>
   </data>
   <data name="Loc_Icon_Description" xml:space="preserve">
-    <value>L'icône qui doit être affichée.</value>
+    <value>実際に表示されるアイコンです</value>
   </data>
   <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
-    <value>Afficher dans le chat</value>
+    <value>チャット上で表示</value>
   </data>
   <data name="Loc_IsRoleIconVisibleInChat_Description" xml:space="preserve">
-    <value>Si l'icône de rôle doit être affichée dans le chat.</value>
+    <value>チャットでロールアイコンを表示するかどうか。</value>
   </data>
   <data name="Loc_IsRoleIconVisibleInNameplates" xml:space="preserve">
-    <value>Afficher l'icône de rôle dans les Plaques de nom</value>
+    <value>ネームプレートにロールアイコンを表示</value>
   </data>
   <data name="Loc_IsRoleIconVisibleInNameplates_Description" xml:space="preserve">
-    <value>Si l'icône de rôle doit être affichée dans les plaques de nom.</value>
+    <value>ネームプレートにロールアイコンを表示するかどうか。</value>
   </data>
   <data name="Loc_Text" xml:space="preserve">
-    <value>Texte</value>
+    <value>テキスト</value>
   </data>
   <data name="Loc_Text_Description" xml:space="preserve">
-    <value>Le texte qui doit être affiché.</value>
+    <value>実際に表示されるテキストです</value>
   </data>
   <data name="Loc_TextColor" xml:space="preserve">
-    <value>Couleur </value>
+    <value>色</value>
   </data>
   <data name="Loc_TextColor_Description" xml:space="preserve">
-    <value>La couleur du texte.</value>
+    <value>テキストの色</value>
   </data>
   <data name="Loc_TextGlowColor" xml:space="preserve">
-    <value>Couleur de surbrillance</value>
+    <value>発光色</value>
   </data>
   <data name="Loc_TextGlowColor_Description" xml:space="preserve">
-    <value>La couleur de surbrillance du texte.</value>
+    <value>テキストの発光色</value>
   </data>
   <data name="Loc_IsTextItalic" xml:space="preserve">
-    <value>Italique</value>
+    <value>斜体</value>
   </data>
   <data name="Loc_IsTextItalic_Description" xml:space="preserve">
-    <value>Si le texte doit être affiché en italique.</value>
+    <value>テキストを斜体にするかどうか。</value>
   </data>
   <data name="Loc_IsTextVisibleInChat" xml:space="preserve">
-    <value>Afficher dans le chat</value>
+    <value>チャット上で表示</value>
   </data>
   <data name="Loc_IsTextVisibleInChat_Description" xml:space="preserve">
-    <value>Si le texte doit être affiché dans le chat.</value>
+    <value>チャットでテキストを表示するかどうか。</value>
   </data>
   <data name="Loc_IsTextVisibleInNameplates" xml:space="preserve">
-    <value>Afficher dans les plaques de noms</value>
+    <value>ネームプレートに表示</value>
   </data>
   <data name="Loc_IsTextVisibleInNameplates_Description" xml:space="preserve">
-    <value>Si le texte doit être affiché dans les plaques de noms.</value>
+    <value>ネームプレートにテキストを表示するかどうか。</value>
   </data>
   <data name="Loc_TagPositionInChat" xml:space="preserve">
-    <value>Position dans le chat</value>
+    <value>チャット中の位置</value>
   </data>
   <data name="Loc_TagPositionInChat_Description" xml:space="preserve">
-    <value>Là où le tag sera positionné dans le chat.</value>
+    <value>チャットでタグが配置される場所。</value>
   </data>
   <data name="Loc_TagPositionInNameplates" xml:space="preserve">
-    <value>Position dans les plaques de noms</value>
+    <value>ネームプレートの位置</value>
   </data>
   <data name="Loc_TagPositionInNameplates_Description" xml:space="preserve">
-    <value>Là où le tag sera positionné dans les plaques de noms.</value>
+    <value>ネームプレートでタグが配置される場所。</value>
   </data>
   <data name="Loc_TagTargetInNameplates" xml:space="preserve">
-    <value>Cible dans les plaques de noms</value>
+    <value>ターゲットのネームプレート</value>
   </data>
   <data name="Loc_TagTargetInNameplates_Description" xml:space="preserve">
-    <value>L'élément que le tag doit affecter dans les plaques de nom.</value>
+    <value>ネームプレートにおいて、タグが対象とすべき要素。</value>
   </data>
   <data name="Loc_GameObjectNamesToApplyTo" xml:space="preserve">
-    <value>Ajouter aux personnages</value>
+    <value>プレイヤーを追加</value>
   </data>
   <data name="Loc_GameObjectNamesToApplyTo_Description" xml:space="preserve">
-    <value>Une liste de personnages à qui ajouter des tags, séparés par des virgules ou des points virgules. Par exemple : "Cloud Strife, Tifa Lockhart".</value>
+    <value>タグを追加するプレイヤーのリスト。カンマまたはセミコロンで区切ります。例："Yoshida Naoki, Hime Chan"。</value>
   </data>
   <data name="Loc_TagPosition_After" xml:space="preserve">
-    <value>Après</value>
+    <value>の後</value>
   </data>
   <data name="Loc_TagPosition_After_Description" xml:space="preserve">
-    <value>Afficher le tag après l'élément concerné.</value>
+    <value>対象の要素の後にタグを表示する。</value>
   </data>
   <data name="Loc_TagPosition_Before" xml:space="preserve">
-    <value>Avant</value>
+    <value>の前</value>
   </data>
   <data name="Loc_TagPosition_Before_Description" xml:space="preserve">
-    <value>Afficher le tag avant l'élément concerné.</value>
+    <value>対象の要素の前にタグを表示する。</value>
   </data>
   <data name="Loc_TagPosition_Replace" xml:space="preserve">
-    <value>Remplacer</value>
+    <value>置換</value>
   </data>
   <data name="Loc_TagPosition_Replace_Description" xml:space="preserve">
-    <value>Remplace l'élément cible par le tag.</value>
+    <value>対象の要素をタグに置き換える。</value>
   </data>
   <data name="Loc_IsEnabled" xml:space="preserve">
-    <value>Activé</value>
+    <value>有効化</value>
   </data>
   <data name="Loc_CustomId" xml:space="preserve">
-    <value>ID personnalisé</value>
+    <value>カスタム ID</value>
   </data>
   <data name="Loc_GeneralCategory" xml:space="preserve">
-    <value>Propriétés générales</value>
+    <value>全般プロパティ</value>
   </data>
   <data name="Loc_IconCategory" xml:space="preserve">
-    <value>Propriétés de l'icône</value>
+    <value>アイコンのプロパティ</value>
   </data>
   <data name="Loc_TextCategory" xml:space="preserve">
-    <value>Propriétés du texte</value>
+    <value>テキストのプロパティ</value>
   </data>
   <data name="Loc_PositionCategory" xml:space="preserve">
-    <value>Propriétés de position</value>
+    <value>位置のプロパティ</value>
   </data>
   <data name="Loc_ActivityCategory" xml:space="preserve">
-    <value>Propriétés de contenu</value>
+    <value>アクティビティのプロパティ</value>
   </data>
   <data name="Loc_PlayerCategory" xml:space="preserve">
-    <value>Propriétés des personnages</value>
+    <value>プレイヤーのプロパティ</value>
   </data>
   <data name="Loc_IsVisibleInPveDuties" xml:space="preserve">
-    <value>Afficher dans les contenus PvE</value>
+    <value>PvEコンテンツ中に表示</value>
   </data>
   <data name="Loc_IsVisibleInPveDuties_Description" xml:space="preserve">
-    <value>Si le tag doit être visible ou non dans les missions de type PvE.</value>
+    <value>PvEコンテンツ中にタグを表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleInPvpDuties" xml:space="preserve">
-    <value>Afficher dans les missions JcJ</value>
+    <value>PvPコンテンツ中に表示</value>
   </data>
   <data name="Loc_IsVisibleInPvpDuties_Description" xml:space="preserve">
-    <value>Si le tag doit être visible ou non dans les missions de type PvP.</value>
+    <value>PvPコンテンツ中にタグを表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleInOverworld" xml:space="preserve">
-    <value>Afficher ailleurs</value>
+    <value>別の場所で表示</value>
   </data>
   <data name="Loc_IsVisibleInOverworld_Description" xml:space="preserve">
-    <value>Si le tag doit être visible dans d'autres circonstances pour lesquelles il n'y a pas d'option spécifique.</value>
+    <value>特定のオプションがない他の状況でもタグを表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleForSelf" xml:space="preserve">
-    <value>Afficher pour soi-même</value>
+    <value>自分に表示</value>
   </data>
   <data name="Loc_IsVisibleForSelf_Description" xml:space="preserve">
-    <value>Si le tag doit être visible ou non pour le personnage que vous jouez.</value>
+    <value>タグを自分のプレイヤーに表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleForPartyPlayers" xml:space="preserve">
-    <value>Afficher pour les équipiers</value>
+    <value>パーティーメンバーに表示</value>
   </data>
   <data name="Loc_IsVisibleForPartyPlayers_Description" xml:space="preserve">
-    <value>Si le tag doit être visible ou non pour les membres d'équipe.</value>
+    <value>タグをパーティメンバーに表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleForAlliancePlayers" xml:space="preserve">
-    <value>Afficher pour les membres de l'alliance</value>
+    <value>アライアンスメンバーに表示</value>
   </data>
   <data name="Loc_IsVisibleForAlliancePlayers_Description" xml:space="preserve">
-    <value>Si le tag doit être visible pour les membres d'alliance qui ne sont pas dans votre équipe.</value>
+    <value>パーティに参加していないアライアンスメンバーにもタグを表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleForFriendPlayers" xml:space="preserve">
-    <value>Afficher pour les amis</value>
+    <value>フレンドに表示</value>
   </data>
   <data name="Loc_IsVisibleForFriendPlayers_Description" xml:space="preserve">
-    <value>Si le tag doit être visible ou non pour les ami·e·s.</value>
+    <value>タグをフレンドに表示するかどうか。</value>
   </data>
   <data name="Loc_IsVisibleForEnemyPlayers" xml:space="preserve">
-    <value>Afficher pour les ennemis</value>
+    <value>敵に表示</value>
   </data>
   <data name="Loc_IsVisibleForEnemyPlayers_Description" xml:space="preserve">
-    <value>Si le tag doit être visible ou non pour les ennemis en JcJ.</value>
+    <value>PvPコンテンツで敵にタグを表示させるかどうか。</value>
   </data>
   <data name="Loc_IsVisibleForOtherPlayers" xml:space="preserve">
-    <value>Afficher pour les autres</value>
+    <value>その他に表示</value>
   </data>
   <data name="Loc_IsVisibleForOtherPlayers_Description" xml:space="preserve">
-    <value>Si le tag doit être visible pour les personnages dans d'autres circonstances pour lesquelles il n'y a pas d'option spécifique.</value>
+    <value>特定のオプションがない他の状況でプレイヤーにタグを表示するかどうか。</value>
   </data>
   <data name="Loc_IsPlayersTabOrderedByProximity" xml:space="preserve">
-    <value>Trier par proximité</value>
+    <value>近接順で並べ替え</value>
   </data>
   <data name="Loc_IsPlayersTabOrderedByProximity_Description" xml:space="preserve">
-    <value>Les personnages qui sont les plus proches de vous seront listés en premier.</value>
+    <value>自分に近いプレーヤーが上に向かって並びます。</value>
   </data>
   <data name="Loc_IsPlayersTabSelfVisible" xml:space="preserve">
-    <value>Afficher son propre personnage</value>
+    <value>自己を表示</value>
   </data>
   <data name="Loc_IsPlayersTabSelfVisible_Description" xml:space="preserve">
-    <value>Afficher votre personnage dans la liste des personnages.</value>
+    <value>プレイヤーリストに自分自身を表示します。</value>
   </data>
   <data name="Loc_IsPlayersTabFriendsVisible" xml:space="preserve">
-    <value>Afficher les amis</value>
+    <value>フレンドを表示</value>
   </data>
   <data name="Loc_IsPlayersTabFriendsVisible_Description" xml:space="preserve">
-    <value>Afficher vos amis dans la liste des personnages.</value>
+    <value>プレイヤーリストにフレンドを表示します。</value>
   </data>
   <data name="Loc_IsPlayersTabPartyVisible" xml:space="preserve">
-    <value>Afficher les équipiers</value>
+    <value>パーティーメンバーを表示</value>
   </data>
   <data name="Loc_IsPlayersTabPartyVisible_Description" xml:space="preserve">
-    <value>Afficher vos équipiers dans la liste des personnages.</value>
+    <value>プレイヤーリストにパーティメンバーを表示します。</value>
   </data>
   <data name="Loc_IsPlayersTabAllianceVisible" xml:space="preserve">
-    <value>Afficher les membres de votre alliance</value>
+    <value>アライアンスメンバーを表示</value>
   </data>
   <data name="Loc_IsPlayersTabAllianceVisible_Description" xml:space="preserve">
-    <value>Afficher les membres de votre alliance dans la liste des personnages.</value>
+    <value>プレイヤー一覧にアライアンスメンバーを表示します。</value>
   </data>
   <data name="Loc_IsPlayersTabEnemiesVisible" xml:space="preserve">
-    <value>Afficher les ennemis</value>
+    <value>敵を表示</value>
   </data>
   <data name="Loc_IsPlayersTabEnemiesVisible_Description" xml:space="preserve">
-    <value>Afficher vos ennemis dans la liste des personnages.</value>
+    <value>プレイヤー一覧に敵を表示します。</value>
   </data>
   <data name="Loc_IsPlayersTabOthersVisible" xml:space="preserve">
-    <value>Afficher les autres</value>
+    <value>その他を表示</value>
   </data>
   <data name="Loc_IsPlayersTabOthersVisible_Description" xml:space="preserve">
-    <value>Afficher les autres personnages dans la liste des personnages.</value>
+    <value>プレイヤーリストにその他を表示します。</value>
   </data>
   <data name="Loc_IsTextColorAppliedToChatName" xml:space="preserve">
-    <value>Appliquer la couleur au nom dans le chat</value>
+    <value>チャット名に色をつける</value>
   </data>
   <data name="Loc_IsTextColorAppliedToChatName_Description" xml:space="preserve">
-    <value>Si la couleur doit être appliquée au nom des personnages dans le chat.</value>
+    <value>チャットで名前に色をつけるかどうか。</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateName" xml:space="preserve">
-    <value>Appliquer la couleur au nom dans la plaque de nom</value>
+    <value>ネームプレートに色をつける</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateName_Description" xml:space="preserve">
-    <value>Si la couleur doit être appliquée au nom des personnages dans leur plaque de nom.</value>
+    <value>ネームプレートの名前に色をつけるかどうか。</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateTitle" xml:space="preserve">
-    <value>Appliquer la couleur au titre dans la plaque de nom</value>
+    <value>ネームプレートの称号に色をつける</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateTitle_Description" xml:space="preserve">
-    <value>Si la couleur doit être appliquée au titre des personnages dans leur plaque de nom.</value>
+    <value>ネームプレートの称号に色をつけるかどうか。</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateFreeCompany" xml:space="preserve">
-    <value>Appliquer la couleur à la Compagnie Libre dans la plaque de nom</value>
+    <value>ネームプレートのFCタグに色をつける</value>
   </data>
   <data name="Loc_IsTextColorAppliedToNameplateFreeCompany_Description" xml:space="preserve">
-    <value>Si la couleur doit être appliquée au tag de Compagnie Libre ou non dans les plaques de nom.</value>
+    <value>ネームプレートのFCタグに色をつけるかどうか。</value>
   </data>
   <data name="Loc_ActivityContextSelection_All" xml:space="preserve">
-    <value>Partout</value>
+    <value>すべての場所</value>
   </data>
   <data name="Loc_ActivityContextSelection_None" xml:space="preserve">
-    <value>Aucune mission</value>
+    <value>非戦闘中</value>
   </data>
   <data name="Loc_ActivityContextSelection_PveDuty" xml:space="preserve">
-    <value>Missions PvE</value>
+    <value>PvEコンテンツ</value>
   </data>
   <data name="Loc_ActivityContextSelection_PvpDuty" xml:space="preserve">
-    <value>Missions PvP</value>
+    <value>PvPコンテンツ</value>
   </data>
   <data name="Loc_Static_CurrentActivityProfile" xml:space="preserve">
-    <value>Profil d'activité actuel</value>
+    <value>現在有効なプロファイル</value>
   </data>
   <data name="Loc_ActivityContextSelection" xml:space="preserve">
-    <value>Les options ci-dessous doivent seulement être appliquées dans les contenus suivants</value>
+    <value>以下のオプションを適用する</value>
   </data>
   <data name="Loc_ActivityContextSelection_All_Description" xml:space="preserve">
-    <value>La plupart des options ci-dessous s'appliqueront partout où vous êtes. Elles seront les mêmes hors-missions, en missions PvE et en missions PvP. Vos options définies spécifiquement pour un autre contexte seront supplantées.</value>
+    <value>以下のオプションは、あなたがどこにいても適用されます。オーバーワールドでも、PvEコンテンツでも、PvPコンテンツでも同じになります。他の環境用に定義されたオプションは上書きされます。</value>
   </data>
   <data name="Loc_ActivityContextSelection_None_Description" xml:space="preserve">
-    <value>La plupart des options ci-dessous ne s'appliqueront qu'en dehors des Missions.</value>
+    <value>以下のオプションは、あらゆるコンテンツの外にいる場合にのみ適用されます。</value>
   </data>
   <data name="Loc_ActivityContextSelection_PveDuty_Description" xml:space="preserve">
-    <value>La plupart des options ci-dessous ne s'appliqueront qu'aux Missions JcE.</value>
+    <value>以下のオプションは、PvEコンテンツにのみ適用されます。</value>
   </data>
   <data name="Loc_ActivityContextSelection_PvpDuty_Description" xml:space="preserve">
-    <value>La plupart des options ci-dessous ne s'appliqueront qu'aux Missions JcJ.</value>
+    <value>以下のオプションは、PvPコンテンツにのみ適用されます。</value>
   </data>
   <data name="Loc_Static_ChatExperimental" xml:space="preserve">
-    <value>Chat (expérimental)</value>
+    <value>チャット（試験的機能）</value>
   </data>
   <data name="Loc_Static_OtherExperimental" xml:space="preserve">
-    <value>Autre (expérimental)</value>
+    <value>その他（試験的機能）</value>
   </data>
   <data name="Loc_InsertBehindNumberPrefixInChat" xml:space="preserve">
-    <value>Insérer après le préfixe de numéro d'équipe dans le chat</value>
+    <value>チャットでグループ番号の後ろに接頭辞を挿入する</value>
   </data>
   <data name="Loc_InsertBehindNumberPrefixInChat_Description" xml:space="preserve">
-    <value>Si activée, cette option insérera le tag &amp; l'icône après le préfixe de numéro d'équipe/d'alliance dans le chat plutôt qu'avant. </value>
+    <value>有効にすると、タグとアイコンは、チャットでグループ/アライアンス番号の前ではなく後ろに挿入されます。 </value>
   </data>
   <data name="Loc_NameplateCategory" xml:space="preserve">
-    <value>Propriétés de la plaque de nom</value>
+    <value>ネームプレートプロパティ</value>
   </data>
   <data name="Loc_NameplateFreeCompanyVisibility_Description" xml:space="preserve">
-    <value>Définit quand est-ce que l'élément compagnie libre de la plaque de nom devrait être visible ou non.</value>
+    <value>ネームプレートのフリーカンパニー要素が表示されるかどうかを定義します。</value>
   </data>
   <data name="Loc_NameplateTitlePosition_Description" xml:space="preserve">
-    <value>Définit la position pour l'élément titre de la plaque de nom. Devrait-il être au-dessus, ou en-dessous du nom ? À vous de décider !</value>
+    <value>ネームプレートの称号の位置を定義します。名前の上に置くか下に置くか？あなたが決めてください。</value>
   </data>
   <data name="Loc_NameplateTitleVisibility_Description" xml:space="preserve">
-    <value>Définit quand est-ce que l'élément titre de la plaque de nom devrait être visible ou non.</value>
+    <value>ネームプレートの称号をいつ表示するかどうかを定義する。</value>
   </data>
   <data name="Loc_Static_Chat" xml:space="preserve">
-    <value>Chat</value>
+    <value>チャット</value>
   </data>
   <data name="Loc_IsRoleJobIconVisibleInNameplates" xml:space="preserve">
-    <value>Afficher l'icône de rôle dans la plaque de nom</value>
+    <value>ネームプレートにロールアイコンを表示</value>
   </data>
   <data name="Loc_IsJobIconVisibleInNameplates" xml:space="preserve">
-    <value>Afficher l'icône de job dans la Plaque de nom</value>
+    <value>ネームプレートにジョブアイコンを表示</value>
   </data>
   <data name="Loc_IsJobIconVisibleInNameplates_Description" xml:space="preserve">
-    <value>Si l'icône de job doit être affichée dans les plaques de nom.</value>
+    <value>ネームプレートにジョブアイコンを表示させるかどうか。</value>
   </data>
   <data name="Loc_JobIconSet" xml:space="preserve">
-    <value>Set d'icônes de job</value>
+    <value>ジョブのアイコンをセット</value>
   </data>
   <data name="Loc_JobIconSet_Description" xml:space="preserve">
-    <value>Le set d'icônes à utiliser pour afficher l'icône de job. Vous pouvez également choisir le set d'icône de rôle pour afficher un icône de rôle à la place.</value>
+    <value>ジョブアイコンを表示するために使用するアイコンセットです。ロールアイコンを選択して、代わりにロールアイコンを表示することもできます。</value>
   </data>
   <data name="Loc_ChatFeatureCategory" xml:space="preserve">
-    <value>Options de Chat Avancées</value>
+    <value>詳細なチャットオプション</value>
   </data>
   <data name="Loc_TargetChatTypes" xml:space="preserve">
-    <value>Types de Chat affectés</value>
+    <value>対象チャットの種類</value>
   </data>
   <data name="Loc_TargetChatTypes_Description" xml:space="preserve">
-    <value>Définit quels types de chat devraient être affectés par les fonctionnalités de ce tag.</value>
+    <value>このタグのチャット機能を有効にするチャットの種類を定義します。</value>
   </data>
   <data name="Loc_Static_StatusIconPrioList" xml:space="preserve">
-    <value>Priorité des icônes de statut</value>
+    <value>ステータスアイコンの優先順位</value>
   </data>
   <data name="Loc_StatusIconPriorizerConditionSets_InDuty" xml:space="preserve">
-    <value>En mission</value>
+    <value>コンテンツ中</value>
   </data>
   <data name="Loc_StatusIconPriorizerConditionSets_InDuty_Description" xml:space="preserve">
-    <value>Les icônes de statuts qui ont la priorité durant les missions.</value>
+    <value>コンテンツ内で優先的に表示されるべきステータスアイコン。</value>
   </data>
   <data name="Loc_StatusIconPriorizerConditionSets_InForay" xml:space="preserve">
-    <value>En mission d'exploration</value>
+    <value>In Foray</value>
   </data>
   <data name="Loc_StatusIconPriorizerConditionSets_InForay_Description" xml:space="preserve">
-    <value>Les icônes de statuts qui ont la priorité durant les missions d'exploration.</value>
+    <value>Foray内で優先的に表示されるべきステータスアイコン。</value>
   </data>
   <data name="Loc_StatusIconPriorizerConditionSets_Overworld" xml:space="preserve">
-    <value>Hors-mission</value>
+    <value>オーバーワールド</value>
   </data>
   <data name="Loc_StatusIconPriorizerConditionSets_Overworld_Description" xml:space="preserve">
-    <value>Les icônes de statuts qui ont la priorité en dehors des missions.</value>
+    <value>オーバーワールドで優先的に表示されるべきステータスアイコン。</value>
   </data>
   <data name="Loc_StatusIconPriorizer_ResetToDefault" xml:space="preserve">
-    <value>Réinitialiser aux valeurs par défaut</value>
+    <value>既定値に戻す</value>
   </data>
   <data name="Loc_StatusIconPriorizer_ResetToDefault_Description" xml:space="preserve">
-    <value>Réinitialise toutes les conditions définies aux paramètres par défaut</value>
+    <value>すべての条件セットを初期設定に戻す</value>
   </data>
   <data name="Loc_StatusIconPriorizer_ResetToEmpty" xml:space="preserve">
-    <value>Réinitialiser à zéro</value>
+    <value>空に戻す</value>
   </data>
   <data name="Loc_StatusIconPriorizer_ResetToEmpty_Description" xml:space="preserve">
-    <value>Supprime toutes les conditions définies. Plus aucune icône de statut ne sera affichée en priorité.</value>
+    <value>すべての条件セットを空のコレクションにクリアします。ステータスアイコンは優先されません。</value>
   </data>
   <data name="Loc_UsePriorizedIcons" xml:space="preserve">
-    <value>Activer les priorités d'icônes</value>
+    <value>優先順位付けされたアイコンを使用</value>
   </data>
   <data name="Loc_UsePriorizedIcons_Description" xml:space="preserve">
-    <value>L'activation de cette option obligera la priorisation de l'affichage des icônes de statuts plutôt que celles de jobs, si vous avez activé les icônes de jobs.
-Lorsque cette option est désactivée, seule l'icône de statut de déconnexion sera prioritaire.</value>
+    <value>このオプションをオンにすると、ジョブアイコンを有効にすると、ステータスアイコンのセットがジョブアイコンよりも優先されます。
+無効にすると、ステータスアイコンのみが優先されます。</value>
   </data>
   <data name="Loc_StatusIcons_Busy" xml:space="preserve">
-    <value>Occupé·e</value>
+    <value>取り込み中</value>
   </data>
   <data name="Loc_StatusIcons_Disconnecting" xml:space="preserve">
-    <value>En cours de déconnexion</value>
+    <value>切断中</value>
   </data>
   <data name="Loc_StatusIcons_DutyFinder" xml:space="preserve">
-    <value>En recherche de mission</value>
+    <value>コンテンツファインダー</value>
   </data>
   <data name="Loc_StatusIcons_GroupPose" xml:space="preserve">
-    <value>Pose de groupe</value>
+    <value>グループポーズ</value>
   </data>
   <data name="Loc_StatusIcons_Idle" xml:space="preserve">
-    <value>Absent·e</value>
+    <value>放置中</value>
   </data>
   <data name="Loc_StatusIcons_InDuty" xml:space="preserve">
-    <value>En mission</value>
+    <value>戦闘中</value>
   </data>
   <data name="Loc_StatusIcons_Mentor" xml:space="preserve">
-    <value>Mentor</value>
+    <value>メンター</value>
   </data>
   <data name="Loc_StatusIcons_MentorCrafting" xml:space="preserve">
-    <value>Mentor (artisanat/récolte)</value>
+    <value>製作採集メンター</value>
   </data>
   <data name="Loc_StatusIcons_MentorPvE" xml:space="preserve">
-    <value>Mentor PvE</value>
+    <value>バトルメンター</value>
   </data>
   <data name="Loc_StatusIcons_MentorPvP" xml:space="preserve">
-    <value>Mentor JcJ</value>
+    <value>PvPメンター</value>
   </data>
   <data name="Loc_StatusIcons_NewAdventurer" xml:space="preserve">
-    <value>Novice</value>
+    <value>若葉マーク</value>
   </data>
   <data name="Loc_StatusIcons_PartyLeader" xml:space="preserve">
-    <value>Chef d'équipe</value>
+    <value>PTリーダー</value>
   </data>
   <data name="Loc_StatusIcons_PartyMember" xml:space="preserve">
-    <value>Membre d'équipe</value>
+    <value>PTメンバー</value>
   </data>
   <data name="Loc_StatusIcons_Returner" xml:space="preserve">
-    <value>Rappelé·e</value>
+    <value>リターナー</value>
   </data>
   <data name="Loc_StatusIcons_RolePlaying" xml:space="preserve">
-    <value>Jeu de rôle</value>
+    <value>ロールプレイ中</value>
   </data>
   <data name="Loc_StatusIcons_ViewingCutscene" xml:space="preserve">
-    <value>Cinématique</value>
+    <value>カットシーン中</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate" xml:space="preserve">
-    <value>Modèle de base</value>
+    <value>テンプレート</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Basic" xml:space="preserve">
-    <value>Basique</value>
+    <value>基本</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Basic_Description" xml:space="preserve">
-    <value>Quasiment identique à Vide, mais inclut une pré-configuration très basique pour le formatage et la couleur.
-Peut également être utilisé si vous souhaitez créer votre propre configuration, mais que vous souhaitez avoir un formatage basique tout de même.</value>
+    <value>Emptyと同じですが、フォーマットとカラーリングのための非常に基本的な事前設定を含んでいます。
+独自の設定をしたいが、基本的な書式が欲しい場合にも使用できる。</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Description" xml:space="preserve">
-    <value>Vous pouvez choisir ici le modèle de base pour tous les paramétrages ci-dessous.
-Le modèle utilisé est un ensemble basique de propriétés. Chaque modification que vous faites sera sauvegardée ; cependant, les options provenant du modèle ne sont pas sauvegardées.
-Cela vous permet de ne pas avoir à surcharger énormément de propriétés - ou de créer votre propre configuration complète sans modèle de base.
+    <value>ここでは、以下のすべての設定のテンプレートを選択することができます。
+テンプレートはプロパティの基本セットとして使用されます。あなたが行うすべての変更は、保存されます。しかし、このテンプレートのオプションはすべて保存されません。
+これは、多くのプロパティを上書きする必要がないため、またはテンプレートを使用せずに完全に独自の設定を行うために役立ちます。
 
-Attention :
-Modifier ce champ peut provoquer la réinitialisation de propriétés. Vous pouvez perdre une partie de votre configuration.
-Après avoir modifié ce champ, vérifiez bien que tous vos paramètres correspondent à vos attentes.</value>
+警告
+この設定を変更すると、プロパティがリセットされることがあります。設定の一部が失われる可能性があります。
+この設定を変更した後、すべてがあなたの好きなように設定されていることを確認してください。</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Full" xml:space="preserve">
-    <value>Complet</value>
+    <value>フル</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Full_Description" xml:space="preserve">
-    <value>Préconfiguré pour afficher le tag de job avec couleur et colore également le texte du nom du personnage.</value>
+    <value>ジョブタグをカラーで表示し、プレイヤー名要素に色を付けます。</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_None" xml:space="preserve">
-    <value>Vide</value>
+    <value>空</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_None_Description" xml:space="preserve">
-    <value>Aucune configuration. C'est un modèle complètement vide.
-Utilisez ce modèle si vous souhaitez avoir toutes les options sous votre contrôle ou si vous souhaitez avoir votre propre configuration légère.</value>
+    <value>設定が一つもありません。これは完全に空のテンプレートです。
+コントロール下にあるすべてのオプションを設定したい場合、またはいくつかの設定だけを作成したい場合は、これを使用します。</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Simple" xml:space="preserve">
-    <value>Simple</value>
+    <value>シンプル</value>
   </data>
   <data name="Loc_DefaultPluginDataTemplate_Simple_Description" xml:space="preserve">
-    <value>Préconfiguré pour afficher le tag de job avec couleur et remplacer le titre par l'icône de rôle.</value>
+    <value>タイトルを置き換えることで、ジョブタグとロールアイコンをカラーで表示します。</value>
   </data>
   <data name="Loc_DeadPlayerHandling_GrayOut" xml:space="preserve">
-    <value>Les griser</value>
+    <value>グレーアウト</value>
   </data>
   <data name="Loc_DeadPlayerHandling_Ignore" xml:space="preserve">
-    <value>Les ignorer</value>
+    <value>無視</value>
   </data>
   <data name="Loc_DeadPlayerHandling_Include" xml:space="preserve">
-    <value>Les inclure</value>
+    <value>含む</value>
   </data>
   <data name="Loc_DeadPlayerHandling" xml:space="preserve">
-    <value>Traitement des personnages décédés</value>
+    <value>死んだプレイヤーの処理</value>
   </data>
   <data name="Loc_DeadPlayerHandling_GrayOut_Description" xml:space="preserve">
-    <value>Appliquer tous les tags, mais griser leur plaque de nom.</value>
+    <value>任意のタグを適用しますが、ネームプレートを灰色表示にします。</value>
   </data>
   <data name="Loc_DeadPlayerHandling_Ignore_Description" xml:space="preserve">
-    <value>Les personnages décédés ne seront pas traités et tous les tags les concernant seront ignorés.</value>
+    <value>死んだプレイヤーは処理せず、タグも適用しない。</value>
   </data>
   <data name="Loc_DeadPlayerHandling_Include_Description" xml:space="preserve">
-    <value>Les personnages décédés seront gérés comme s'ils étaient vivants. Aucune différenciation ne sera appliquée entre les personnages vivants et décédés.</value>
+    <value>死んだプレイヤーも生きているのと同じように扱う。死んだプレイヤーと生きているプレイヤーの違いはありません。</value>
   </data>
   <data name="Loc_MoveStatusIconToNameplateTextIfPossible" xml:space="preserve">
-    <value>Déplacer l'Icône de Statut dans le texte de la Plaque de nom si possible</value>
+    <value>可能であれば、ステータスアイコンをネームプレートのテキストに移動する。</value>
   </data>
   <data name="Loc_MoveStatusIconToNameplateTextIfPossible_Description" xml:space="preserve">
-    <value>Si l'icône de statut actuel existe en tant qu'icône textuelle, alors la déplacer dans le texte à côté du Nom du Personnage dans sa Plaque de nom, afin de laisser place à un autre icône, tel que l'icône de Job, par exemple.</value>
+    <value>現在のステータスアイコンがフォントアイコンとして利用できる場合、それをネームプレートのプレイヤー名のテキストに移動し、ジョブアイコンなどの別のアイコンを使用できるようにします。</value>
   </data>
   <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
-    <value>Afficher l'icône de rôle dans le Chat</value>
+    <value>チャットにロールアイコンを表示</value>
   </data>
   <data name="Loc_TargetChatTypesIncludeUndefined" xml:space="preserve">
-    <value>Inclure les types de chat non-définis</value>
+    <value>未定義のチャットタイプを含む</value>
   </data>
   <data name="Loc_TargetChatTypesIncludeUndefined_Description" xml:space="preserve">
-    <value>Lorsque cette option est activée, le tag s'appliquera à tous les messages qui n'ont pas de type défini.
-Cela peut se produire si les mises à jour du jeu et l'énumération de tous les types de chat deviennent invalides en raison de valeurs déplacées ou altérées, ou si un autre plugin crée un type de chat personnalisé pour quelque raison que ce soit.</value>
+    <value>このタグを有効にすると、定義されていないすべてのチャットメッセージに適用されます。
+このケースは、ゲームがアップデートされ、すべてのチャットタイプの列挙がシフトされた値によって無効になった場合、またはプラグインが何らかの理由でカスタムチャットタイプを作成した場合に発生します。</value>
   </data>
 </root>
