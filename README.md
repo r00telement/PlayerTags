@@ -20,8 +20,9 @@ If you want to contribute to a language that isn't listed, just tell me with an 
 | German | Pilzinsel64, xEbony
 | Spanish | Risu
 | French | Khayle
+| Japanese | Refer
 | ... | You?
 
 # Credits
 
-This plugin was originally developed by r00telement but forked and continued by Pilzinsel64.
+This plugin was originally developed by [r00telement](https://github.com/r00telement) but forked and continued by [Pilzinsel64](https://github.com/Pilzinsel64).
