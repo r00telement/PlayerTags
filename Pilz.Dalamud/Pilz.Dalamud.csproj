@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>annotations</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -23,9 +23,7 @@
         <PackageProjectUrl>https://github.com/Pilzinsel64/Pilz.Dalamud</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Pilzinsel64/Pilz.Dalamud</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <FileVersion>0.1.1.0</FileVersion>
-        <AssemblyVersion>0.1.1.0</AssemblyVersion>
-        <Version>0.1.1</Version>
+        <Version>0.2.0</Version>
         <GenerateDocumentationFile>True</GenerateDocumentationFile>
     </PropertyGroup>
   
