@@ -40,10 +40,10 @@ namespace PlayerTags
 
             PluginServices.DalamudPluginInterface.UiBuilder.Draw += UiBuilder_Draw;
             PluginServices.DalamudPluginInterface.UiBuilder.OpenConfigUi += UiBuilder_OpenConfigUi;
-            PluginServices.CommandManager.AddHandler(c_CommandName, new CommandInfo((string command, string arguments) =>
+            PluginServices.CommandManager.AddHandler(c_CommandName, new CommandInfo((string command, string arguments) => UiBuilder_OpenConfigUi())
             {
-                UiBuilder_OpenConfigUi();
-            }) { HelpMessage = "Shows the config" });
+                HelpMessage = Resources.Strings.Loc_Command_playertags
+            });
             m_CustomTagsContextMenuFeature = new CustomTagsContextMenuFeature(m_PluginConfiguration, m_PluginData);
             m_NameplatesTagTargetFeature = new NameplateTagTargetFeature(m_PluginConfiguration, m_PluginData);
             m_ChatTagTargetFeature = new ChatTagTargetFeature(m_PluginConfiguration, m_PluginData);
@@ -68,9 +68,7 @@ namespace PlayerTags
         private void UiBuilder_Draw()
         {
             if (m_PluginConfiguration.IsVisible)
-            {
                 m_PluginConfigurationUI.Draw();
-            }
         }
 
         private void UiBuilder_OpenConfigUi()

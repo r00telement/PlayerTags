@@ -187,6 +187,15 @@ namespace PlayerTags.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Shows the config window for Player Tags ähnelt.
+        /// </summary>
+        public static string Loc_Command_playertags {
+            get {
+                return ResourceManager.GetString("Loc_Command_playertags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Custom id ähnelt.
         /// </summary>
         public static string Loc_CustomId {

@@ -829,4 +829,7 @@ Use this if you want to to have every option under your control or just want to 
     <value>When enabled the Tag will apply to all Chat messages that has not a defined type.
 This case can happen either if the Game updates and the Enumeration of all Chat Types gets invalid due to shifted values, or plugins creates a custom chat type for whatever reason.</value>
   </data>
+  <data name="Loc_Command_playertags" xml:space="preserve">
+    <value>Shows the config window for Player Tags</value>
+  </data>
 </root>

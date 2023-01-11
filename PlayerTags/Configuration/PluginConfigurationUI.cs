@@ -1202,7 +1202,7 @@ namespace PlayerTags.Configuration
                     var entryName = Enum.GetName(typeofEnum, entry.Value);
                     var tempval = entry.Enabled;
 
-                    isClicked = ImGui.Checkbox(Localizer.GetString(entryName), ref isDisabled ? ref tempval : ref entry.Enabled);
+                    isClicked = ImGui.Checkbox(Localizer.GetString(entryName, false), ref isDisabled ? ref tempval : ref entry.Enabled);
 
                     if (ImGui.IsItemHovered())
                         ImGui.SetTooltip(Localizer.GetString(entryName, true));

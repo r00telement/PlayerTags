@@ -2,14 +2,13 @@
 using Dalamud.Plugin;
 using PlayerTags.Resources;
 using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace PlayerTags
 {
     public static class Localizer
     {
-        private static CultureInfo culture = null;
-
         public static void SetLanguage(string langCode)
         {
             SetLanguage(new CultureInfo(langCode));
@@ -17,7 +16,7 @@ namespace PlayerTags
 
         public static void SetLanguage(CultureInfo cultureInfo)
         {
-            culture = cultureInfo;
+            Strings.Culture = cultureInfo;
         }
 
         public static string GetName<TEnum>(TEnum value)
@@ -51,11 +50,10 @@ namespace PlayerTags
 
         public static string GetString(string localizedStringId)
         {
-            string? value = Strings.ResourceManager.GetString(localizedStringId, culture ?? Strings.Culture);
+            string? value = Strings.ResourceManager.GetString(localizedStringId, Strings.Culture);
+
             if (value != null)
-            {
                 return value;
-            }
 
             PluginLog.Error($"Failed to get localized string for id {localizedStringId}");
             return localizedStringId;
