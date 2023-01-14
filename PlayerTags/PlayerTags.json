@@ -1,14 +1,10 @@
 {
-  "Author": "r00telement",
+  "Author": "Pilzinsel64, r00telement",
   "Name": "Player Tags",
-  "Description": "Lightweight job visibility in nameplates and chat. Create custom tags and add them to players with the context menu.",
+  "Description": "Lightweight job visibility in nameplates and chat. Create custom tags and add them to players with the context menu.\n\nYou want to contribute and help developing new features or want to extend existing? Feel free to open Fork and open a Pull Request!\n\nThis plugin was originally developed by r00telement but forked and continued by Pilzinsel64.",
+  "Punchline": "Lightweight job visibility in nameplates and chat.",
   "Tags": [ "Jobs", "UI" ],
   "CategoryTags": [ "jobs", "UI" ],
-  "RepoUrl": "https://github.com/r00telement/PlayerTags",
-  "IconUrl": "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Icon.png",
-  "ImageUrls": [
-    "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Nameplates_1.png",
-    "https://github.com/r00telement/PlayerTags/raw/main/PlayerTags/Resources/Promo/Chat_1.png"
-  ],
-  "Changelog": ""
+  "RepoUrl": "https://github.com/Pilzinsel64/PlayerTags",
+  "DalamudAPILevel": 8
 }

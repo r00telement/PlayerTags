@@ -6,6 +6,6 @@
             OutputPath="$(OutputPath)"
             AssemblyName="$(AssemblyName)"
             MakeZip="true"
-            Exclude="$(AssemblyName).pdb;$(AssemblyName).deps.json" />
+            Exclude="$(AssemblyName).pdb;$(AssemblyName).deps.json"/>
     </Target>
 </Project>

@@ -1,4 +1,8 @@
-﻿namespace PlayerTags.Inheritables
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
+
+namespace PlayerTags.Inheritables
 {
     public class InheritableReference<T> : IInheritable
         where T : class
@@ -7,8 +11,10 @@
 
         public InheritableBehavior Behavior { get; set; }
 
+        [JsonProperty]
         public T Value;
 
+        [JsonIgnore]
         public T? InheritedValue
         {
             get

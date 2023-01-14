@@ -1,9 +1,9 @@
-﻿using Dalamud.Game.ClientState.Objects.SubKinds;
+﻿using Dalamud.ContextMenu;
+using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.ClientState.Party;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Logging;
 using PlayerTags.Configuration;
-using PlayerTags.GameInterface.ContextMenus;
 using PlayerTags.PluginStrings;
 using System;
 using System.Collections.Generic;
@@ -25,13 +25,17 @@ namespace PlayerTags.Data
         public List<Tag> CustomTags;
         public List<Identity> Identities;
 
-        private PluginConfiguration m_PluginConfiguration;
+        private PluginConfiguration pluginConfiguration;
 
         public PluginData(PluginConfiguration pluginConfiguration)
         {
-            m_PluginConfiguration = pluginConfiguration;
+            this.pluginConfiguration = pluginConfiguration;
+            ReloadDefault();
+        }
 
-            Default = new DefaultPluginData();
+        public void ReloadDefault()
+        {
+            Default = new DefaultPluginData(pluginConfiguration.DefaultPluginDataTemplate);
 
             // Set the default changes and saved changes
             AllTags = new Tag(new LocalizedPluginString(nameof(AllTags)), Default.AllTags);
@@ -261,14 +265,10 @@ namespace PlayerTags.Data
                     if (identity.WorldId == null && worldId != null)
                     {
                         identity.WorldId = worldId;
-                        m_PluginConfiguration.Save(this);
+                        pluginConfiguration.Save(this);
+                    }
 
-                        return identity;
-                    }
-                    else
-                    {
-                        return identity;
-                    }
+                    return identity;
                 }
             }
 
@@ -278,16 +278,15 @@ namespace PlayerTags.Data
             };
         }
 
-        public Identity? GetIdentity(ContextMenuOpenedArgs contextMenuOpenedArgs)
+        public Identity? GetIdentity(GameObjectContextMenuOpenArgs contextMenuOpenedArgs)
         {
-            if (contextMenuOpenedArgs.GameObjectContext == null
-                || contextMenuOpenedArgs.GameObjectContext.Name == null
-                || contextMenuOpenedArgs.GameObjectContext.WorldId == null)
+            if (string.IsNullOrEmpty(contextMenuOpenedArgs.Text?.TextValue)
+                || contextMenuOpenedArgs.ObjectWorld == 0
+                || contextMenuOpenedArgs.ObjectWorld == 65535)
             {
                 return null;
             }
-
-            return GetIdentity(contextMenuOpenedArgs.GameObjectContext.Name, contextMenuOpenedArgs.GameObjectContext.WorldId);
+            return GetIdentity(contextMenuOpenedArgs.Text?.TextValue ?? string.Empty, contextMenuOpenedArgs.ObjectWorld);
         }
 
         public Identity GetIdentity(PlayerCharacter playerCharacter)

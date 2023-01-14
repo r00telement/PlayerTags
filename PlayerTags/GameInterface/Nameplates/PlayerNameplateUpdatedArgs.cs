@@ -1,33 +1,52 @@
 ﻿using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Text.SeStringHandling;
+using Pilz.Dalamud.Nameplates.EventArgs;
 
 namespace PlayerTags.GameInterface.Nameplates
 {
     public class PlayerNameplateUpdatedArgs
     {
+        private readonly AddonNamePlate_SetPlayerNameManagedEventArgs eventArgs;
+
         public PlayerCharacter PlayerCharacter { get; }
 
-        public SeString Name { get; }
+        public SeString Name
+        {
+            get => eventArgs.Name;
+        }
 
-        public SeString Title { get; }
+        public SeString Title
+        {
+            get => eventArgs.Title;
+        }
 
-        public SeString FreeCompany { get; }
+        public SeString FreeCompany
+        {
+            get => eventArgs.FreeCompany;
+        }
 
-        public bool IsTitleVisible { get; set; }
+        public bool IsTitleVisible
+        {
+            get => eventArgs.IsTitleVisible;
+            set => eventArgs.IsTitleVisible = value;
+        }
 
-        public bool IsTitleAboveName { get; set; }
+        public bool IsTitleAboveName
+        {
+            get => eventArgs.IsTitleAboveName;
+            set => eventArgs.IsTitleAboveName = value;
+        }
 
-        public int IconId { get; set; }
+        public int IconId
+        {
+            get => eventArgs.IconID;
+            set => eventArgs.IconID = value;
+        }
 
-        public PlayerNameplateUpdatedArgs(PlayerCharacter playerCharacter, SeString name, SeString title, SeString freeCompany, bool isTitleVisible, bool isTitleAboveName, int iconId)
+        public PlayerNameplateUpdatedArgs(PlayerCharacter playerCharacter, AddonNamePlate_SetPlayerNameManagedEventArgs eventArgs)
         {
             PlayerCharacter = playerCharacter;
-            Name = name;
-            Title = title;
-            FreeCompany = freeCompany;
-            IsTitleVisible = isTitleVisible;
-            IsTitleAboveName = isTitleAboveName;
-            IconId = iconId;
+            this.eventArgs = eventArgs;
         }
     }
 }

@@ -2,9 +2,17 @@
 using Dalamud.Game.ClientState.Objects.Types;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using FFXIVClientStructs.FFXIV.Client.Game.Character;
+using FFXIVClientStructs.FFXIV.Client.System.Memory;
+using FFXIVClientStructs.FFXIV.Component.GUI;
+using Lumina.Excel.GeneratedSheets;
+using Pilz.Dalamud.Icons;
+using Pilz.Dalamud.Nameplates.Tools;
+using Pilz.Dalamud.Tools.Strings;
 using PlayerTags.Configuration;
 using PlayerTags.Data;
 using PlayerTags.GameInterface.Nameplates;
+using PlayerTags.Inheritables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +24,31 @@ namespace PlayerTags.Features
     /// </summary>
     public class NameplateTagTargetFeature : TagTargetFeature
     {
-        private PluginConfiguration m_PluginConfiguration;
-        private PluginData m_PluginData;
+        private readonly PluginConfiguration m_PluginConfiguration;
+        private readonly PluginData m_PluginData;
+        private readonly StatusIconPriorizer statusiconPriorizer;
+        private readonly JobIconSets jobIconSets = new();
         private Nameplate? m_Nameplate;
 
         public NameplateTagTargetFeature(PluginConfiguration pluginConfiguration, PluginData pluginData)
         {
             m_PluginConfiguration = pluginConfiguration;
             m_PluginData = pluginData;
+            statusiconPriorizer = new(pluginConfiguration.StatusIconPriorizerSettings);
 
             PluginServices.ClientState.Login += ClientState_Login;
             PluginServices.ClientState.Logout += ClientState_Logout;
+
             Hook();
         }
 
         public override void Dispose()
         {
             Unhook();
+            
             PluginServices.ClientState.Logout -= ClientState_Logout;
             PluginServices.ClientState.Login -= ClientState_Login;
+            
             base.Dispose();
         }
 
@@ -77,9 +91,9 @@ namespace PlayerTags.Features
 
         protected override bool IsIconVisible(Tag tag)
         {
-            if (tag.IsIconVisibleInNameplates.InheritedValue != null)
+            if (tag.IsRoleIconVisibleInNameplates.InheritedValue != null)
             {
-                return tag.IsIconVisibleInNameplates.InheritedValue.Value;
+                return tag.IsRoleIconVisibleInNameplates.InheritedValue.Value;
             }
 
             return false;
@@ -95,44 +109,33 @@ namespace PlayerTags.Features
             return false;
         }
 
-        private void Nameplate_PlayerNameplateUpdated(PlayerNameplateUpdatedArgs args)
+        private unsafe void Nameplate_PlayerNameplateUpdated(PlayerNameplateUpdatedArgs args)
         {
             var beforeTitleBytes = args.Title.Encode();
-            AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany/*, out isNameChanged, out isTitleChanged, out isFreeCompanyChanged*/);
+            var iconID = args.IconId;
+            var generalOptions = m_PluginConfiguration.GeneralOptions[ActivityContextManager.CurrentActivityContext.ActivityType];
 
-            if (m_PluginConfiguration.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
-            {
+            AddTagsToNameplate(args.PlayerCharacter, args.Name, args.Title, args.FreeCompany, ref iconID, generalOptions);
+
+            args.IconId = iconID;
+
+            if (generalOptions.NameplateTitlePosition == NameplateTitlePosition.AlwaysAboveName)
                 args.IsTitleAboveName = true;
-            }
-            else if (m_PluginConfiguration.NameplateTitlePosition == NameplateTitlePosition.AlwaysBelowName)
-            {
+            else if (generalOptions.NameplateTitlePosition == NameplateTitlePosition.AlwaysBelowName)
                 args.IsTitleAboveName = false;
-            }
 
-            if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.Default)
-            {
-            }
-            else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.Always)
-            {
+            if (generalOptions.NameplateTitleVisibility == NameplateTitleVisibility.Always)
                 args.IsTitleVisible = true;
-            }
-            else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.Never)
-            {
+            else if (generalOptions.NameplateTitleVisibility == NameplateTitleVisibility.Never)
                 args.IsTitleVisible = false;
-            }
-            else if (m_PluginConfiguration.NameplateTitleVisibility == NameplateTitleVisibility.WhenHasTags)
+            else if (generalOptions.NameplateTitleVisibility == NameplateTitleVisibility.WhenHasTags)
             {
                 bool hasTitleChanged = !beforeTitleBytes.SequenceEqual(args.Title.Encode());
                 args.IsTitleVisible = hasTitleChanged;
             }
 
-            if (m_PluginConfiguration.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Default)
-            {
-            }
-            else if (m_PluginConfiguration.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Never)
-            {
+            if (generalOptions.NameplateFreeCompanyVisibility == NameplateFreeCompanyVisibility.Never)
                 args.FreeCompany.Payloads.Clear();
-            }
         }
 
         /// <summary>
@@ -142,19 +145,24 @@ namespace PlayerTags.Features
         /// <param name="tagPosition">The position of the changes.</param>
         /// <param name="payloadChanges">The payload changes to add.</param>
         /// <param name="nameplateChanges">The dictionary to add changes to.</param>
-        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloadChanges, Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges)
+        private void AddPayloadChanges(NameplateElement nameplateElement, TagPosition tagPosition, IEnumerable<Payload> payloadChanges, NameplateChanges nameplateChanges, bool forceUsingSingleAnchorPayload)
         {
-            if (!payloadChanges.Any())
+            if (payloadChanges.Any())
             {
-                return;
+                var changes = nameplateChanges.GetChanges((NameplateElements)nameplateElement);
+                AddPayloadChanges((StringPosition)tagPosition, payloadChanges, changes, forceUsingSingleAnchorPayload);
             }
+        }
 
-            if (!nameplateChanges.Keys.Contains(nameplateElement))
-            {
-                nameplateChanges[nameplateElement] = new Dictionary<TagPosition, List<Payload>>();
-            }
+        private NameplateChanges GenerateEmptyNameplateChanges(SeString name, SeString title, SeString freeCompany)
+        {
+            NameplateChanges nameplateChanges = new();
+            
+            nameplateChanges.GetProps(NameplateElements.Name).Destination = name;
+            nameplateChanges.GetProps(NameplateElements.Title).Destination = title;
+            nameplateChanges.GetProps(NameplateElements.FreeCompany).Destination = freeCompany;
 
-            AddPayloadChanges(tagPosition, payloadChanges, nameplateChanges[nameplateElement]);
+            return nameplateChanges;
         }
 
         /// <summary>
@@ -164,23 +172,22 @@ namespace PlayerTags.Features
         /// <param name="name">The name text to change.</param>
         /// <param name="title">The title text to change.</param>
         /// <param name="freeCompany">The free company text to change.</param>
-        private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany)
+        private void AddTagsToNameplate(GameObject gameObject, SeString name, SeString title, SeString freeCompany, ref int statusIcon, GeneralOptionsClass generalOptions)
         {
-            Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>> nameplateChanges = new Dictionary<NameplateElement, Dictionary<TagPosition, List<Payload>>>();
+            var playerCharacter = gameObject as PlayerCharacter;
+            int? newStatusIcon = null;
+            NameplateChanges nameplateChanges = GenerateEmptyNameplateChanges(name, title, freeCompany);
 
-            if (gameObject is PlayerCharacter playerCharacter)
+            if (playerCharacter != null && (!playerCharacter.IsDead || generalOptions.NameplateDeadPlayerHandling != DeadPlayerHandling.Ignore))
             {
+                var classJob = playerCharacter.ClassJob;
+                var classJobGameData = classJob?.GameData;
+
                 // Add the job tags
-                if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
+                if (classJobGameData != null && m_PluginData.JobTags.TryGetValue(classJobGameData.Abbreviation, out var jobTag))
                 {
                     if (jobTag.TagTargetInNameplates.InheritedValue != null && jobTag.TagPositionInNameplates.InheritedValue != null)
-                    {
-                        var payloads = GetPayloads(jobTag, gameObject);
-                        if (payloads.Any())
-                        {
-                            AddPayloadChanges(jobTag.TagTargetInNameplates.InheritedValue.Value, jobTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
-                        }
-                    }
+                        checkTag(jobTag);
                 }
 
                 // Add the randomly generated name tag payload
@@ -191,9 +198,7 @@ namespace PlayerTags.Features
                     {
                         var generatedName = RandomNameGenerator.Generate(characterName);
                         if (generatedName != null)
-                        {
-                            AddPayloadChanges(NameplateElement.Name, TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), nameplateChanges);
-                        }
+                            AddPayloadChanges(NameplateElement.Name, TagPosition.Replace, Enumerable.Empty<Payload>().Append(new TextPayload(generatedName)), nameplateChanges, false);
                     }
                 }
 
@@ -203,116 +208,78 @@ namespace PlayerTags.Features
                 {
                     var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
                     if (customTag != null)
+                        checkTag(customTag);
+                }
+
+                void checkTag(Tag tag)
+                {
+                    if (tag.TagTargetInNameplates.InheritedValue != null && tag.TagPositionInNameplates.InheritedValue != null)
                     {
-                        if (customTag.TagTargetInNameplates.InheritedValue != null && customTag.TagPositionInNameplates.InheritedValue != null)
-                        {
-                            var payloads = GetPayloads(customTag, gameObject);
-                            if (payloads.Any())
-                            {
-                                AddPayloadChanges(customTag.TagTargetInNameplates.InheritedValue.Value, customTag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges);
-                            }
-                        }
+                        var payloads = GetPayloads(tag, gameObject);
+                        if (payloads.Any())
+                            AddPayloadChanges(tag.TagTargetInNameplates.InheritedValue.Value, tag.TagPositionInNameplates.InheritedValue.Value, payloads, nameplateChanges, false);
                     }
+                    if (IsTagVisible(tag, gameObject) && newStatusIcon == null && classJob != null && (tag.IsJobIconVisibleInNameplates?.InheritedValue ?? false))
+                        newStatusIcon = jobIconSets.GetJobIcon(tag.JobIconSet?.InheritedValue ?? JobIconSetName.Framed, classJob.Id);
                 }
             }
+
+            // Apply new status icon
+            if (newStatusIcon != null)
+            {
+                var change = nameplateChanges.GetChange(NameplateElements.Name, StringPosition.Before);
+                NameplateUpdateFactory.ApplyStatusIconWithPrio(ref statusIcon, (int)newStatusIcon, change, ActivityContextManager.CurrentActivityContext, statusiconPriorizer, m_PluginConfiguration.MoveStatusIconToNameplateTextIfPossible);
+            }
+
+            // Gray out the nameplate
+            if (playerCharacter != null && playerCharacter.IsDead && generalOptions.NameplateDeadPlayerHandling == DeadPlayerHandling.GrayOut)
+                GrayOutNameplate(gameObject, nameplateChanges);
 
             // Build the final strings out of the payloads
-            foreach ((var nameplateElement, var stringChanges) in nameplateChanges)
-            {
-                SeString? seString = null;
-                if (nameplateElement == NameplateElement.Name)
-                {
-                    seString = name;
-                }
-                else if (nameplateElement == NameplateElement.Title)
-                {
-                    seString = title;
-                }
-                else if (nameplateElement == NameplateElement.FreeCompany)
-                {
-                    seString = freeCompany;
-                }
+            ApplyNameplateChanges(nameplateChanges);
 
-                if (seString != null)
-                {
-                    ApplyStringChanges(seString, stringChanges);
-                }
-            }
-
-            if (gameObject is PlayerCharacter playerCharacter1)
+            if (playerCharacter != null && (!playerCharacter.IsDead || generalOptions.NameplateDeadPlayerHandling == DeadPlayerHandling.Include))
             {
                 // An additional step to apply text color to additional locations
-                Identity identity = m_PluginData.GetIdentity(playerCharacter1);
+                Identity identity = m_PluginData.GetIdentity(playerCharacter);
                 foreach (var customTagId in identity.CustomTagIds)
                 {
                     var customTag = m_PluginData.CustomTags.FirstOrDefault(tag => tag.CustomId.Value == customTagId);
                     if (customTag != null)
-                    {
-                        if (IsTagVisible(customTag, gameObject))
-                        {
-                            if (customTag.TextColor.InheritedValue != null)
-                            {
-                                if (name.Payloads.Any(payload => payload is TextPayload)
-                                    && customTag.IsTextColorAppliedToNameplateName.InheritedValue != null
-                                    && customTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
-                                {
-                                    name.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                    name.Payloads.Add(new UIForegroundPayload(0));
-                                }
-
-                                if (title.Payloads.Any(payload => payload is TextPayload)
-                                    && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null
-                                    && customTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
-                                {
-                                    title.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                    title.Payloads.Add(new UIForegroundPayload(0));
-                                }
-
-                                if (freeCompany.Payloads.Any(payload => payload is TextPayload)
-                                    && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null
-                                    && customTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
-                                {
-                                    freeCompany.Payloads.Insert(0, (new UIForegroundPayload(customTag.TextColor.InheritedValue.Value)));
-                                    freeCompany.Payloads.Add(new UIForegroundPayload(0));
-                                }
-                            }
-                        }
-                    }
+                        applyTextFormatting(customTag);
                 }
 
-                if (playerCharacter1.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter1.ClassJob.GameData.Abbreviation, out var jobTag))
+                if (playerCharacter.ClassJob.GameData != null && m_PluginData.JobTags.TryGetValue(playerCharacter.ClassJob.GameData.Abbreviation, out var jobTag))
+                    applyTextFormatting(jobTag);
+
+                void applyTextFormatting(Tag tag)
                 {
-                    if (IsTagVisible(jobTag, gameObject))
-                    {
-                        if (jobTag.TextColor.InheritedValue != null)
-                        {
-                            if (name.Payloads.Any(payload => payload is TextPayload)
-                                && jobTag.IsTextColorAppliedToNameplateName.InheritedValue != null
-                                && jobTag.IsTextColorAppliedToNameplateName.InheritedValue.Value)
-                            {
-                                name.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                name.Payloads.Add(new UIForegroundPayload(0));
-                            }
-
-                            if (title.Payloads.Any(payload => payload is TextPayload)
-                                && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue != null
-                                && jobTag.IsTextColorAppliedToNameplateTitle.InheritedValue.Value)
-                            {
-                                title.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                title.Payloads.Add(new UIForegroundPayload(0));
-                            }
-
-                            if (freeCompany.Payloads.Any(payload => payload is TextPayload)
-                                && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue != null
-                                && jobTag.IsTextColorAppliedToNameplateFreeCompany.InheritedValue.Value)
-                            {
-                                freeCompany.Payloads.Insert(0, (new UIForegroundPayload(jobTag.TextColor.InheritedValue.Value)));
-                                freeCompany.Payloads.Add(new UIForegroundPayload(0));
-                            }
-                        }
-                    }
-                }                
+                    var destStrings = new[] { name, title, freeCompany };
+                    var isTextColorApplied = new[] { tag.IsTextColorAppliedToNameplateName, tag.IsTextColorAppliedToNameplateTitle, tag.IsTextColorAppliedToNameplateFreeCompany };
+                    ApplyTextFormatting(gameObject, tag, new[] { name, title, freeCompany }, isTextColorApplied, null);
+                }
             }
+        }
+
+        private void GrayOutNameplate(GameObject gameObject, NameplateChanges nameplateChanges)
+        {
+            if (gameObject is PlayerCharacter playerCharacter)
+            {
+                foreach (NameplateElements element in Enum.GetValues<NameplateElements>())
+                {
+                    nameplateChanges.GetChange(element, StringPosition.Before).Payloads.Add(new UIForegroundPayload(3));
+                    nameplateChanges.GetChange(element, StringPosition.After).Payloads.Add(new UIForegroundPayload(0));
+                }
+            }
+        }
+
+        protected void ApplyNameplateChanges(NameplateChanges nameplateChanges)
+        {
+            var props = new NameplateChangesProps
+            {
+                Changes = nameplateChanges
+            };
+            NameplateUpdateFactory.ApplyNameplateChanges(props);
         }
     }
 }

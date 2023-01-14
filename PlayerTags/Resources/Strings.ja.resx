@@ -1,0 +1,832 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Loc_Static_PluginName" xml:space="preserve">
+    <value>Player Tags</value>
+  </data>
+  <data name="Loc_Static_WarningMessage" xml:space="preserve">
+    <value>このプラグインは、ネームプレートやチャットを修正することができます。これらを変更する他のプラグインと組み合わせた場合、不具合が起きる可能性があります。プラグインのロード順で違いが出るかもしれません。</value>
+  </data>
+  <data name="Loc_Static_General" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <data name="Loc_Static_QuickTag" xml:space="preserve">
+    <value>簡易タグ</value>
+  </data>
+  <data name="Loc_Static_TaggedPlayers" xml:space="preserve">
+    <value>タグ付きプレイヤー</value>
+  </data>
+  <data name="Loc_Static_PlayerName" xml:space="preserve">
+    <value>プレイヤー</value>
+  </data>
+  <data name="Loc_Static_ContextMenu_AddTag" xml:space="preserve">
+    <value>タグを追加: {0}</value>
+  </data>
+  <data name="Loc_Static_ContextMenu_RemoveTag" xml:space="preserve">
+    <value>タグを削除: {0}</value>
+  </data>
+  <data name="Loc_Static_Nameplates" xml:space="preserve">
+    <value>ネームプレート</value>
+  </data>
+  <data name="Loc_Static_Format_AddTagToPlayer" xml:space="preserve">
+    <value>{1} に {0} を追加する</value>
+  </data>
+  <data name="Loc_Static_Inherited" xml:space="preserve">
+    <value>&lt;Inherited&gt;</value>
+  </data>
+  <data name="Loc_IsSelected" xml:space="preserve">
+    <value>選択中</value>
+  </data>
+  <data name="Loc_IsExpanded" xml:space="preserve">
+    <value>展開中</value>
+  </data>
+  <data name="Loc_IsCustomTagsContextMenuEnabled" xml:space="preserve">
+    <value>コンテキストメニューの統合</value>
+  </data>
+  <data name="Loc_IsCustomTagsContextMenuEnabled_Description" xml:space="preserve">
+    <value>コンテキストメニューに、プレイヤーにタグを追加・削除するためのオプションが追加されます。</value>
+  </data>
+  <data name="Loc_IsShowInheritedPropertiesEnabled" xml:space="preserve">
+    <value>継承されたプロパティの表示</value>
+  </data>
+  <data name="Loc_IsShowInheritedPropertiesEnabled_Description" xml:space="preserve">
+    <value>親ノードから継承したプロパティがエディタに表示されます。</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility" xml:space="preserve">
+    <value>フリーカンパニーを表示</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Default_Description" xml:space="preserve">
+    <value>ネームプレートのFCタグは、キャラクターがフリーカンパニーに入っているときのみ表示されます。</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Never" xml:space="preserve">
+    <value>表示しない</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Never_Description" xml:space="preserve">
+    <value>ネームプレートのFCタグは、一切表示されません。</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility" xml:space="preserve">
+    <value>称号の表示</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Always" xml:space="preserve">
+    <value>常に表示</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Always_Description" xml:space="preserve">
+    <value>ネームプレートの称号は、キャラクターが称号を付けていない場合でも常に表示されます。</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Default_Description" xml:space="preserve">
+    <value>ネームプレートの称号は、キャラクターが称号を付けている場合のみ表示されます。</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Never" xml:space="preserve">
+    <value>表示しない</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Never_Description" xml:space="preserve">
+    <value>ネームプレートの称号は、一切表示されません。</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_WhenHasTags" xml:space="preserve">
+    <value>タグがある場合のみ表示</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_WhenHasTags_Description" xml:space="preserve">
+    <value>ネームプレートの称号は、タグがある場合のみ表示されます。</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition" xml:space="preserve">
+    <value>称号の位置</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysAboveName" xml:space="preserve">
+    <value>常に名前の上に表示</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysAboveName_Description" xml:space="preserve">
+    <value>ネームプレートの称号は、常に名前の上に配置されます。</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysBelowName" xml:space="preserve">
+    <value>常に名前の下に表示</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_AlwaysBelowName_Description" xml:space="preserve">
+    <value>ネームプレートの称号は、常に名前の下に配置されます。</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Default_Description" xml:space="preserve">
+    <value>称号の表示位置は、称号によって位置が変わります。</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany" xml:space="preserve">
+    <value>フリーカンパニー</value>
+  </data>
+  <data name="Loc_NameplateElement_FreeCompany_Description" xml:space="preserve">
+    <value>ネームプレート上の 名前 要素。</value>
+  </data>
+  <data name="Loc_NameplateElement_Name" xml:space="preserve">
+    <value>名前</value>
+  </data>
+  <data name="Loc_NameplateElement_Name_Description" xml:space="preserve">
+    <value>ネームプレート上の 名前 要素。</value>
+  </data>
+  <data name="Loc_NameplateElement_Title" xml:space="preserve">
+    <value>称号</value>
+  </data>
+  <data name="Loc_NameplateElement_Title_Description" xml:space="preserve">
+    <value>ネームプレート上の 称号 要素。</value>
+  </data>
+  <data name="Loc_Static_Development" xml:space="preserve">
+    <value>開発版</value>
+  </data>
+  <data name="Loc_Static_Experimental" xml:space="preserve">
+    <value>試験運用版</value>
+  </data>
+  <data name="Loc_IsPlayerNameRandomlyGenerated" xml:space="preserve">
+    <value>ランダムにプレイヤー名を生成する</value>
+  </data>
+  <data name="Loc_IsPlayerNameRandomlyGenerated_Description" xml:space="preserve">
+    <value>すべてのプレイヤーの名前を、ランダムに生成したものに置き換える。</value>
+  </data>
+  <data name="Loc_IsLinkSelfInChatEnabled" xml:space="preserve">
+    <value>チャットで自分にタグを適用する</value>
+  </data>
+  <data name="Loc_IsLinkSelfInChatEnabled_Description" xml:space="preserve">
+    <value>チャットネームとキャラクターを紐付けし、チャットで自身にタグを適用できるようにしようとするものです。</value>
+  </data>
+  <data name="Loc_IsApplyTagsToAllChatMessagesEnabled" xml:space="preserve">
+    <value>すべてのチャットメッセージにタグを適用する</value>
+  </data>
+  <data name="Loc_IsApplyTagsToAllChatMessagesEnabled_Description" xml:space="preserve">
+    <value>全体チャットを含む、すべてのチャットメッセージにタグを適用します。</value>
+  </data>
+  <data name="Loc_Static_ResetDefault_Description" xml:space="preserve">
+    <value>この項目を既定にリセットします。</value>
+  </data>
+  <data name="Loc_Static_ResetAllDefault_Description" xml:space="preserve">
+    <value>すべての項目を既定にリセットします。カスタムタグは変更されません。</value>
+  </data>
+  <data name="Loc_Static_Tags" xml:space="preserve">
+    <value>タグ</value>
+  </data>
+  <data name="Loc_Static_NoText" xml:space="preserve">
+    <value>&lt;No text&gt;</value>
+  </data>
+  <data name="Loc_AllTags" xml:space="preserve">
+    <value>全て</value>
+  </data>
+  <data name="Loc_AllRoleTags" xml:space="preserve">
+    <value>ロール</value>
+  </data>
+  <data name="Loc_Role_LandHand" xml:space="preserve">
+    <value>ギャザラー/クラフター</value>
+  </data>
+  <data name="Loc_Role_Tank" xml:space="preserve">
+    <value>タンク</value>
+  </data>
+  <data name="Loc_Role_Healer" xml:space="preserve">
+    <value>ヒーラー</value>
+  </data>
+  <data name="Loc_Role_Dps" xml:space="preserve">
+    <value>DPS</value>
+  </data>
+  <data name="Loc_DpsRole_Melee" xml:space="preserve">
+    <value>近接</value>
+  </data>
+  <data name="Loc_DpsRole_Ranged" xml:space="preserve">
+    <value>レンジ</value>
+  </data>
+  <data name="Loc_RangedDpsRole_Magical" xml:space="preserve">
+    <value>魔法</value>
+  </data>
+  <data name="Loc_RangedDpsRole_Physical" xml:space="preserve">
+    <value>物理</value>
+  </data>
+  <data name="Loc_LandHandRole_Hand" xml:space="preserve">
+    <value>クラフター</value>
+  </data>
+  <data name="Loc_LandHandRole_Land" xml:space="preserve">
+    <value>ギャザラー</value>
+  </data>
+  <data name="Loc_AllCustomTags" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="Loc_CustomTags" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="Loc_IsEnabled_Description" xml:space="preserve">
+    <value>この上書きの値を有効にします。</value>
+  </data>
+  <data name="Loc_Static_AddPropertyOverride_Description" xml:space="preserve">
+    <value>プロパティの上書きを追加します。</value>
+  </data>
+  <data name="Loc_Static_RemovePropertyOverride_Description" xml:space="preserve">
+    <value>このプロパティの上書きを削除します。値は親アイテムから継承されます。</value>
+  </data>
+  <data name="Loc_Static_NewTag" xml:space="preserve">
+    <value>新しいタグ</value>
+  </data>
+  <data name="Loc_Static_AddCustomTag_Description" xml:space="preserve">
+    <value>カスタムタグを追加する。</value>
+  </data>
+  <data name="Loc_Static_RemoveCustomTag_Description" xml:space="preserve">
+    <value>このカスタムタグを削除します。</value>
+  </data>
+  <data name="Loc_Icon" xml:space="preserve">
+    <value>アイコン</value>
+  </data>
+  <data name="Loc_Icon_Description" xml:space="preserve">
+    <value>実際に表示されるアイコンです</value>
+  </data>
+  <data name="Loc_IsIconVisibleInChat" xml:space="preserve">
+    <value>チャット上で表示</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInChat_Description" xml:space="preserve">
+    <value>チャットでロールアイコンを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInNameplates" xml:space="preserve">
+    <value>ネームプレートにロールアイコンを表示</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInNameplates_Description" xml:space="preserve">
+    <value>ネームプレートにロールアイコンを表示するかどうか。</value>
+  </data>
+  <data name="Loc_Text" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="Loc_Text_Description" xml:space="preserve">
+    <value>実際に表示されるテキストです</value>
+  </data>
+  <data name="Loc_TextColor" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="Loc_TextColor_Description" xml:space="preserve">
+    <value>テキストの色</value>
+  </data>
+  <data name="Loc_TextGlowColor" xml:space="preserve">
+    <value>発光色</value>
+  </data>
+  <data name="Loc_TextGlowColor_Description" xml:space="preserve">
+    <value>テキストの発光色</value>
+  </data>
+  <data name="Loc_IsTextItalic" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="Loc_IsTextItalic_Description" xml:space="preserve">
+    <value>テキストを斜体にするかどうか。</value>
+  </data>
+  <data name="Loc_IsTextVisibleInChat" xml:space="preserve">
+    <value>チャット上で表示</value>
+  </data>
+  <data name="Loc_IsTextVisibleInChat_Description" xml:space="preserve">
+    <value>チャットでテキストを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsTextVisibleInNameplates" xml:space="preserve">
+    <value>ネームプレートに表示</value>
+  </data>
+  <data name="Loc_IsTextVisibleInNameplates_Description" xml:space="preserve">
+    <value>ネームプレートにテキストを表示するかどうか。</value>
+  </data>
+  <data name="Loc_TagPositionInChat" xml:space="preserve">
+    <value>チャット中の位置</value>
+  </data>
+  <data name="Loc_TagPositionInChat_Description" xml:space="preserve">
+    <value>チャットでタグが配置される場所。</value>
+  </data>
+  <data name="Loc_TagPositionInNameplates" xml:space="preserve">
+    <value>ネームプレートの位置</value>
+  </data>
+  <data name="Loc_TagPositionInNameplates_Description" xml:space="preserve">
+    <value>ネームプレートでタグが配置される場所。</value>
+  </data>
+  <data name="Loc_TagTargetInNameplates" xml:space="preserve">
+    <value>ターゲットのネームプレート</value>
+  </data>
+  <data name="Loc_TagTargetInNameplates_Description" xml:space="preserve">
+    <value>ネームプレートにおいて、タグが対象とすべき要素。</value>
+  </data>
+  <data name="Loc_GameObjectNamesToApplyTo" xml:space="preserve">
+    <value>プレイヤーを追加</value>
+  </data>
+  <data name="Loc_GameObjectNamesToApplyTo_Description" xml:space="preserve">
+    <value>タグを追加するプレイヤーのリスト。カンマまたはセミコロンで区切ります。例："Yoshida Naoki, Hime Chan"。</value>
+  </data>
+  <data name="Loc_TagPosition_After" xml:space="preserve">
+    <value>の後</value>
+  </data>
+  <data name="Loc_TagPosition_After_Description" xml:space="preserve">
+    <value>対象の要素の後にタグを表示する。</value>
+  </data>
+  <data name="Loc_TagPosition_Before" xml:space="preserve">
+    <value>の前</value>
+  </data>
+  <data name="Loc_TagPosition_Before_Description" xml:space="preserve">
+    <value>対象の要素の前にタグを表示する。</value>
+  </data>
+  <data name="Loc_TagPosition_Replace" xml:space="preserve">
+    <value>置換</value>
+  </data>
+  <data name="Loc_TagPosition_Replace_Description" xml:space="preserve">
+    <value>対象の要素をタグに置き換える。</value>
+  </data>
+  <data name="Loc_IsEnabled" xml:space="preserve">
+    <value>有効化</value>
+  </data>
+  <data name="Loc_CustomId" xml:space="preserve">
+    <value>カスタム ID</value>
+  </data>
+  <data name="Loc_GeneralCategory" xml:space="preserve">
+    <value>全般プロパティ</value>
+  </data>
+  <data name="Loc_IconCategory" xml:space="preserve">
+    <value>アイコンのプロパティ</value>
+  </data>
+  <data name="Loc_TextCategory" xml:space="preserve">
+    <value>テキストのプロパティ</value>
+  </data>
+  <data name="Loc_PositionCategory" xml:space="preserve">
+    <value>位置のプロパティ</value>
+  </data>
+  <data name="Loc_ActivityCategory" xml:space="preserve">
+    <value>アクティビティのプロパティ</value>
+  </data>
+  <data name="Loc_PlayerCategory" xml:space="preserve">
+    <value>プレイヤーのプロパティ</value>
+  </data>
+  <data name="Loc_IsVisibleInPveDuties" xml:space="preserve">
+    <value>PvEコンテンツ中に表示</value>
+  </data>
+  <data name="Loc_IsVisibleInPveDuties_Description" xml:space="preserve">
+    <value>PvEコンテンツ中にタグを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleInPvpDuties" xml:space="preserve">
+    <value>PvPコンテンツ中に表示</value>
+  </data>
+  <data name="Loc_IsVisibleInPvpDuties_Description" xml:space="preserve">
+    <value>PvPコンテンツ中にタグを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleInOverworld" xml:space="preserve">
+    <value>別の場所で表示</value>
+  </data>
+  <data name="Loc_IsVisibleInOverworld_Description" xml:space="preserve">
+    <value>特定のオプションがない他の状況でもタグを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleForSelf" xml:space="preserve">
+    <value>自分に表示</value>
+  </data>
+  <data name="Loc_IsVisibleForSelf_Description" xml:space="preserve">
+    <value>タグを自分のプレイヤーに表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleForPartyPlayers" xml:space="preserve">
+    <value>パーティーメンバーに表示</value>
+  </data>
+  <data name="Loc_IsVisibleForPartyPlayers_Description" xml:space="preserve">
+    <value>タグをパーティメンバーに表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleForAlliancePlayers" xml:space="preserve">
+    <value>アライアンスメンバーに表示</value>
+  </data>
+  <data name="Loc_IsVisibleForAlliancePlayers_Description" xml:space="preserve">
+    <value>パーティに参加していないアライアンスメンバーにもタグを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleForFriendPlayers" xml:space="preserve">
+    <value>フレンドに表示</value>
+  </data>
+  <data name="Loc_IsVisibleForFriendPlayers_Description" xml:space="preserve">
+    <value>タグをフレンドに表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleForEnemyPlayers" xml:space="preserve">
+    <value>敵に表示</value>
+  </data>
+  <data name="Loc_IsVisibleForEnemyPlayers_Description" xml:space="preserve">
+    <value>PvPコンテンツで敵にタグを表示させるかどうか。</value>
+  </data>
+  <data name="Loc_IsVisibleForOtherPlayers" xml:space="preserve">
+    <value>その他に表示</value>
+  </data>
+  <data name="Loc_IsVisibleForOtherPlayers_Description" xml:space="preserve">
+    <value>特定のオプションがない他の状況でプレイヤーにタグを表示するかどうか。</value>
+  </data>
+  <data name="Loc_IsPlayersTabOrderedByProximity" xml:space="preserve">
+    <value>近接順で並べ替え</value>
+  </data>
+  <data name="Loc_IsPlayersTabOrderedByProximity_Description" xml:space="preserve">
+    <value>自分に近いプレーヤーが上に向かって並びます。</value>
+  </data>
+  <data name="Loc_IsPlayersTabSelfVisible" xml:space="preserve">
+    <value>自己を表示</value>
+  </data>
+  <data name="Loc_IsPlayersTabSelfVisible_Description" xml:space="preserve">
+    <value>プレイヤーリストに自分自身を表示します。</value>
+  </data>
+  <data name="Loc_IsPlayersTabFriendsVisible" xml:space="preserve">
+    <value>フレンドを表示</value>
+  </data>
+  <data name="Loc_IsPlayersTabFriendsVisible_Description" xml:space="preserve">
+    <value>プレイヤーリストにフレンドを表示します。</value>
+  </data>
+  <data name="Loc_IsPlayersTabPartyVisible" xml:space="preserve">
+    <value>パーティーメンバーを表示</value>
+  </data>
+  <data name="Loc_IsPlayersTabPartyVisible_Description" xml:space="preserve">
+    <value>プレイヤーリストにパーティメンバーを表示します。</value>
+  </data>
+  <data name="Loc_IsPlayersTabAllianceVisible" xml:space="preserve">
+    <value>アライアンスメンバーを表示</value>
+  </data>
+  <data name="Loc_IsPlayersTabAllianceVisible_Description" xml:space="preserve">
+    <value>プレイヤー一覧にアライアンスメンバーを表示します。</value>
+  </data>
+  <data name="Loc_IsPlayersTabEnemiesVisible" xml:space="preserve">
+    <value>敵を表示</value>
+  </data>
+  <data name="Loc_IsPlayersTabEnemiesVisible_Description" xml:space="preserve">
+    <value>プレイヤー一覧に敵を表示します。</value>
+  </data>
+  <data name="Loc_IsPlayersTabOthersVisible" xml:space="preserve">
+    <value>その他を表示</value>
+  </data>
+  <data name="Loc_IsPlayersTabOthersVisible_Description" xml:space="preserve">
+    <value>プレイヤーリストにその他を表示します。</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToChatName" xml:space="preserve">
+    <value>チャット名に色をつける</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToChatName_Description" xml:space="preserve">
+    <value>チャットで名前に色をつけるかどうか。</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateName" xml:space="preserve">
+    <value>ネームプレートに色をつける</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateName_Description" xml:space="preserve">
+    <value>ネームプレートの名前に色をつけるかどうか。</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateTitle" xml:space="preserve">
+    <value>ネームプレートの称号に色をつける</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateTitle_Description" xml:space="preserve">
+    <value>ネームプレートの称号に色をつけるかどうか。</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateFreeCompany" xml:space="preserve">
+    <value>ネームプレートのFCタグに色をつける</value>
+  </data>
+  <data name="Loc_IsTextColorAppliedToNameplateFreeCompany_Description" xml:space="preserve">
+    <value>ネームプレートのFCタグに色をつけるかどうか。</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_All" xml:space="preserve">
+    <value>すべての場所</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_None" xml:space="preserve">
+    <value>非戦闘中</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PveDuty" xml:space="preserve">
+    <value>PvEコンテンツ</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PvpDuty" xml:space="preserve">
+    <value>PvPコンテンツ</value>
+  </data>
+  <data name="Loc_Static_CurrentActivityProfile" xml:space="preserve">
+    <value>現在有効なプロファイル</value>
+  </data>
+  <data name="Loc_ActivityContextSelection" xml:space="preserve">
+    <value>以下のオプションを適用する</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_All_Description" xml:space="preserve">
+    <value>以下のオプションは、あなたがどこにいても適用されます。オーバーワールドでも、PvEコンテンツでも、PvPコンテンツでも同じになります。他の環境用に定義されたオプションは上書きされます。</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_None_Description" xml:space="preserve">
+    <value>以下のオプションは、あらゆるコンテンツの外にいる場合にのみ適用されます。</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PveDuty_Description" xml:space="preserve">
+    <value>以下のオプションは、PvEコンテンツにのみ適用されます。</value>
+  </data>
+  <data name="Loc_ActivityContextSelection_PvpDuty_Description" xml:space="preserve">
+    <value>以下のオプションは、PvPコンテンツにのみ適用されます。</value>
+  </data>
+  <data name="Loc_Static_ChatExperimental" xml:space="preserve">
+    <value>チャット（試験的機能）</value>
+  </data>
+  <data name="Loc_Static_OtherExperimental" xml:space="preserve">
+    <value>その他（試験的機能）</value>
+  </data>
+  <data name="Loc_InsertBehindNumberPrefixInChat" xml:space="preserve">
+    <value>チャットでグループ番号の後ろに接頭辞を挿入する</value>
+  </data>
+  <data name="Loc_InsertBehindNumberPrefixInChat_Description" xml:space="preserve">
+    <value>有効にすると、タグとアイコンは、チャットでグループ/アライアンス番号の前ではなく後ろに挿入されます。 </value>
+  </data>
+  <data name="Loc_NameplateCategory" xml:space="preserve">
+    <value>ネームプレートプロパティ</value>
+  </data>
+  <data name="Loc_NameplateFreeCompanyVisibility_Description" xml:space="preserve">
+    <value>ネームプレートのフリーカンパニー要素が表示されるかどうかを定義します。</value>
+  </data>
+  <data name="Loc_NameplateTitlePosition_Description" xml:space="preserve">
+    <value>ネームプレートの称号の位置を定義します。名前の上に置くか下に置くか？あなたが決めてください。</value>
+  </data>
+  <data name="Loc_NameplateTitleVisibility_Description" xml:space="preserve">
+    <value>ネームプレートの称号をいつ表示するかどうかを定義する。</value>
+  </data>
+  <data name="Loc_Static_Chat" xml:space="preserve">
+    <value>チャット</value>
+  </data>
+  <data name="Loc_IsRoleJobIconVisibleInNameplates" xml:space="preserve">
+    <value>ネームプレートにロールアイコンを表示</value>
+  </data>
+  <data name="Loc_IsJobIconVisibleInNameplates" xml:space="preserve">
+    <value>ネームプレートにジョブアイコンを表示</value>
+  </data>
+  <data name="Loc_IsJobIconVisibleInNameplates_Description" xml:space="preserve">
+    <value>ネームプレートにジョブアイコンを表示させるかどうか。</value>
+  </data>
+  <data name="Loc_JobIconSet" xml:space="preserve">
+    <value>ジョブのアイコンをセット</value>
+  </data>
+  <data name="Loc_JobIconSet_Description" xml:space="preserve">
+    <value>ジョブアイコンを表示するために使用するアイコンセットです。ロールアイコンを選択して、代わりにロールアイコンを表示することもできます。</value>
+  </data>
+  <data name="Loc_ChatFeatureCategory" xml:space="preserve">
+    <value>詳細なチャットオプション</value>
+  </data>
+  <data name="Loc_TargetChatTypes" xml:space="preserve">
+    <value>対象チャットの種類</value>
+  </data>
+  <data name="Loc_TargetChatTypes_Description" xml:space="preserve">
+    <value>このタグのチャット機能を有効にするチャットの種類を定義します。</value>
+  </data>
+  <data name="Loc_Static_StatusIconPrioList" xml:space="preserve">
+    <value>ステータスアイコンの優先順位</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InDuty" xml:space="preserve">
+    <value>コンテンツ中</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InDuty_Description" xml:space="preserve">
+    <value>コンテンツ内で優先的に表示されるべきステータスアイコン。</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InForay" xml:space="preserve">
+    <value>In Foray</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_InForay_Description" xml:space="preserve">
+    <value>Foray内で優先的に表示されるべきステータスアイコン。</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_Overworld" xml:space="preserve">
+    <value>オーバーワールド</value>
+  </data>
+  <data name="Loc_StatusIconPriorizerConditionSets_Overworld_Description" xml:space="preserve">
+    <value>オーバーワールドで優先的に表示されるべきステータスアイコン。</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToDefault" xml:space="preserve">
+    <value>既定値に戻す</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToDefault_Description" xml:space="preserve">
+    <value>すべての条件セットを初期設定に戻す</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToEmpty" xml:space="preserve">
+    <value>空に戻す</value>
+  </data>
+  <data name="Loc_StatusIconPriorizer_ResetToEmpty_Description" xml:space="preserve">
+    <value>すべての条件セットを空のコレクションにクリアします。ステータスアイコンは優先されません。</value>
+  </data>
+  <data name="Loc_UsePriorizedIcons" xml:space="preserve">
+    <value>優先順位付けされたアイコンを使用</value>
+  </data>
+  <data name="Loc_UsePriorizedIcons_Description" xml:space="preserve">
+    <value>このオプションをオンにすると、ジョブアイコンを有効にすると、ステータスアイコンのセットがジョブアイコンよりも優先されます。
+無効にすると、ステータスアイコンのみが優先されます。</value>
+  </data>
+  <data name="Loc_StatusIcons_Busy" xml:space="preserve">
+    <value>取り込み中</value>
+  </data>
+  <data name="Loc_StatusIcons_Disconnecting" xml:space="preserve">
+    <value>切断中</value>
+  </data>
+  <data name="Loc_StatusIcons_DutyFinder" xml:space="preserve">
+    <value>コンテンツファインダー</value>
+  </data>
+  <data name="Loc_StatusIcons_GroupPose" xml:space="preserve">
+    <value>グループポーズ</value>
+  </data>
+  <data name="Loc_StatusIcons_Idle" xml:space="preserve">
+    <value>放置中</value>
+  </data>
+  <data name="Loc_StatusIcons_InDuty" xml:space="preserve">
+    <value>戦闘中</value>
+  </data>
+  <data name="Loc_StatusIcons_Mentor" xml:space="preserve">
+    <value>メンター</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorCrafting" xml:space="preserve">
+    <value>製作採集メンター</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorPvE" xml:space="preserve">
+    <value>バトルメンター</value>
+  </data>
+  <data name="Loc_StatusIcons_MentorPvP" xml:space="preserve">
+    <value>PvPメンター</value>
+  </data>
+  <data name="Loc_StatusIcons_NewAdventurer" xml:space="preserve">
+    <value>若葉マーク</value>
+  </data>
+  <data name="Loc_StatusIcons_PartyLeader" xml:space="preserve">
+    <value>PTリーダー</value>
+  </data>
+  <data name="Loc_StatusIcons_PartyMember" xml:space="preserve">
+    <value>PTメンバー</value>
+  </data>
+  <data name="Loc_StatusIcons_Returner" xml:space="preserve">
+    <value>リターナー</value>
+  </data>
+  <data name="Loc_StatusIcons_RolePlaying" xml:space="preserve">
+    <value>ロールプレイ中</value>
+  </data>
+  <data name="Loc_StatusIcons_ViewingCutscene" xml:space="preserve">
+    <value>カットシーン中</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate" xml:space="preserve">
+    <value>テンプレート</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Basic" xml:space="preserve">
+    <value>基本</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Basic_Description" xml:space="preserve">
+    <value>Emptyと同じですが、フォーマットとカラーリングのための非常に基本的な事前設定を含んでいます。
+独自の設定をしたいが、基本的な書式が欲しい場合にも使用できる。</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Description" xml:space="preserve">
+    <value>ここでは、以下のすべての設定のテンプレートを選択することができます。
+テンプレートはプロパティの基本セットとして使用されます。あなたが行うすべての変更は、保存されます。しかし、このテンプレートのオプションはすべて保存されません。
+これは、多くのプロパティを上書きする必要がないため、またはテンプレートを使用せずに完全に独自の設定を行うために役立ちます。
+
+警告
+この設定を変更すると、プロパティがリセットされることがあります。設定の一部が失われる可能性があります。
+この設定を変更した後、すべてがあなたの好きなように設定されていることを確認してください。</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Full" xml:space="preserve">
+    <value>フル</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Full_Description" xml:space="preserve">
+    <value>ジョブタグをカラーで表示し、プレイヤー名要素に色を付けます。</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_None" xml:space="preserve">
+    <value>空</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_None_Description" xml:space="preserve">
+    <value>設定が一つもありません。これは完全に空のテンプレートです。
+コントロール下にあるすべてのオプションを設定したい場合、またはいくつかの設定だけを作成したい場合は、これを使用します。</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Simple" xml:space="preserve">
+    <value>シンプル</value>
+  </data>
+  <data name="Loc_DefaultPluginDataTemplate_Simple_Description" xml:space="preserve">
+    <value>タイトルを置き換えることで、ジョブタグとロールアイコンをカラーで表示します。</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_GrayOut" xml:space="preserve">
+    <value>グレーアウト</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Ignore" xml:space="preserve">
+    <value>無視</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Include" xml:space="preserve">
+    <value>含む</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling" xml:space="preserve">
+    <value>死んだプレイヤーの処理</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_GrayOut_Description" xml:space="preserve">
+    <value>任意のタグを適用しますが、ネームプレートを灰色表示にします。</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Ignore_Description" xml:space="preserve">
+    <value>死んだプレイヤーは処理せず、タグも適用しない。</value>
+  </data>
+  <data name="Loc_DeadPlayerHandling_Include_Description" xml:space="preserve">
+    <value>死んだプレイヤーも生きているのと同じように扱う。死んだプレイヤーと生きているプレイヤーの違いはありません。</value>
+  </data>
+  <data name="Loc_MoveStatusIconToNameplateTextIfPossible" xml:space="preserve">
+    <value>可能であれば、ステータスアイコンをネームプレートのテキストに移動する。</value>
+  </data>
+  <data name="Loc_MoveStatusIconToNameplateTextIfPossible_Description" xml:space="preserve">
+    <value>現在のステータスアイコンがフォントアイコンとして利用できる場合、それをネームプレートのプレイヤー名のテキストに移動し、ジョブアイコンなどの別のアイコンを使用できるようにします。</value>
+  </data>
+  <data name="Loc_IsRoleIconVisibleInChat" xml:space="preserve">
+    <value>チャットにロールアイコンを表示</value>
+  </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined" xml:space="preserve">
+    <value>未定義のチャットタイプを含む</value>
+  </data>
+  <data name="Loc_TargetChatTypesIncludeUndefined_Description" xml:space="preserve">
+    <value>このタグを有効にすると、定義されていないすべてのチャットメッセージに適用されます。
+このケースは、ゲームがアップデートされ、すべてのチャットタイプの列挙がシフトされた値によって無効になった場合、またはプラグインが何らかの理由でカスタムチャットタイプを作成した場合に発生します。</value>
+  </data>
+</root>

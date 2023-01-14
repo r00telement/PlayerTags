@@ -1,18 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Authors>r00telement</Authors>
-        <Version>1.2.0.0</Version>
+        <Authors>r00telement;Pilzinsel64</Authors>
+        <Version>1.9.0.0</Version>
     </PropertyGroup>
 
     <PropertyGroup>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFramework>net7.0-windows</TargetFramework>
         <Platforms>x64</Platforms>
-        <Nullable>enable</Nullable>
+        <Nullable>annotations</Nullable>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <OutputPath>$(AppData)\XIVLauncher\devPlugins\PlayerTags\</OutputPath>
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+      <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
  
     <PropertyGroup>
@@ -20,7 +24,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DalamudPackager" Version="2.1.5" />
+        <PackageReference Include="Dalamud.ContextMenu" Version="1.2.1" />
+        <PackageReference Include="DalamudPackager" Version="2.1.10" />
+        <ProjectReference Include="..\Pilz.Dalamud\Pilz.Dalamud.csproj" />
         <Reference Include="FFXIVClientStructs">
             <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
             <Private>false</Private>
@@ -52,6 +58,11 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Compile Update="Resources\Paths.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Paths.resx</DependentUpon>
+        </Compile>
         <Compile Update="Resources\Strings.Designer.cs">
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
@@ -60,6 +71,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <EmbeddedResource Update="Resources\Paths.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Paths.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
         <EmbeddedResource Update="Resources\Strings.resx">
             <Generator>PublicResXFileCodeGenerator</Generator>
             <LastGenOutput>Strings.Designer.cs</LastGenOutput>
